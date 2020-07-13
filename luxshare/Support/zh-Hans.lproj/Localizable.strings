@@ -1,0 +1,148 @@
+"home" = "首页";
+"mine" = "我的";
+"message" = "消息";
+"language" = "chinese";
+"nextstep" = "下一步";
+"submit" = "确认";
+"save" = "保存";
+"suggest" = "建议";
+"handleSuccess" = "操作成功";
+"handleFailure" = "操作失败";
+"edit" = "编辑";
+"finish" = "完成";
+"delete" = "删除";
+"warning" = "警告";
+"home" = "家庭";
+"notication" = "通知";
+
+//角色
+"role_normal" = "普通成员";
+"role_normalTip" = "使用设备/使用智能";
+"role_admin" = "管理员";
+"role_adminTip" = "管理设备和房间/管理智能/管理人员";
+"home_role" = "家庭角色";
+"role_addMemberTip" = "关联账号接受邀请后,才能成为家庭成员并使用相关功能";
+
+//登录
+"login" = "登录";
+"register" = "注册";
+
+"login_countryCode" = "国家区号:";
+"login_account" = "手机号/邮箱";
+"login_phone" = "手机号";
+"login_password" = "密码:";
+"login_verifyCode" = "验证码";
+"login_sendCode" = "发送验证码";
+"login_loginPassword" = "密码登录";
+"reset_password" = "重置密码";
+"reset_newPassword" = "新密码";
+"login_success" = "登录成功";
+"login_fail" = "登录失败";
+
+"login_getCode" = "获取";
+"login_loginWithMessage" = "通过短信验证码登录";
+"login_messageLogin" = "短信验证码登录";
+"login_forgetPassword" = "忘记密码";
+"login_getPassword" = "找回密码";
+"login_resetPassword" = "重置密码";
+"login_inputRightPhone" = "输入正确的手机号";
+
+"regist_success" = "注册成功";
+"verify_code_success" = "验证码发送成功";
+"verify_code_fail" = "验证码发送失败";
+"verify_code_invalid" = "验证码无效";
+
+"resetPasswordByPhonesuccess" = "密码重置成功";
+"resetPasswordByPhonefialure" = "密码重置失败";
+//我的
+"mine_shareDevices" = "共享设备";
+"mine_commonQuestions" = "常见问题";
+"mine_familyManagement" = "家庭管理";
+"mine_currentVersion" = "当前版本";
+
+//家庭管理
+"home_manage" = "家庭管理";
+"home_addHome" = "添加家庭";
+"home_detail" = "家庭信息";
+"home_name" = "家庭名称";
+"home_location" = "家庭位置";
+"home_removeHome" = "移除家庭";
+"home_homeMember" = "家庭成员";
+"home_editHomeName" = "修改家庭名称";
+"home_editHomeLocation" = "修改家庭位置";
+"home_addHomeMember" = "添加家庭成员";
+"home_noManager" = "您不是管理员,不能编辑";
+"home_addMember" = "添加成员";
+"home_room" = "房间:";
+
+"home_memberstatus_pending" = "待加入";
+"home_memberstatus_accept" = "已加入";
+"home_memberstatus_reject" = "已拒绝";
+"home_pendrecive" = "邀请确认";
+"home_pendTextfirst" = "您有一个待确认的邀请,邀请您加入家庭:";
+"home_pendTextsecond" = "一起享受智能生活带来的便利.请您确认是否加入?";
+"home_rejectJoin" = "拒绝加入";
+"home_acceptPend" = "接受邀请";
+
+
+"home_selectOneRoom" = "至少选择一个房间";
+"member_name" = "名称";
+"member_inputName" = "请输入家庭成员名称";
+"member_max25" = "最多输入25个字";
+"home_editMemberName" = "修改成员名称";
+
+"member_account" = "账号";
+"member_inputAccount" = "请输入账号";
+"member_headpic" = "头像";
+
+"member_country" = "国家/地区";
+
+"member_memberAccount" = "关联账号";
+"member_homeRole" = "家庭角色";
+"member_removeMember" = "移除成员";
+//房间管理
+"room_manage" = "房间管理";
+"room_roomDetail" = "房间信息";
+"room_addOtherRoom" = "添加其他房间";
+"room_name" = "房间名称";
+"room_noDevices" = "不在此房间的设备";
+"room_editRoomName" = "修改房间名称";
+"roon_namelenngthMin1" = "房间名不能为空";
+//全选
+"message_all" = "全选";
+//设备device
+"device_addDevice" = "添加设备";
+"device_addNewDevice" = "新增设备";
+"device_resetDevice" = "重置设备";
+"device_resetTip" = "长按电源键5秒进行设备重置";
+"device_doneTip1" = "指示灯处于快闪状态";
+"device_doneTip2" = "或听到[等待连接]";
+
+//wifi
+"wifi_setWifi" = "设置Wifi";
+"wifi_setWifiTip" = "将装置连接到既有的网络";
+"wifi_name" = "wifi名称";
+"wifi_password" = "wifi密码";
+
+//二维码
+"qrcode_title" = "扫描二维码";
+"qrcode_subtitle" = "请将二维码正对摄像头约15~20cm,从而使摄像头能扫描到";
+"qrcode_submit" = "扫描二维码成功";
+
+//设备
+"device_connecting" = "设备连接中";
+"device_connectTip" = "路由器、手机和设备尽量靠近";
+"device_addSuccess" = "添加成功";
+
+//
+"device_lightNormal" = "提示灯处于闪烁状态";
+"device_lightUnnormal" = "提示灯处于其他状态";
+"device_lightTip" = "接通电源,确认指示灯处于闪烁状态";
+"device_addFailer" = "添加失败";
+
+"device_deviceWifiTip" = "打开手机'设置-无线局域网',连接上图所示Wi-Fi网络";
+"device_connectHelp" = "不能连接? 请参见帮助";
+"device_goToConnect" = "去连接";
+
+
+
