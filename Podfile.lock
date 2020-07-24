@@ -14,6 +14,18 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
+  - BRPickerView (2.6.3):
+    - BRPickerView/AddressPickerView (= 2.6.3)
+    - BRPickerView/Base (= 2.6.3)
+    - BRPickerView/DatePickerView (= 2.6.3)
+    - BRPickerView/StringPickerView (= 2.6.3)
+  - BRPickerView/AddressPickerView (2.6.3):
+    - BRPickerView/Base
+  - BRPickerView/Base (2.6.3)
+  - BRPickerView/DatePickerView (2.6.3):
+    - BRPickerView/Base
+  - BRPickerView/StringPickerView (2.6.3):
+    - BRPickerView/Base
   - CocoaAsyncSocket (7.6.4)
   - HXPhotoPicker (2.4.2)
   - IQKeyboardManager (6.5.5)
@@ -102,6 +114,8 @@ PODS:
   - UMCPush (3.2.4):
     - UMCCommon
   - UMCSecurityPlugins (1.0.6)
+  - WMPlayer (5.1.0):
+    - Masonry
   - YYCache (1.0.4)
   - YYImage (1.0.4):
     - YYImage/Core (= 1.0.4)
@@ -113,6 +127,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (= 3.2.1)
+  - BRPickerView
   - HXPhotoPicker (= 2.4.2)
   - IQKeyboardManager
   - JKCategories (= 1.7)
@@ -128,11 +143,13 @@ DEPENDENCIES:
   - UMCCommon
   - UMCPush
   - UMCSecurityPlugins
+  - WMPlayer (from `https://github.com/zhengwenming/WMPlayer.git`)
   - YYWebImage (~> 1.0.5)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - AFNetworking
+    - BRPickerView
     - CocoaAsyncSocket
     - HXPhotoPicker
     - IQKeyboardManager
@@ -171,8 +188,18 @@ SPEC REPOS:
     - YYModel
     - YYWebImage
 
+EXTERNAL SOURCES:
+  WMPlayer:
+    :git: https://github.com/zhengwenming/WMPlayer.git
+
+CHECKOUT OPTIONS:
+  WMPlayer:
+    :commit: c6d3ddf64b8b9172e89e6a8ea79ed52ba6d8e353
+    :git: https://github.com/zhengwenming/WMPlayer.git
+
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  BRPickerView: 67ce855d07ff61771b586fea719053612bfeb1d6
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   HXPhotoPicker: 0b0751fe5d64271edefcd5cc4ffa9b6300ca58b7
   IQKeyboardManager: 3a8b9e603f8b0eeaf5f096a1f2b2cfcf121992ef
@@ -206,11 +233,12 @@ SPEC CHECKSUMS:
   UMCCommon: 4e80f93492d300245683236668763dc5d0b04dbd
   UMCPush: 1edd856027dcf905333effb4040ace5d236a7316
   UMCSecurityPlugins: 0831a08f3988f3cea9f1d3a7626cd9bee4fef150
+  WMPlayer: aa27d59db872e897581e1fd335e59fbccf5a6f17
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 7744015de17e171c936d063d61b1c12c7b9ddd88
+PODFILE CHECKSUM: 1aac2a4c5d91ad9a56de715804abf30a706f7af2
 
 COCOAPODS: 1.9.1

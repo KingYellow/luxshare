@@ -26,6 +26,7 @@
 //登录
 "login" = "登录";
 "register" = "注册";
+"logout" = "退出登录";
 
 "login_countryCode" = "国家区号:";
 "login_account" = "手机号/邮箱";
@@ -59,6 +60,16 @@
 "mine_commonQuestions" = "常见问题";
 "mine_familyManagement" = "家庭管理";
 "mine_currentVersion" = "当前版本";
+
+//个人信息
+"personInfo_headPic" = "头像";
+"personInfo_nickName" = "昵称";
+"personInfo_phoneNum" = "手机号码";
+"personInfo_headPic" = "头像";
+"personInfo_editLoginPW" = "修改登录密码";
+
+
+
 
 //家庭管理
 "home_manage" = "家庭管理";
@@ -143,6 +154,32 @@
 "device_deviceWifiTip" = "打开手机'设置-无线局域网',连接上图所示Wi-Fi网络";
 "device_connectHelp" = "不能连接? 请参见帮助";
 "device_goToConnect" = "去连接";
+"device_deviceName" = "设备名称";
+"device_deviceNamePlace" = "智能摄像机";
+
+"device_deviceLocation" = "设备位置";
+"device_deviceInfo" = "设备信息";
+
+//设置
+"setting_setting" = "设置";
+"setting_deceteAlarm" = "侦测报警设置";
+"setting_moveAlarm" = "移动报警";
+"setting_decetecCry" = "哭声检测";
+"setting_timerAlarm" = "报警功能定时设置";
+"setting_storage" = "存储设置";
+"setting_basicFun" = "基本功能";
+
+"device_playBack" = "回放";
+
+"share_addShareMember" = "添加共享";
+"share_shareMember" = "设备共享";
+
+
+
+
+
+
+
 
 
 

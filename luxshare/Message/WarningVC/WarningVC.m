@@ -8,6 +8,8 @@
 
 #import "WarningVC.h"
 #import "QZHMessageCell.h"
+#import "WarningListCell.h"
+#import "PhotPreViewVC.h"
 
 @interface WarningVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic)UITableView *qzTableView;
@@ -89,7 +91,7 @@
             weakSelf.page++;
             [weakSelf getMessageList:weakSelf.page];
         }];
-        [self.qzTableView registerClass:[QZHMessageCell class] forCellReuseIdentifier:QZHCELL_REUSE_TEXT];
+        [self.qzTableView registerClass:[WarningListCell class] forCellReuseIdentifier:QZHCELL_REUSE_TEXT];
     }
     return _qzTableView;
 }
@@ -99,10 +101,16 @@
     NSInteger row = indexPath.row;
     TuyaSmartMessageListModel *model = self.listArr[section][row];
     
-    QZHMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
+    WarningListCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
     cell.nameLab.text = model.msgTypeContent;
     cell.contentLab.text = model.msgContent;
-
+    
+    TuyaSmartMessageAttachModel *picModel = model.attachPicList.firstObject;
+    [cell.picIMG exp_loadImageUrlString:picModel.thumbUrl placeholder:QZHICON_HEAD_PLACEHOLDER];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(preAction:)];
+    cell.picIMG.userInteractionEnabled = YES;
+    [cell.picIMG addGestureRecognizer:tap];
     cell.selectBtn.selected = [model.select boolValue];
     if (self.topView.selectBtn.hidden) {
         [cell.selectBtn mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -201,12 +209,7 @@
     }
     return _deleteBtn;
 }
-//-(TuyaSmartHome *)home{
-//    if (!_home) {
-//        self.home =[TuyaSmartHome homeWithHomeId:self.homeModel.homeId];
-//    }
-//    return _home;
-//}
+
 - (void)resetArr{
     //其中modelarr为需要分类的数组，listArr为分好组的数组。
 
@@ -224,7 +227,9 @@
         NSString *month1 = [[[[time1 componentsSeparatedByString:@" "] firstObject] componentsSeparatedByString:@"-"] objectAtIndex:1];
 
         NSString *day1=[[[[time1 componentsSeparatedByString:@" "] firstObject] componentsSeparatedByString:@"-"] objectAtIndex:2];
-
+        if (day1.length == 1) {
+            day1 = [@"0" stringByAppendingString:day1];
+        }
         NSString *currentStr1=[NSString stringWithFormat:@"%@-%@",month1,day1];
         
         [self.timeArr addObject:currentStr1];
@@ -277,7 +282,9 @@
          NSString *month1=[[[[time1 componentsSeparatedByString:@" "] firstObject] componentsSeparatedByString:@"-"] objectAtIndex:1];
 
          NSString *day1=[[[[time1 componentsSeparatedByString:@" "] firstObject] componentsSeparatedByString:@"-"] objectAtIndex:2];
-
+         if (day1.length == 1) {
+             day1 = [@"0" stringByAppendingString:day1];
+         }
         NSString *currentStr1=[NSString stringWithFormat:@"%@-%@",month1,day1];
 
         for (NSString *str in myary)
@@ -352,7 +359,11 @@
     ///消息类型（1 - 告警，2 - 家庭，3 - 通知）
 -(void)deleteMessage{
     QZHWS(weakSelf)
-    [[TuyaSmartMessage new] deleteMessageWithType:1 ids:[self deleteMessageIds] msgSrcIds:nil success:^{
+    TuyaSmartMessageListDeleteRequestModel *model = [[TuyaSmartMessageListDeleteRequestModel alloc] init];
+    model.msgType = 1;
+    model.msgIds = [self deleteMessageIds];
+    model.msgSrcIds = nil;
+    [[TuyaSmartMessage new] deleteMessageWithDeleteRequestModel:model success:^(BOOL result) {
         [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if (weakSelf.topView.selectBtn.selected && [self ishasselexted]) {
@@ -362,8 +373,9 @@
             [weakSelf.qzTableView.mj_header beginRefreshing];
         });
     } failure:^(NSError *error) {
-           [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
+    
 }
 
 -(void)checkNewMessage{
@@ -441,5 +453,20 @@
             }];
         }
     }
+}
+
+#pragma mark  -- action
+- (void)preAction:(UIGestureRecognizer *)sender{
+    UIImageView *view =  (UIImageView *)sender.view;
+    WarningListCell *cell = (WarningListCell *)view.superview.superview;
+    
+    NSIndexPath *index = [self.qzTableView indexPathForCell:cell];
+
+    TuyaSmartMessageListModel *model = self.listArr[index.section][index.row];
+    TuyaSmartMessageAttachModel *attModel = model.attachPicList.firstObject;
+    PhotPreViewVC *vc = [[PhotPreViewVC alloc] init];
+    vc.imgUrl = attModel.url;
+    [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
+
 }
 @end

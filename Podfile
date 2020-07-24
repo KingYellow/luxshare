@@ -24,4 +24,7 @@ target 'luxshare' do
   pod 'STPopup'
   pod 'SGQRCode', '~> 3.0.1'
   pod 'IQKeyboardManager'
+  pod 'WMPlayer',  :git => 'https://github.com/zhengwenming/WMPlayer.git'
+  pod 'BRPickerView'
+
 end

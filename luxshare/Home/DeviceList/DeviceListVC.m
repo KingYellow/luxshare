@@ -89,7 +89,13 @@
         
     DeviceListCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
     TuyaSmartDeviceModel *model = self.listArr[row];
-    cell.nameLab.text = model.name;
+    cell.selectBtn.selected = model.isOnline;
+    if (model.isShare) {
+        cell.nameLab.text = [model.name stringByAppendingString:@"(共享设备)"];
+    }else{
+        cell.nameLab.text = model.name;
+    }
+    [cell.poloIMG exp_loadImageUrlString:model.iconUrl placeholder:QZHICON_PLACEHOLDER];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     UILongPressGestureRecognizer *press = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressAction:)];
@@ -126,6 +132,7 @@
 
     CameraOnLiveVC *vc = [[CameraOnLiveVC alloc] init];
     vc.deviceModel = model;
+    vc.homeModel = self.homeModel;
     [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
     TuyaSmartDevice *device = [TuyaSmartDevice deviceWithDeviceId:model.devId];
     device.delegate = self;
@@ -178,7 +185,7 @@ QZHWS(weakSelf)
 }
 
 - (void)addDeviceAction:(UIButton *)sender{
-    
+    self.addDevice();
 }
 #pragma mark - TuyaSmartDeviceDelegate
 

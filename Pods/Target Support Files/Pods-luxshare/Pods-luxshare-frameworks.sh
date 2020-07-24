@@ -198,6 +198,7 @@ fi
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/BRPickerView/BRPickerView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/HXPhotoPicker/HXPhotoPicker.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework"
@@ -209,6 +210,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SGQRCode/SGQRCode.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/STPopup/STPopup.framework"
   install_framework "${PODS_ROOT}/TuyaCameraSDK/ios/TuyaCameraSDK.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/WMPlayer/WMPlayer.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/YYCache/YYCache.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/YYImage/YYImage.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/YYModel/YYModel.framework"
@@ -216,6 +218,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/BRPickerView/BRPickerView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/HXPhotoPicker/HXPhotoPicker.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework"
@@ -227,6 +230,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SGQRCode/SGQRCode.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/STPopup/STPopup.framework"
   install_framework "${PODS_ROOT}/TuyaCameraSDK/ios/TuyaCameraSDK.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/WMPlayer/WMPlayer.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/YYCache/YYCache.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/YYImage/YYImage.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/YYModel/YYModel.framework"

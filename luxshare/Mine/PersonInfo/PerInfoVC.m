@@ -74,7 +74,7 @@
     if (section == 0) {
         if (row == 0) {
             PerInfoPicCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
-            cell.nameLab.text = @"头像";
+            cell.nameLab.text = QZHLoaclString(@"personInfo_headPic");
             [cell.IMGView exp_loadImageUrlString:[TuyaSmartUser sharedInstance].headIconUrl placeholder:QZHICON_HEAD_PLACEHOLDER];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -82,12 +82,11 @@
         }else{
             PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
             if (row == 1) {
-                cell.nameLab.text = @"昵称";
+                cell.nameLab.text = QZHLoaclString(@"personInfo_nickName");
                 cell.describeLab.text = [TuyaSmartUser sharedInstance].nickname;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                NSLog(@"shifouzaidenglu %d",[TuyaSmartUser sharedInstance].isLogin);
             }else{
-                cell.nameLab.text = @"手机号码";
+                cell.nameLab.text = QZHLoaclString(@"personInfo_phoneNum");
                 cell.describeLab.text = [TuyaSmartUser sharedInstance].phoneNumber;
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -95,13 +94,13 @@
         }
     }else if(section == 1){
         PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
-        cell.nameLab.text = @"修改登录密码";
+        cell.nameLab.text = QZHLoaclString(@"personInfo_editLoginPW");
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else{
         QZHDefaultButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_DEFAULT];
-        cell.nameLab.text = @"退出登录";
+        cell.nameLab.text = QZHLoaclString(@"logout");
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }

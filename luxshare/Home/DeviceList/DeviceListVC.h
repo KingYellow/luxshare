@@ -14,6 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic)NSArray *listArr;
 @property (copy, nonatomic)dispatch_block_t updateDevice;
+@property (copy, nonatomic)dispatch_block_t addDevice;
+
+@property (strong, nonatomic)TuyaSmartHomeModel *homeModel;
+
 
 @end
 

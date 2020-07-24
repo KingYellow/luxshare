@@ -45,4 +45,5 @@
 #import "MessageTopView.h"
 #import "QZHMessageModel.h"
 #import "TuyaSmartMessageListModel+EXP.h"
+#import "WMPlayer.h"
 #endif /* luxshare_pch */

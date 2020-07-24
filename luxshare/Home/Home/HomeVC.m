@@ -20,7 +20,7 @@
 #import "RoomManageVC.h"
 #import "DeviceSettingVC.h"
 
-@interface HomeVC ()<UITableViewDelegate,UITableViewDataSource,TuyaSmartHomeManagerDelegate,UIPageViewControllerDelegate,UIPageViewControllerDataSource,TuyaSmartHomeDelegate>
+@interface HomeVC ()<UITableViewDelegate,UITableViewDataSource,TuyaSmartHomeManagerDelegate,UIPageViewControllerDelegate,UIPageViewControllerDataSource,TuyaSmartHomeDelegate,UIGestureRecognizerDelegate>
 @property (strong, nonatomic)UITableView *qzTableView;
 @property (copy, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)TuyaSmartHomeManager *magager;
@@ -46,6 +46,8 @@
     self.selectIndex = 0;
     [self initConfig];
     [self getHomeList];
+    
+    [QZHNotification addObserver:self selector:@selector(InfoChangeToUpdateList) name:QZHNotificationKeyK1 object:nil];
     
 }
 - (void)initConfig{
@@ -128,25 +130,33 @@
 -(void)loadVcs:(TuyaSmartHome *)home{
     QZHWS(weakSelf)
     NSMutableArray *vcArr = [NSMutableArray array];
-    NSMutableArray *deviceArr = [NSMutableArray array];
     for (int i=0; i <= home.roomList.count; i++) {
         DeviceListVC *vc = [[DeviceListVC alloc] init];
         vc.updateDevice = ^{
             [weakSelf getHomeList];
         };
+        vc.addDevice = ^{
+            [weakSelf exp_rightAction];
+        };
 
         if (i>0) {
             TuyaSmartRoomModel *roommodel = home.roomList[i - 1];
+            NSMutableArray *deviceArr = [NSMutableArray array];
 
             for (TuyaSmartDeviceModel *dmodel in home.deviceList) {
                 if (roommodel.roomId == dmodel.roomId) {
                     [deviceArr addObject:dmodel];
                 }
             }
+
             vc.listArr = deviceArr;
         }else{
-            vc.listArr = home.deviceList;
+            
+            NSMutableArray *Arr = [NSMutableArray arrayWithArray:home.deviceList];
+            [Arr addObjectsFromArray:home.sharedDeviceList];
+            vc.listArr = Arr;
         }
+        vc.homeModel = home.homeModel;
         [vcArr addObject:vc];
     }
     
@@ -252,6 +262,9 @@
         _qzTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         [_qzTableView exp_tableViewDefault];
         _qzTableView.bounces = NO;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
+        tap.delegate = self;
+        [self.qzTableView addGestureRecognizer:tap];
         self.qzTableView.backgroundColor = QZHKIT_COLOR_LEADBACK;
         self.qzTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         UIView *head = [[UIView alloc] init];
@@ -284,7 +297,7 @@
         }else{
             cell.selectBtn.selected = NO;
         }
-        
+
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -527,9 +540,27 @@
     }
 }
 
-
+// 设备信息更新，例如name
+- (void)home:(TuyaSmartHome *)home deviceInfoUpdate:(TuyaSmartDeviceModel *)device {
+    [self getHomeList];
+}
 // MQTT连接成功
 - (void)serviceConnectedSuccess {
     // 刷新当前家庭UI
+}
+
+- (void)InfoChangeToUpdateList{
+    [self getHomeList];
+}
+- (void)dismiss{
+    self.qzTableView.hidden = YES;
+}
+- (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch*)touch {
+
+    if ([touch.view isMemberOfClass:[UITableView class]]) {
+        return YES;
+    }
+    return NO;
+
 }
 @end

@@ -228,6 +228,9 @@
         NSString *month1 = [[[[time1 componentsSeparatedByString:@" "] firstObject] componentsSeparatedByString:@"-"] objectAtIndex:1];
 
         NSString *day1=[[[[time1 componentsSeparatedByString:@" "] firstObject] componentsSeparatedByString:@"-"] objectAtIndex:2];
+        if (day1.length == 1) {
+            day1 = [@"0" stringByAppendingString:day1];
+        }
 
         NSString *currentStr1=[NSString stringWithFormat:@"%@-%@",month1,day1];
         
@@ -281,7 +284,9 @@
          NSString *month1=[[[[time1 componentsSeparatedByString:@" "] firstObject] componentsSeparatedByString:@"-"] objectAtIndex:1];
 
          NSString *day1=[[[[time1 componentsSeparatedByString:@" "] firstObject] componentsSeparatedByString:@"-"] objectAtIndex:2];
-
+         if (day1.length == 1) {
+             day1 = [@"0" stringByAppendingString:day1];
+         }
         NSString *currentStr1=[NSString stringWithFormat:@"%@-%@",month1,day1];
 
         for (NSString *str in myary)

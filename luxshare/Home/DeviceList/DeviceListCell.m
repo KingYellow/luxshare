@@ -35,9 +35,9 @@
      }];
 
     [self.poloIMG mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.selectBtn.mas_right).offset(20);
+        make.left.mas_equalTo(self.selectBtn.mas_right).offset(5);
         make.centerY.mas_equalTo(self.nameLab);
-        make.width.mas_equalTo(40);
+        make.width.mas_equalTo(70);
         make.height.mas_equalTo(70);
     }];
 
