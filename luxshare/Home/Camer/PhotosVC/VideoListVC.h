@@ -10,9 +10,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void (^selectResult)(NSArray *selectArr);
 @interface VideoListVC : UIViewController
 @property (strong, nonatomic)NSArray *listArr;
-
+@property (copy, nonatomic)selectResult selecctResultBlock;
+- (void)selectAllVideosOrPhotos:(BOOL) select;
+- (void)getphotosList;
 @end
 
 NS_ASSUME_NONNULL_END

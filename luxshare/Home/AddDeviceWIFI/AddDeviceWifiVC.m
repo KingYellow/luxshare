@@ -8,12 +8,15 @@
 
 #import "AddDeviceWifiVC.h"
 #import "SetWIFIVC.h"
+#import "TOTAWebVC.h"
+#import "UIImageView+Gif.h"
 
 @interface AddDeviceWifiVC ()
 @property (strong, nonatomic)UIImageView *indicatorIMG;
 @property (strong, nonatomic)UILabel *titleLab;
 @property (strong, nonatomic)UIButton *selectBtn;
 @property (strong, nonatomic)UIButton *submitBtn;
+
 @end
 
 @implementation AddDeviceWifiVC
@@ -21,6 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initConfig];
+    [self.indicatorIMG startPlayGifWithImages:@[@"ty_adddevice_lighting",@"ty_adddevice_light"]];
     
 }
 - (void)initConfig{
@@ -71,7 +75,6 @@
 - (UIImageView *)indicatorIMG{
     if (!_indicatorIMG) {
         _indicatorIMG = [[UIImageView alloc] init];
-        _indicatorIMG.backgroundColor = QZHColorRed;
     }
     return _indicatorIMG;
 }
@@ -110,6 +113,9 @@
     return _submitBtn;
 }
 - (void)selectAction:(UIButton *)sender{
+    TOTAWebVC *vc = [[TOTAWebVC alloc] init];
+    vc.urlString = @"https://smartapp.tuya.com/tuyasmart/help";
+    [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
 
 }
 - (void)submitAction:(UIButton *)sender{
@@ -117,4 +123,5 @@
     vc.homemodel = self.homemodel;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
 @end

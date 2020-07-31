@@ -80,6 +80,13 @@
         maskLayer.frame = CGRectMake(0, 0, QZHScreenWidth - 20, 50);
         maskLayer.path = maskPath.CGPath;
         self.bigView.layer.mask = maskLayer;
+    }else if(radioPosition == 2){
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, QZHScreenWidth - 20, 50)
+           byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(10, 10)];
+      CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+      maskLayer.frame = CGRectMake(0, 0, QZHScreenWidth - 20, 50);
+      maskLayer.path = maskPath.CGPath;
+      self.bigView.layer.mask = maskLayer;
     }else{
         
     }

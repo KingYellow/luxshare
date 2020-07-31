@@ -12,6 +12,7 @@
 #import "HomeManageVC.h"
 #import "PerInfoVC.h"
 #import "SettingVC.h"
+#import "TOTAWebVC.h"
 
 @interface MineVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic)UITableView *qzTableView;
@@ -84,7 +85,7 @@
         cell.IMGView.image = QZHLoadIcon(self.logoArr[row]);
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        if (row == 3) {
+        if (row == 2) {
             cell.tagLab.hidden = NO;
             NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
             NSString *appVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
@@ -140,7 +141,12 @@
         PerInfoVC *vc = [[PerInfoVC alloc] init];
         [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
     }
-    if (section == 1 && row == 2) {
+    if (section == 1 && row == 0) {
+        TOTAWebVC *vc = [[TOTAWebVC alloc] init];
+        vc.urlString = @"https://smartapp.tuya.com/tuyasmart/help";
+        [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
+    }
+    if (section == 1 && row == 1) {
         HomeManageVC *vc = [[HomeManageVC alloc] init];
         [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
     }
@@ -154,7 +160,7 @@
 
 - (NSMutableArray *)listArr{
     if (!_listArr) {
-        _listArr = [NSMutableArray arrayWithArray:@[QZHLoaclString(@"mine_shareDevices"),QZHLoaclString(@"mine_commonQuestions"),QZHLoaclString(@"mine_familyManagement"),QZHLoaclString(@"mine_currentVersion")]];
+        _listArr = [NSMutableArray arrayWithArray:@[QZHLoaclString(@"mine_commonQuestions"),QZHLoaclString(@"mine_familyManagement"),QZHLoaclString(@"mine_currentVersion")]];
  
     }
     return _listArr;
@@ -162,7 +168,7 @@
 
 -(NSMutableArray *)logoArr{
     if (!_logoArr) {
-        _logoArr = [NSMutableArray arrayWithArray:@[@"about",@"lianxi",@"shezhi",@"shezhi"]];
+        _logoArr = [NSMutableArray arrayWithArray:@[@"lianxi",@"shezhi",@"shezhi"]];
     }
     return _logoArr;
 }

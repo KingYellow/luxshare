@@ -34,15 +34,27 @@
     return _locationMagager;
 }
 
-- (void)viewWillAppear:(BOOL)animated{
+
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
-    [self upDateWifiInfo];
+    UIApplication *app = [UIApplication sharedApplication];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+    selector:@selector(applicationWillEnterForeground)
+    name:UIApplicationWillEnterForegroundNotification
+    object:app];
 }
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     [self initConfig];
-    
+    [self upDateWifiInfo];
+
 }
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
@@ -224,8 +236,6 @@
 
              // Fallback on earlier versions
          }
-
-
          
      }
     [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"App-Prefs:root"] ];
@@ -263,13 +273,12 @@
     }
 }
 - (void)enterWiFISelectVC{
-           NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-
-           if ([[UIApplication sharedApplication] canOpenURL:url]) {
-
-             [[UIApplication sharedApplication] openURL:url];
-
-          }
+    
+    NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+    
+    if ([[UIApplication sharedApplication] canOpenURL:url]) {
+        [[UIApplication sharedApplication] openURL:url];
+    }
     
 
 }
@@ -336,6 +345,8 @@
     }];
   
 }
-
+- (void)applicationWillEnterForeground{
+    [self upDateWifiInfo];
+}
 
 @end

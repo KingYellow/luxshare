@@ -217,8 +217,9 @@
 - (void)startConfigWiFi:(NSString *)ssid password:(NSString *)password token:(NSString *)token {
     // 设置 TuyaSmartActivator 的 delegate，并实现 delegate 方法
 
-    // 开始配网，热点模式对应 mode 为 TYActivatorModeAP
-    [self.activator startConfigWiFi:TYActivatorModeAP ssid:ssid password:password token:token timeout:100];
+    // 开始配网，二维码模式对应 mode 为 TYActivatorModeQRCode
+    
+    [self.activator startConfigWiFi:self.actModel ssid:ssid password:password token:token timeout:100];
     
 
 }

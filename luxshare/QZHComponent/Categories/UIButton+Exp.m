@@ -86,7 +86,7 @@
     if (state == QZHButtonStateEnable) {
         self.userInteractionEnabled = YES;
         [self setTitleColor:QZH_KIT_Color_WHITE_70 forState:UIControlStateNormal];
-        self.backgroundColor = QZHKIT_COLOR_SKIN;
+        self.backgroundColor = [UIColor jk_gradientFromColor:UIColorFromHex(0x828B22) toColor:QZHKIT_COLOR_SKIN withWidth:self.frame.size.width];
     } else {
         self.userInteractionEnabled = NO;
         [self setTitleColor:QZHKIT_Color_BLACK_54 forState:UIControlStateNormal];

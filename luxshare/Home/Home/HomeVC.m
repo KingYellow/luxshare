@@ -19,6 +19,7 @@
 #import "AddHomeVC.h"
 #import "RoomManageVC.h"
 #import "DeviceSettingVC.h"
+#import "Reachability.h"
 
 @interface HomeVC ()<UITableViewDelegate,UITableViewDataSource,TuyaSmartHomeManagerDelegate,UIPageViewControllerDelegate,UIPageViewControllerDataSource,TuyaSmartHomeDelegate,UIGestureRecognizerDelegate>
 @property (strong, nonatomic)UITableView *qzTableView;
@@ -87,41 +88,72 @@
 }
  -(void)exp_rightAction{
      
-     
-     ///监控网络状态
-     [QZHReachability reachability:^(QZHNetworkStatus status, NSString *describe) {
-         if (status == QZHNetworkStatusReachableViaWiFi) {
-             //TODO: 有WIFI
-             [YCXMenu setTintColor:QZHKIT_COLOR_SKIN];
-             [YCXMenu setSelectedColor:QZH_KIT_Color_WHITE_70];
-             if ([YCXMenu isShow]){
-                 [YCXMenu dismissMenu];
-             } else {
-                 [YCXMenu showMenuInView:self.tabBarController.view fromRect:CGRectMake(self.navigationController.view.frame.size.width - 50, QZHNAVI_HEIGHT, 50, 0) menuItems:self.items selected:^(NSInteger index, YCXMenuItem *item) {
-                     NSLog(@"%@ %ld",item,index);
-                     if (item.tag == 100) {
-                         AddQRCodeVC *vc = [[AddQRCodeVC alloc] init];
-                         vc.homemodel = self.listArr[self.selectIndex];
-                         [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
-                     }
-             
-                     if (item.tag == 101) {
-                          AddDeviceWifiVC *vc = [[AddDeviceWifiVC alloc] init];
-                          vc.homemodel = self.listArr[self.selectIndex];
-                          [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
-                     }
-                 }];
-             }
-         }else{
-             UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"提示" message:@"需要开启手机wifi网络连接,才能添加设备" preferredStyle:UIAlertControllerStyleAlert];
-             UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                 
+     Reachability *reach = [Reachability reachabilityWithHostName:@"www.apple.com"];
+     if ([reach currentReachabilityStatus] == ReachableViaWiFi) {
+         [YCXMenu setTintColor:QZHKIT_COLOR_SKIN];
+         [YCXMenu setSelectedColor:QZH_KIT_Color_WHITE_70];
+         if ([YCXMenu isShow]){
+             [YCXMenu dismissMenu];
+         } else {
+             [YCXMenu showMenuInView:self.tabBarController.view fromRect:CGRectMake(self.navigationController.view.frame.size.width - 50, QZHNAVI_HEIGHT, 50, 0) menuItems:self.items selected:^(NSInteger index, YCXMenuItem *item) {
+                 NSLog(@"%@ %ld",item,index);
+                 if (item.tag == 100) {
+                     AddQRCodeVC *vc = [[AddQRCodeVC alloc] init];
+                     vc.homemodel = self.listArr[self.selectIndex];
+                     [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
+                 }
+         
+                 if (item.tag == 101) {
+                      AddDeviceWifiVC *vc = [[AddDeviceWifiVC alloc] init];
+                      vc.homemodel = self.listArr[self.selectIndex];
+                      [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
+                 }
              }];
-             [alertC addAction:action];
-             [self presentViewController:alertC animated:NO completion:nil];
-             
          }
-     }];
+     }else{
+         UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"提示" message:@"需要开启手机wifi网络连接,才能添加设备" preferredStyle:UIAlertControllerStyleAlert];
+                     UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                         
+                     }];
+                     [alertC addAction:action];
+                     [self presentViewController:alertC animated:NO completion:nil];
+     }
+     
+     
+//     ///监控网络状态
+//     [QZHReachability reachability:^(QZHNetworkStatus status, NSString *describe) {
+//         if (status == QZHNetworkStatusReachableViaWiFi) {
+//             //TODO: 有WIFI
+//             [YCXMenu setTintColor:QZHKIT_COLOR_SKIN];
+//             [YCXMenu setSelectedColor:QZH_KIT_Color_WHITE_70];
+//             if ([YCXMenu isShow]){
+//                 [YCXMenu dismissMenu];
+//             } else {
+//                 [YCXMenu showMenuInView:self.tabBarController.view fromRect:CGRectMake(self.navigationController.view.frame.size.width - 50, QZHNAVI_HEIGHT, 50, 0) menuItems:self.items selected:^(NSInteger index, YCXMenuItem *item) {
+//                     NSLog(@"%@ %ld",item,index);
+//                     if (item.tag == 100) {
+//                         AddQRCodeVC *vc = [[AddQRCodeVC alloc] init];
+//                         vc.homemodel = self.listArr[self.selectIndex];
+//                         [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
+//                     }
+//             
+//                     if (item.tag == 101) {
+//                          AddDeviceWifiVC *vc = [[AddDeviceWifiVC alloc] init];
+//                          vc.homemodel = self.listArr[self.selectIndex];
+//                          [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
+//                     }
+//                 }];
+//             }
+//         }else{
+//             UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"提示" message:@"需要开启手机wifi网络连接,才能添加设备" preferredStyle:UIAlertControllerStyleAlert];
+//             UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//                 
+//             }];
+//             [alertC addAction:action];
+//             [self presentViewController:alertC animated:NO completion:nil];
+//             
+//         }
+//     }];
      
 
 }
@@ -430,7 +462,7 @@
 - (UIButton *)rightBtn{
     if (!_rightBtn) {
         _rightBtn = [[UIButton alloc] init];
-        [_rightBtn setImage:QZHLoadIcon(@"pay_normal") forState:UIControlStateNormal];
+        [_rightBtn setImage:QZHLoadIcon(@"ellipsis") forState:UIControlStateNormal];
         [_rightBtn addTarget:self action:@selector(romeListAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _rightBtn;

@@ -128,7 +128,8 @@
 
 
 // --------------------------margin-------------------------------
-
+static NSString * const BATTERY_PRODUCT_ID = @"b4hq7aoy4m4ciabx";
+static NSString * const AC_PRODUCT_ID= @"u3ctgwxzrovkuamh";
 
 
 //第一次安装app记录时使用
@@ -153,7 +154,7 @@ static NSString * const QZHCELL_REUSE_FIELD = @"QZHReuseCellField";
 static NSString * const QZHICON_PLACEHOLDER = @"icon_empty_pld";
 
 //头像占位图
-static NSString * const QZHICON_HEAD_PLACEHOLDER = @"icon_empty_pld_head";
+static NSString * const QZHICON_HEAD_PLACEHOLDER = @"mine";
 
 //导航栏返回按钮图标
 static NSString * const QZHICON_BACK_ITEM = @"nav_btn_back";

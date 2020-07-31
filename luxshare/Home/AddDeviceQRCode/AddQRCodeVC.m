@@ -8,6 +8,7 @@
 
 #import "AddQRCodeVC.h"
 #import "SetWIFIVC.h"
+#import "UIImageView+Gif.h"
 
 @interface AddQRCodeVC ()
 @property (strong, nonatomic)UIImageView *indicatorIMG;
@@ -31,6 +32,7 @@
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     [self UIConfig];
+    [self.indicatorIMG startPlayGifWithImages:@[@"ty_adddevice_lighting",@"ty_adddevice_light"]];
 
 }
 - (void)UIConfig{
@@ -78,7 +80,6 @@
 - (UIImageView *)indicatorIMG{
     if (!_indicatorIMG) {
         _indicatorIMG = [[UIImageView alloc] init];
-        _indicatorIMG.backgroundColor = QZHColorRed;
     }
     return _indicatorIMG;
 }
@@ -147,4 +148,6 @@
     vc.isQRCode = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
+
 @end

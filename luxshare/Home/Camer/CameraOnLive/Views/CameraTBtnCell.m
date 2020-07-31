@@ -45,7 +45,8 @@
         [_leftBtn setTitle:@"唤醒" forState:UIControlStateNormal];
         _leftBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_BIG_TITLE;
         [_leftBtn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
-        [_leftBtn setImage:QZHLoadIcon(@"") forState:UIControlStateNormal];
+        [_leftBtn setImage:QZHLoadIcon(@"ic_awake_n") forState:UIControlStateNormal];
+        [_leftBtn jk_setImagePosition:LXMImagePositionLeft spacing:15];
         _leftBtn.tag = -1;
         [_leftBtn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -57,7 +58,11 @@
         [_rightBtn setTitle:@"休眠" forState:UIControlStateNormal];
         _rightBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_BIG_TITLE;
         [_rightBtn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
-        [_rightBtn setImage:QZHLoadIcon(@"") forState:UIControlStateNormal];
+        [_rightBtn setImage:QZHLoadIcon(@"ic_sleep_n") forState:UIControlStateNormal];
+
+        [_rightBtn setImageEdgeInsets: UIEdgeInsetsMake(30, 30, 10, 10)];
+        [_rightBtn jk_setImagePosition:LXMImagePositionLeft spacing:15];
+
         _rightBtn.tag = 1;
         [_rightBtn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
 

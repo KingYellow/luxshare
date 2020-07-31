@@ -24,7 +24,7 @@
     [self.contentView addSubview:self.logoIMG];
     [self.contentView addSubview:self.nameLab];
     [self.contentView addSubview:self.describeLab];
-    [self.contentView addSubview:self.selectBtn];
+    [self.IMGView addSubview:self.selectBtn];
      [self.IMGView mas_makeConstraints:^(MASConstraintMaker *make) {
          make.left.top.mas_equalTo(10);
          make.width.mas_equalTo(QZHScreenWidth/2-20);
@@ -90,9 +90,8 @@
 -(UIButton *)selectBtn{
     if (!_selectBtn) {
         _selectBtn = [[UIButton alloc] init];
-//        [_selectBtn setImage:QZHLoadIcon(@"pay_normal") forState:UIControlStateNormal];
+        [_selectBtn setImage:QZHLoadIcon(@"pay_normal") forState:UIControlStateNormal];
         [_selectBtn setImage:QZHLoadIcon(@"pay_selected") forState:UIControlStateSelected];
-
     }
     return _selectBtn;
 }
@@ -100,6 +99,7 @@
 
     frame.size.height -= QZHSIZE_HEIGHT_LISTCELL_SEPARATOR;
     [super setFrame:frame];
+    
 }
 
 @end

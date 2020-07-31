@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic)NSString *wifi;
 @property (strong, nonatomic)NSString *pw;
 @property (strong, nonatomic)NSString *token;
+@property (assign, nonatomic)TYActivatorMode actModel;
 @end
 
 NS_ASSUME_NONNULL_END

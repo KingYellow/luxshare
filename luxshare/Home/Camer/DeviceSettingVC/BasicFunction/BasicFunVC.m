@@ -88,6 +88,13 @@
             
             SettingDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
             cell.nameLab.text = @"对讲方式";
+            
+            int type = [[QZHDataHelper readValueForKey:@"talkType"] intValue];
+            if (type) {
+                cell.tagLab.text = @"双向对讲";
+            }else{
+                cell.tagLab.text = @"单向对讲";
+            }
             cell.radioPosition = 1;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;

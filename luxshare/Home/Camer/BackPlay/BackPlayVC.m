@@ -31,7 +31,9 @@
 @property (strong, nonatomic)UIButton *selectDateBtn;
 @property (strong, nonatomic)UIButton *recordBtn;
 @property (strong, nonatomic)UIButton *shotBtn;
-
+@property (strong, nonatomic)UILabel *tipLab;
+@property (strong, nonatomic)NSTimer *timer;
+@property (assign, nonatomic)NSInteger second;
 @end
 
 @implementation BackPlayVC
@@ -50,6 +52,7 @@
 }
 - (void)UIConfig{
     self.playView = [[CameraPlayView alloc] init];
+
     self.playView.horizontalBtn.hidden = YES;
     self.playView.definitionBtn.hidden = YES;
     self.timeLine = [[ZFTimeLine alloc] init];
@@ -63,8 +66,14 @@ QZHWS(weakSelf)
     };
     [self.view addSubview:self.playView];
     [self.view addSubview:self.timeLine];
+
     self.playView.frame = CGRectMake(0, 0, QZHScreenWidth, QZHScreenWidth *1080/1920);
     self.timeLine.frame = CGRectMake(0, QZHScreenWidth *1080/1920, QZHScreenWidth, 70);
+    [self.playView addSubview:self.tipLab];
+    self.playView.playBtn.hidden = YES;
+    [self.tipLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.mas_equalTo(self.playView);
+    }];
     [self.selectDateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
         make.top.mas_equalTo(self.timeLine.mas_bottom);
@@ -81,8 +90,29 @@ QZHWS(weakSelf)
         make.width.height.mas_equalTo(QZHScreenWidth/2);
     }];
 }
-
+#pragma mark -- ZFTimeLineDelegate
 -(void)timeLine:(ZFTimeLine *)timeLine moveToDate:(NSString *)date{
+
+    NSDictionary *playInfo;
+    NSTimeInterval nowT = 0.0;
+    for (NSDictionary *info in self.timeSlicesInCurrentDay) {
+        NSTimeInterval start = [info[kTuyaSmartTimeSliceStartTime] integerValue];
+        NSTimeInterval end = [info[kTuyaSmartTimeSliceStopTime] integerValue];
+        
+        NSDate *nowDate = [NSDate jk_dateWithString:date format:@"yyyyMMddHHmmss"];
+        NSTimeInterval now = [nowDate timeIntervalSince1970];
+        
+        if (now > start && now < end) {
+            playInfo = info;
+            nowT = now;
+        }
+    }
+    if (playInfo) {
+        NSInteger startTime = [playInfo[kTuyaSmartTimeSliceStartTime] integerValue];
+        NSInteger stopTime = [playInfo[kTuyaSmartTimeSliceStopTime] integerValue];
+        NSInteger playTime = (NSInteger)nowT;
+        [self.camera startPlayback:playTime startTime:startTime stopTime:stopTime];
+    }
     
 }
 
@@ -121,7 +151,17 @@ QZHWS(weakSelf)
 - (void)cameraDidConnected:(id<TuyaSmartCameraType>)camera {
     self.connected = YES;
       // 需要 p2p 连接成功后查询某天的视频录像片段
-//        [camera queryRecordTimeSliceWithYear:2020 month:7 day:11];
+    NSDate *date = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+     
+    [formatter setDateFormat:@"yyyy"];
+    NSInteger currentYear=[[formatter stringFromDate:date] integerValue];
+    [formatter setDateFormat:@"MM"];
+    NSInteger currentMonth=[[formatter stringFromDate:date]integerValue];
+    [formatter setDateFormat:@"dd"];
+    NSInteger currentDay=[[formatter stringFromDate:date] integerValue];
+     
+    [self.camera queryRecordTimeSliceWithYear:currentYear  month:currentMonth day:currentDay];
 }
 
 - (void)cameraDisconnected:(id<TuyaSmartCameraType>)camera {
@@ -132,9 +172,14 @@ QZHWS(weakSelf)
 
 - (void)camera:(id<TuyaSmartCameraType>)camera didReceiveTimeSliceQueryData:(NSArray<NSDictionary *> *)timeSlices {
       // 如果当天没有视频录像，则不播放
-        if (timeSlices.count == 0) {
+    if (timeSlices.count == 0) {
+        self.tipLab.hidden = NO;
+        self.recordBtn.userInteractionEnabled = NO;
         return;
     }
+    self.recordBtn.userInteractionEnabled = YES;
+    self.tipLab.hidden = YES;
+
       // 保存视频录像列表，从第一个开始播放
     self.timeSlicesInCurrentDay = [timeSlices copy];
       self.timeSlicesIndex = 0;
@@ -154,16 +199,19 @@ QZHWS(weakSelf)
     if (index >= self.timeSlicesInCurrentDay.count) {
         return;
     }
-    NSDictionary *currentTimeSlice = [self.timeSlicesInCurrentDay objectAtIndex:self.timeSlicesIndex];
-    NSInteger stopTime = [currentTimeSlice[kTuyaSmartTimeSliceStopTime] integerValue];
-      // 如果当前视频帧的时间戳大于等于当前视频片段的结束时间，则播放下一个视频片段
-    if (frameInfo.nTimeStamp >= stopTime) {
-        NSDictionary *nextTimeSlice = [self.timeSlicesInCurrentDay objectAtIndex:index];
-        NSInteger startTime = [nextTimeSlice[kTuyaSmartTimeSliceStartTime] integerValue];
-            NSInteger stopTime = [nextTimeSlice[kTuyaSmartTimeSliceStopTime] integerValue];
-            NSInteger playTime = startTime;
-            [camera startPlayback:playTime startTime:startTime stopTime:stopTime];
-    }
+    NSDate *now = [NSDate dateWithTimeIntervalSince1970:frameInfo.nTimeStamp];
+    NSString *date = [[NSDateFormatter jk_dateFormatterWithFormat:@"yyyyMMddHHmmss"] stringFromDate:now];
+    [self.timeLine moveToDate:date];
+//    NSDictionary *currentTimeSlice = [self.timeSlicesInCurrentDay objectAtIndex:self.timeSlicesIndex];
+//    NSInteger stopTime = [currentTimeSlice[kTuyaSmartTimeSliceStopTime] integerValue];
+//      // 如果当前视频帧的时间戳大于等于当前视频片段的结束时间，则播放下一个视频片段
+//    if (frameInfo.nTimeStamp >= stopTime) {
+//        NSDictionary *nextTimeSlice = [self.timeSlicesInCurrentDay objectAtIndex:index];
+//        NSInteger startTime = [nextTimeSlice[kTuyaSmartTimeSliceStartTime] integerValue];
+//            NSInteger stopTime = [nextTimeSlice[kTuyaSmartTimeSliceStopTime] integerValue];
+//            NSInteger playTime = startTime;
+//            [camera startPlayback:playTime startTime:startTime stopTime:stopTime];
+//    }
 }
 
 - (void)cameraDidBeginPlayback:(id<TuyaSmartCameraType>)camera {
@@ -196,7 +244,12 @@ QZHWS(weakSelf)
     self.playbacking = NO;
     self.playbackPaused = NO;
 }
-
+-(void)cameraDidStartRecord:(id<TuyaSmartCameraType>)camera{
+    [self startTimer];
+}
+- (void)cameraDidStopRecord:(id<TuyaSmartCameraType>)camera{
+    [self stopTimer];
+}
 // 错误回调
 - (void)camera:(id<TuyaSmartCameraType>)camera didOccurredErrorAtStep:(TYCameraErrorCode)errStepCode specificErrorCode:(NSInteger)errorCode {
         if (errStepCode == TY_ERROR_CONNECT_FAILED) {
@@ -251,6 +304,17 @@ QZHWS(weakSelf)
     }
     return _shotBtn;
 }
+- (UILabel *)tipLab{
+    if (!_tipLab) {
+        _tipLab = [[UILabel alloc] init];
+        _tipLab.text = @"当天没有视频";
+        _tipLab.textColor = QZH_KIT_Color_WHITE_70;
+        _tipLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
+        _tipLab.textAlignment = NSTextAlignmentCenter;
+        _tipLab.hidden = YES;
+    }
+    return _tipLab;
+}
 - (void)selectaction:(UIButton *)sender{
     QZHWS(weakSelf)
     zyyy_DateListView *v =[[zyyy_DateListView alloc] initWithFrame:self.navigationController.view.bounds];
@@ -258,7 +322,6 @@ QZHWS(weakSelf)
     v.selectDateBlock = ^(NSDictionary *date) {
         weakSelf.camera.delegate = self;
         [weakSelf.camera queryRecordTimeSliceWithYear:[date[@"year"] integerValue] month:[date[@"month"] integerValue] day:[date[@"day"] integerValue]];
-
     };
     [v iiiii];
 
@@ -267,7 +330,9 @@ QZHWS(weakSelf)
 - (void)recordaction:(UIButton *)sender{
     sender.selected = !sender.selected;
     if (sender.selected) {
-        [self.camera startRecord];
+        if (self.playbacking) {
+            [self.camera startRecord];
+        }
     }else{
         [self.camera stopRecord];
     }
@@ -293,5 +358,23 @@ QZHWS(weakSelf)
         [self.camera enableMute:select forPlayMode:TuyaSmartCameraPlayModePreview];
         
     }
+}
+- (void)startTimer{
+    self.second = 0;
+    self.playView.recordProgressView.hidden = NO;
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction:) userInfo:nil repeats:YES];
+}
+- (void)stopTimer{
+    self.playView.recordProgressView.hidden = YES;
+    [self.timer invalidate];
+    self.timer = nil;
+    self.playView.recordProgressView.timeLab.text = @"00:00";
+}
+
+- (void)timerAction:(NSTimer *)tiemr{
+    self.second++;
+    NSInteger min = self.second/60;
+    NSInteger sec = self.second%60;
+    self.playView.recordProgressView.timeLab.text = [NSString stringWithFormat:@"%02ld:%02ld",min,sec];
 }
 @end

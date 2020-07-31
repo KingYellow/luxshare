@@ -86,6 +86,23 @@ QZHWS(weakSelf)
 
 
     self.videoVC = [[VideoListVC alloc] init];
+    
+    self.videoVC.selecctResultBlock = ^(NSArray * _Nonnull selectArr) {
+        if (selectArr.count > 0) {
+            weakSelf.topHandleView.hidden = NO;
+            weakSelf.bottomHandleView.hidden = NO;
+            weakSelf.deleteArr = selectArr;
+            weakSelf.topNumLab.text = [NSString stringWithFormat:@"%ld个已选定",selectArr.count];
+            if (weakSelf.currentIndex == 1) {
+              
+            }
+        }else{
+            weakSelf.topHandleView.hidden = YES;
+            weakSelf.bottomHandleView.hidden = YES;
+         
+        }
+
+    };
 
     self.arrVcs = [NSArray arrayWithObjects:self.videoVC,self.photoVC ,  nil];
     
@@ -105,12 +122,12 @@ QZHWS(weakSelf)
 #pragma mark ----按钮点击事件
 -(void)btnAction:(UIButton *)sender{
     sender.selected = YES;
-    NSInteger newSelectIndex = sender.tag - 888;
-    if (self.oldSelectIndex == newSelectIndex) {
+    self.currentIndex = sender.tag - 888;
+    if (self.oldSelectIndex == self.currentIndex) {
         
     }else{
-        UIViewController *vc = self.arrVcs[newSelectIndex];
-        if (self.oldSelectIndex > newSelectIndex) {
+        UIViewController *vc = self.arrVcs[self.currentIndex];
+        if (self.oldSelectIndex > self.currentIndex) {
             [self.pageVc setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:^(BOOL finished) {
                 
             }];
@@ -120,9 +137,9 @@ QZHWS(weakSelf)
             }];
         }
 
-        self.oldSelectIndex = newSelectIndex;
+        self.oldSelectIndex = self.currentIndex;
         [UIView animateWithDuration:0.25 animations:^{
-            self.bottomView.frame = CGRectMake(newSelectIndex * QZHScreenWidth/2, 57* QZHScaleWidth, QZHScreenWidth/2, 3* QZHScaleWidth);
+            self.bottomView.frame = CGRectMake(self.currentIndex * QZHScreenWidth/2, 57* QZHScaleWidth, QZHScreenWidth/2, 3* QZHScaleWidth);
         }];
     }
 }
@@ -313,13 +330,22 @@ QZHWS(weakSelf)
 }
 - (void)allSelectAction:(UIButton *)sender{
     sender.selected = !sender.selected;
-    [self.photoVC selectAllVideosOrPhotos:sender.selected];
+    if (self.currentIndex == 1) {
+        [self.photoVC selectAllVideosOrPhotos:sender.selected];
+    }else{
+        [self.videoVC selectAllVideosOrPhotos:sender.selected];
+    }
     
 }
 - (void)cancelAction:(UIButton *)sender{
     self.topHandleView.hidden = YES;
     self.bottomHandleView.hidden = YES;
-    [self.photoVC selectAllVideosOrPhotos:NO];
+    if (self.currentIndex == 1) {
+        [self.photoVC selectAllVideosOrPhotos:NO];
+    }else{
+        [self.videoVC selectAllVideosOrPhotos:NO];
+    }
+
 }
 - (void)deleteAction:(UIButton *)sender{
     NSMutableArray *arr = [NSMutableArray array];
@@ -335,7 +361,11 @@ QZHWS(weakSelf)
                // UI更新代码
                self.topHandleView.hidden = YES;
                self.bottomHandleView.hidden = YES;
-               [self.photoVC getphotosList];
+               if (self.currentIndex == 1) {
+                    [self.photoVC getphotosList];
+               }else{
+                   [self.videoVC getphotosList];
+               }
                
             });
 

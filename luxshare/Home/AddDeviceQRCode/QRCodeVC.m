@@ -10,11 +10,10 @@
 #import "SGQRCode.h"
 #import "ProgressVC.h"
 
-@interface QRCodeVC ()<TuyaSmartActivatorDelegate>
+@interface QRCodeVC ()
 @property (strong, nonatomic)UILabel *titleLab;
 @property (strong, nonatomic)UILabel *subLab;
 @property (strong, nonatomic)UIImageView *indicatorIMG;
-@property (strong, nonatomic)TuyaSmartActivator *activator;
 @property (strong, nonatomic)UIButton *submitBtn;
 
 @end
@@ -26,6 +25,7 @@
     [super viewDidLoad];
 
     [self initConfig];
+
     
 }
 - (void)initConfig{
@@ -110,13 +110,7 @@
     }
     return _indicatorIMG;
 }
--(TuyaSmartActivator *)activator{
-    if (!_activator) {
-        _activator = [TuyaSmartActivator sharedInstance];
-        _activator.delegate = self;
-    }
-    return _activator;
-}
+
 #pragma mark -- wifi
 
 - (void)submitAction:(UIButton *)sender{
@@ -127,9 +121,9 @@
     vc.wifi = self.wifi;
     vc.pw = self.pw;
     vc.token = self.token;
+    vc.actModel = TYActivatorModeQRCode;
     [self.navigationController pushViewController:vc animated:YES];
 }
-
 
 
 

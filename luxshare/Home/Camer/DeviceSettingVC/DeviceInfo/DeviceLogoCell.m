@@ -28,7 +28,7 @@
 -(UIImageView *)logoIMG{
     if (!_logoIMG) {
         _logoIMG = [[UIImageView alloc] init];
-        _logoIMG.contentMode = UIViewContentModeCenter;
+        _logoIMG.contentMode = UIViewContentModeScaleAspectFit;
     }
     return _logoIMG;
 }

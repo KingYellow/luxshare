@@ -32,7 +32,8 @@
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     [self exp_addRightItemTitle:QZHLoaclString(@"save") itemIcon:@""];
     [self UIConfig];
-    self.selectIndex = 0;
+    self.selectIndex = [[QZHDataHelper readValueForKey:@"talkType"] intValue];
+
 }
 - (void)UIConfig{
     [self.view addSubview:self.tipLab];
@@ -48,7 +49,9 @@
      }];
 }
 -(void)exp_rightAction{
-    
+    [QZHDataHelper saveValue:@(self.selectIndex) forKey:@"talkType"];
+    [self.navigationController popViewControllerAnimated:YES];
+
 }
 #pragma mark -tableView
 -(UITableView *)qzTableView{
@@ -108,9 +111,6 @@
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSInteger section = indexPath.section;
-    NSInteger row = indexPath.row;
-
 
 }
 

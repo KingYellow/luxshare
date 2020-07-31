@@ -352,21 +352,10 @@
 
 }
 - (void)drawGreenRectContext:(CGContextRef)ctx {
-//        NSDictionary *d = self.dateArr.firstObject;
-//        currentInterval = [d[kTuyaSmartTimeSliceStartTime] integerValue];
-//        //计算x=0时对应的时间戳
-//        float centerX = QZHScreenWidth/2.0;
-//        NSTimeInterval leftInterval = currentInterval - centerX * [self secondsOfIntervalValue];
-//        NSTimeInterval rightInterval = currentInterval + centerX * [self secondsOfIntervalValue];
-    //    NSInteger startTime = [timeSlice[kTuyaSmartTimeSliceStartTime] integerValue];
-    //    NSInteger stopTime = [timeSlice[kTuyaSmartTimeSliceStopTime] integerValue];
-    //左边第一个刻度对应的x值和时间戳
     
     //计算x=0时对应的时间戳
     float centerX = QZHScreenWidth/2.0;
-    NSTimeInterval leftInterval = currentInterval - centerX * [self secondsOfIntervalValue];
-    NSTimeInterval rightInterval = currentInterval + centerX * [self secondsOfIntervalValue];
-    
+    NSTimeInterval leftInterval = currentInterval - centerX * [self secondsOfIntervalValue];    
     float x;
     NSTimeInterval interval;
     if (scaleType == ScaleTypeBig) {
@@ -393,10 +382,8 @@
               float length = (end - start)/[self secondsOfIntervalValue] + 0.5;
 
                 [self drawGreenRect:startX Context:ctx length:length];
-
           }
       }
-
 }
 
 @end

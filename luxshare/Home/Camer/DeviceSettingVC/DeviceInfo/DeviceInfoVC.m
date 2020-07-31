@@ -64,7 +64,11 @@
     if (section == 0) {
         DeviceLogoCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell.logoIMG exp_loadImageUrlString:self.deviceModel.iconUrl placeholder:QZHICON_PLACEHOLDER];
+        if ([self.deviceModel.productId isEqualToString:BATTERY_PRODUCT_ID]) {
+            cell.logoIMG.image = QZHLoadIcon(@"ic_ipc_battery");
+        }else{
+            cell.logoIMG.image = QZHLoadIcon(@"ic_ipc_ac");
+        }
         return cell;
     }else{
         

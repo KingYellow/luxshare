@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "ZYGlKImageView.h"
 NS_ASSUME_NONNULL_BEGIN
-typedef void(^buttontag)(NSInteger tag, BOOL selected);
 
 @interface OnLiveCell : UITableViewCell
 

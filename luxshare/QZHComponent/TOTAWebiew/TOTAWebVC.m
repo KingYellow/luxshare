@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = QZH_KIT_Color_WHITE_100;
-    self.navigationItem.title = @"广告详情";
+    self.navigationItem.title = @"帮助详情";
     [self UIConfig];
     [self loadUrl];
 }

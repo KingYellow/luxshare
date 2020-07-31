@@ -8,8 +8,8 @@
 
 #import "WarningVC.h"
 #import "QZHMessageCell.h"
-#import "WarningListCell.h"
 #import "PhotPreViewVC.h"
+#import "WarningDetailVC.h"
 
 @interface WarningVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic)UITableView *qzTableView;
@@ -91,7 +91,7 @@
             weakSelf.page++;
             [weakSelf getMessageList:weakSelf.page];
         }];
-        [self.qzTableView registerClass:[WarningListCell class] forCellReuseIdentifier:QZHCELL_REUSE_TEXT];
+        [self.qzTableView registerClass:[QZHMessageCell class] forCellReuseIdentifier:QZHCELL_REUSE_TEXT];
     }
     return _qzTableView;
 }
@@ -101,16 +101,11 @@
     NSInteger row = indexPath.row;
     TuyaSmartMessageListModel *model = self.listArr[section][row];
     
-    WarningListCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
+    QZHMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
     cell.nameLab.text = model.msgTypeContent;
     cell.contentLab.text = model.msgContent;
-    
     TuyaSmartMessageAttachModel *picModel = model.attachPicList.firstObject;
-    [cell.picIMG exp_loadImageUrlString:picModel.thumbUrl placeholder:QZHICON_HEAD_PLACEHOLDER];
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(preAction:)];
-    cell.picIMG.userInteractionEnabled = YES;
-    [cell.picIMG addGestureRecognizer:tap];
+
     cell.selectBtn.selected = [model.select boolValue];
     if (self.topView.selectBtn.hidden) {
         [cell.selectBtn mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -173,10 +168,16 @@
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    QZHWS(weakSelf)
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
-    QZHWS(weakSelf)
-
+    TuyaSmartMessageListModel *model = self.listArr[section][row];
+    WarningDetailVC *vc = [[WarningDetailVC alloc] init];
+    vc.msgSrcId = model.msgSrcId;
+    vc.btnAction = ^(BOOL isselected) {
+        weakSelf.btnAction(isselected);
+       };
+    [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
 }
 #pragma mark --lazy
 - (NSMutableArray *)listArr{
@@ -346,8 +347,14 @@
 
 - (void)getMessageList:(NSInteger) page{
     QZHWS(weakSelf)
-    [[TuyaSmartMessage new] getMessageListWithType:1 limit:10 offset:self.modelArr.count success:^(NSArray<TuyaSmartMessageListModel *> *list) {
-        [weakSelf.modelArr addObjectsFromArray:list];
+    
+    TuyaSmartMessageListRequestModel *model = [[TuyaSmartMessageListRequestModel alloc] init];
+    model.msgType = TYMessageTypeAlarm;
+    model.limit = 10;
+    model.offset = self.modelArr.count;
+    
+    [[TuyaSmartMessage new] fetchMessageListWithListRequestModel:model success:^(NSArray<TuyaSmartMessageListModel *> * _Nonnull messageList) {
+        [weakSelf.modelArr addObjectsFromArray:messageList];
         [weakSelf resetArr];
         [weakSelf.qzTableView.mj_footer endRefreshing];
         [weakSelf.qzTableView.mj_header endRefreshing];
@@ -355,6 +362,7 @@
     } failure:^(NSError *error) {
         [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
+    
 }
     ///消息类型（1 - 告警，2 - 家庭，3 - 通知）
 -(void)deleteMessage{
@@ -455,18 +463,4 @@
     }
 }
 
-#pragma mark  -- action
-- (void)preAction:(UIGestureRecognizer *)sender{
-    UIImageView *view =  (UIImageView *)sender.view;
-    WarningListCell *cell = (WarningListCell *)view.superview.superview;
-    
-    NSIndexPath *index = [self.qzTableView indexPathForCell:cell];
-
-    TuyaSmartMessageListModel *model = self.listArr[index.section][index.row];
-    TuyaSmartMessageAttachModel *attModel = model.attachPicList.firstObject;
-    PhotPreViewVC *vc = [[PhotPreViewVC alloc] init];
-    vc.imgUrl = attModel.url;
-    [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
-
-}
 @end

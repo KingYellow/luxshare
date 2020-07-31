@@ -23,6 +23,12 @@
     [self addSubview:self.voiceBtn];
     [self addSubview:self.definitionBtn];
     [self addSubview:self.horizontalBtn];
+    [self addSubview:self.playPreGif];
+    [self addSubview:self.wifiIMG];
+    [self addSubview:self.batteryIMG];
+    [self addSubview:self.recordProgressView];
+    QZHViewRadius(self.recordProgressView, 20);
+
 
 //    [self.preView mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
@@ -33,18 +39,23 @@
         make.height.mas_equalTo(40);
         make.center.mas_equalTo(self);
     }];
+    [self.playPreGif mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(88);
+        make.height.mas_equalTo(88);
+        make.center.mas_equalTo(self);
+    }];
 
     [self.voiceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(20);
-        make.height.mas_equalTo(20);
-        make.left.mas_equalTo(20);
+        make.width.mas_equalTo(30);
+        make.height.mas_equalTo(30);
+        make.left.mas_equalTo(50);
         make.bottom.mas_equalTo(-30);
 
     }];
     [self.definitionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(60);
         make.height.mas_equalTo(25);
-        make.left.mas_equalTo(self.voiceBtn.mas_right).offset(50);
+        make.left.mas_equalTo(self.voiceBtn.mas_right).offset(30);
         make.bottom.mas_equalTo(-30);
 
     }];
@@ -53,6 +64,27 @@
         make.height.mas_equalTo(30);
         make.right.mas_equalTo(-30);
         make.bottom.mas_equalTo(-30);
+
+    }];
+    [self.wifiIMG mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(20);
+        make.height.mas_equalTo(20);
+        make.right.mas_equalTo(-20);
+        make.top.mas_equalTo(20);
+
+    }];
+    [self.batteryIMG mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(20);
+        make.height.mas_equalTo(20);
+        make.right.mas_equalTo(self.wifiIMG.mas_left).offset(-5);
+        make.top.mas_equalTo(20);
+
+    }];
+    [self.recordProgressView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(150);
+        make.height.mas_equalTo(40);
+        make.centerX.mas_equalTo(self);
+        make.bottom.mas_equalTo(-20);
 
     }];
     
@@ -72,8 +104,8 @@
 -(UIButton *)voiceBtn{
     if (!_voiceBtn) {
         _voiceBtn = [[UIButton alloc] init];
-        [_voiceBtn setImage:QZHLoadIcon(@"pay_normal") forState:UIControlStateNormal];
-        [_voiceBtn setImage:QZHLoadIcon(@"pay_selected") forState:UIControlStateSelected];
+        [_voiceBtn setImage:QZHLoadIcon(@"camera_preview_sound_btn_on") forState:UIControlStateNormal];
+        [_voiceBtn setImage:QZHLoadIcon(@"camera_preview_sound_btn_off") forState:UIControlStateSelected];
         _voiceBtn.tag = 1;
         _voiceBtn.selected = YES;
         [_voiceBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -94,22 +126,41 @@
 -(UIButton *)horizontalBtn{
     if (!_horizontalBtn) {
         _horizontalBtn = [[UIButton alloc] init];
-        [_horizontalBtn setImage:QZHLoadIcon(@"pay_normal") forState:UIControlStateNormal];
-        [_horizontalBtn setImage:QZHLoadIcon(@"pay_selected") forState:UIControlStateSelected];
+        [_horizontalBtn setImage:QZHLoadIcon(@"ic_full_screen") forState:UIControlStateNormal];
+        [_horizontalBtn setImage:QZHLoadIcon(@"ic_part_screen") forState:UIControlStateSelected];
         _horizontalBtn.tag = 3;
         [_horizontalBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _horizontalBtn;
 }
-//-(UIView<TuyaSmartVideoViewType> *)videoView{
-//    if (!_videoView) {
-//        _videoView = [[UIView<TuyaSmartVideoViewType> alloc] init];
-//        _videoView.backgroundColor = UIColor.greenColor;
-//        [self sendSubviewToBack:self.videoView];
-//
-//    }
-//    return _videoView;
-//}
+
+- (UIImageView *)playPreGif{
+    if (!_playPreGif) {
+        _playPreGif = [[UIImageView alloc] init];
+    }
+    return _playPreGif;
+}
+- (UIImageView *)wifiIMG{
+    if (!_wifiIMG) {
+        _wifiIMG = [[UIImageView alloc] init];
+    }
+    return _wifiIMG;
+}
+- (UIImageView *)batteryIMG{
+    if (!_batteryIMG) {
+        _batteryIMG = [[UIImageView alloc] init];
+    }
+    return _batteryIMG;
+}
+-(RecordProgressView *)recordProgressView{
+    if (!_recordProgressView) {
+        _recordProgressView = [[RecordProgressView alloc] init];
+        _recordProgressView.backgroundColor = QZHKIT_COLOR_SKIN;
+        _recordProgressView.hidden = YES;
+    }
+    return _recordProgressView;
+}
+
 - (void)buttonAction:(UIButton *)sender{
     sender.selected = !sender.selected;
     //sender.tag == 0) {

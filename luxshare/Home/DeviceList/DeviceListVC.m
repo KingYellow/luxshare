@@ -89,13 +89,23 @@
         
     DeviceListCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
     TuyaSmartDeviceModel *model = self.listArr[row];
-    cell.selectBtn.selected = model.isOnline;
     if (model.isShare) {
         cell.nameLab.text = [model.name stringByAppendingString:@"(共享设备)"];
+        [cell.selectBtn setImage:QZHLoadIcon(@"ty_devicelist_share_gray") forState:UIControlStateNormal];
+        [cell.selectBtn setImage:QZHLoadIcon(@"ty_devicelist_share_green") forState:UIControlStateSelected];
     }else{
         cell.nameLab.text = model.name;
+        [cell.selectBtn setImage:QZHLoadIcon(@"ty_devicelist_dot_gray") forState:UIControlStateNormal];
+        [cell.selectBtn setImage:QZHLoadIcon(@"ty_devicelist_dot_green") forState:UIControlStateSelected];
+
     }
-    [cell.poloIMG exp_loadImageUrlString:model.iconUrl placeholder:QZHICON_PLACEHOLDER];
+    cell.selectBtn.selected = model.isOnline;
+
+    if ([model.productId isEqualToString:BATTERY_PRODUCT_ID]) {
+        cell.poloIMG.image = QZHLoadIcon(@"ic_ipc_battery");
+    }else{
+        cell.poloIMG.image = QZHLoadIcon(@"ic_ipc_ac");
+    }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     UILongPressGestureRecognizer *press = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressAction:)];

@@ -8,20 +8,48 @@
 
 #import "DeviceWifiVC.h"
 #import "ProgressVC.h"
+#import "TOTAWebVC.h"
+#import <SystemConfiguration/CaptiveNetwork.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface DeviceWifiVC ()
+@interface DeviceWifiVC ()<CLLocationManagerDelegate>
 @property (strong, nonatomic)UIImageView *indicatorIMG;
 @property (strong, nonatomic)UILabel *titleLab;
 @property (strong, nonatomic)UIButton *selectBtn;
 @property (strong, nonatomic)UIButton *submitBtn;
+@property (nonatomic, strong) CLLocationManager *locationMagager;
+
 @end
 
 @implementation DeviceWifiVC
+- (CLLocationManager *)locationMagager {
+    if (!_locationMagager) {
+        _locationMagager = [[CLLocationManager alloc] init];
+        _locationMagager.delegate = self;
+    }
+    return _locationMagager;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    UIApplication *app = [UIApplication sharedApplication];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+    selector:@selector(applicationWillEnterForeground)
+    name:UIApplicationWillEnterForegroundNotification
+    object:app];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initConfig];
-    
+    [self upDateWifiInfo];
+
 }
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
@@ -69,7 +97,7 @@
 - (UIImageView *)indicatorIMG{
     if (!_indicatorIMG) {
         _indicatorIMG = [[UIImageView alloc] init];
-        _indicatorIMG.backgroundColor = QZHColorRed;
+        _indicatorIMG.image = QZHLoadIcon(@"WifiSmart");
     }
     return _indicatorIMG;
 }
@@ -108,14 +136,109 @@
     return _submitBtn;
 }
 - (void)selectAction:(UIButton *)sender{
+    TOTAWebVC *vc = [[TOTAWebVC alloc] init];
+    vc.urlString = @"https://smartapp.tuya.com/tuyasmart/help";
+    [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
 
 }
 - (void)submitAction:(UIButton *)sender{
-    ProgressVC *Vc = [[ProgressVC alloc] init];
-    Vc.wifi = self.wifi;
-    Vc.pw = self.pw;
-    Vc.token = self.token;
-    [self.navigationController pushViewController:[Vc exp_hiddenTabBar] animated:YES];
+    
+    [self selectWifiAction];
+}
+- (void)selectWifiAction{
+    
+   // App-Prefs:root
+//    设置页面
+//    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] ];
+    
+    NSURL *url = [NSURL URLWithString:@"App-Prefs:root=WIFI"];
+
+     if ([[UIApplication sharedApplication] canOpenURL:url]) {
+         
+         if (@available(iOS 10.0, *)) {
+             
+             [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+         } else {
+             [[UIApplication sharedApplication] openURL:url]; // iOS 9 的跳转
+
+             // Fallback on earlier versions
+         }
+
+
+         
+     }
+    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"App-Prefs:root"] ];
+
 }
 
+#pragma mark -- wifi
+-(NSDictionary *)getWifiInfo{
+
+    NSArray *ifs = (__bridge_transfer id)(CNCopySupportedInterfaces());
+
+    //NSLog(@"interface %@", ifs);
+
+    NSDictionary *info = nil;
+
+    for (NSString *ifname in ifs) {
+
+        info = (__bridge_transfer NSDictionary *)CNCopyCurrentNetworkInfo((__bridge CFStringRef)ifname);
+
+    }
+    
+    if ([info[@"SSID"] containsString:@"SmartLife"]) {
+        ProgressVC *Vc = [[ProgressVC alloc] init];
+        Vc.wifi = self.wifi;
+        Vc.pw = self.pw;
+        Vc.token = self.token;
+        Vc.actModel = TYActivatorModeAP;
+        [self.navigationController pushViewController:[Vc exp_hiddenTabBar] animated:YES];
+    }
+    return info;
+
+}
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    
+    if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+        [self getWifiInfo];
+    }
+}
+- (void)enterWiFISelectVC{
+    NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+
+    if ([[UIApplication sharedApplication] canOpenURL:url]) {
+        [[UIApplication sharedApplication] openURL:url];
+
+    }
+}
+
+- (void)upDateWifiInfo{
+    if (@available(iOS 13, *)) {
+        
+        if (CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedWhenInUse) {//开启了权限，直接搜索
+            
+            [self getWifiInfo];
+            
+        } else if (CLLocationManager.authorizationStatus == kCLAuthorizationStatusDenied) {//如果用户没给权限，则提示
+            
+            UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"提示" message:@"您未开启定位权限,无法获取Wifi信息" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            [alertC addAction:action];
+            [self presentViewController:alertC animated:NO completion:nil];
+            
+        } else {//请求权限
+            
+            [self.locationMagager requestWhenInUseAuthorization];
+        }
+        
+    } else {
+        
+        [self getWifiInfo];
+    }
+}
+- (void)applicationWillEnterForeground{
+    [self upDateWifiInfo];
+}
 @end

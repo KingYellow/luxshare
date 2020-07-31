@@ -112,7 +112,7 @@
         
     }else if(section == 1){
         
-        if (row == 4) {
+        if (row == 5) {
              SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
              cell.nameLab.text = @"离线提醒";
             cell.radioPosition = 1;
@@ -161,7 +161,7 @@
     if (section == 1) {
             UIView *view = [[UIView alloc] init];
         UILabel *lab = [[UILabel alloc] init];
-        lab.text = QZHLoaclString(@"home_homeMember");
+        lab.text = QZHLoaclString(@"setting_moreSetting");
         lab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
         lab.textColor = QZHKIT_Color_BLACK_54;
         lab.frame = CGRectMake(15, 30, QZHScreenWidth, 20);
@@ -181,7 +181,7 @@
         return 4;
     }else if(section == 1){
        
-        return 5;
+        return self.memberArr.count;
     }else{
         return 1;
     }
@@ -236,13 +236,13 @@
             vc.homeModel = self.homeModel;
             [self.navigationController pushViewController:vc animated:YES];
         }
-        if (row == 2) {
+        if (row == 3) {
             ElectricManageVC *vc = [[ElectricManageVC alloc] init];
             vc.deviceModel = self.deviceModel;
             vc.homeModel = self.homeModel;
             [self.navigationController pushViewController:vc animated:YES];
         }
-        if (row == 3) {
+        if (row == 2) {
             ShareDeviceVC *vc = [[ShareDeviceVC alloc] init];
             vc.deviceModel = self.deviceModel;
             vc.homeModel = self.homeModel;
@@ -281,7 +281,7 @@
 }
 - (NSMutableArray *)memberArr{
     if (!_memberArr) {
-        _memberArr = [NSMutableArray arrayWithArray:@[@"侦测报警设置",@"存储设置",@"电源管理设置",@"人脸识别",@"离线提醒"]];
+        _memberArr = [NSMutableArray arrayWithArray:@[@"侦测报警设置",@"存储设置",@"共享设备",@"电源管理设置",@"人脸识别",@"离线提醒"]];
  
     }
     return _memberArr;

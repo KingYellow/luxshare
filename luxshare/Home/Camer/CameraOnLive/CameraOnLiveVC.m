@@ -16,8 +16,9 @@
 #import "CameraPlayView.h"
 #import "PhotosVC.h"
 #import "BackPlayVC.h"
+#import "UIImageView+Gif.h"
 
-@interface CameraOnLiveVC ()<TuyaSmartCameraDelegate,UITableViewDelegate,UITableViewDataSource,TuyaSmartCameraDPObserver>
+@interface CameraOnLiveVC ()<TuyaSmartCameraDelegate,UITableViewDelegate,UITableViewDataSource,TuyaSmartCameraDPObserver,TuyaSmartDeviceDelegate>
 @property (strong, nonatomic)UITableView *qzTableView;
 @property (copy, nonatomic)NSMutableArray *listArr;
 @property (copy, nonatomic)NSMutableArray *logoArr;
@@ -28,10 +29,13 @@
 @property (strong, nonatomic)TuyaSmartCameraDPManager *dpManager;
 @property (strong, nonatomic)TuyaSmartDevice *device;
 @property (strong, nonatomic)CameraPlayView *playView;
+@property (strong, nonatomic)UIImageView *playPreGif;
 //高清
 @property (assign, nonatomic)BOOL HD;
 //静音
 @property (assign, nonatomic)BOOL isMuted;
+@property (strong, nonatomic)NSTimer *timer;
+@property (assign, nonatomic)NSInteger second;
 @end
 
 @implementation CameraOnLiveVC
@@ -50,13 +54,16 @@
     self.dpManager = [[TuyaSmartCameraDPManager alloc] initWithDeviceId:self.deviceModel.devId];
       self.device = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId];
       // 添加 DP 监听
+    self.device.delegate = self;
       [self.dpManager addObserver:self];
 
     [self start];
+    [self getWifiSignalStrength];
+    [self getBatteryStrength];
+
 }
 
 - (void)UIConfig{
-
 
     [self.view addSubview:self.qzTableView];
     [self.qzTableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -76,6 +83,9 @@
         [self.camera startPreview];
         return;
     }
+    self.playView.playBtn.hidden = YES;
+    [self.playView.playPreGif startPlayGifWithImages:@[@"img_loading_anima1",@"img_loading_anima2",@"img_loading_anima3"]];
+    self.playView.playPreGif.hidden = NO;
     // deviceModel 为设备列表中的摄像机设备的数据模型
     id p2pType = [self.deviceModel.skills objectForKey:@"p2pType"];
     [[TuyaSmartRequest new] requestWithApiName:@"tuya.m.rtc.session.init" postData:@{@"devId": self.deviceModel.devId} version:@"1.0" success:^(id result) {
@@ -84,6 +94,7 @@
             TuyaSmartCameraConfig *config = [TuyaSmartCameraFactory ipcConfigWithUid:[TuyaSmartUser sharedInstance].uid localKey:self.deviceModel.localKey configData:result];
             self.camera = [TuyaSmartCameraFactory cameraWithP2PType:p2pType config:config delegate:self];
             [self.camera connect];
+            
         });
 
     } failure:^(NSError *error) {
@@ -99,10 +110,8 @@
         [_qzTableView exp_tableViewDefault];
         self.qzTableView.backgroundColor = QZHKIT_COLOR_LEADBACK;
         self.qzTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
         _qzTableView.delegate = self;
         _qzTableView.dataSource = self;
-        
         [self.qzTableView registerClass:[CameraTBtnCell class] forCellReuseIdentifier:QZHCELL_REUSE_IMAGE];
         [self.qzTableView registerClass:[CameraThreeBtnCell class] forCellReuseIdentifier:QZHCELL_REUSE_TEXT];
         [self.qzTableView registerClass:[OnLiveCell class] forCellReuseIdentifier:QZHCELL_REUSE_FIELD];
@@ -125,19 +134,21 @@
     }else if (row == 1) {
         OnLiveCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_FIELD];
         [cell.contentView addSubview:self.playView];
-        self.playView.frame= CGRectMake(0, 0, QZHScreenWidth, 211);
+        self.playView.frame= CGRectMake(0, 0, QZHScreenWidth, QZHScreenWidth * 1080/1920);
         [_playView addSubview:self.camera.videoView];
         [self.camera.videoView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0  ));
         }];
         [self.playView sendSubviewToBack:self.camera.videoView];
-        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else if (row == 2) {
         CameraThreeBtnCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
-        cell.btnBlock = ^(NSInteger tag, BOOL select) {
-            
-            [weakSelf videoHandle:tag isselected:select];
+        cell.btnBlock = ^(UIButton *sender, BOOL select) {
+            if (weakSelf.previewing) {
+                sender.selected = !sender.selected;
+                [weakSelf videoHandle:sender.tag isselected:sender.selected];
+            }
         };
 
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -145,13 +156,13 @@
     }else if (row == 3) {
         CameraListCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_DEFAULT];
         cell.nameLab.text = @"    相册管理";
-        cell.IMGView.image = QZHLoadIcon(@"shezhi");
+        cell.IMGView.image = QZHLoadIcon(@"ic_all_doc");
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else{
         CameraListCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_DEFAULT];
         cell.nameLab.text = @"    历史回看";
-        cell.IMGView.image = QZHLoadIcon(@"shezhi");
+        cell.IMGView.image = QZHLoadIcon(@"ic_all_safety");
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
@@ -193,14 +204,11 @@
         vc.deviceModel = self.deviceModel;
         [self.navigationController pushViewController:vc animated:YES];
     }
-
-
 }
 
 - (NSMutableArray *)listArr{
-    if (!_listArr) {
+    if (!_listArr){
         _listArr = [NSMutableArray arrayWithArray:@[QZHLoaclString(@"mine_shareDevices"),QZHLoaclString(@"mine_commonQuestions"),QZHLoaclString(@"mine_familyManagement"),QZHLoaclString(@"mine_currentVersion")]];
- 
     }
     return _listArr;
 }
@@ -211,12 +219,14 @@
     }
     return _logoArr;
 }
+
+
 #pragma mark -- camerDelegate
 
 -(void)cameraDidConnected:(id<TuyaSmartCameraType>)camera{
+    
     self.connected = YES;
     [self.camera startPreview];
-
 
 }
 -(void)cameraDisconnected:(id<TuyaSmartCameraType>)camera{
@@ -224,13 +234,17 @@
     self.connected = NO;
     self.previewing = NO;
     [self.camera connect];
+    [self.playView.playPreGif stopGif];
 }
 -(void)cameraDidStartRecord:(id<TuyaSmartCameraType>)camera{
-    
+    self.playView.recordProgressView.typeLab.text = @"录制中";
+    [self startTimer];
 }
 -(void)cameraDidStopRecord:(id<TuyaSmartCameraType>)camera{
-    
+   
+    [self stopTimer];
 }
+
 -(void)cameraDidBeginPlayback:(id<TuyaSmartCameraType>)camera{
     
 }
@@ -244,12 +258,15 @@
     self.camera.videoView.backgroundColor = QZHColorRed;
 
     [self.qzTableView reloadData];
+    [self.playView.playPreGif stopGif];
+
 
 }
 -(void)cameraDidStopPreview:(id<TuyaSmartCameraType>)camera{
     self.previewing = NO;
 
 }
+
 -(void)camera:(id<TuyaSmartCameraType>)camera didOccurredErrorAtStep:(TYCameraErrorCode)errStepCode specificErrorCode:(NSInteger)errorCode{
      if (errStepCode == TY_ERROR_CONNECT_FAILED) {
           // p2p 连接失败
@@ -275,6 +292,68 @@
     }
 }
 
+#pragma mark -- wifi强度
+- (void)getWifiSignalStrength {
+    [self.device getWifiSignalStrengthWithSuccess:^{
+        NSLog(@"get wifi signal strength success");
+    } failure:^(NSError *error) {
+        NSLog(@"get wifi signal strength failure: %@", error);
+    }];
+}
+- (void)getBatteryStrength{
+    if ([self.deviceModel.productId isEqualToString:BATTERY_PRODUCT_ID]) {
+     int type = [[self.dpManager valueForDP:TuyaSmartCameraWirelessPowerModeDPName] intValue];
+    int strength = [[self.dpManager valueForDP:TuyaSmartCameraWirelessElectricityDPName] intValue];
+        NSString *imgStr;
+        //0 电池  1 电源
+        if (type) {
+            if (strength < 25) {
+                imgStr = @"ic_battery_charging_0_24";
+            }else if (strength < 50){
+                imgStr = @"ic_battery_charging_25_49";
+            }else if (strength < 75){
+                imgStr = @"ic_battery_charging_50_74";
+            }else{
+                imgStr = @"ic_battery_charging_75_100";
+            }
+            
+        }else{
+            if (strength < 10) {
+                imgStr = @"ic_battery_0_9";
+            }else if (strength < 20){
+                imgStr = @"ic_battery_10_19";
+            }else if (strength < 25){
+                imgStr = @"ic_battery_20_24";
+            }else if (strength < 50){
+                imgStr = @"ic_battery_25_49";
+            }else if (strength < 75){
+                imgStr = @"ic_battery_50_74";
+            }else if (strength < 100){
+                imgStr = @"ic_battery_75_99";
+            }else{
+                imgStr = @"ic_battery_100";
+            }
+        }
+        self.playView.batteryIMG.image = QZHLoadIcon(imgStr);
+
+    }
+    
+}
+#pragma mark - TuyaSmartDeviceDelegate
+
+- (void)device:(TuyaSmartDevice *)device signal:(NSString *)signal {
+    NSInteger wifi = [signal integerValue];
+    if (wifi < -80) {
+        self.playView.wifiIMG.image = QZHLoadIcon(@"wifi_0");
+    } else if (wifi < -65) {
+        self.playView.wifiIMG.image = QZHLoadIcon(@"wifi_1");
+    } else if (wifi < -50) {
+        self.playView.wifiIMG.image = QZHLoadIcon(@"wifi_2");
+    } else {
+        self.playView.wifiIMG.image = QZHLoadIcon(@"wifi_3");
+    }
+}
+
 #pragma mark -- 视频控制
 //直播属性设置
 - (void)onLivePlayHandle:(NSInteger )tag isselected:(BOOL)select{
@@ -282,6 +361,7 @@
     //sender.tag == 0) {
          //播放
     if (tag == 0) {
+
         
     }else if(tag == 1){
         //sender.tag == 1){
@@ -306,6 +386,7 @@
         if (selected) {
             [self.camera startRecord];
         }else{
+
             [self.camera stopRecord];
         }
     }else if (tag == 0){
@@ -338,6 +419,15 @@
         [self start];
     }else{
         //休眠
+        NSDictionary  *dps = @{@"231": @(NO)};
+
+          [self.device publishDps:dps success:^{
+              NSLog(@"publishDps success");
+              //下发成功，状态上报通过 deviceDpsUpdate方法 回调
+
+          } failure:^(NSError *error) {
+              NSLog(@"publishDps failure: %@", error);
+          }];
     }
 }
 
@@ -349,10 +439,10 @@
 
 - (void)start {
     if ([self isDoorbell]) {
-        QZHWS(weakSelf)
         // 获取设备的状态
-                BOOL isAwaking = [[self.dpManager valueForDP:TuyaSmartCameraWirelessAwakeDPName] boolValue];
+        BOOL isAwaking = [[self.dpManager valueForDP:TuyaSmartCameraWirelessAwakeDPName] boolValue];
         if (isAwaking) { // 唤醒状态下，直接连接p2p 或者 开始预览
+
           
         }else { // 休眠状态下，发送唤醒命令
             
@@ -404,10 +494,15 @@
 #pragma mark -- 对讲
 - (void)startTalk {
     [self.camera startTalk];
-    // 如果不是静音状态，关闭声音
-    if (!self.isMuted) {
-        [self.camera enableMute:YES forPlayMode:TuyaSmartCameraPlayModePreview];
+    
+    int selectIndex = [[QZHDataHelper readValueForKey:@"talkType"] intValue];
+    if (!selectIndex) {
+            // 如果不是静音状态，关闭声音
+        if (!self.isMuted) {
+            [self.camera enableMute:YES forPlayMode:TuyaSmartCameraPlayModePreview];
+        }
     }
+
 }
 
 - (void)stopTalk {
@@ -416,6 +511,10 @@
 
 - (void)cameraDidBeginTalk:(id<TuyaSmartCameraType>)camera {
         // 对讲已成功开启
+
+
+    self.playView.recordProgressView.typeLab.text = @"通话中";
+    [self startTimer];
 }
 
 - (void)cameraDidStopTalk:(id<TuyaSmartCameraType>)camera {
@@ -424,6 +523,7 @@
     if (self.isMuted) {
         [self.camera enableMute:NO forPlayMode:TuyaSmartCameraPlayModePreview];
     }
+    [self stopTimer];
 }
 
 
@@ -431,36 +531,24 @@
 - (void)scrollHor:(BOOL) isHor{
 
         if (isHor) {
-            QZHWS(weakSelf)
-//            OnLiveCell *cell = [self.qzTableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_FIELD];
             self.playView.transform = CGAffineTransformMakeRotation(90*M_PI/180);
-
-             CGAffineTransform transform = self.playView.transform;
+            CGAffineTransform transform = self.playView.transform;
              transform = CGAffineTransformScale(transform, 1,1);
-             self.playView.transform = transform;
-
+            self.playView.transform = transform;
             self.playView.frame = CGRectMake(0, 0, QZHScreenWidth, QZHScreenHeight);
-
-//            [cell sendSubviewToBack:self.camera.videoView];
             [self.navigationController.view addSubview:self.playView];
    
-
         }else{
 
             OnLiveCell *cell = [self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-
             self.playView.transform = CGAffineTransformMakeRotation(0*M_PI/90);
-
-             CGAffineTransform transform = self.playView.transform;
+            CGAffineTransform transform = self.playView.transform;
              transform = CGAffineTransformScale(transform, 1,1);
-             self.playView.transform = transform;
-
-            self.playView.frame = CGRectMake(0, 0, QZHScreenWidth, 211);
-
+            self.playView.transform = transform;
+            self.playView.frame = CGRectMake(0, 0, QZHScreenWidth, QZHScreenWidth * 1080/1920);
             [cell.contentView addSubview:self.playView];
             [cell.contentView sendSubviewToBack:self.playView];
         }
-
 }
 
 -(CameraPlayView *)playView{
@@ -468,12 +556,28 @@
 
 QZHWS(weakSelf)
         _playView = [[CameraPlayView alloc] init];
-
         _playView.buttonBlock = ^(NSInteger tag, BOOL selected) {
             [weakSelf onLivePlayHandle:tag isselected:selected];
         };
     }
     return _playView;
 }
+- (void)startTimer{
+    self.second = 0;
+    self.playView.recordProgressView.hidden = NO;
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction:) userInfo:nil repeats:YES];
+}
+- (void)stopTimer{
+    self.playView.recordProgressView.hidden = YES;
+    [self.timer invalidate];
+    self.timer = nil;
+    self.playView.recordProgressView.timeLab.text = @"00:00";
+}
 
+- (void)timerAction:(NSTimer *)tiemr{
+    self.second++;
+    NSInteger min = self.second/60;
+    NSInteger sec = self.second%60;
+    self.playView.recordProgressView.timeLab.text = [NSString stringWithFormat:@"%02ld:%02ld",min,sec];
+}
 @end

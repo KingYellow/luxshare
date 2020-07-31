@@ -50,7 +50,7 @@
 -(UIButton *)normalBtn{
     if (!_normalBtn) {
         _normalBtn = [[UIButton alloc] init];
-        [_normalBtn setImage:QZHLoadIcon(@"about") forState:UIControlStateNormal];
+        [_normalBtn setImage:QZHLoadIcon(@"ic_select") forState:UIControlStateNormal];
     }
     return _normalBtn;
 }

@@ -34,8 +34,8 @@
      [self.IMGView mas_makeConstraints:^(MASConstraintMaker *make) {
          make.left.mas_equalTo(QZHKIT_MARGIN_LEFT_LISTCELL_IMAGE);
          make.centerY.mas_equalTo(self.contentView);
-         make.width.height.mas_equalTo(24);
-         make.bottom.mas_equalTo(-QZHKIT_MARGIN_BOTTOM_LISTCELL_IMAGE);
+         make.width.mas_equalTo(24);
+         make.height.mas_equalTo(24);
 
      }];
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -73,8 +73,6 @@
 -(UIImageView *)IMGView{
     if (!_IMGView) {
         _IMGView = [[UIImageView alloc] init];
-        _IMGView.contentMode = UIViewContentModeScaleToFill;
-        _IMGView.image = [UIImage imageNamed:@"2.jpeg"];
     }
     return _IMGView;
 }
@@ -94,12 +92,7 @@
     }
     return _forward;
 }
--(void)setDic:(NSDictionary *)dic{
-    
-    
-    self.nameLab.text = [NSString stringWithFormat:@"道达信息"];
 
-}
 - (void)setFrame:(CGRect)frame {
 
     frame.size.height -= QZHSIZE_HEIGHT_LISTCELL_SEPARATOR;

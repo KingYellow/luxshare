@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^buttontag)(NSInteger tag, BOOL select);
+typedef void(^buttontag)(UIButton *sender, BOOL select);
 @interface CameraThreeBtnCell : UITableViewCell
 @property (strong, nonatomic)UIButton *leftBtn;
 @property (strong, nonatomic)UIButton *midBtn;

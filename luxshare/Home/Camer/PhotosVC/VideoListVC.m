@@ -89,10 +89,15 @@
         
     PhotoListCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
     HXPhotoModel *model = self.listArr[row];
-    
-    [model requestThumbImageCompletion:^(UIImage * _Nullable image, HXPhotoModel * _Nullable model, NSDictionary * _Nullable info) {
-        cell.IMGView.image = image;
-    }];
+    cell.selectBtn.selected = model.selected;
+   [model requestThumbImageCompletion:^(UIImage * _Nullable image, HXPhotoModel * _Nullable model, NSDictionary * _Nullable info) {
+       cell.IMGView.image = image;
+   }];
+   cell.IMGView.tag = row;
+   cell.IMGView.userInteractionEnabled = YES;
+   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectAction:)];
+   [cell.IMGView addGestureRecognizer:tap];
+
     cell.nameLab.text = [model.creationDate jk_stringWithFormat:@"yyyy年MM月dd日"];
     cell.describeLab.text = [model.creationDate jk_stringWithFormat:@"hh:mm"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -155,5 +160,31 @@
         }
 
     }];
+}
+
+- (void)selectAction:(UIGestureRecognizer *)sender{
+    HXPhotoModel *model = self.listArr[sender.view.tag];
+    PhotoListCell *Cell = [self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:sender.view.tag inSection:0]];
+    model.selected = !model.selected;
+    Cell.selectBtn.selected = !Cell.selectBtn.selected;
+    self.selecctResultBlock([self setSelectedArr]);
+}
+
+- (NSArray *)setSelectedArr{
+    NSMutableArray *arrm = [NSMutableArray array];
+    for (HXPhotoModel *model in self.listArr) {
+        if (model.selected ) {
+            [arrm addObject:model];
+        }
+    }
+    return arrm;
+}
+- (void)selectAllVideosOrPhotos:(BOOL) select{
+    for (HXPhotoModel *model in self.listArr) {
+        model.selected = select;
+    }
+    [self.qzTableView reloadData];
+    self.selecctResultBlock([self setSelectedArr]);
+
 }
 @end

@@ -103,8 +103,7 @@
     return _rightBtn;
 }
 - (void)btnAction:(UIButton *)sender{
-    sender.selected = !sender.selected;
-    self.btnBlock(sender.tag, sender.selected);
+    self.btnBlock(sender, sender.selected);
 }
 
 @end

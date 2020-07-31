@@ -29,17 +29,21 @@
     }];
      
      [self.IMGView mas_makeConstraints:^(MASConstraintMaker *make) {
-         make.centerY.mas_equalTo(self.contentView);
-         make.width.height.mas_equalTo(20);
+         make.top.mas_equalTo(15);
+         make.width.mas_equalTo(20);
          make.right.mas_equalTo(-30);
+         make.bottom.mas_equalTo(-15);
 
      }];
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
-         make.centerY.mas_equalTo(self.contentView);
         make.left.mas_equalTo(30);
+        make.bottom.mas_equalTo(0);
+        make.top.mas_equalTo(0);
      }];
     [self.tagLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.mas_equalTo(self.contentView);
+        make.bottom.mas_equalTo(0);
+        make.top.mas_equalTo(0);
+        make.left.mas_equalTo(self.nameLab.mas_right).offset(10);
         make.right.mas_equalTo(self.IMGView.mas_left).offset(-10);
     }];
     
@@ -67,6 +71,7 @@
         _tagLab = [[UILabel alloc] init];
         _tagLab.font = QZHKIT_FONT_LISTCELL_TIME_TITLE;
         _tagLab.textColor = QZHKIT_Color_BLACK_26;
+        _tagLab.textAlignment = NSTextAlignmentRight;
     }
     return  _tagLab;
 }

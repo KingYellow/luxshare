@@ -29,7 +29,7 @@
 }
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
-    self.navigationItem.title = QZHLoaclString(@"setting_deceteAlarm");
+    self.navigationItem.title = QZHLoaclString(@"setting_storage");
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     [self UIConfig];
@@ -105,7 +105,14 @@
              return cell;
         }else{
             PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
-             cell.nameLab.text = @"定时";
+             cell.nameLab.text = @"录像模式";
+            
+            int type = [[self.dpManager valueForDP:TuyaSmartCameraRecordModeDPName] intValue];
+            if (type == 1) {
+                cell.describeLab.text = @"事件录像";
+            }else{
+                cell.describeLab.text = @"连续录像";
+            }
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
              cell.selectionStyle = UITableViewCellSelectionStyleNone;
              return cell;
@@ -171,6 +178,10 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = indexPath.row;
     NSInteger section = indexPath.section;
+    
+    if (section ==1  && row == 1) {
+        [self creatActionSheet];
+    }
     if (section == 2) {
         UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"是否确认格式化" message:@"" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -239,5 +250,45 @@
         _progessView.frame = self.navigationController.view.bounds;
     }
     return _progessView;
+}
+
+#pragma mark -- 录像模式
+-(void)creatActionSheet {
+
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"存储卡录像模式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+
+    QZHWS(weakSelf)
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"事件录像" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if ([self.dpManager isSupportDP:TuyaSmartCameraRecordModeDPName]) {
+            
+            [self.dpManager setValue:@"1" forDP:TuyaSmartCameraRecordModeDPName success:^(id result) {
+                [weakSelf.qzTableView reloadData];
+            } failure:^(NSError *error) {
+               [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+            }];
+        }
+    }];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"连续录像" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+          if ([self.dpManager isSupportDP:TuyaSmartCameraRecordModeDPName]) {
+              
+              [self.dpManager setValue:@"2" forDP:TuyaSmartCameraRecordModeDPName success:^(id result) {
+                  [weakSelf.qzTableView reloadData];
+              } failure:^(NSError *error) {
+                 [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+              }];
+          }
+    }];
+
+    UIAlertAction *action4 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"取消");
+    }];
+    
+    //把action添加到actionSheet里
+    [actionSheet addAction:action1];
+    [actionSheet addAction:action2];
+    [actionSheet addAction:action4];
+
+    //相当于之前的[actionSheet show];
+    [self presentViewController:actionSheet animated:YES completion:nil];
 }
 @end

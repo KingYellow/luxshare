@@ -61,8 +61,8 @@
 -(UIButton *)selectBtn{
     if (!_selectBtn) {
         _selectBtn = [[UIButton alloc] init];
-        [_selectBtn setImage:QZHLoadIcon(@"pay_normal") forState:UIControlStateNormal];
-        [_selectBtn setImage:QZHLoadIcon(@"pay_selected") forState:UIControlStateSelected];
+        [_selectBtn setImage:QZHLoadIcon(@"ty_devicelist_dot_green") forState:UIControlStateNormal];
+        [_selectBtn setImage:QZHLoadIcon(@"ty_devicelist_dot_gray") forState:UIControlStateSelected];
     }
     return _selectBtn;
 }

@@ -168,12 +168,18 @@
 "setting_timerAlarm" = "报警功能定时设置";
 "setting_storage" = "存储设置";
 "setting_basicFun" = "基本功能";
+"setting_electricManage" = "电源管理设置";
+
+"setting_moreSetting" = "高级设置";
 
 "device_playBack" = "回放";
 
 "share_addShareMember" = "添加共享";
 "share_shareMember" = "设备共享";
 
+//消息
+"message_warningDetail" = "告警消息详情";
+"message_selectWeek" = "选择星期";
 
 
 

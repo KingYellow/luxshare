@@ -7,16 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RecordProgressView.h"
 
 NS_ASSUME_NONNULL_BEGIN
-typedef void(^buttontag)(NSInteger tag, BOOL selected);
+typedef void(^playbuttontag)(NSInteger tag, BOOL selected);
 
 @interface CameraPlayView : UIView
 @property (strong, nonatomic)UIButton *playBtn;
 @property (strong, nonatomic)UIButton *voiceBtn;
 @property (strong, nonatomic)UIButton *definitionBtn;
 @property (strong, nonatomic)UIButton *horizontalBtn;
-@property (copy, nonatomic)buttontag buttonBlock;
+@property (copy, nonatomic)playbuttontag buttonBlock;
+@property (strong, nonatomic)UIImageView *playPreGif;
+@property (strong, nonatomic)UIImageView *wifiIMG;
+@property (strong, nonatomic)UIImageView *batteryIMG;
+@property (strong, nonatomic)RecordProgressView *recordProgressView;
+
 @end
 
 NS_ASSUME_NONNULL_END

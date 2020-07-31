@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
+typedef void (^btnblock)(BOOL isselected);
 @interface WarningDetailVC : UIViewController
-
+@property (strong, nonatomic)NSString *msgSrcId;
+@property (copy, nonatomic)btnblock btnAction;
 @end
 
 NS_ASSUME_NONNULL_END

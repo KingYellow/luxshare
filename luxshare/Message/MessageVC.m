@@ -10,6 +10,7 @@
 #import "HomeMessageVC.h"
 #import "WarningVC.h"
 #import "NoticationVC.h"
+#import "MessageSettingVC.h"
 
 @interface MessageVC ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource>
 @property (strong, nonatomic)NSArray *arrVcs;
@@ -19,6 +20,7 @@
 @property (assign, nonatomic)NSInteger oldSelectIndex;
 @property (assign, nonatomic)NSInteger currentIndex;
 @property (strong, nonatomic)UIButton *rightBtn;
+@property (strong, nonatomic)UIButton *setBtn;
 @property (strong, nonatomic)UIView *titleView;
 @property (strong, nonatomic)UILabel *titleLab;
 
@@ -38,22 +40,33 @@
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     // Do any additional setup after loading the view.
     self.rightBtn =  [self exp_addRightItemTitle:QZHLoaclString(@"finish") itemIcon:@""];
+//    self.setBtn =  [self exp_addRightItemTitle:@"" itemIcon:@"pay_normal"];
+    [self.rightBtn setImage:QZHLoadIcon(@"pay_normal") forState:UIControlStateNormal];
+    [self.rightBtn setImage:[UIImage new] forState:UIControlStateSelected];
+    [self.rightBtn setTitle:@"" forState:UIControlStateNormal];
+    [self.rightBtn setTitle:QZHLoaclString(@"finish") forState:UIControlStateSelected];
     self.navigationItem.title = @"编辑";
-    self.rightBtn.hidden = YES;
     [self loadVcs];
 }
 
 -(void)exp_rightAction{
-    self.navigationItem.titleView = self.titleView;
-    self.rightBtn.hidden = YES;
-    if (self.oldSelectIndex == 0) {
-        [self.warningVc rightAction];
-
-    }else if (self.oldSelectIndex  == 1){
-        [self.homeVc rightAction];
+    if (!self.rightBtn.selected) {
+        MessageSettingVC *vc = [[MessageSettingVC alloc] init];
+        [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
+        
     }else{
-        [self.notificationVc rightAction];
+        self.rightBtn.selected = !self.rightBtn.selected;
+        self.navigationItem.titleView = self.titleView;
+        if (self.oldSelectIndex == 0) {
+            [self.warningVc rightAction];
+
+        }else if (self.oldSelectIndex  == 1){
+            [self.homeVc rightAction];
+        }else{
+            [self.notificationVc rightAction];
+        }
     }
+
 }
 
 //初始化
@@ -65,17 +78,18 @@
     self.homeVc = [[HomeMessageVC alloc] init];
     self.homeVc.btnAction = ^(BOOL isselected) {
         weakSelf.navigationItem.titleView = weakSelf.titleLab;
-        weakSelf.rightBtn.hidden = NO;
+        weakSelf.rightBtn.selected = YES;
+
     };
     self.warningVc = [[WarningVC alloc] init];
     self.warningVc.btnAction = ^(BOOL isselected) {
          weakSelf.navigationItem.titleView = weakSelf.titleLab;
-         weakSelf.rightBtn.hidden = NO;
+         weakSelf.rightBtn.selected = YES;
      };
     self.notificationVc = [[NoticationVC alloc] init];
     self.notificationVc.btnAction = ^(BOOL isselected) {
          weakSelf.navigationItem.titleView = weakSelf.titleLab;
-         weakSelf.rightBtn.hidden = NO;
+         weakSelf.rightBtn.selected = YES;
      };
     self.arrVcs = [NSArray arrayWithObjects:self.warningVc, self.homeVc,  self.notificationVc, nil];
     
@@ -203,5 +217,12 @@ offset    已请求到的消息总数
         }
     }
     return _titleView;
+}
+-(UIButton *)setBtn{
+    if (!_setBtn) {
+        _setBtn = [[UIButton alloc] init];
+        [_setBtn setImage:QZHLoadIcon(@"pay_normal") forState:UIControlStateNormal];
+    }
+    return _setBtn;
 }
 @end

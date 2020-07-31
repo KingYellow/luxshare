@@ -35,6 +35,7 @@
     
     if (!self.isSuccess) {
         self.titleLab.text = QZHLoaclString(@"device_addFailer");
+        self.indicatorIMG.image = QZHLoadIcon(@"ty_adddevice_ok");
     }
 
 }
@@ -91,7 +92,6 @@
 - (UIImageView *)indicatorIMG{
     if (!_indicatorIMG) {
         _indicatorIMG = [[UIImageView alloc] init];
-        _indicatorIMG.backgroundColor = QZHColorRed;
     }
     return _indicatorIMG;
 }

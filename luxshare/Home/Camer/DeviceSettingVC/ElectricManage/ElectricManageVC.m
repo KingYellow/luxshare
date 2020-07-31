@@ -30,7 +30,7 @@
 }
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
-    self.navigationItem.title = QZHLoaclString(@"setting_deceteAlarm");
+    self.navigationItem.title = QZHLoaclString(@"setting_electricManage");
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     [self UIConfig];
