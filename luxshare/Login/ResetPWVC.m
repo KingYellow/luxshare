@@ -299,7 +299,7 @@
    [[TuyaSmartUser sharedInstance] sendVerifyCode:self.countryCodeText.text phoneNumber:self.phoneText.text type:2 success:^{
        NSLog(@"sendVerifyCode success");
    } failure:^(NSError *error) {
-       NSLog(@"sendVerifyCode failure: %@", error);
+       [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
    }];
 }
 
@@ -320,14 +320,14 @@
                 [[QZHHUD HUD] textHUDWithMessage:@"重置成功" afterDelay:1.0];
                 NSLog(@"resetPasswordByPhone success");
             } failure:^(NSError *error) {
-                NSLog(@"resetPasswordByPhone failure: %@", error);
+                [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
             }];
                 NSLog(@"valid code!");
         } else {
             NSLog(@"invalid code!");
         }
     } failure:^(NSError *error) {
-            NSLog(@"check code failure: %@", error);
+            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
 - (void)selectValue{

@@ -34,6 +34,17 @@
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     [self UIConfig];
+    self.titleLab.text = [NSString stringWithFormat:@"发现可更新版本%@",self.upModel.version];
+    float size = [self.upModel.fileSize integerValue]/1024.0;
+    if (size > 102.4) {
+        size = size/1024.0;
+        self.sizeLab.text = [NSString stringWithFormat:@"%.2f M",size];
+
+    }else{
+        self.sizeLab.text = [NSString stringWithFormat:@"%.2f K",size];
+    }
+    self.contentLab.text = self.upModel.desc;
+    self.updateBtn.hidden = NO;
 
 }
 - (void)UIConfig{
@@ -51,7 +62,6 @@
     [self.bigView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.mas_equalTo(15);
         make.right.mas_equalTo(-15);
-//        make.bottom.mas_equalTo(self.contentLab.mas_bottom).offset(-15);
     }];
     [self.titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.bigView.mas_top).offset(15);
@@ -161,7 +171,7 @@
 -(UIProgressView *)progress{
     if (!_progress) {
         _progress = [[UIProgressView alloc] init];
-        _progress.progress = 0.2;
+        _progress.progress = 0;
         _progress.progressTintColor = QZHKIT_COLOR_SKIN;
         _progress.trackTintColor = QZHKIT_Color_BLACK_26;
         QZHViewRadius(_progress, 3);
@@ -193,7 +203,7 @@
         
     }];
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self.titleLab.text = [NSString stringWithFormat:@"%@",@"正在更新至"];
+        self.titleLab.text = [NSString stringWithFormat:@"%@%@",@"正在更新至",self.upModel.version];
         [self.sizeLab mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(0);
         }];
@@ -211,7 +221,7 @@
 
         }];
         self.updateBtn.hidden = YES;
-
+        [self upgradeFirmware];
         
     }];
     [alertC addAction:cancelaction];
@@ -225,17 +235,35 @@
     self.device.delegate = self;
     // type: 从获取设备升级信息接口 getFirmwareUpgradeInfo 返回的固件类型
     // TuyaSmartFirmwareUpgradeModel - type
-
     [self.device upgradeFirmware:self.upModel.type success:^{
-        NSLog(@"upgradeFirmware success");
+        NSLog(@"success");
+
     } failure:^(NSError *error) {
-        NSLog(@"upgradeFirmware failure: %@", error);
+           [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
 
 
 - (void)device:(TuyaSmartDevice *)device firmwareUpgradeProgress:(NSInteger)type progress:(double)progress {
     //固件升级的进度
-    [self.progress setProgress:progress];
+    [self.progress setProgress:progress/100.0];
+
 }
+- (void)device:(TuyaSmartDevice *)device firmwareUpgradeStatusModel:(TuyaSmartFirmwareUpgradeStatusModel *)upgradeStatusModel{
+    if (upgradeStatusModel.upgradeStatus == TuyaSmartDeviceUpgradeStatusSuccess) {
+        QZHWS(weakSelf)
+        [[QZHHUD HUD] textHUDWithMessage:@"更新成功" afterDelay:0.5];
+        self.refresh();
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+            
+        });
+    }
+    if (upgradeStatusModel.upgradeStatus == TuyaSmartDeviceUpgradeStatusTimeout || upgradeStatusModel.upgradeStatus == TuyaSmartDeviceUpgradeStatusFailure) {
+        [self viewDidLoad];
+    }
+    
+}
+
+
 @end

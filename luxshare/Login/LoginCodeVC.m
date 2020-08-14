@@ -20,6 +20,7 @@
 @property (strong, nonatomic)UIButton *sendBtn;
 @property (strong, nonatomic)CountrySelectView *countryView;
 @property (strong, nonatomic)ContactModel *countryModel;
+@property (strong, nonatomic)TuyaSmartHomeManager *magager;
 @end
 
 @implementation LoginCodeVC
@@ -210,7 +211,7 @@
    [[TuyaSmartUser sharedInstance] sendVerifyCode:self.countryModel.code phoneNumber:self.phoneText.text type:type success:^{
        NSLog(@"sendVerifyCode success");
    } failure:^(NSError *error) {
-       NSLog(@"sendVerifyCode failure: %@", error);
+          [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
    }];
 }
 
@@ -269,21 +270,38 @@
             if (result) {
                   [[TuyaSmartUser sharedInstance] loginWithMobile:self.phoneText.text countryCode:self.countryModel.code code:self.passwordText.text success:^{
 
-                    [QZHDataHelper saveValue:QZHKEY_TOKEN forKey:QZHKEY_TOKEN];
                     [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"login_success") afterDelay:0.5];
-                    [QZHROOT_DELEGATE setVC];
+                      [self getHomeList];
                       
                   } failure:^(NSError *error) {
-                       NSLog(@"login failure: %@", error);
+                       [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
                    }];
                 
             } else {
                 [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"verify_code_invalid") afterDelay:0.5];
         }
     } failure:^(NSError *error) {
-            NSLog(@"check code failure: %@", error);
+            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
     
+}
+
+#pragma mark -- 获取家庭
+- (void)getHomeList {
+   self.magager = [TuyaSmartHomeManager new];
+    [self.magager getHomeListWithSuccess:^(NSArray<TuyaSmartHomeModel *> *homes) {
+        if (homes.count == 0) {
+            [QZHROOT_DELEGATE showFamilyVC];
+        }else{
+            [QZHDataHelper saveValue:QZHKEY_TOKEN forKey:QZHKEY_TOKEN];
+            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"login_success") afterDelay:0.5];
+            [QZHROOT_DELEGATE setVC];
+        }
+
+    } failure:^(NSError *error) {
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+        
+    }];
 }
 
 @end

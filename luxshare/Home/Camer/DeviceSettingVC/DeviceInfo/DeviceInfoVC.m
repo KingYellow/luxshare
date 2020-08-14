@@ -191,7 +191,8 @@
         self.deviceModel = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId].deviceModel;
         [self.qzTableView reloadData];
     } failure:^(NSError *error) {
-        
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+
     }];
 
 

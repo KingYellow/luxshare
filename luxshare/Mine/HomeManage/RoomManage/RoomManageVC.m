@@ -160,11 +160,11 @@
 - (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath {
     TuyaSmartRoomModel *model = self.listArr[indexPath.row];
     [self.home removeHomeRoomWithRoomId:model.roomId  success:^{
-        NSLog(@"remove room success");
+        [QZHNotification postNotificationName:QZHNotificationKeyK1 object:nil];
         [self.listArr removeObjectAtIndex:indexPath.row];
         [self.qzTableView reloadData];
     } failure:^(NSError *error) {
-        NSLog(@"remove room failure: %@", error);
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
 

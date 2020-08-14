@@ -126,7 +126,7 @@
 "device_addNewDevice" = "新增设备";
 "device_resetDevice" = "重置设备";
 "device_resetTip" = "长按电源键5秒进行设备重置";
-"device_doneTip1" = "指示灯处于快闪状态";
+"device_doneTip1" = "指示灯处于慢闪状态";
 "device_doneTip2" = "或听到[等待连接]";
 
 //wifi
@@ -165,7 +165,21 @@
 "setting_deceteAlarm" = "侦测报警设置";
 "setting_moveAlarm" = "移动报警";
 "setting_decetecCry" = "哭声检测";
+"setting_decetecCrySensitivity" = "哭声检测灵敏度";
+
 "setting_timerAlarm" = "报警功能定时设置";
+"setting_alarmArea" = "报警区域";
+"setting_alarmAreaSwitch" = "报警区域开关";
+"setting_decetecVoice" = "声音侦测";
+"setting_decetecVoiceSensitivity" = "声音侦测灵敏度";
+
+"setting_decrteAlarmSwitch" = "移动侦测报警开关";
+"setting_personFilter" = "人形过滤";
+"setting_alarmSensitivity" = "报警灵敏度";
+
+
+
+
 "setting_storage" = "存储设置";
 "setting_basicFun" = "基本功能";
 "setting_electricManage" = "电源管理设置";

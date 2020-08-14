@@ -234,12 +234,19 @@
     }
     QZHWS(weakSelf)
     [[[TuyaSmartHomeManager alloc] init] addHomeWithName:self.name geoName:self.location rooms:arr latitude:0 longitude:0 success:^(long long result) {
-        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
-        weakSelf.refresh();
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-            
-        });
+        if (self.isFirst) {
+            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
+            [QZHDataHelper saveValue:QZHKEY_TOKEN forKey:QZHKEY_TOKEN];
+            [QZHROOT_DELEGATE setVC];
+        }else{
+            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
+            weakSelf.refresh();
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+                
+            });
+        }
+
     } failure:^(NSError *error) {
            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];

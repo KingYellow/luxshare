@@ -236,8 +236,9 @@ QZHWS(weakSelf)
         [_leftBtn setTitle:@"视频" forState:UIControlStateNormal];
         _leftBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_BIG_TITLE;
         [_leftBtn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
-        [_leftBtn setImage:QZHLoadIcon(@"") forState:UIControlStateNormal];
+        [_leftBtn setImage:QZHLoadIcon(@"ic_all_video") forState:UIControlStateNormal];
         _leftBtn.tag = 888;
+        [_leftBtn jk_setImagePosition:0 spacing:15];
         [_leftBtn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _leftBtn;
@@ -248,7 +249,8 @@ QZHWS(weakSelf)
         [_rightBtn setTitle:@"图片" forState:UIControlStateNormal];
         _rightBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_BIG_TITLE;
         [_rightBtn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
-        [_rightBtn setImage:QZHLoadIcon(@"") forState:UIControlStateNormal];
+        [_rightBtn setImage:QZHLoadIcon(@"ic_all_photo_n") forState:UIControlStateNormal];
+        [_rightBtn jk_setImagePosition:0 spacing:15];
         _rightBtn.tag = 889;
         [_rightBtn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
 

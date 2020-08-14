@@ -151,16 +151,24 @@
         [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
     }
 
-    if (section == 2 && row == 0) {
-        SettingVC *vc = [[SettingVC alloc] init];
-        [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
-    }
+    if (section == 1 && row == 3) {
+        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"提示" message:@"一周后账号才会永久停用并删除以下你账户中的所有信息" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            [self cancelAccount];
 
+        }];
+        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+
+        }];
+        [alertC addAction:action];
+        [alertC addAction:action1];
+        [self presentViewController:alertC animated:NO completion:nil];
+    }
 }
 
 - (NSMutableArray *)listArr{
     if (!_listArr) {
-        _listArr = [NSMutableArray arrayWithArray:@[QZHLoaclString(@"mine_commonQuestions"),QZHLoaclString(@"mine_familyManagement"),QZHLoaclString(@"mine_currentVersion")]];
+        _listArr = [NSMutableArray arrayWithArray:@[QZHLoaclString(@"mine_commonQuestions"),QZHLoaclString(@"mine_familyManagement"),QZHLoaclString(@"mine_currentVersion"),@"注销账号"]];
  
     }
     return _listArr;
@@ -168,9 +176,20 @@
 
 -(NSMutableArray *)logoArr{
     if (!_logoArr) {
-        _logoArr = [NSMutableArray arrayWithArray:@[@"lianxi",@"shezhi",@"shezhi"]];
+        _logoArr = [NSMutableArray arrayWithArray:@[@"lianxi",@"shezhi",@"shezhi",@"shezhi"]];
     }
     return _logoArr;
 }
+- (void)cancelAccount{
 
+    [[TuyaSmartUser sharedInstance] cancelAccount:^{
+        [[QZHHUD HUD] textHUDWithMessage:@"注销成功" afterDelay:0.5];
+        [QZHDataHelper removeForKey:QZHKEY_TOKEN];
+        [QZHROOT_DELEGATE setVC];
+        
+    } failure:^(NSError *error) {
+       [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+        
+    }];
+}
 @end

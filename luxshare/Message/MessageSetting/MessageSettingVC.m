@@ -177,6 +177,8 @@
             [weakSelf getMessagePushStatus];
         } failure:^(NSError *error) {
             sender.on = !sender.on;
+            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+
         }];
 
     }else if (sender.tag == 1) {
@@ -185,7 +187,7 @@
             // 设置成功
         } failure:^(NSError *error) {
             sender.on = !sender.on;
-
+            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
         }];
 
     }else if (sender.tag == 2) {
@@ -195,7 +197,7 @@
 
         } failure:^(NSError *error) {
             sender.on = !sender.on;
-
+            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
         }];
 
     }else if (sender.tag == 3) {
@@ -205,7 +207,7 @@
 
         } failure:^(NSError *error) {
             sender.on = !sender.on;
-
+            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
         }];
     }else{
     }
@@ -224,7 +226,7 @@
         }
 
     } failure:^(NSError *error) {
-
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
 - (void)getSubMessageStatus{
@@ -241,7 +243,7 @@
 
     } failure:^(NSError *error) {
         dispatch_group_leave(downloadGroup);
-
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
     dispatch_group_enter(downloadGroup);
 
@@ -253,7 +255,7 @@
 
     } failure:^(NSError *error) {
         dispatch_group_leave(downloadGroup);
-
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
     //消息通知类
     dispatch_group_enter(downloadGroup);
@@ -264,6 +266,8 @@
         dispatch_group_leave(downloadGroup);
 
     } failure:^(NSError *error) {
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+
         dispatch_group_leave(downloadGroup);
 
     }];

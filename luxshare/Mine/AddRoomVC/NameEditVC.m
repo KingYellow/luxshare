@@ -101,6 +101,8 @@
 - (void)addHomeRoom {
     QZHWS(weakSelf)
     [self.home addHomeRoomWithName:self.nameField.text success:^{
+        
+        [QZHNotification postNotificationName:QZHNotificationKeyK1 object:nil];
         NSLog(@"add room success");
         weakSelf.refresh();
         [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
@@ -109,7 +111,7 @@
 
         });
     } failure:^(NSError *error) {
-        NSLog(@"add room failure: %@", error);
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
 #pragma mark -- uicollection

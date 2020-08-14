@@ -231,7 +231,7 @@
         // homeModel 家庭信息
         NSLog(@"get home detail success");
     } failure:^(NSError *error) {
-        NSLog(@"get home detail failure: %@", error);
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
 -(TuyaSmartHome *)home{
@@ -271,7 +271,7 @@
         [self.memberArr addObjectsFromArray:memberList];
         [self.qzTableView reloadData];
     } failure:^(NSError *error) {
-        
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
 // 家庭下新增房间代理回调
@@ -309,7 +309,7 @@
             
         });
     } failure:^(NSError *error) {
-   [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+       [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
         
     }];
 }

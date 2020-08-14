@@ -265,7 +265,6 @@
        [self.qzTableView reloadData];
         NSLog(@"get home detail success");
     } failure:^(NSError *error) {
-        NSLog(@"get home detail failure: %@", error);
            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
@@ -291,7 +290,7 @@
         [weakSelf.qzTableView reloadData];
         NSLog(@"update home info success");
     } failure:^(NSError *error) {
-        NSLog(@"update home info failure: %@", error);
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
     
   
@@ -302,7 +301,7 @@
         [self.memberArr addObjectsFromArray:memberList];
         [self.qzTableView reloadData];
     } failure:^(NSError *error) {
-        
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
 // 家庭下新增房间代理回调

@@ -16,6 +16,8 @@
 @property (strong, nonatomic)UIButton *sendBtn;
 @property (strong, nonatomic)UIButton *submitBtn;
 @property (strong, nonatomic)UIButton *openBtn;
+@property (strong, nonatomic)TuyaSmartHomeManager *magager;
+
 @end
 
 @implementation RegisterSecondVC
@@ -206,7 +208,7 @@
             [[TuyaSmartUser sharedInstance] resetPasswordByPhone:self.conutry phoneNumber:self.account newPassword:self.passwordText.text code:self.codeText.text success:^{
                 [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"resetPasswordByPhonesuccess") afterDelay:0.5];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    
+                    [QZHDataHelper removeForKey:QZHKEY_TOKEN];
                     [QZHROOT_DELEGATE setVC];
                 });
 
@@ -217,6 +219,7 @@
             //邮箱
             [[TuyaSmartUser sharedInstance] resetPasswordByEmail:self.conutry email:self.account newPassword:self.passwordText.text code:self.codeText.text success:^{
                 [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"resetPasswordByPhonesuccess") afterDelay:0.5];
+                [QZHDataHelper removeForKey:QZHKEY_TOKEN];
                 [QZHROOT_DELEGATE setVC];
 
             } failure:^(NSError *error) {
@@ -231,22 +234,20 @@
             [[TuyaSmartUser sharedInstance] registerByPhone:self.conutry phoneNumber:self.account password:self.passwordText.text code:self.codeText.text success:^{
                    
                 //登录接口请求成功后
-               [QZHDataHelper saveValue:QZHKEY_TOKEN forKey:QZHKEY_TOKEN];
                [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"regist_success") afterDelay:0.5];
-                [QZHROOT_DELEGATE setVC];
-
+                [self getHomeList];
             } failure:^(NSError *error) {
-                NSLog(@"register failure: %@", error);
+               [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
             }];
             
         }else{
             [[TuyaSmartUser sharedInstance] registerByEmail:self.conutry email:self.account password:self.passwordText.text code:self.codeText.text success:^{
                     //登录接口请求成功后
-                   [QZHDataHelper saveValue:QZHKEY_TOKEN forKey:QZHKEY_TOKEN];
                    [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"regist_success") afterDelay:0.5];
-                    [QZHROOT_DELEGATE setVC];
+                    [self getHomeList];
+
             } failure:^(NSError *error) {
-                NSLog(@"register failure: %@", error);
+                [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
             }];
         }
     }
@@ -332,8 +333,25 @@
         [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"verify_code_invalid") afterDelay:0.5];
         }
     } failure:^(NSError *error) {
-            NSLog(@"check code failure: %@", error);
+            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
 
+#pragma mark -- 获取家庭
+- (void)getHomeList {
+   self.magager = [TuyaSmartHomeManager new];
+    [self.magager getHomeListWithSuccess:^(NSArray<TuyaSmartHomeModel *> *homes) {
+        if (homes.count == 0) {
+            [QZHROOT_DELEGATE showFamilyVC];
+        }else{
+            [QZHDataHelper saveValue:QZHKEY_TOKEN forKey:QZHKEY_TOKEN];
+            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"login_success") afterDelay:0.5];
+            [QZHROOT_DELEGATE setVC];
+        }
+
+    } failure:^(NSError *error) {
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+        
+    }];
+}
 @end

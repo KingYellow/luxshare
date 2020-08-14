@@ -52,9 +52,12 @@
 
 //文本颜色黑色：[87% 普通文字] [54% 减淡文字] [26% 禁用状态/提示文字] [12% 分隔线]
 #define QZHKIT_Color_BLACK_87 UIColorFromHexA(0x000000, 0.87)
+#define QZHKIT_Color_BLACK_70 UIColorFromHexA(0x000000, 0.7)
 #define QZHKIT_Color_BLACK_54 UIColorFromHexA(0x000000, 0.54)
 #define QZHKIT_Color_BLACK_26 UIColorFromHexA(0x000000, 0.26)
 #define QZHKIT_Color_BLACK_12 UIColorFromHexA(0x000000, 0.12)
+#define QZHKIT_Color_BLACK_0 UIColorFromHexA(0x000000, 0.01)
+
 
 //文本颜色白色：[100% 普通文字] [70% 减淡文字] [30% 禁用状态/提示文字] [12% 分隔线]
 #define QZH_KIT_Color_WHITE_100 UIColorFromHexA(0xffffff, 1)
@@ -182,5 +185,8 @@ static NSString * const QZHICON_HEADPIC = @"xxx";
 //    } \
 //    NSLocalizedStringWithDefaultValue(key, @"Localizable", bundle, key, nil); \
 //})
+
+static NSString * const QZHTUYATIMERALARM = @"alarmTimer";
+
 
 #endif /* DDMacro_h */

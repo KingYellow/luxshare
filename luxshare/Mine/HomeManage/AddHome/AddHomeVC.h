@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AddHomeVC : UIViewController
 @property (copy, nonatomic)dispatch_block_t refresh;
+@property (assign, nonatomic)BOOL isFirst;
 @end
 
 NS_ASSUME_NONNULL_END

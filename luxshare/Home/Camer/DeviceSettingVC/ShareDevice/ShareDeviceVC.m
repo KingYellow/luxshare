@@ -161,7 +161,7 @@
         [self getReceiveMemberList];
     } failure:^(NSError *error) {
 
-        NSLog(@"removeDeviceShare failure: %@", error);
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
 
     }];
 }

@@ -375,12 +375,13 @@
 -(void)checkNewMessage{
     QZHWS(weakSelf)
     [[TuyaSmartMessage new] getLatestMessageWithSuccess:^(NSDictionary *result) {
-        NSLog(@"get latesMessage success:%@", result);
+
         if ([result[@"family"] boolValue]) {
-            [weakSelf.qzTableView.mj_header beginRefreshing];
+            [weakSelf.modelArr removeAllObjects];
+            [weakSelf getMessageList:0];
         }
     } failure:^(NSError *error) {
-        NSLog(@"get message max time failure:%@", error);
+       [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
 - (BOOL)isallselexted{

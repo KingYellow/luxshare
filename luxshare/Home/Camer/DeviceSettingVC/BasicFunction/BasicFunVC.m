@@ -91,9 +91,9 @@
             
             int type = [[QZHDataHelper readValueForKey:@"talkType"] intValue];
             if (type) {
-                cell.tagLab.text = @"双向对讲";
-            }else{
                 cell.tagLab.text = @"单向对讲";
+            }else{
+                cell.tagLab.text = @"双向对讲";
             }
             cell.radioPosition = 1;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -120,16 +120,15 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = indexPath.row;
-    if (row == 0) {
-        DeviceInfoVC *vc = [[DeviceInfoVC alloc] init];
-        vc.deviceModel = self.deviceModel;
-        vc.homeModel = self.homeModel;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+
     if (row == 2) {
+        QZHWS(weakSelf)
         TalkTypeVC *vc = [[TalkTypeVC alloc] init];
         vc.deviceModel = self.deviceModel;
         vc.homeModel = self.homeModel;
+        vc.refresh = ^{
+            [weakSelf.qzTableView reloadData];
+        };
         [self.navigationController pushViewController:vc animated:YES];
     }
 
@@ -145,6 +144,8 @@
             [self.dpManager setValue:@(sender.on) forDP:TuyaSmartCameraBasicIndicatorDPName success:^(id result) {
                 [weakSelf.qzTableView reloadData];
             } failure:^(NSError *error) {
+                [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+
                 sender.on = !sender.on;
             }];
         }
@@ -155,6 +156,8 @@
                  [self.dpManager setValue:@(sender.on) forDP:TuyaSmartCameraBasicOSDDPName success:^(id result) {
                      [weakSelf.qzTableView reloadData];
                  } failure:^(NSError *error) {
+                     [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+
                      sender.on = !sender.on;
                  }];
              }

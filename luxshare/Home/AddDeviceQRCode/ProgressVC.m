@@ -41,16 +41,14 @@
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     [self UIConfig];
-    [self exp_addRightItemTitle:@"点击" itemIcon:@""];
+    QZHWS(weakSelf)
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [_circleV circleWithProgress:99 andIsAnimate:YES];
+        [weakSelf.circleV circleWithProgress:99 andIsAnimate:YES];
 
     });
 
 }
-- (void)exp_rightAction{
-    //设置进度,是否有动画效果
-}
+
 - (void)UIConfig{
     [self.view addSubview:self.titleLab];
     [self.view addSubview:self.subLab];
@@ -132,7 +130,6 @@
 - (UIImageView *)indicatorIMG{
     if (!_indicatorIMG) {
         _indicatorIMG = [[UIImageView alloc] init];
-        _indicatorIMG.backgroundColor = QZHColorRed;
     }
     return _indicatorIMG;
 }
@@ -208,9 +205,10 @@
         vc.isSuccess = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }else{
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
         NETResultVC *vc = [[NETResultVC alloc] init];
-         vc.isSuccess = NO;
-         [self.navigationController pushViewController:vc animated:YES];
+        vc.isSuccess = NO;
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 

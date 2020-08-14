@@ -61,8 +61,8 @@
     [self.view addSubview:self.shotBtn];
 QZHWS(weakSelf)
     self.timeLine.delegate = self;
-    self.playView.buttonBlock = ^(NSInteger tag, BOOL selected) {
-        [weakSelf onLivePlayHandle:tag isselected:selected];
+    self.playView.buttonBlock = ^(UIButton *sender, BOOL selected) {
+        [weakSelf onLivePlayHandle:sender.tag isselected:selected];
     };
     [self.view addSubview:self.playView];
     [self.view addSubview:self.timeLine];
@@ -131,6 +131,7 @@ QZHWS(weakSelf)
         });
     } failure:^(NSError *error) {
         // 获取配置信息失败
+           [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
 
@@ -299,7 +300,6 @@ QZHWS(weakSelf)
         [_shotBtn setTitle:@"截屏" forState:UIControlStateNormal];
         _shotBtn.backgroundColor = UIColor.whiteColor;
         [_shotBtn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
-
         [_shotBtn addTarget:self action:@selector(shotaction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _shotBtn;

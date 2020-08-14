@@ -100,6 +100,8 @@
 
     cell.nameLab.text = [model.creationDate jk_stringWithFormat:@"yyyy年MM月dd日"];
     cell.describeLab.text = [model.creationDate jk_stringWithFormat:@"hh:mm"];
+    cell.logoIMG.image = QZHLoadIcon(@"ic_all_video");
+
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 
@@ -148,15 +150,21 @@
     
         
     } completion:^(NSMutableArray<HXAlbumModel *> *albums) {
+        BOOL has = NO;
         for (HXAlbumModel *mm in albums) {
             NSString *appname = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
             if ([mm.albumName isEqualToString:appname]) {
+                has = YES;
                 [manager getPhotoListWithAlbumModel:albums.lastObject complete:^(NSArray *allList, NSArray *previewList, NSArray *photoList, NSArray *videoList, NSArray *dateList, HXPhotoModel *firstSelectModel, HXAlbumModel *albumModel) {
                 
                     weakSelf.listArr = videoList;
                     [weakSelf.qzTableView reloadData];
                 }];
             }
+        }
+        if (!has) {
+            self.listArr = [NSArray array];
+            [self.qzTableView reloadData];
         }
 
     }];

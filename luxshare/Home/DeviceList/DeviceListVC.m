@@ -156,18 +156,33 @@
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         NSIndexPath *path = [self.qzTableView indexPathForCell:cell];
         TuyaSmartDeviceModel *model = self.listArr[path.row];
-             TuyaSmartDevice *device = [TuyaSmartDevice deviceWithDeviceId:model.devId];
-QZHWS(weakSelf)
+        
+        QZHWS(weakSelf)
+        if (model.isShare) {
+            TuyaSmartHomeDeviceShare *deviceShare  = [[TuyaSmartHomeDeviceShare alloc] init];
+
+             [deviceShare removeReceiveDeviceShareWithDevId:model.devId success:^{
+
+                 [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
+                 weakSelf.updateDevice();
+                 
+             } failure:^(NSError *error) {
+
+                 [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+
+             }];
+        }else{
+            TuyaSmartDevice *device = [TuyaSmartDevice deviceWithDeviceId:model.devId];
             [device remove:^{
                 NSLog(@"remove success");
                 [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
                 weakSelf.updateDevice();
- 
+
             } failure:^(NSError *error) {
-                NSLog(@"remove failure: %@", error);
                    [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
             }];
-  
+        }
+
     }];
     [alertC addAction:action];
     [alertC addAction:action1];

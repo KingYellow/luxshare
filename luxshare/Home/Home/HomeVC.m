@@ -44,16 +44,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [QZHNotification addObserver:self selector:@selector(InfoChangeToUpdateList) name:QZHNotificationKeyK1 object:nil];
+
     self.selectIndex = 0;
     [self initConfig];
     [self getHomeList];
     
-    [QZHNotification addObserver:self selector:@selector(InfoChangeToUpdateList) name:QZHNotificationKeyK1 object:nil];
     
 }
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
-//    self.navigationItem.title     QZHLoaclString(@"home_manage");
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     self.leftBtn = [self exp_addLeftItemTitle:@"home" itemIcon:@""];
@@ -66,9 +66,8 @@
     [self.view addSubview:self.rightBtn];
     
     [QZHROOT_DELEGATE.window addSubview:self.qzTableView];
-    self.qzTableView.backgroundColor = QZHKIT_Color_BLACK_26;
-    self.qzTableView.frame = self.navigationController.view.frame;
-    self.qzTableView.hidden = YES;
+    self.qzTableView.frame = CGRectMake(0, -QZHScreenHeight, QZHScreenWidth, QZHScreenHeight);
+ 
     [self.topBtnsView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.mas_equalTo(0);
         make.right.mas_equalTo(-60);
@@ -83,8 +82,11 @@
 
 }
 -(void)exp_leftAction{
-    [self.qzTableView reloadData];
-    self.qzTableView.hidden = NO;
+    [self getHomeList];
+    self.qzTableView.backgroundColor = QZHKIT_Color_BLACK_26;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.qzTableView.frame = self.navigationController.view.frame;
+    }];
 }
  -(void)exp_rightAction{
      
@@ -118,46 +120,8 @@
                      [alertC addAction:action];
                      [self presentViewController:alertC animated:NO completion:nil];
      }
-     
-     
-//     ///监控网络状态
-//     [QZHReachability reachability:^(QZHNetworkStatus status, NSString *describe) {
-//         if (status == QZHNetworkStatusReachableViaWiFi) {
-//             //TODO: 有WIFI
-//             [YCXMenu setTintColor:QZHKIT_COLOR_SKIN];
-//             [YCXMenu setSelectedColor:QZH_KIT_Color_WHITE_70];
-//             if ([YCXMenu isShow]){
-//                 [YCXMenu dismissMenu];
-//             } else {
-//                 [YCXMenu showMenuInView:self.tabBarController.view fromRect:CGRectMake(self.navigationController.view.frame.size.width - 50, QZHNAVI_HEIGHT, 50, 0) menuItems:self.items selected:^(NSInteger index, YCXMenuItem *item) {
-//                     NSLog(@"%@ %ld",item,index);
-//                     if (item.tag == 100) {
-//                         AddQRCodeVC *vc = [[AddQRCodeVC alloc] init];
-//                         vc.homemodel = self.listArr[self.selectIndex];
-//                         [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
-//                     }
-//             
-//                     if (item.tag == 101) {
-//                          AddDeviceWifiVC *vc = [[AddDeviceWifiVC alloc] init];
-//                          vc.homemodel = self.listArr[self.selectIndex];
-//                          [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
-//                     }
-//                 }];
-//             }
-//         }else{
-//             UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"提示" message:@"需要开启手机wifi网络连接,才能添加设备" preferredStyle:UIAlertControllerStyleAlert];
-//             UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-//                 
-//             }];
-//             [alertC addAction:action];
-//             [self presentViewController:alertC animated:NO completion:nil];
-//             
-//         }
-//     }];
-     
 
 }
-//初始化
 //添加控制器
 -(void)loadVcs:(TuyaSmartHome *)home{
     QZHWS(weakSelf)
@@ -192,9 +156,7 @@
         [vcArr addObject:vc];
     }
     
-    
     self.arrVcs = [NSArray arrayWithArray:vcArr];
-
     self.pageVc = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     [self.pageVc setViewControllers:@[self.arrVcs[0]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
     self.pageVc.delegate = self;
@@ -238,11 +200,7 @@
     if (previousIndex == self.currentIndex) {
         
     }else{
-//        UIButton *btn_current = self.arrBtn[self.currentIndex];
-//        UIButton *btn_old = self.arrBtn[previousIndex];
-//        btn_old.selected = NO;
-//        btn_current.selected = YES;
-        
+
         self.oldSelectIndex = self.currentIndex;
         [UIView animateWithDuration:0.25 animations:^{
             [self.topBtnsView setSelectButtonWithTag:self.oldSelectIndex];
@@ -314,7 +272,6 @@
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     if (section == 0) {
-        
         HomeSelectCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
         TuyaSmartHomeModel *model = self.listArr[row];
         
@@ -397,9 +354,8 @@
                  [self.leftBtn setTitle:model.name forState:UIControlStateNormal];
                  self.selectIndex = row;
                  self.topBtnsView.titleArray = arrm;
-
                 [self loadVcs:self.currentHome];
-                 self.qzTableView.hidden = YES;
+                 [self dismiss];
                  
              } failure:^(NSError *error) {
                     [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
@@ -407,7 +363,7 @@
         }
  
     }else{
-        self.qzTableView.hidden = YES;
+        [self dismiss];
         AddHomeVC *vc = [[AddHomeVC alloc] init];
         vc.refresh = ^{
             
@@ -478,6 +434,10 @@
         [weakSelf.listArr removeAllObjects];
         [weakSelf.listArr addObjectsFromArray:homes];
         [weakSelf.qzTableView reloadData];
+        if (self.listArr.count == 0) {
+            [[QZHHUD HUD] textHUDWithMessage:@"暂无家庭" afterDelay:1.0];
+            return ;
+        }
          TuyaSmartHomeModel *model = self.listArr[self.selectIndex];
          self.currentHome =[TuyaSmartHome homeWithHomeId:model.homeId];
          self.currentHome.delegate = self;
@@ -499,7 +459,7 @@
 
 
     } failure:^(NSError *error) {
-        NSLog(@"get home list failure: %@", error);
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
 //加入拒绝家庭邀请
@@ -580,12 +540,17 @@
 - (void)serviceConnectedSuccess {
     // 刷新当前家庭UI
 }
-
+//房间信息更新时刷新 自定义通知
 - (void)InfoChangeToUpdateList{
     [self getHomeList];
 }
 - (void)dismiss{
-    self.qzTableView.hidden = YES;
+    self.qzTableView.backgroundColor = QZHKIT_Color_BLACK_0;
+
+    [UIView animateWithDuration:0.3 animations:^{
+        self.qzTableView.frame = CGRectMake(0,-QZHScreenHeight, QZHScreenWidth, QZHScreenHeight);
+    }];
+
 }
 - (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch*)touch {
 

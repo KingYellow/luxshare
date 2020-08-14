@@ -147,7 +147,7 @@
            }
     }else if(section == 1){
         RegisterVC *vc = [[RegisterVC alloc] init];
-        vc.title = QZHLoaclString(@"login_resetPassword");
+        vc.titleText = QZHLoaclString(@"login_resetPassword");
         [self.navigationController pushViewController:vc animated:YES];
         
     }else if(section == 2){
@@ -156,7 +156,7 @@
             [QZHDataHelper removeForKey:QZHKEY_TOKEN];
                  [QZHROOT_DELEGATE setVC];
            } failure:^(NSError *error) {
-               NSLog(@"logOut failure: %@", error);
+               [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
            }];
      
     }
@@ -248,7 +248,6 @@
         NSLog(@"updateNickname success");
         [weakSelf.qzTableView reloadData];
     } failure:^(NSError *error) {
-        NSLog(@"updateNickname failure: %@", error);
            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }

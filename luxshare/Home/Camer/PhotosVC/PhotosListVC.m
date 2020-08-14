@@ -97,7 +97,7 @@
     cell.IMGView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectAction:)];
     [cell.IMGView addGestureRecognizer:tap];
-    
+    cell.logoIMG.image = QZHLoadIcon(@"ic_all_photo_n");
     cell.nameLab.text = [model.creationDate jk_stringWithFormat:@"yyyy年MM月dd日"];
     cell.describeLab.text = [model.creationDate jk_stringWithFormat:@"hh:mm"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -138,16 +138,21 @@
     
         
     } completion:^(NSMutableArray<HXAlbumModel *> *albums) {
+        BOOL has = NO;
         for (HXAlbumModel *mm in albums) {
             NSString *appname = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
             if ([mm.albumName isEqualToString:appname]) {
-                
+                has = YES;
                 [manager getPhotoListWithAlbumModel:albums.lastObject complete:^(NSArray *allList, NSArray *previewList, NSArray *photoList, NSArray *videoList, NSArray *dateList, HXPhotoModel *firstSelectModel, HXAlbumModel *albumModel) {
             
                     weakSelf.listArr = photoList;
                     [weakSelf.qzTableView reloadData];
                 }];
             }
+        }
+        if (!has) {
+            self.listArr = [NSArray array];
+            [self.qzTableView reloadData];
         }
 
     }];

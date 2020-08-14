@@ -25,13 +25,13 @@
     
     [self.leftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(QZHScreenWidth/2);
-        make.height.mas_equalTo(60 * QZHScaleWidth);
+        make.bottom.mas_equalTo(0);
         make.left.top.mas_equalTo(0);
     }];
 
     [self.rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(QZHScreenWidth/2);
-        make.height.mas_equalTo(60 * QZHScaleWidth);
+        make.bottom.mas_equalTo(0);
         make.right.top.mas_equalTo(0);
 
     }];
@@ -59,10 +59,7 @@
         _rightBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_BIG_TITLE;
         [_rightBtn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
         [_rightBtn setImage:QZHLoadIcon(@"ic_sleep_n") forState:UIControlStateNormal];
-
-        [_rightBtn setImageEdgeInsets: UIEdgeInsetsMake(30, 30, 10, 10)];
         [_rightBtn jk_setImagePosition:LXMImagePositionLeft spacing:15];
-
         _rightBtn.tag = 1;
         [_rightBtn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
 

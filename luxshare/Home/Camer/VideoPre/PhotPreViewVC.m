@@ -59,8 +59,8 @@
 -(UIButton *)horizontalBtn{
     if (!_horizontalBtn) {
         _horizontalBtn = [[UIButton alloc] init];
-        [_horizontalBtn setImage:QZHLoadIcon(@"pay_normal") forState:UIControlStateNormal];
-        [_horizontalBtn setImage:QZHLoadIcon(@"pay_selected") forState:UIControlStateSelected];
+        [_horizontalBtn setImage:QZHLoadIcon(@"ic_full_screen") forState:UIControlStateNormal];
+        [_horizontalBtn setImage:QZHLoadIcon(@"ic_part_screen") forState:UIControlStateSelected];
         _horizontalBtn.tag = 3;
         [_horizontalBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
     }

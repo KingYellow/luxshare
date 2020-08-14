@@ -13,7 +13,7 @@
 -(instancetype)init{
     if (self == [super init]) {
         [self creatSubViews];
-        self.backgroundColor = QZHColorBlack;
+        self.backgroundColor = UIColor.blackColor;
     }
     return self;
 }
@@ -28,12 +28,9 @@
     [self addSubview:self.batteryIMG];
     [self addSubview:self.recordProgressView];
     QZHViewRadius(self.recordProgressView, 20);
+    QZHViewRadius(self.definitionBtn, 15);
+    QZHViewRadius(self.horizontalBtn, 15);
 
-
-//    [self.preView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
-//    }];
-    
     [self.playBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(60);
         make.height.mas_equalTo(40);
@@ -48,28 +45,30 @@
     [self.voiceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(30);
         make.height.mas_equalTo(30);
-        make.left.mas_equalTo(50);
-        make.bottom.mas_equalTo(-30);
+        make.left.mas_equalTo(10);
+        make.bottom.mas_equalTo(-15);
 
     }];
+    
     [self.definitionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(60);
-        make.height.mas_equalTo(25);
-        make.left.mas_equalTo(self.voiceBtn.mas_right).offset(30);
-        make.bottom.mas_equalTo(-30);
+        make.width.mas_equalTo(50);
+        make.height.mas_equalTo(30);
+        make.left.mas_equalTo(self.voiceBtn.mas_right).offset(10);
+        make.bottom.mas_equalTo(-15);
 
     }];
+    
     [self.horizontalBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(30);
         make.height.mas_equalTo(30);
-        make.right.mas_equalTo(-30);
-        make.bottom.mas_equalTo(-30);
+        make.right.mas_equalTo(-20);
+        make.bottom.mas_equalTo(-15);
 
     }];
     [self.wifiIMG mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(20);
         make.height.mas_equalTo(20);
-        make.right.mas_equalTo(-20);
+        make.right.mas_equalTo(-15);
         make.top.mas_equalTo(20);
 
     }];
@@ -120,6 +119,7 @@
         _definitionBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
         _definitionBtn.tag = 2;
         [_definitionBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+        _definitionBtn.backgroundColor = QZHKIT_Color_BLACK_70;
     }
     return _definitionBtn;
 }
@@ -130,6 +130,8 @@
         [_horizontalBtn setImage:QZHLoadIcon(@"ic_part_screen") forState:UIControlStateSelected];
         _horizontalBtn.tag = 3;
         [_horizontalBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+        _horizontalBtn.contentMode = UIViewContentModeScaleToFill;
+        _horizontalBtn.backgroundColor = QZHKIT_Color_BLACK_70;
     }
     return _horizontalBtn;
 }
@@ -162,7 +164,6 @@
 }
 
 - (void)buttonAction:(UIButton *)sender{
-    sender.selected = !sender.selected;
     //sender.tag == 0) {
         //播放
     //sender.tag == 1){
@@ -172,7 +173,8 @@
     //sender.tag == 3){
         //横屏
     
-    self.buttonBlock(sender.tag,sender.selected);
+    self.buttonBlock(sender,sender.selected);
 }
+
 
 @end

@@ -19,6 +19,8 @@
 @property (strong, nonatomic)TuyaSmartDevice *device;
 @property (copy, nonatomic)NSArray *deviceArr;
 @property (strong, nonatomic)FormatProgressView *progessView;
+@property (strong, nonatomic)NSTimer *timer;
+@property (assign, nonatomic)BOOL hasSDC;
 @end
 
 @implementation StorageVC
@@ -26,17 +28,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initConfig];
+    
 }
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
     self.navigationItem.title = QZHLoaclString(@"setting_storage");
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
-    [self UIConfig];
     self.dpManager = [[TuyaSmartCameraDPManager alloc] initWithDeviceId:self.deviceModel.devId];
     [self.dpManager addObserver:self];
     self.device = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId];
     self.deviceArr = [self storageSize];
+    [self UIConfig];
+
 }
 - (void)UIConfig{
     
@@ -143,7 +147,6 @@
         [view addSubview:lab];
         return view;
 
-
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
    
@@ -183,26 +186,26 @@
         [self creatActionSheet];
     }
     if (section == 2) {
-        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"是否确认格式化" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        //enum    1：正常；2：异常（SD卡损坏或格式不对）；3：空间不足；4：正在格式化；5：无SD卡
+        int status = [[self.dpManager valueForDP:TuyaSmartCameraSDCardStatusDPName] intValue];
+        
+        if (status == 5) {
+            [[QZHHUD HUD] textHUDWithMessage:@"该设备没安装存储卡" afterDelay:1.0];
+            return;
+        }
+        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"是否确认格式化" message:@"格式化后不能恢复,勤谨慎操作!" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            [self.navigationController.view addSubview:self.progessView];
             
         }];
         UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-            
-            [self.dpManager setValue:@(YES) forDP:TuyaSmartCameraSDCardFormatDPName success:^(id result) {
-                
-            } failure:^(NSError *error) {
-                
-            }];
+            self.progessView.numberLab.text = @"0%";
+            [self formatAction];
         }];
         [alertC addAction:action];
         [alertC addAction:action1];
         [self presentViewController:alertC animated:NO completion:nil];
     }
- 
 }
-
 
 #pragma mark -- action
 - (void)valueChange:(UISwitch *) sender{
@@ -214,11 +217,10 @@
             [weakSelf.qzTableView reloadData];
         } failure:^(NSError *error) {
             sender.on = !sender.on;
+            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
         }];
     }
-
 }
-
 
 - (NSArray *)storageSize{
     NSMutableArray *arr = [NSMutableArray array];
@@ -239,7 +241,7 @@
         }
     }
     if (arr.count != 3) {
-        return @[@"",@"",@""];
+        return @[@"0K",@"0K",@"0K"];
     }
     return arr;
 }
@@ -247,6 +249,10 @@
 -(FormatProgressView *)progessView{
     if (!_progessView) {
         _progessView = [[FormatProgressView alloc] init];
+        self.progessView.backgroundColor = QZHKIT_Color_BLACK_26;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
+        self.progessView.userInteractionEnabled = YES;
+        [self.progessView addGestureRecognizer:tap];
         _progessView.frame = self.navigationController.view.bounds;
     }
     return _progessView;
@@ -290,5 +296,65 @@
 
     //相当于之前的[actionSheet show];
     [self presentViewController:actionSheet animated:YES completion:nil];
+}
+
+- (void)dismiss{
+    [self.progessView removeFromSuperview];
+    [self.timer invalidate];
+    self.timer = nil;
+
+}
+
+- (void)formatAction {
+    __weak typeof(self) weakSelf = self;
+    [self.dpManager setValue:@(YES) forDP:TuyaSmartCameraSDCardFormatDPName success:^(id result) {
+        [weakSelf.navigationController.view addSubview:weakSelf.progessView];
+        weakSelf.timer  = [NSTimer scheduledTimerWithTimeInterval:1.0 target:weakSelf selector:@selector(handleFormatting) userInfo:nil repeats:YES];
+          // 开始格式化成功，监听格式化进度
+    } failure:^(NSError *error) {
+        // 网络错误
+           [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+    }];
+}
+
+- (void)handleFormatting {
+    QZHWS(weakSelf)
+    
+    [self.dpManager valueForDP:TuyaSmartCameraSDCardFormatStateDPName success:^(id result) {
+          // 主动查询格式化进度，因为部分厂商的设备不会自动上报进度
+        int status = [result intValue];
+            if (status >= 0 && status < 100) {
+                self.progessView.numberLab.text = [[NSString stringWithFormat:@"%d",status] stringByAppendingString:@"%"];
+            } else if (status == 100) {
+                self.progessView.numberLab.text = [[NSString stringWithFormat:@"%d",status] stringByAppendingString:@"%"];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [[QZHHUD HUD] textHUDWithMessage:@"格式化成功" afterDelay:1.0];
+                     [self dismiss];
+                       // 格式化成功后，主动获取设备的容量信息
+                     [self getStorageInfo];
+                });
+ 
+            } else{
+                [[QZHHUD HUD] textHUDWithMessage:@"格式化失败" afterDelay:1.0];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [weakSelf dismiss];
+                });
+
+            }
+        
+    } failure:^(NSError *error) {
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+    }];
+
+
+
+}
+
+- (void)getStorageInfo {
+    __weak typeof(self) weakSelf = self;
+
+    weakSelf.deviceArr = [self storageSize];
+    [weakSelf.qzTableView reloadData];
+        
 }
 @end

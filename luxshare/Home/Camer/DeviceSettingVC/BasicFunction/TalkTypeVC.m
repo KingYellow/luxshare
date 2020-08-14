@@ -50,6 +50,7 @@
 }
 -(void)exp_rightAction{
     [QZHDataHelper saveValue:@(self.selectIndex) forKey:@"talkType"];
+    self.refresh();
     [self.navigationController popViewControllerAnimated:YES];
 
 }
@@ -80,7 +81,7 @@
     cell.selectBtn.tag = row;
     [cell.selectBtn addTarget:self action:@selector(selectAction:) forControlEvents:UIControlEventTouchUpInside];
 
-    if (self.selectIndex == row) {
+    if (self.selectIndex != row) {
         cell.selectBtn.selected = YES;
     }else{
         cell.selectBtn.selected = NO;
@@ -125,12 +126,13 @@
 }
 
 - (void)selectAction:(UIButton *)sender{
-    if (sender.tag == self.selectIndex) {
-        
+
+    if (sender.tag == 0) {
+        self.selectIndex = 1;
     }else{
-        self.selectIndex = sender.tag;
-        [self.qzTableView reloadData];
+        self.selectIndex = 0;
     }
+    [self.qzTableView reloadData];
 }
 -(UILabel *)tipLab{
     if (!_tipLab) {

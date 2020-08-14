@@ -47,6 +47,7 @@
 		8962F21F24BEF11000D85A65 /* DeviceLogoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8962F21E24BEF11000D85A65 /* DeviceLogoCell.m */; };
 		8962F22224BEFBD400D85A65 /* SelectRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8962F22124BEFBD400D85A65 /* SelectRoomCell.m */; };
 		8962F22524BEFC3600D85A65 /* SelectRooeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8962F22424BEFC3600D85A65 /* SelectRooeVC.m */; };
+		8969133C24DCFC7100D74DDE /* FirstRegistAddHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8969133B24DCFC7100D74DDE /* FirstRegistAddHomeVC.m */; };
 		896C04D424D01086007BC01C /* WeekSelectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 896C04D324D01086007BC01C /* WeekSelectVC.m */; };
 		8970BE7024B97C1E008C5D76 /* CameraPlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8970BE6F24B97C1E008C5D76 /* CameraPlayView.m */; };
 		8970BE7424B99D3B008C5D76 /* PhotosVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8970BE7324B99D3B008C5D76 /* PhotosVC.m */; };
@@ -59,6 +60,8 @@
 		897806CF24B8429000BE79EB /* DeviceSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 897806CE24B8429000BE79EB /* DeviceSettingVC.m */; };
 		897806D424B8439900BE79EB /* SettingDefaultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 897806D324B8439900BE79EB /* SettingDefaultCell.m */; };
 		897806D724B8485400BE79EB /* SettingSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 897806D624B8485400BE79EB /* SettingSwitchCell.m */; };
+		897CE2DD24D511D000055681 /* DeceteAlarmACVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 897CE2DC24D511D000055681 /* DeceteAlarmACVC.m */; };
+		8980891324E286F8003BA61A /* MaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8980891224E286F8003BA61A /* MaskView.m */; };
 		8987856224C518750012B71B /* ElectricManageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8987856124C518750012B71B /* ElectricManageVC.m */; };
 		8987856524C51B680012B71B /* ElectricManageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8987856424C51B680012B71B /* ElectricManageCell.m */; };
 		898C4EA124A1D6B800A574E0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 898C4EA324A1D6B800A574E0 /* InfoPlist.strings */; };
@@ -67,6 +70,9 @@
 		898C4EB424A1F97A00A574E0 /* UMengEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 898C4EB324A1F97A00A574E0 /* UMengEngine.m */; };
 		898C4EB624A1FD4300A574E0 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898C4EB524A1FD4300A574E0 /* UserNotifications.framework */; };
 		898CF6C024D3A146009B7232 /* RecordProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 898CF6BF24D3A146009B7232 /* RecordProgressView.m */; };
+		898D60A124DB8DF10093E8F9 /* QZHTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 898D60A024DB8DF10093E8F9 /* QZHTimeCell.m */; };
+		898D60A424DB97070093E8F9 /* AlarmTimeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 898D60A324DB97070093E8F9 /* AlarmTimeListCell.m */; };
+		898D60A724DB97270093E8F9 /* AlarmTimeListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 898D60A624DB97270093E8F9 /* AlarmTimeListVC.m */; };
 		8990114024B40B5C0097A401 /* DeviceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8990113F24B40B5C0097A401 /* DeviceListCell.m */; };
 		8990114424B4133C0097A401 /* CameraOnLiveVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8990114324B4133C0097A401 /* CameraOnLiveVC.m */; };
 		8990114824B41E7D0097A401 /* CameraTBtnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8990114724B41E7D0097A401 /* CameraTBtnCell.m */; };
@@ -89,6 +95,7 @@
 		89B1324724BBEAF200869B3F /* PhotoListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B1324624BBEAF200869B3F /* PhotoListCell.m */; };
 		89B1324A24BBF91700869B3F /* PhotosListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B1324924BBF91700869B3F /* PhotosListVC.m */; };
 		89B1324D24BC1ABB00869B3F /* VideoListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B1324C24BC1ABB00869B3F /* VideoListVC.m */; };
+		89CDB15524E15EC300DE992D /* AlarmAreaVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 89CDB15424E15EC300DE992D /* AlarmAreaVC.m */; };
 		89DB09D224A0591000324E36 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DB09D124A0591000324E36 /* AppDelegate.m */; };
 		89DB09DD24A0591700324E36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89DB09DC24A0591700324E36 /* Assets.xcassets */; };
 		89DB09E024A0591700324E36 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89DB09DE24A0591700324E36 /* LaunchScreen.storyboard */; };
@@ -195,6 +202,7 @@
 		89FD4B9624C7DC2200084E29 /* ShareDeviceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FD4B9524C7DC2100084E29 /* ShareDeviceVC.m */; };
 		89FD4B9924C7EE2C00084E29 /* AddSharerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FD4B9824C7EE2C00084E29 /* AddSharerVC.m */; };
 		89FD4B9C24C825D500084E29 /* UpdateDeviceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FD4B9B24C825D500084E29 /* UpdateDeviceVC.m */; };
+		89FE1BF324DA96BB008FB0AC /* AlarmTimerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FE1BF224DA96BB008FB0AC /* AlarmTimerVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -278,6 +286,8 @@
 		8962F22124BEFBD400D85A65 /* SelectRoomCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectRoomCell.m; sourceTree = "<group>"; };
 		8962F22324BEFC3600D85A65 /* SelectRooeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectRooeVC.h; sourceTree = "<group>"; };
 		8962F22424BEFC3600D85A65 /* SelectRooeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectRooeVC.m; sourceTree = "<group>"; };
+		8969133A24DCFC7100D74DDE /* FirstRegistAddHomeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstRegistAddHomeVC.h; sourceTree = "<group>"; };
+		8969133B24DCFC7100D74DDE /* FirstRegistAddHomeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstRegistAddHomeVC.m; sourceTree = "<group>"; };
 		896C04D224D01086007BC01C /* WeekSelectVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeekSelectVC.h; sourceTree = "<group>"; };
 		896C04D324D01086007BC01C /* WeekSelectVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeekSelectVC.m; sourceTree = "<group>"; };
 		8970BE6E24B97C1E008C5D76 /* CameraPlayView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraPlayView.h; sourceTree = "<group>"; };
@@ -301,6 +311,10 @@
 		897806D324B8439900BE79EB /* SettingDefaultCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingDefaultCell.m; sourceTree = "<group>"; };
 		897806D524B8485400BE79EB /* SettingSwitchCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingSwitchCell.h; sourceTree = "<group>"; };
 		897806D624B8485400BE79EB /* SettingSwitchCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingSwitchCell.m; sourceTree = "<group>"; };
+		897CE2DB24D511D000055681 /* DeceteAlarmACVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeceteAlarmACVC.h; sourceTree = "<group>"; };
+		897CE2DC24D511D000055681 /* DeceteAlarmACVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeceteAlarmACVC.m; sourceTree = "<group>"; };
+		8980891124E286F8003BA61A /* MaskView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaskView.h; sourceTree = "<group>"; };
+		8980891224E286F8003BA61A /* MaskView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MaskView.m; sourceTree = "<group>"; };
 		8987856024C518750012B71B /* ElectricManageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElectricManageVC.h; sourceTree = "<group>"; };
 		8987856124C518750012B71B /* ElectricManageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElectricManageVC.m; sourceTree = "<group>"; };
 		8987856324C51B680012B71B /* ElectricManageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElectricManageCell.h; sourceTree = "<group>"; };
@@ -317,6 +331,12 @@
 		898C4EB524A1FD4300A574E0 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		898CF6BE24D3A146009B7232 /* RecordProgressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordProgressView.h; sourceTree = "<group>"; };
 		898CF6BF24D3A146009B7232 /* RecordProgressView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecordProgressView.m; sourceTree = "<group>"; };
+		898D609F24DB8DF10093E8F9 /* QZHTimeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QZHTimeCell.h; sourceTree = "<group>"; };
+		898D60A024DB8DF10093E8F9 /* QZHTimeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QZHTimeCell.m; sourceTree = "<group>"; };
+		898D60A224DB97070093E8F9 /* AlarmTimeListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlarmTimeListCell.h; sourceTree = "<group>"; };
+		898D60A324DB97070093E8F9 /* AlarmTimeListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlarmTimeListCell.m; sourceTree = "<group>"; };
+		898D60A524DB97270093E8F9 /* AlarmTimeListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlarmTimeListVC.h; sourceTree = "<group>"; };
+		898D60A624DB97270093E8F9 /* AlarmTimeListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlarmTimeListVC.m; sourceTree = "<group>"; };
 		8990113E24B40B5C0097A401 /* DeviceListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceListCell.h; sourceTree = "<group>"; };
 		8990113F24B40B5C0097A401 /* DeviceListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceListCell.m; sourceTree = "<group>"; };
 		8990114224B4133C0097A401 /* CameraOnLiveVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraOnLiveVC.h; sourceTree = "<group>"; };
@@ -362,6 +382,8 @@
 		89B1324924BBF91700869B3F /* PhotosListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotosListVC.m; sourceTree = "<group>"; };
 		89B1324B24BC1ABB00869B3F /* VideoListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoListVC.h; sourceTree = "<group>"; };
 		89B1324C24BC1ABB00869B3F /* VideoListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoListVC.m; sourceTree = "<group>"; };
+		89CDB15324E15EC300DE992D /* AlarmAreaVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlarmAreaVC.h; sourceTree = "<group>"; };
+		89CDB15424E15EC300DE992D /* AlarmAreaVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlarmAreaVC.m; sourceTree = "<group>"; };
 		89DB09CD24A0591000324E36 /* luxshare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = luxshare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89DB09D024A0591000324E36 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		89DB09D124A0591000324E36 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -577,6 +599,8 @@
 		89FD4B9824C7EE2C00084E29 /* AddSharerVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddSharerVC.m; sourceTree = "<group>"; };
 		89FD4B9A24C825D500084E29 /* UpdateDeviceVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateDeviceVC.h; sourceTree = "<group>"; };
 		89FD4B9B24C825D500084E29 /* UpdateDeviceVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateDeviceVC.m; sourceTree = "<group>"; };
+		89FE1BF124DA96BB008FB0AC /* AlarmTimerVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlarmTimerVC.h; sourceTree = "<group>"; };
+		89FE1BF224DA96BB008FB0AC /* AlarmTimerVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlarmTimerVC.m; sourceTree = "<group>"; };
 		A7347066D27901DF8DC873DE /* Pods-luxshare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-luxshare.release.xcconfig"; path = "Target Support Files/Pods-luxshare/Pods-luxshare.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -628,6 +652,16 @@
 			children = (
 				8902258624C17D9E0060DEDF /* DeceteAlarmVC.h */,
 				8902258724C17D9E0060DEDF /* DeceteAlarmVC.m */,
+				897CE2DB24D511D000055681 /* DeceteAlarmACVC.h */,
+				897CE2DC24D511D000055681 /* DeceteAlarmACVC.m */,
+				898D60A524DB97270093E8F9 /* AlarmTimeListVC.h */,
+				898D60A624DB97270093E8F9 /* AlarmTimeListVC.m */,
+				89FE1BF124DA96BB008FB0AC /* AlarmTimerVC.h */,
+				89FE1BF224DA96BB008FB0AC /* AlarmTimerVC.m */,
+				898D60A224DB97070093E8F9 /* AlarmTimeListCell.h */,
+				898D60A324DB97070093E8F9 /* AlarmTimeListCell.m */,
+				898D609F24DB8DF10093E8F9 /* QZHTimeCell.h */,
+				898D60A024DB8DF10093E8F9 /* QZHTimeCell.m */,
 			);
 			path = DeceteAlarm;
 			sourceTree = "<group>";
@@ -927,6 +961,7 @@
 		897806D024B842A900BE79EB /* DeviceSettingVC */ = {
 			isa = PBXGroup;
 			children = (
+				89CDB15224E15EAC00DE992D /* AlarmArea */,
 				89FD4B9324C7DBAF00084E29 /* ShareDevice */,
 				8987855F24C5185C0012B71B /* ElectricManage */,
 				8902258924C18DAF0060DEDF /* Storage */,
@@ -1066,6 +1101,17 @@
 				89ADD6A724ADB36D00817129 /* RoomDetailVC.m */,
 			);
 			path = RoomDetail;
+			sourceTree = "<group>";
+		};
+		89CDB15224E15EAC00DE992D /* AlarmArea */ = {
+			isa = PBXGroup;
+			children = (
+				89CDB15324E15EC300DE992D /* AlarmAreaVC.h */,
+				89CDB15424E15EC300DE992D /* AlarmAreaVC.m */,
+				8980891124E286F8003BA61A /* MaskView.h */,
+				8980891224E286F8003BA61A /* MaskView.m */,
+			);
+			path = AlarmArea;
 			sourceTree = "<group>";
 		};
 		89DB09C424A0591000324E36 = {
@@ -1304,6 +1350,8 @@
 				89F7D09524A5D70B007B5A32 /* RegisterSecondVC.m */,
 				89E591A224A3260400EEB26A /* ResetPWVC.h */,
 				89E591A324A3260400EEB26A /* ResetPWVC.m */,
+				8969133A24DCFC7100D74DDE /* FirstRegistAddHomeVC.h */,
+				8969133B24DCFC7100D74DDE /* FirstRegistAddHomeVC.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -2005,6 +2053,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89F7D08624A5C3FB007B5A32 /* UIImage+Exp.m in Sources */,
+				898D60A424DB97070093E8F9 /* AlarmTimeListCell.m in Sources */,
 				898CF6C024D3A146009B7232 /* RecordProgressView.m in Sources */,
 				8962F20D24BEE21E00D85A65 /* DateListTools.m in Sources */,
 				89F7D08F24A5C3FB007B5A32 /* EasyEmptyTypes.m in Sources */,
@@ -2016,6 +2065,7 @@
 				89F7D08924A5C3FB007B5A32 /* EasyEmptyPart.m in Sources */,
 				89DB0AC824A05A3900324E36 /* QZHUserModel.m in Sources */,
 				893A40D124C95F1800F51261 /* WarningDetailVC.m in Sources */,
+				898D60A724DB97270093E8F9 /* AlarmTimeListVC.m in Sources */,
 				89B1324724BBEAF200869B3F /* PhotoListCell.m in Sources */,
 				897806CC24B7F7F800BE79EB /* DeviceWifiVC.m in Sources */,
 				894B54F624CE606600D5C0D2 /* MessageSettingVC.m in Sources */,
@@ -2032,10 +2082,12 @@
 				89E591C224A3360C00EEB26A /* SCIndexViewConfiguration.m in Sources */,
 				8990114024B40B5C0097A401 /* DeviceListCell.m in Sources */,
 				897806D424B8439900BE79EB /* SettingDefaultCell.m in Sources */,
+				8969133C24DCFC7100D74DDE /* FirstRegistAddHomeVC.m in Sources */,
 				89E591BD24A3360C00EEB26A /* AddressBookTVC.m in Sources */,
 				89F7D08D24A5C3FB007B5A32 /* UIView+EasyShowExt.m in Sources */,
 				89DB0AB824A05A3900324E36 /* DDLoginVC.m in Sources */,
 				8962F21624BEE41900D85A65 /* BackPlayVC.m in Sources */,
+				897CE2DD24D511D000055681 /* DeceteAlarmACVC.m in Sources */,
 				89DB0ACE24A05A3900324E36 /* DDPullCell.m in Sources */,
 				89DB0AB024A05A3900324E36 /* MineVC.m in Sources */,
 				8990115124B443B20097A401 /* CameraListCell.m in Sources */,
@@ -2051,6 +2103,7 @@
 				89F7D07A24A5C3FA007B5A32 /* QZHReachability.m in Sources */,
 				8962F21024BEE21E00D85A65 /* UIColor+Hex.m in Sources */,
 				89160D6D24A6FDD100511F84 /* MessageVC.m in Sources */,
+				8980891324E286F8003BA61A /* MaskView.m in Sources */,
 				89DB0AD424A05A3900324E36 /* TOTAImageView.m in Sources */,
 				89B1324D24BC1ABB00869B3F /* VideoListVC.m in Sources */,
 				89DB0ABC24A05A3900324E36 /* UIView+EasyNavigationExt.m in Sources */,
@@ -2063,8 +2116,10 @@
 				8995273524AB0B300038E765 /* HomeMessageVC.m in Sources */,
 				89DB0AA324A05A3900324E36 /* DDListCell.m in Sources */,
 				895DFE1F24B05651004F986D /* AddQRCodeVC.m in Sources */,
+				89CDB15524E15EC300DE992D /* AlarmAreaVC.m in Sources */,
 				8995272B24AACDE70038E765 /* QZHFieldCell.m in Sources */,
 				89DB09D224A0591000324E36 /* AppDelegate.m in Sources */,
+				898D60A124DB8DF10093E8F9 /* QZHTimeCell.m in Sources */,
 				8990114424B4133C0097A401 /* CameraOnLiveVC.m in Sources */,
 				8987856224C518750012B71B /* ElectricManageVC.m in Sources */,
 				896C04D424D01086007BC01C /* WeekSelectVC.m in Sources */,
@@ -2087,6 +2142,7 @@
 				89DB0AC724A05A3900324E36 /* QZHHUD.m in Sources */,
 				89DB0AC524A05A3900324E36 /* TOTAMulltiCollectionView.m in Sources */,
 				8962F21324BEE29200D85A65 /* animationLabel.m in Sources */,
+				89FE1BF324DA96BB008FB0AC /* AlarmTimerVC.m in Sources */,
 				89E591A124A2FC0F00EEB26A /* QZHTextfieldCell.m in Sources */,
 				89160D8A24A9E7DE00511F84 /* PayTopTableViewCell.m in Sources */,
 				895C8E5324D29D6000463235 /* Reachability.m in Sources */,

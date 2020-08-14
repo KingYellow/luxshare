@@ -33,9 +33,10 @@
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     [self UIConfig];
     
-    if (!self.isSuccess) {
-        self.titleLab.text = QZHLoaclString(@"device_addFailer");
+    if (self.isSuccess) {
         self.indicatorIMG.image = QZHLoadIcon(@"ty_adddevice_ok");
+    }else{
+        self.titleLab.text = QZHLoaclString(@"device_addFailer");
     }
 
 }

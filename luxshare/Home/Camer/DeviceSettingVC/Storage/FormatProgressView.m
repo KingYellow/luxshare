@@ -13,7 +13,7 @@
 -(instancetype)init{
     if (self = [super init]) {
         [self creatViews];
-        self.backgroundColor = QZHKIT_Color_BLACK_26;
+
     }
     return self;
 }

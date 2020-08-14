@@ -47,16 +47,16 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-[[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initConfig];
     [self upDateWifiInfo];
-
 }
 - (void)initConfig{
+    
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
     self.navigationItem.title = QZHLoaclString(@"device_addNewDevice");
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
@@ -129,7 +129,6 @@
         _titleLab.textColor = QZHKIT_Color_BLACK_87;
         _titleLab.textAlignment = NSTextAlignmentCenter;
         _titleLab.text = QZHLoaclString(@"wifi_setWifi");
-
     }
     return _titleLab;
 }
@@ -208,6 +207,7 @@
 }
 
 - (void)submitAction:(UIButton *)sender{
+    [QZHDataHelper saveValue:self.passwordText.text forKey:self.phoneText.text];
     [self getTokenFromTY];
 }
 - (void)selectAction:(UIButton *)sender{
@@ -263,6 +263,10 @@
 
     }
     self.phoneText.text = info[@"SSID"];
+    if (self.phoneText.text) {
+        self.passwordText.text = [QZHDataHelper readValueForKey:self.phoneText.text];
+    }
+
     return info;
 
 }

@@ -174,6 +174,13 @@
     self.window.rootViewController = nil;
     self.window.rootViewController = [self createTbbarVC];
 }
+- (void)showFamilyVC {
+   FirstRegistAddHomeVC *vc = [[FirstRegistAddHomeVC alloc] init];
+   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+   self.window.rootViewController = nav;
+   [self.window makeKeyAndVisible];
+}
+//
 
 
 #pragma mark --初始化tabar

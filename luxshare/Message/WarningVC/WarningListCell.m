@@ -41,8 +41,7 @@
     [self.contentLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.nameLab.mas_bottom).offset(10);
         make.left.mas_equalTo(25);
-//        make.bottom.mas_equalTo(self.contentView).offset(-25);
-        make.right.mas_equalTo(-20);
+        make.right.mas_equalTo(self.checkBtn.mas_left).offset(-5);
     }];
     [self.tagLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.nameLab.mas_right);
@@ -60,6 +59,7 @@
     [self.checkBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.tagLab.mas_bottom).offset(10);
         make.right.mas_equalTo(self.selectBtn.mas_left).offset(-5);
+        make.width.mas_equalTo(65);
 
     }];
     [self.bigView mas_makeConstraints:^(MASConstraintMaker *make) {

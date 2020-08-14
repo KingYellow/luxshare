@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TalkTypeVC : UIViewController
 @property (strong, nonatomic)TuyaSmartHomeModel *homeModel;
 @property (strong, nonatomic)TuyaSmartDeviceModel *deviceModel;
+@property (copy, nonatomic)dispatch_block_t refresh;
 @end
 
 NS_ASSUME_NONNULL_END

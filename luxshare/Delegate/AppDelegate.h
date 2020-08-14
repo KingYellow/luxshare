@@ -13,6 +13,7 @@
 #import "AddressBookTVC.h"
 #import "MineVC.h"
 #import "MessageVC.h"
+#import "FirstRegistAddHomeVC.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

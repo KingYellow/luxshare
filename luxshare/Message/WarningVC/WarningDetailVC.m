@@ -25,7 +25,10 @@
 @end
 
 @implementation WarningDetailVC
-
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.qzTableView reloadData];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initConfig];
@@ -102,12 +105,16 @@
     TuyaSmartMessageListModel *model = self.listArr[section][row];
     
     WarningListCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
+    TuyaSmartMessageAttachModel *picModel = model.attachPicList.firstObject;
+    if (picModel.thumbUrl) {
+       [cell.picIMG exp_loadImageUrlString:picModel.thumbUrl placeholder:QZHICON_PLACEHOLDER];
+    }else{
+        [cell.picIMG mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(0);
+        }];
+    }
     cell.nameLab.text = model.msgTypeContent;
     cell.contentLab.text = model.msgContent;
-    
-    TuyaSmartMessageAttachModel *picModel = model.attachPicList.firstObject;
-    [cell.picIMG exp_loadImageUrlString:picModel.thumbUrl placeholder:QZHICON_PLACEHOLDER];
-    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(preAction:)];
     cell.picIMG.userInteractionEnabled = YES;
     [cell.picIMG addGestureRecognizer:tap];
@@ -174,8 +181,7 @@
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSInteger section = indexPath.section;
-    NSInteger row = indexPath.row;
+
 
 }
 #pragma mark --lazy
@@ -216,7 +222,7 @@
     //首先把原数组中数据的日期取出来放入timeArr
 
     [self.listArr removeAllObjects];
-    [self.timeArr removeLastObject];
+    [self.timeArr removeAllObjects];
 
     [self.modelArr enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 
@@ -348,8 +354,6 @@
 - (void)getMessageList:(NSInteger) page{
     QZHWS(weakSelf)
 
-
-    
     [[TuyaSmartMessage new] getMessageDetailListWithType:TYMessageTypeAlarm msgSrcId:self.msgSrcId limit:10 offset:self.modelArr.count success:^(NSArray<TuyaSmartMessageListModel *> * _Nonnull list) {
         [weakSelf.modelArr addObjectsFromArray:list];
         [weakSelf resetArr];
@@ -382,7 +386,6 @@
     TuyaSmartMessageListDeleteRequestModel *model = [[TuyaSmartMessageListDeleteRequestModel alloc] init];
     model.msgType = 1;
     model.msgIds = [self deleteMessageIds];
-    model.msgSrcIds = nil;
     [[TuyaSmartMessage new] deleteMessageWithDeleteRequestModel:model success:^(BOOL result) {
         [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -398,17 +401,6 @@
     
 }
 
--(void)checkNewMessage{
-    QZHWS(weakSelf)
-    [[TuyaSmartMessage new] getLatestMessageWithSuccess:^(NSDictionary *result) {
-        NSLog(@"get latesMessage success:%@", result);
-        if ([result[@"alarm"] boolValue]) {
-            [weakSelf.qzTableView.mj_header beginRefreshing];
-        }
-    } failure:^(NSError *error) {
-        NSLog(@"get message max time failure:%@", error);
-    }];
-}
 - (BOOL)isallselexted{
     
     for (NSArray *arr in self.listArr) {
@@ -496,6 +488,10 @@
     TuyaSmartMessageListModel *model = self.listArr[index.section][index.row];
     TuyaSmartDevice *device = [TuyaSmartDevice deviceWithDeviceId:model.msgSrcId];
     TuyaSmartHome *home = [TuyaSmartHome homeWithHomeId:model.homeID];
+    if (!device.deviceModel.isOnline) {
+        [[QZHHUD HUD] textHUDWithMessage:@"设备已断开连接" afterDelay:1.0];
+        return;
+    }
     CameraOnLiveVC *vc = [[CameraOnLiveVC alloc] init];
     vc.deviceModel = device.deviceModel;
     vc.homeModel = home.homeModel;

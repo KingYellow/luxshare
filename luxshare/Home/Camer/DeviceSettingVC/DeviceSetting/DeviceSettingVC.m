@@ -16,7 +16,7 @@
 #import "ElectricManageVC.h"
 #import "ShareDeviceVC.h"
 #import "UpdateDeviceVC.h"
-
+#import "DeceteAlarmACVC.h"
 
 @interface DeviceSettingVC ()<UITableViewDelegate,UITableViewDataSource,TuyaSmartCameraDPObserver>
 @property (strong, nonatomic)UITableView *qzTableView;
@@ -33,6 +33,7 @@
     [super viewDidLoad];
     [self initConfig];
 }
+
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
     self.navigationItem.title = QZHLoaclString(@"setting_setting");
@@ -42,8 +43,9 @@
     self.dpManager = [[TuyaSmartCameraDPManager alloc] initWithDeviceId:self.deviceModel.devId];
     [self.dpManager addObserver:self];
     self.device = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId];
-
-    [self getFirmwareUpgradeInfo];
+    if ([self isAdminOrOwner]) {
+        [self getFirmwareUpgradeInfo];
+    }
 }
 - (void)UIConfig{
     
@@ -79,17 +81,17 @@
             cell.nameLab.text = @"隐私模式";
             cell.radioPosition = 0;
             cell.switchBtn.tag = 1;
-          cell.switchBtn.on =  [[self.dpManager valueForDP:TuyaSmartCameraBasicPrivateDPName] boolValue];
+            cell.switchBtn.on =  [[self.dpManager valueForDP:TuyaSmartCameraBasicPrivateDPName] boolValue];
             [cell.switchBtn addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
             return cell;
         }else{
-            
             SettingDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
             cell.nameLab.text = self.listArr[row];
             if (row == 0) {
                 cell.radioPosition = -1;
+                cell.tagLab.text = @"";
             }else if (row == 3){
                 cell.radioPosition = 1;
                 int state = [[self.dpManager valueForDP:TuyaSmartCameraBasicNightvisionDPName] intValue];
@@ -105,6 +107,7 @@
 
             }else{
                 cell.radioPosition = 0;
+                cell.tagLab.text = @"";
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
@@ -123,6 +126,12 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
              return cell;
         }else{
+            
+             if ([self.deviceModel.productId isEqualToString:AC_PRODUCT_ID]) {
+                 if (indexPath.section == 1 && indexPath.row == 3) {
+                     return [UITableViewCell new];
+                 }
+             }
             SettingDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
              cell.nameLab.text = self.memberArr[row];
              if (row == 0) {
@@ -145,7 +154,10 @@
             if (model.upgradeStatus == 1) {
                 cell.tagLab.backgroundColor = UIColor.redColor;
                 [cell.tagLab mas_updateConstraints:^(MASConstraintMaker *make) {
-                    make.width.height.mas_equalTo(20);
+                    make.bottom.mas_equalTo(-15);
+                    make.top.mas_equalTo(15);
+                    make.width.mas_equalTo(20);
+
                 }];
                 QZHViewRadius(cell.tagLab, 10);
                 cell.tagLab.text = @"1";
@@ -173,8 +185,11 @@
 
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    if ([self isAdminOrOwner]) {
+        return 3;
+    }
    
-    return 3;
+    return 2;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0 ) {
@@ -188,6 +203,13 @@
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+   
+    if ([self.deviceModel.productId isEqualToString:AC_PRODUCT_ID]) {
+        if (indexPath.section == 1 && indexPath.row == 3) {
+            return 0;
+        }
+    }
+    
     return 50;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -195,6 +217,7 @@
     if (section == 1) {
         return 60;
     }
+    
      return 30;
 }
 
@@ -225,16 +248,34 @@
     }
     if (section == 1) {
         if (row == 0) {
-            DeceteAlarmVC *vc = [[DeceteAlarmVC alloc] init];
-            vc.deviceModel = self.deviceModel;
-            vc.homeModel = self.homeModel;
-            [self.navigationController pushViewController:vc animated:YES];
+            
+            if ([self.deviceModel.productId isEqualToString:AC_PRODUCT_ID]) {
+                DeceteAlarmACVC *vc = [[DeceteAlarmACVC alloc] init];
+                vc.deviceModel = self.deviceModel;
+                vc.homeModel = self.homeModel;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else{
+                DeceteAlarmVC *vc = [[DeceteAlarmVC alloc] init];
+                vc.deviceModel = self.deviceModel;
+                vc.homeModel = self.homeModel;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+
         }
         if (row == 1) {
-            StorageVC *vc = [[StorageVC alloc] init];
-            vc.deviceModel = self.deviceModel;
-            vc.homeModel = self.homeModel;
-            [self.navigationController pushViewController:vc animated:YES];
+
+            
+            if ([[self.dpManager valueForDP:TuyaSmartCameraSDCardStatusDPName] intValue] == 5) {
+                [[QZHHUD HUD] textHUDWithMessage:@"该设备不支持存储功能" afterDelay:1.0];
+
+            }else{
+                
+                StorageVC *vc = [[StorageVC alloc] init];
+                vc.deviceModel = self.deviceModel;
+                vc.homeModel = self.homeModel;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+
         }
         if (row == 3) {
             ElectricManageVC *vc = [[ElectricManageVC alloc] init];
@@ -251,7 +292,7 @@
     }
     if (section == 2) {
         TuyaSmartFirmwareUpgradeModel *model = self.deviceUpdateArr.firstObject;
-        if (model.upgradeStatus != 0) {
+        if (model.upgradeStatus == 0) {
             UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"已是最新版本" message:[NSString stringWithFormat:@"当前版本号: %@",model.currentVersion] preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                 
@@ -260,11 +301,14 @@
             [self presentViewController:alertC animated:NO completion:nil];
         }else{
             //有新版本
-            
+            QZHWS(weakSelf)
             UpdateDeviceVC *vc = [[UpdateDeviceVC alloc] init];
             vc.deviceModel = self.deviceModel;
             vc.homeModel = self.homeModel;
             vc.upModel = self.deviceUpdateArr.firstObject;
+            vc.refresh = ^{
+                [weakSelf getFirmwareUpgradeInfo];
+            };
             [self.navigationController pushViewController:vc animated:YES];
         }
 
@@ -294,9 +338,12 @@
         if ([self.dpManager isSupportDP:TuyaSmartCameraBasicPrivateDPName]) {
             
             [self.dpManager setValue:@(sender.on) forDP:TuyaSmartCameraBasicPrivateDPName success:^(id result) {
+                [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
+
                 [weakSelf.qzTableView reloadData];
             } failure:^(NSError *error) {
                 sender.on = !sender.on;
+                   [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
             }];
         }
     }else{
@@ -349,7 +396,6 @@
         }
     }];
     UIAlertAction *action4 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        NSLog(@"取消");
     }];
     
     //把action添加到actionSheet里
@@ -367,15 +413,20 @@
 QZHWS(weakSelf)
     [self.device getFirmwareUpgradeInfo:^(NSArray<TuyaSmartFirmwareUpgradeModel *> *upgradeModelList) {
         weakSelf.deviceUpdateArr = upgradeModelList;
-        
-        for (TuyaSmartFirmwareUpgradeModel *modle in  upgradeModelList) {
-            NSLog(@"ddddd%@%@",modle.version,modle.currentVersion);
-        }
+
         [weakSelf.qzTableView reloadData];
     } failure:^(NSError *error) {
        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
         
     }];
 }
-
+- (BOOL)isAdminOrOwner{
+    if (self.homeModel.role == TYHomeRoleType_Admin ||self.homeModel.role == TYHomeRoleType_Owner) {
+        return YES;
+    }
+    return NO;
+}
+-(void)dealloc{
+    
+}
 @end

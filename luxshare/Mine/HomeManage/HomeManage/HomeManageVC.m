@@ -167,7 +167,7 @@
         [weakSelf.qzTableView reloadData];
         
     } failure:^(NSError *error) {
-        NSLog(@"get home list failure: %@", error);
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
 //加入拒绝家庭邀请

@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic)TuyaSmartDeviceModel *deviceModel;
 @property (strong, nonatomic)TuyaSmartHomeModel *homeModel;
 @property (strong, nonatomic)TuyaSmartFirmwareUpgradeModel *upModel;
+@property (copy, nonatomic)dispatch_block_t refresh;
 @end
 
 NS_ASSUME_NONNULL_END

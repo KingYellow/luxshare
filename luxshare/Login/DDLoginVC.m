@@ -22,6 +22,7 @@
 @property (strong, nonatomic)UIButton *forgetBtn;
 @property (strong, nonatomic)CountrySelectView *countryView;
 @property (strong, nonatomic)ContactModel *countryModel;
+@property (strong, nonatomic)TuyaSmartHomeManager *magager;
 @end
 
 @implementation DDLoginVC
@@ -222,14 +223,14 @@
 
 }
 - (void)submitAction{
+    
     if ([self.phoneText.text exp_isPureInt]) {
        [self.submitBtn exp_buttonState:QZHButtonStateEnable];
         
         [[TuyaSmartUser sharedInstance] loginByPhone:self.countryModel.code phoneNumber:self.phoneText.text password:self.passwordText.text success:^{
             //登录接口请求成功后
-               [QZHDataHelper saveValue:QZHKEY_TOKEN forKey:QZHKEY_TOKEN];
-               [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"login_success") afterDelay:0.5];
-            [QZHROOT_DELEGATE setVC];
+            [self getHomeList];
+
 
         } failure:^(NSError *error) {
             [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"login_fail") afterDelay:0.5];
@@ -238,11 +239,9 @@
         
         [[TuyaSmartUser sharedInstance] loginByEmail:self.countryCodeText.text email:@"your_email" password:self.phoneText.text success:^{
             //登录接口请求成功后
-               [QZHDataHelper saveValue:QZHKEY_TOKEN forKey:QZHKEY_TOKEN];
-               [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"login_success") afterDelay:0.5];
-            [QZHROOT_DELEGATE setVC];
+               [self getHomeList];
+
         } failure:^(NSError *error) {
-            NSLog(@"login failure: %@", error);
             [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"login_fail") afterDelay:0.5];
         }];
     }
@@ -256,7 +255,7 @@
    [[TuyaSmartUser sharedInstance] sendVerifyCode:self.countryModel.code phoneNumber:self.phoneText.text type:type success:^{
        NSLog(@"sendVerifyCode success");
    } failure:^(NSError *error) {
-       NSLog(@"sendVerifyCode failure: %@", error);
+       [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
    }];
 }
 
@@ -291,5 +290,23 @@
     vc.titleText = QZHLoaclString(@"login_getPassword");
     [self.navigationController pushViewController:vc animated:YES];
 }
+#pragma mark -- 获取家庭
+- (void)getHomeList {
+   self.magager = [TuyaSmartHomeManager new];
+    [self.magager getHomeListWithSuccess:^(NSArray<TuyaSmartHomeModel *> *homes) {
+        if (homes.count == 0) {
+            [QZHROOT_DELEGATE showFamilyVC];
+        }else{
+            [QZHDataHelper saveValue:QZHKEY_TOKEN forKey:QZHKEY_TOKEN];
+            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"login_success") afterDelay:0.5];
+            [QZHROOT_DELEGATE setVC];
+        }
+
+    } failure:^(NSError *error) {
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+        
+    }];
+}
+
 
 @end

@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 ///设置根视图
 - (void)setVC;
+//没有家庭s时显示
+- (void)showFamilyVC;
 
 ///设置列表模式 根视图
 //- (void)rootMListVC;

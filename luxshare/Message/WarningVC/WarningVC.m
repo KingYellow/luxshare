@@ -217,7 +217,7 @@
     //首先把原数组中数据的日期取出来放入timeArr
 
     [self.listArr removeAllObjects];
-    [self.timeArr removeLastObject];
+    [self.timeArr removeAllObjects];
 
     [self.modelArr enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 
@@ -297,7 +297,6 @@
                 NSMutableArray *arr=[self.listArr objectAtIndex:[myary indexOfObject:str]];
                 [arr addObject:currentmodel];
             }
-
         }
     }];
     
@@ -341,7 +340,6 @@
     self.deleteBtn.hidden = ![self ishasselexted];
     self.topView.selectBtn.selected = [self isallselexted];
     [self.qzTableView reloadData];
-
   
 }
 
@@ -364,17 +362,17 @@
     }];
     
 }
-    ///消息类型（1 - 告警，2 - 家庭，3 - 通知）
+///消息类型（1 - 告警，2 - 家庭，3 - 通知）
 -(void)deleteMessage{
     QZHWS(weakSelf)
     TuyaSmartMessageListDeleteRequestModel *model = [[TuyaSmartMessageListDeleteRequestModel alloc] init];
     model.msgType = 1;
     model.msgIds = [self deleteMessageIds];
-    model.msgSrcIds = nil;
     [[TuyaSmartMessage new] deleteMessageWithDeleteRequestModel:model success:^(BOOL result) {
         [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if (weakSelf.topView.selectBtn.selected && [self ishasselexted]) {
+                
             }else{
                 weakSelf.deleteBtn.hidden = YES;
             }
@@ -391,10 +389,14 @@
     [[TuyaSmartMessage new] getLatestMessageWithSuccess:^(NSDictionary *result) {
         NSLog(@"get latesMessage success:%@", result);
         if ([result[@"alarm"] boolValue]) {
-            [weakSelf.qzTableView.mj_header beginRefreshing];
+            
+            [weakSelf.modelArr removeAllObjects];
+            [weakSelf getMessageList:0];
+            
         }
     } failure:^(NSError *error) {
-        NSLog(@"get message max time failure:%@", error);
+       [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+        
     }];
 }
 - (BOOL)isallselexted{

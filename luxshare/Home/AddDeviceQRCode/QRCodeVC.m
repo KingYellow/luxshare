@@ -10,7 +10,7 @@
 #import "SGQRCode.h"
 #import "ProgressVC.h"
 
-@interface QRCodeVC ()
+@interface QRCodeVC ()<TuyaSmartActivatorDelegate>
 @property (strong, nonatomic)UILabel *titleLab;
 @property (strong, nonatomic)UILabel *subLab;
 @property (strong, nonatomic)UIImageView *indicatorIMG;
@@ -41,6 +41,7 @@
     [self.view addSubview:self.titleLab];
     [self.view addSubview:self.subLab];
     [self.view addSubview:self.indicatorIMG];
+
     self.indicatorIMG.image = [SGQRCodeObtain generateQRCodeWithData:self.codeStr size:QZHScreenWidth - 60];
     
     [self.titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -59,15 +60,16 @@
         make.width.height.mas_equalTo(QZHScreenWidth - 60);
     }];
 
-  
     [self.submitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(20);
         make.right.mas_equalTo(-20);
 
-        make.height.mas_equalTo(50); make.bottom.mas_equalTo(self.view).offset(-QZHHeightBottom -30);
+        make.height.mas_equalTo(50);
+        make.bottom.mas_equalTo(self.view).offset(-QZHHeightBottom -30);
     }];
     QZHViewRadius(self.submitBtn,25);
-    
+    [self.submitBtn exp_buttonState:QZHButtonStateEnable];
+
 }
 
 -(UILabel *)titleLab{
@@ -99,14 +101,12 @@
         _submitBtn = [[UIButton alloc] init];
         [_submitBtn setTitle:QZHLoaclString(@"qrcode_submit") forState:UIControlStateNormal];
         [_submitBtn addTarget:self action:@selector(submitAction:) forControlEvents:UIControlEventTouchUpInside];
-        [_submitBtn exp_buttonState:QZHButtonStateEnable];
     }
     return _submitBtn;
 }
 - (UIImageView *)indicatorIMG{
     if (!_indicatorIMG) {
         _indicatorIMG = [[UIImageView alloc] init];
-        _indicatorIMG.backgroundColor = QZHColorRed;
     }
     return _indicatorIMG;
 }
@@ -125,6 +125,9 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (void)activator:(TuyaSmartActivator *)activator didReceiveDevice:(TuyaSmartDeviceModel *)deviceModel error:(NSError *)error
+{
 
+}
 
 @end

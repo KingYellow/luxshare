@@ -16,6 +16,10 @@
 @property (strong, nonatomic)UIPickerView *rightPicker;
 @property (strong, nonatomic)UILabel *leftTimeLab;
 @property (strong, nonatomic)UILabel *rightTimeLab;
+@property (strong, nonatomic)UILabel *yesterdayLab;
+@property (strong, nonatomic)UILabel *todayLab;
+
+
 @property (copy, nonatomic)NSMutableArray *hourArr;
 @property (copy, nonatomic)NSMutableArray *minArr;
 @property (strong, nonatomic)NSString *leftHour;
@@ -45,17 +49,40 @@
     self.leftMin = @"00";
     self.rightHour = @"00";
     self.rightMin = @"00";
-
     [self UIConfig];
 }
 -(void)exp_rightAction{
-    
+    if (self.listArr.count) {
+            
+        NSMutableArray *weekArr = [NSMutableArray array];
+        for (NSDictionary *dic in self.listArr) {
+             if ([dic[@"select"] boolValue]) {
+                 [weekArr addObject:dic[@"week"]];
+             }
+         }
+         if (weekArr.count == 7) {
+             self.weekDays = @"每天";
+         }else if(weekArr.count == 5 && ![weekArr containsObject:@"星期六"] && ![weekArr containsObject:@"星期日"]){
+                self.weekDays = @"工作日";
+         }else if(weekArr.count == 0){
+             self.weekDays = @"永不";
+         }else{
+             self.weekDays = [weekArr componentsJoinedByString:@","];
+         }
+         self.cell.tagLab.text = self.weekDays;
+         
+         [QZHDataHelper saveValue:self.listArr forKey:@"weekDays"];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+
 }
 - (void)UIConfig{
     [self.view addSubview:self.leftPicker];
     [self.view addSubview:self.rightPicker];
     [self.view addSubview:self.leftTimeLab];
     [self.view addSubview:self.rightTimeLab];
+    [self.view addSubview:self.yesterdayLab];
+
     self.cell = [[SettingDefaultCell alloc] init];
     self.cell.backgroundColor = QZH_KIT_Color_WHITE_70;
     self.cell.nameLab.text = @"重复";
@@ -79,7 +106,7 @@
     }];
     [self.leftPicker mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(20);
-        make.top.mas_equalTo(self.leftTimeLab.mas_bottom).offset(20);
+        make.top.mas_equalTo(self.leftTimeLab.mas_bottom).offset(50);
         make.width.mas_equalTo(QZHScreenWidth/2 - 20);
         make.height.mas_equalTo(240);
     }];
@@ -89,9 +116,15 @@
         make.width.mas_equalTo(QZHScreenWidth/2 - 20);
         make.height.mas_equalTo(20);
     }];
+    [self.yesterdayLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-20);
+        make.top.mas_equalTo(self.rightTimeLab.mas_bottom).offset(10);
+        make.width.mas_equalTo(QZHScreenWidth/2 - 20);
+        make.height.mas_equalTo(20);
+    }];
     [self.rightPicker mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-20);
-        make.top.mas_equalTo(self.rightTimeLab.mas_bottom).offset(20);
+        make.top.mas_equalTo(self.rightTimeLab.mas_bottom).offset(50);
         make.width.mas_equalTo(QZHScreenWidth/2 - 20);
         make.height.mas_equalTo(240);
     }];
@@ -135,6 +168,17 @@
         
     }
     return _rightTimeLab;
+}
+-(UILabel *)yesterdayLab{
+    if (!_yesterdayLab) {
+        _yesterdayLab = [[UILabel alloc] init];
+        _yesterdayLab.textColor = QZHKIT_Color_BLACK_87;
+        _yesterdayLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
+        _yesterdayLab.textAlignment = NSTextAlignmentCenter;
+        _yesterdayLab.text = @"当日";
+        
+    }
+    return _yesterdayLab;
 }
 -(NSMutableArray *)hourArr{
     if (!_hourArr) {
@@ -208,13 +252,12 @@
             self.rightMin = self.minArr[row];
         }
         self.rightTimeLab.text = [NSString stringWithFormat:@"%@:%@",self.rightHour,self.rightMin];
-        
     }
+    [self compareRightTime];
 }
 
 - (void)selectDateAction{
     QZHWS(weakSelf)
-    NSMutableArray *weekArr = [NSMutableArray array];
     
     WeekSelectVC *VC = [[WeekSelectVC alloc] init];
     NSMutableArray *listArr = [NSMutableArray arrayWithArray:[QZHDataHelper readValueForKey:@"weekDays"]];
@@ -222,23 +265,23 @@
          VC.listArr = listArr;
      }
     VC.selectWeek = ^(NSArray * _Nonnull listArr) {
-         for (NSDictionary *dic in listArr) {
-              if ([dic[@"select"] boolValue]) {
-                  [weekArr addObject:dic[@"week"]];
-              }
-          }
-          if (weekArr.count == 7) {
-              weakSelf.weekDays = @"每天";
-          }else if(weekArr.count == 5 && ![weekArr containsObject:@"星期六"] && ![weekArr containsObject:@"星期日"]){
-                 self.weekDays = @"工作日";
-          }else if(weekArr.count == 0){
-              self.weekDays = @"永不";
-          }else{
-              self.weekDays = [weekArr componentsJoinedByString:@","];
-          }
-          weakSelf.cell.tagLab.text = weakSelf.weekDays;
-          
-          [QZHDataHelper saveValue:listArr forKey:@"weekDays"];
+        weakSelf.listArr = listArr;
+        NSMutableArray *weekArr = [NSMutableArray array];
+        for (NSDictionary *dic in self.listArr) {
+             if ([dic[@"select"] boolValue]) {
+                 [weekArr addObject:dic[@"week"]];
+             }
+         }
+         if (weekArr.count == 7) {
+             self.weekDays = @"每天";
+         }else if(weekArr.count == 5 && ![weekArr containsObject:@"星期六"] && ![weekArr containsObject:@"星期日"]){
+                self.weekDays = @"工作日";
+         }else if(weekArr.count == 0){
+             self.weekDays = @"仅限一次";
+         }else{
+             self.weekDays = [weekArr componentsJoinedByString:@","];
+         }
+         self.cell.tagLab.text = self.weekDays;
     };
     [self.navigationController pushViewController:VC animated:YES];
 }
@@ -255,9 +298,22 @@
     }else if(weekArr.count == 5 && ![weekArr containsObject:@"星期六"] && ![weekArr containsObject:@"星期日"]){
            self.weekDays = @"工作日";
     }else if(weekArr.count == 0){
-        self.weekDays = @"永不";
+        self.weekDays = @"仅限一次";
     }else{
         self.weekDays = [weekArr componentsJoinedByString:@","];
+    }
+}
+- (void)compareRightTime{
+    if ([self.leftHour intValue] < [self.rightHour intValue]) {
+        self.yesterdayLab.text = @"当日";
+    }else if([self.leftHour intValue] > [self.rightHour intValue]){
+        self.yesterdayLab.text = @"次日";
+    }else{
+        if ([self.leftMin intValue] <= [self.rightMin intValue]) {
+            self.yesterdayLab.text = @"当日";
+        }else{
+            self.yesterdayLab.text = @"次日";
+        }
     }
 }
 @end

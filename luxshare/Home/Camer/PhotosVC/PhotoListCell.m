@@ -42,8 +42,8 @@
     [self.logoIMG mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.IMGView.mas_right).offset(20);
         make.bottom.mas_equalTo(self.nameLab.mas_top).offset(-5);
-        make.width.mas_equalTo(40);
-        make.height.mas_equalTo(25);
+        make.width.mas_equalTo(30);
+        make.height.mas_equalTo(30);
     }];
     [self.selectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(20);
@@ -83,14 +83,13 @@
 -(UIImageView *)logoIMG{
     if (!_logoIMG) {
         _logoIMG = [[UIImageView alloc] init];
-        _logoIMG.backgroundColor = UIColor.blueColor;
     }
     return _logoIMG;
 }
 -(UIButton *)selectBtn{
     if (!_selectBtn) {
         _selectBtn = [[UIButton alloc] init];
-        [_selectBtn setImage:QZHLoadIcon(@"pay_normal") forState:UIControlStateNormal];
+        [_selectBtn setImage:[UIImage new] forState:UIControlStateNormal];
         [_selectBtn setImage:QZHLoadIcon(@"pay_selected") forState:UIControlStateSelected];
     }
     return _selectBtn;

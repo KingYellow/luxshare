@@ -217,7 +217,7 @@
     //首先把原数组中数据的日期取出来放入timeArr
 
     [self.listArr removeAllObjects];
-    [self.timeArr removeLastObject];
+    [self.timeArr removeAllObjects];
 
     [self.modelArr enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 
@@ -378,12 +378,14 @@
 -(void)checkNewMessage{
     QZHWS(weakSelf)
     [[TuyaSmartMessage new] getLatestMessageWithSuccess:^(NSDictionary *result) {
-        NSLog(@"get latesMessage success:%@", result);
         if ([result[@"notification"] boolValue]) {
-            [weakSelf.qzTableView.mj_header beginRefreshing];
+            [weakSelf.modelArr removeAllObjects];
+            [weakSelf getMessageList:0];
+            
         }
     } failure:^(NSError *error) {
-        NSLog(@"get message max time failure:%@", error);
+
+       [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
 - (BOOL)isallselexted{

@@ -36,8 +36,6 @@
     self.dpManager = [[TuyaSmartCameraDPManager alloc] initWithDeviceId:self.deviceModel.devId];
     [self.dpManager addObserver:self];
     self.device = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId];
-
-    [self getFirmwareUpgradeInfo];
 }
 - (void)UIConfig{
     
@@ -156,7 +154,7 @@
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
    
-    return 3;
+    return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0 ) {
@@ -211,26 +209,11 @@
             [weakSelf.qzTableView reloadData];
         } failure:^(NSError *error) {
             sender.on = !sender.on;
+            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+
         }];
     }
 
-}
-
-#pragma mark -- 设备升级信息
-
-- (void)getFirmwareUpgradeInfo{
-QZHWS(weakSelf)
-    [self.device getFirmwareUpgradeInfo:^(NSArray<TuyaSmartFirmwareUpgradeModel *> *upgradeModelList) {
-        weakSelf.deviceUpdateArr = upgradeModelList;
-        
-        for (TuyaSmartFirmwareUpgradeModel *modle in  upgradeModelList) {
-            NSLog(@"ddddd%@%@",modle.version,modle.currentVersion);
-        }
-        [weakSelf.qzTableView reloadData];
-    } failure:^(NSError *error) {
-       [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
-        
-    }];
 }
 
 #pragma mark -- PIR
