@@ -43,6 +43,7 @@
     self.dpManager = [[TuyaSmartCameraDPManager alloc] initWithDeviceId:self.deviceModel.devId];
     [self.dpManager addObserver:self];
     self.device = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId];
+    self.deviceModel = self.device.deviceModel;
     if ([self isAdminOrOwner]) {
         [self getFirmwareUpgradeInfo];
     }
@@ -62,10 +63,8 @@
         [_qzTableView exp_tableViewDefault];
         self.qzTableView.backgroundColor = QZHKIT_COLOR_LEADBACK;
         self.qzTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
         _qzTableView.delegate = self;
         _qzTableView.dataSource = self;
-
         [self.qzTableView registerClass:[SettingDefaultCell class] forCellReuseIdentifier:QZHCELL_REUSE_TEXT];
         [self.qzTableView registerClass:[SettingSwitchCell class] forCellReuseIdentifier:QZHCELL_REUSE_IMAGE];
     }
@@ -116,8 +115,8 @@
     }else if(section == 1){
         
         if (row == 5) {
-             SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
-             cell.nameLab.text = @"离线提醒";
+            SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
+            cell.nameLab.text = @"离线提醒";
             cell.radioPosition = 1;
             cell.switchBtn.on = YES;
             cell.switchBtn.tag = 2;
@@ -354,16 +353,7 @@
 -(void)creatActionSheet {
 
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"红外夜视" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    /*
-     typedef NS_ENUM(NSInteger, UIAlertActionStyle) {
-     UIAlertActionStyleDefault = 0,
-     UIAlertActionStyleCancel,         取消按钮
-     UIAlertActionStyleDestructive     破坏性按钮，比如：“删除”，字体颜色是红色的
-     } NS_ENUM_AVAILABLE_IOS(8_0);
-     
-     */
-    // 创建action，这里action1只是方便编写，以后再编程的过程中还是以命名规范为主
+
     QZHWS(weakSelf)
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"自动" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self.dpManager isSupportDP:TuyaSmartCameraBasicNightvisionDPName]) {

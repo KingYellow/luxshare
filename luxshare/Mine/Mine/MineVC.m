@@ -89,7 +89,8 @@
             cell.tagLab.hidden = NO;
             NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
             NSString *appVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-            cell.tagLab.text = [NSString stringWithFormat:@"V %@",appVersion];
+            NSString *buildVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+            cell.tagLab.text = [NSString stringWithFormat:@"V %@ (%@)",appVersion,buildVersion];
         }else{
             cell.tagLab.hidden = YES;
         }
@@ -102,7 +103,6 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
- 
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 2;
@@ -118,7 +118,6 @@
         case 2:
             return 1;
             break;
-            
         default:
             return 0;
             break;
@@ -152,7 +151,7 @@
     }
 
     if (section == 1 && row == 3) {
-        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"提示" message:@"一周后账号才会永久停用并删除以下你账户中的所有信息" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"提示" message:@"一周后账号才会永久停用,并删除你账户中的所有信息" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             [self cancelAccount];
 

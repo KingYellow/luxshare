@@ -102,6 +102,9 @@
 #define QZHSIZE_WIDTH_LISTCELL_IMAGE              60
 //LISTCELL 间距
 #define QZHSIZE_HEIGHT_LISTCELL_SEPARATOR          1
+//报警区域设置最小值
+#define QZHSIZE_WIDTH_ALARMAREA                   200
+
 
 
 // --------------------------size-------------------------------

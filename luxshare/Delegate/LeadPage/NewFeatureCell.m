@@ -14,6 +14,7 @@
     self = [super initWithFrame:frame];
     if (self)
     {
+        self.backgroundColor = QZH_KIT_Color_WHITE_100;
         [self creatSubviews];
     }
     return self;

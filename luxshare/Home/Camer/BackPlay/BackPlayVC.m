@@ -34,9 +34,15 @@
 @property (strong, nonatomic)UILabel *tipLab;
 @property (strong, nonatomic)NSTimer *timer;
 @property (assign, nonatomic)NSInteger second;
+@property (assign, nonatomic)BOOL recording;
+@property (assign, nonatomic)NSTimeInterval recordTime;
 @end
 
 @implementation BackPlayVC
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.camera stopPreview];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initConfig];
@@ -62,7 +68,8 @@
 QZHWS(weakSelf)
     self.timeLine.delegate = self;
     self.playView.buttonBlock = ^(UIButton *sender, BOOL selected) {
-        [weakSelf onLivePlayHandle:sender.tag isselected:selected];
+        sender.selected = !sender.selected;
+        [weakSelf onLivePlayHandle:sender.tag isselected:sender.selected];
     };
     [self.view addSubview:self.playView];
     [self.view addSubview:self.timeLine];
@@ -95,7 +102,9 @@ QZHWS(weakSelf)
 
     NSDictionary *playInfo;
     NSTimeInterval nowT = 0.0;
-    for (NSDictionary *info in self.timeSlicesInCurrentDay) {
+    
+    for (int i = 0; i < self.timeSlicesInCurrentDay.count; i++) {
+        NSDictionary *info = self.timeSlicesInCurrentDay[i];
         NSTimeInterval start = [info[kTuyaSmartTimeSliceStartTime] integerValue];
         NSTimeInterval end = [info[kTuyaSmartTimeSliceStopTime] integerValue];
         
@@ -105,6 +114,7 @@ QZHWS(weakSelf)
         if (now > start && now < end) {
             playInfo = info;
             nowT = now;
+            self.timeSlicesIndex = i;
         }
     }
     if (playInfo) {
@@ -118,7 +128,6 @@ QZHWS(weakSelf)
 
 - (void)startPlayback {
     if (self.connected) {
-//        [self.camera queryRecordTimeSliceWithYear:2020 month:7 day:11];
         return;
     }
     id p2pType = [self.deviceModel.skills objectForKey:@"p2pType"];
@@ -195,24 +204,27 @@ QZHWS(weakSelf)
 }
 
 - (void)camera:(id<TuyaSmartCameraType>)camera ty_didReceiveVideoFrame:(CMSampleBufferRef)sampleBuffer frameInfo:(TuyaSmartVideoFrameInfo)frameInfo {
-    NSInteger index = self.timeSlicesIndex + 1;
-      // 如果没有下一个视频录像，则返回
-    if (index >= self.timeSlicesInCurrentDay.count) {
-        return;
-    }
     NSDate *now = [NSDate dateWithTimeIntervalSince1970:frameInfo.nTimeStamp];
     NSString *date = [[NSDateFormatter jk_dateFormatterWithFormat:@"yyyyMMddHHmmss"] stringFromDate:now];
     [self.timeLine moveToDate:date];
-//    NSDictionary *currentTimeSlice = [self.timeSlicesInCurrentDay objectAtIndex:self.timeSlicesIndex];
-//    NSInteger stopTime = [currentTimeSlice[kTuyaSmartTimeSliceStopTime] integerValue];
-//      // 如果当前视频帧的时间戳大于等于当前视频片段的结束时间，则播放下一个视频片段
-//    if (frameInfo.nTimeStamp >= stopTime) {
-//        NSDictionary *nextTimeSlice = [self.timeSlicesInCurrentDay objectAtIndex:index];
-//        NSInteger startTime = [nextTimeSlice[kTuyaSmartTimeSliceStartTime] integerValue];
-//            NSInteger stopTime = [nextTimeSlice[kTuyaSmartTimeSliceStopTime] integerValue];
-//            NSInteger playTime = startTime;
-//            [camera startPlayback:playTime startTime:startTime stopTime:stopTime];
-//    }
+    NSInteger index = self.timeSlicesIndex + 1;
+      // 如果没有下一个视频录像，则返回
+    if (index >= self.timeSlicesInCurrentDay.count) {
+        self.playbacking = NO;
+        return;
+    }
+
+    NSDictionary *currentTimeSlice = [self.timeSlicesInCurrentDay objectAtIndex:self.timeSlicesIndex];
+    NSInteger stopTime = [currentTimeSlice[kTuyaSmartTimeSliceStopTime] integerValue];
+      // 如果当前视频帧的时间戳大于等于当前视频片段的结束时间，则播放下一个视频片段
+    if (frameInfo.nTimeStamp >= stopTime) {
+        self.timeSlicesIndex++;
+        NSDictionary *nextTimeSlice = [self.timeSlicesInCurrentDay objectAtIndex:index];
+        NSInteger startTime = [nextTimeSlice[kTuyaSmartTimeSliceStartTime] integerValue];
+            NSInteger stopTime = [nextTimeSlice[kTuyaSmartTimeSliceStopTime] integerValue];
+            NSInteger playTime = startTime;
+            [camera startPlayback:playTime startTime:startTime stopTime:stopTime];
+    }
 }
 
 - (void)cameraDidBeginPlayback:(id<TuyaSmartCameraType>)camera {
@@ -236,7 +248,7 @@ QZHWS(weakSelf)
 
 - (void)cameraDidStopPlayback:(id<TuyaSmartCameraType>)camera {
       // 视频录像已停止播放
-       self.playbacking = NO;
+    self.playbacking = NO;
     self.playbackPaused = NO;
 }
 
@@ -247,9 +259,11 @@ QZHWS(weakSelf)
 }
 -(void)cameraDidStartRecord:(id<TuyaSmartCameraType>)camera{
     [self startTimer];
+    self.recording = YES;
+    self.recordTime = [[NSDate date] timeIntervalSince1970];
 }
 - (void)cameraDidStopRecord:(id<TuyaSmartCameraType>)camera{
-    [self stopTimer];
+    self.recording = NO;
 }
 // 错误回调
 - (void)camera:(id<TuyaSmartCameraType>)camera didOccurredErrorAtStep:(TYCameraErrorCode)errStepCode specificErrorCode:(NSInteger)errorCode {
@@ -260,7 +274,9 @@ QZHWS(weakSelf)
     else if (errStepCode == TY_ERROR_START_PLAYBACK_FAILED) {
           // 存储卡录像播放失败
         self.playbacking = NO;
-            self.playbackPaused = NO;
+        self.playbackPaused = NO;
+    }else if (errStepCode == TY_ERROR_RECORD_FAILED) {
+        self.recording = NO;
     }
       else if (errStepCode == TY_ERROR_PAUSE_PLAYBACK_FAILED) {
                 // 暂停播放失败
@@ -335,6 +351,12 @@ QZHWS(weakSelf)
         }
     }else{
         [self.camera stopRecord];
+        self.recording = NO;
+        self.recordTime = [[NSDate date] timeIntervalSince1970] - self.recordTime;
+         if (self.recordTime < 1) {
+             [[QZHHUD HUD] textHUDWithMessage:@"录制时间短于1S可能导致存储失败" afterDelay:1.0];
+         }
+        [self stopTimer];
     }
 
 }

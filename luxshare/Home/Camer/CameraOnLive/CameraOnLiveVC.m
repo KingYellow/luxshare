@@ -81,6 +81,7 @@
     [self.camera stopPreview];
     self.connected = NO;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
@@ -150,14 +151,13 @@
             TuyaSmartCameraConfig *config = [TuyaSmartCameraFactory ipcConfigWithUid:[TuyaSmartUser sharedInstance].uid localKey:self.deviceModel.localKey configData:result];
             self.camera = [TuyaSmartCameraFactory cameraWithP2PType:p2pType config:config delegate:self];
             [self.camera connect];
-            
+
         });
 
     } failure:^(NSError *error) {
        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
-
 
 #pragma mark -tableView
 -(UITableView *)qzTableView{
@@ -335,8 +335,13 @@
       // p2p 连接被动断开，一般为网络波动导致
     self.connected = NO;
     self.previewing = NO;
-    [self.camera connect];
     [self.playView.playPreGif stopGif];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+       
+        [self.camera connect];
+
+    });
+    
 }
 -(void)cameraDidStartRecord:(id<TuyaSmartCameraType>)camera{
     self.playView.recordProgressView.typeLab.text = @"录制中";
@@ -364,7 +369,6 @@
         [self.camera.videoView mas_makeConstraints:^(MASConstraintMaker *make) {
            make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0  ));
         }];
-
         [self.playView sendSubviewToBack:self.camera.videoView];
         
     }else{
@@ -389,6 +393,8 @@
      if (errStepCode == TY_ERROR_CONNECT_FAILED) {
           // p2p 连接失败
         self.connected = NO;
+         NSLog(@"current thead =%@",[NSThread currentThread]);
+
     }
     else if (errStepCode == TY_ERROR_START_PREVIEW_FAILED) {
           // 实时视频播放失败
@@ -480,8 +486,8 @@
     //sender.tag == 0) {
          //播放
     if (tag == 0) {
-
-        
+        [self start];
+        self.playView.playBtn.hidden = YES;
     }else if(tag == 1){
         //sender.tag == 1){
             //声音
@@ -550,10 +556,15 @@
         [self start];
     }else{
         //休眠
+        [self.camera stopPreview];
+    
         NSDictionary  *dps = @{@"231": @(NO)};
           [self.device publishDps:dps success:^{
               NSLog(@"publishDps success");
               //下发成功，状态上报通过 deviceDpsUpdate方法 回调
+//              [self.camera.videoView removeFromSuperview];
+              [self.camera pausePlayback];
+              self.playView.playBtn.hidden = NO;
               self.connected = NO;
               self.previewing = NO;
           } failure:^(NSError *error) {
@@ -691,7 +702,7 @@ QZHWS(weakSelf)
                 return;
             }
 
-            if (!weakSelf.previewing) {
+            if (!weakSelf.previewing && sender.tag !=0) {
                 [[QZHHUD HUD] textHUDWithMessage:@"正常播放时才能进行操作" afterDelay:1.0];
                 return;
             }
@@ -766,6 +777,18 @@ QZHWS(weakSelf)
     [self setConfigs];
 }
 - (void)applicationWillEnterBackground{
+    if (self.recording) {
+        CameraThreeBtnCell *cell = (CameraThreeBtnCell *)[self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+        cell.leftBtn.selected = NO;
+        [self videoHandle:-1 isselected:NO];
+        
+    }
+    if (self.talking) {
+        CameraThreeBtnCell *cell = [self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+        cell.midBtn.selected = NO;
+        [self videoHandle:0 isselected:NO];
+        
+    }
     [self.camera stopPreview];
     self.connected = NO;
 }

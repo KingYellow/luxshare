@@ -11,6 +11,7 @@
 @implementation CountrySelectView
 - (instancetype)init{
     if (self = [super init]) {
+        self.backgroundColor = QZH_KIT_Color_WHITE_100;
         [self creatSubViews];
     }
     return self;

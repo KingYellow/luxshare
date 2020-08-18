@@ -26,6 +26,7 @@ PODS:
     - BRPickerView/Base
   - BRPickerView/StringPickerView (2.6.3):
     - BRPickerView/Base
+  - Bugly (2.5.5)
   - CocoaAsyncSocket (7.6.4)
   - HXPhotoPicker (2.4.2)
   - IQKeyboardManager (6.5.5)
@@ -128,6 +129,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (= 3.2.1)
   - BRPickerView
+  - Bugly
   - HXPhotoPicker (= 2.4.2)
   - IQKeyboardManager
   - JKCategories (= 1.7)
@@ -150,6 +152,7 @@ SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - AFNetworking
     - BRPickerView
+    - Bugly
     - CocoaAsyncSocket
     - HXPhotoPicker
     - IQKeyboardManager
@@ -200,6 +203,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   BRPickerView: 67ce855d07ff61771b586fea719053612bfeb1d6
+  Bugly: eded937bbb1f731cacf689c2d934ddbd9ab34f83
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   HXPhotoPicker: 0b0751fe5d64271edefcd5cc4ffa9b6300ca58b7
   IQKeyboardManager: 3a8b9e603f8b0eeaf5f096a1f2b2cfcf121992ef
@@ -239,6 +243,6 @@ SPEC CHECKSUMS:
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 1aac2a4c5d91ad9a56de715804abf30a706f7af2
+PODFILE CHECKSUM: c03abd948612026b0018fe44bb3fd3dee60ce0fa
 
 COCOAPODS: 1.9.1

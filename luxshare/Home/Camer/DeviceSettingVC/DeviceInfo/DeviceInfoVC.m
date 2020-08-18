@@ -162,7 +162,6 @@
         });
 
     } failure:^(NSError *error) {
-        NSLog(@"updateName failure: %@", error);
            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }

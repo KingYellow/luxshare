@@ -12,6 +12,7 @@
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        self.backgroundColor = QZH_KIT_Color_WHITE_100;
         [self creatSubViews];
     }
     return self;

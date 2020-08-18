@@ -78,7 +78,23 @@
     [self.maskView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0 ));
     }];
-
+    if (self.deviceModel.dps[@"169"]) {
+        NSData *jsonData = [self.deviceModel.dps[@"169"] dataUsingEncoding:NSUTF8StringEncoding];
+        if (!jsonData) {
+            return;
+        }
+        NSError *err;
+        NSDictionary *dicjson = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                            options:NSJSONReadingMutableContainers
+                                                              error:&err];
+        NSDictionary *dic = dicjson[@"region0"];
+        
+        if (([dic[@"xlen"] intValue] - [dic[@"x"] intValue])/100.0*QZHScreenHeight < QZHSIZE_WIDTH_ALARMAREA  || ([dic[@"ylen"] intValue] - [dic[@"y"] intValue])/100.0*QZHScreenWidth < QZHSIZE_WIDTH_ALARMAREA) {
+            return;
+        }
+        self.maskView.centerRect = CGRectMake([dic[@"x"] intValue]/100.0*QZHScreenHeight, [dic[@"y"] intValue]/100.0*QZHScreenWidth, ([dic[@"xlen"] intValue] - [dic[@"x"] intValue])/100.0*QZHScreenHeight, ([dic[@"ylen"] intValue] - [dic[@"y"] intValue])/100.0*QZHScreenWidth);
+    }
+  
 }
 - (void)setConfigs{
     if (self.connected) {
@@ -218,7 +234,8 @@
             // 刷新状态栏
         weakSelf.statusHiden = NO;
         // 刷新状态栏
-        [weakSelf performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakSelf performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf.navigationController popViewControllerAnimated:YES];
 
             });
@@ -253,53 +270,19 @@
 
     [self.device publishDps:dps success:^{
         [[QZHHUD HUD] textHUDWithMessage:@"设置成功" afterDelay:1.0];
-        [self.navigationController popViewControllerAnimated:YES];
+        self.statusHiden = NO;
+        // 刷新状态栏
+        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+
 
     } failure:^(NSError *error) {
         [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
 
-
-////这样就实现了但是，这样是不够的。因为里边的缩放和移动等没有做相应的判断。因为代码很简洁，所以扩展也非常方便。我修改了缩放的代码，增加了限制，其他的类似
-//
-//// 处理缩放手势
-//
-// - (void) pinchView:(UIPinchGestureRecognizer *)pinchGestureRecognizer
-//
-//         {
-//
-//        UIView *view = pinchGestureRecognizer.view;
-//
-//        if (pinchGestureRecognizer.state == UIGestureRecognizerStateBegan || pinchGestureRecognizer.state == UIGestureRecognizerStateChanged)
-//
-//        {
-//
-//        view.transform = CGAffineTransformScale(view.transform, pinchGestureRecognizer.scale, pinchGestureRecognizer.scale);
-//
-//        if (showImgView.frame.size.width < oldFrame.size.width)
-//
-//         {
-//
-//        showImgView.frame = oldFrame;
-//
-//        //让图片无法缩得比原图小
-//
-//        }
-//
-//        if (showImgView.frame.size.width > 3 * oldFrame.size.width)
-//
-//        {
-//
-//        showImgView.frame = largeFrame;
-//
-//        }
-//
-//        pinchGestureRecognizer.scale = 1;
-//
-//        }
-//
-//}
 - (BOOL)prefersStatusBarHidden{
 
     return self.statusHiden;

@@ -11,6 +11,7 @@
 @implementation TOTACardCCell
 -(instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
+        self.backgroundColor = QZH_KIT_Color_WHITE_100;
         [self creatSubviews];
     }
     return self;

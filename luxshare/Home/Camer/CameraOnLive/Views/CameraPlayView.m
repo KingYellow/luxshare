@@ -93,8 +93,7 @@
 -(UIButton *)playBtn{
     if (!_playBtn) {
         _playBtn = [[UIButton alloc] init];
-        [_playBtn setImage:QZHLoadIcon(@"pay_normal") forState:UIControlStateNormal];
-        [_playBtn setImage:QZHLoadIcon(@"pay_selected") forState:UIControlStateSelected];
+        [_playBtn setImage:QZHLoadIcon(@"btn_doc_video_play_video") forState:UIControlStateNormal];
         _playBtn.tag = 0;
         [_playBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
     }

@@ -16,10 +16,9 @@
         //设置 背景为clear
         self.backgroundColor = [UIColor clearColor];
         self.opaque = NO;
-        self.selectView.frame = CGRectMake(self.center.y -80, self.center.x - 45, 192, 108);
+        self.selectView.frame = CGRectMake(0, 0, QZHScreenHeight, QZHScreenWidth);
             
         self.oldFrame = self.selectView.frame;
-        self.largeFrame = CGRectMake(0 - QZHScreenWidth, 0 - QZHScreenHeight, 3 * self.oldFrame.size.width, 3 * self.oldFrame.size.height);
         [self addGestureRecognizerToView:self.selectView];
         [self addSubview:self.selectView];
         [self addSubview:self.leftBackBtn];
@@ -51,13 +50,15 @@
     UIRectFill(holeiInterSection);
 }
 -(void)setCenterRect:(CGRect)centerRect{
-    _centerRect = centerRect;
+    _selectView.frame = centerRect;
     [self drawRect:self.frame];
 }
 -(UIView *)selectView{
     if (!_selectView) {
         _selectView = [[UIView alloc] init];
         _selectView.backgroundColor = QZHColorClear;
+        _selectView.layer.borderColor = QZHKIT_COLOR_SKIN.CGColor;
+        _selectView.layer.borderWidth = 1.5;
     }
     return _selectView;
 }
@@ -82,27 +83,54 @@
     UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
 
     [view addGestureRecognizer:panGestureRecognizer];
-
 }
-
 
 // 处理缩放手势
 
 - (void) pinchView:(UIPinchGestureRecognizer *)pinchGestureRecognizer{
 
     UIView *view = pinchGestureRecognizer.view;
+    if (pinchGestureRecognizer.state == UIGestureRecognizerStateBegan){
+        self.oldFrame = view.frame;
+    }
+    
+    if (pinchGestureRecognizer.state == UIGestureRecognizerStateChanged){
 
-    if (pinchGestureRecognizer.state == UIGestureRecognizerStateBegan || pinchGestureRecognizer.state == UIGestureRecognizerStateChanged){
-        self.gestureBolok(self.selectView.frame, YES);
-        self.leftBackBtn.hidden = YES;
-        view.transform = CGAffineTransformScale(view.transform, pinchGestureRecognizer.scale, pinchGestureRecognizer.scale);
+        if (view.frame.size.width * pinchGestureRecognizer.scale <= QZHSIZE_WIDTH_ALARMAREA && pinchGestureRecognizer.scale < 1) {
+            [view setFrame:CGRectMake(view.center.x - QZHSIZE_WIDTH_ALARMAREA/2, view.center.y - QZHSIZE_WIDTH_ALARMAREA * self.oldFrame.size.height/self.oldFrame.size.width/2, QZHSIZE_WIDTH_ALARMAREA,QZHSIZE_WIDTH_ALARMAREA * self.oldFrame.size.height/self.oldFrame.size.width)];
+        }else if (view.frame.size.height <= QZHSIZE_WIDTH_ALARMAREA && pinchGestureRecognizer.scale < 1) {
+            [view setFrame:CGRectMake(view.center.x - QZHSIZE_WIDTH_ALARMAREA * self.oldFrame.size.width/self.oldFrame.size.height/2, view.center.y - QZHSIZE_WIDTH_ALARMAREA/2, QZHSIZE_WIDTH_ALARMAREA * self.oldFrame.size.width/self.oldFrame.size.height, QZHSIZE_WIDTH_ALARMAREA)];
+        }else{
+            CGFloat x = view.center.x - view.frame.size.width/2 * pinchGestureRecognizer.scale;
+            CGFloat y = view.center.y - view.frame.size.height/2 * pinchGestureRecognizer.scale;
+            CGFloat xlen = view.center.x + view.frame.size.width * pinchGestureRecognizer.scale/2;
+            CGFloat ylen = view.center.y + view.frame.size.height * pinchGestureRecognizer.scale/2;
+            
+            if (x < 0) {
+                view.frame = CGRectMake(0, view.center.y - view.center.x * self.oldFrame.size.height/self.oldFrame.size.width, view.center.x * 2, view.center.x * 2 * self.oldFrame.size.height/self.oldFrame.size.width);
+            }else
+            if (y < 0) {
+                view.frame = CGRectMake(view.center.x - view.center.y * self.oldFrame.size.width/self.oldFrame.size.height, 0, view.center.y * 2 * self.oldFrame.size.width/self.oldFrame.size.height, view.center.y * 2);
+            }else
+            if (xlen > QZHScreenHeight) {
+                view.frame = CGRectMake(view.center.x * 2 - QZHScreenHeight, view.center.y - (QZHScreenHeight - view.center.x) * self.oldFrame.size.height/self.oldFrame.size.width, (QZHScreenHeight - view.center.x) * 2, (QZHScreenHeight - view.center.x) * 2 * self.oldFrame.size.height/self.oldFrame.size.width);
+            }else
+            if (ylen > QZHScreenWidth) {
+                view.frame = CGRectMake(view.center.x - (QZHScreenWidth - view.center.y) * self.oldFrame.size.width/self.oldFrame.size.height,2 * view.center.y - QZHScreenWidth, (QZHScreenWidth - view.center.y) * 2 * self.oldFrame.size.width/self.oldFrame.size.height, (QZHScreenWidth - view.center.y) * 2);
+            }else{
+
+                view.frame = CGRectMake(view.center.x - view.frame.size.width/2 * pinchGestureRecognizer.scale, view.center.y - view.frame.size.height/2 * pinchGestureRecognizer.scale, view.frame.size.width * pinchGestureRecognizer.scale, view.frame.size.height * pinchGestureRecognizer.scale);
+            }
+        }
         pinchGestureRecognizer.scale = 1;
-        
+        self.leftBackBtn.hidden = YES;
+        self.gestureBolok(self.selectView.frame, YES);
     }
     if (pinchGestureRecognizer.state == UIGestureRecognizerStateEnded || pinchGestureRecognizer.state == UIGestureRecognizerStateCancelled){
         self.gestureBolok(self.selectView.frame, NO);
         self.leftBackBtn.hidden = NO;
-    }
+        
+    };
     [self setNeedsDisplay];
 
 }
@@ -112,46 +140,78 @@
 - (void) panView:(UIPanGestureRecognizer *)panGestureRecognizer{
 
     UIView *view = panGestureRecognizer.view;
-    if (panGestureRecognizer.state == UIGestureRecognizerStateBegan || panGestureRecognizer.state == UIGestureRecognizerStateChanged){
-        self.gestureBolok(self.selectView.frame, YES);
-        self.leftBackBtn.hidden = YES;
+    if (panGestureRecognizer.state == UIGestureRecognizerStateBegan){
+        CGPoint point = [panGestureRecognizer locationInView:panGestureRecognizer.view];
+        NSLog(@"beginX =%f,begainY =%f , old x = %f, oidY = %f",point.x,point.y,self.oldTouchLocal.x,self.oldTouchLocal.y);
+        self.oldTouchLocal = point;
+    }
+    if (panGestureRecognizer.state == UIGestureRecognizerStateChanged){
 
         CGPoint translation = [panGestureRecognizer translationInView:view.superview];
-
-        CGPoint locationPoint = [panGestureRecognizer locationInView:panGestureRecognizer.view];
+        CGPoint locationPoint = self.oldTouchLocal;
         CGFloat x = view.frame.origin.x;
         CGFloat y = view.frame.origin.y;
         CGFloat xLen = view.frame.origin.x + view.frame.size.width;
         CGFloat yLen = view.frame.origin.y + view.frame.size.height;
-
-        CGFloat scalWidth = 20.0;
+        NSLog(@"lx = %f, ly = %f, tx = %f, ty = %f, w = %f, h = %f, x = %f, y = %f",locationPoint.x, locationPoint.y, translation.x, translation.y, view.frame.size.width, view.frame.size.height,x,y);
+        CGFloat scalWidth = 30.0;
         if (locationPoint.x < scalWidth || locationPoint.y < scalWidth || locationPoint.x > view.frame.size.width - scalWidth || locationPoint.y > view.frame.size.height - scalWidth) {
             
             if (locationPoint.x < scalWidth) {
-               x = x + translation.x;
+                if (view.frame.size.width < QZHSIZE_WIDTH_ALARMAREA) {
+                    x = xLen - QZHSIZE_WIDTH_ALARMAREA;
+                }else{
+                    x = x + translation.x;
+                }
             }
             if (locationPoint.y < scalWidth) {
-               y = y + translation.y;
+                if (view.frame.size.height < QZHSIZE_WIDTH_ALARMAREA) {
+                    y = yLen - QZHSIZE_WIDTH_ALARMAREA;
+                }else{
+                    y = y + translation.y;
+                }
             }
             if (locationPoint.x > view.frame.size.width - scalWidth) {
-               xLen = xLen + translation.x;
+                if (view.frame.size.width < QZHSIZE_WIDTH_ALARMAREA) {
+                    xLen = x + QZHSIZE_WIDTH_ALARMAREA;
+                }else{
+                    xLen = xLen + translation.x;
+                }
             }
             if (locationPoint.y > view.frame.size.height - scalWidth) {
-               yLen = yLen + translation.y;
+                if (view.frame.size.height < QZHSIZE_WIDTH_ALARMAREA) {
+                      yLen = y + QZHSIZE_WIDTH_ALARMAREA;
+                }else{
+                    yLen = yLen + translation.y;
+                }
             }
+            x = MAX(0, x);
+            xLen = MIN(QZHScreenHeight, xLen);
+            y = MAX(0, y);
+            yLen = MIN(QZHScreenWidth, yLen);
+
             [view setFrame:CGRectMake(x, y, xLen - x, yLen - y)];
+
         }else{
+            CGPoint centerP = (CGPoint){view.center.x + translation.x, view.center.y + translation.y};
+            centerP.x = MAX(view.frame.size.width/2, centerP.x);
+            centerP.x = MIN(QZHScreenHeight - view.frame.size.width/2, centerP.x);
+            centerP.y = MAX(view.frame.size.height/2, centerP.y);
+            centerP.y = MIN(QZHScreenWidth - view.frame.size.height/2, centerP.y);
+            [view setCenter:centerP];
 
-            [view setCenter:(CGPoint){view.center.x + translation.x, view.center.y + translation.y}];
-
-            [panGestureRecognizer setTranslation:CGPointZero inView:view.superview];
         }
+        self.oldTouchLocal = [panGestureRecognizer locationInView:panGestureRecognizer.view];
 
-
+        [panGestureRecognizer setTranslation:CGPointZero inView:view.superview];
+        self.gestureBolok(self.selectView.frame, YES);
+        self.leftBackBtn.hidden = YES;
+        
     }
     if (panGestureRecognizer.state == UIGestureRecognizerStateEnded || panGestureRecognizer.state == UIGestureRecognizerStateCancelled){
         self.gestureBolok(self.selectView.frame, NO);
         self.leftBackBtn.hidden = NO;
+        self.oldTouchLocal = [panGestureRecognizer locationInView:view];
     }
     [self setNeedsDisplay];
 

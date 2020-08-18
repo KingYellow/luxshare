@@ -40,6 +40,7 @@
     self.dpManager = [[TuyaSmartCameraDPManager alloc] initWithDeviceId:self.deviceModel.devId];
     [self.dpManager addObserver:self];
     self.device = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId];
+    self.deviceModel = self.device.deviceModel;
 
 }
 - (void)UIConfig{

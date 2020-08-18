@@ -52,6 +52,7 @@
     self.dpManager = [[TuyaSmartCameraDPManager alloc] initWithDeviceId:self.deviceModel.devId];
     [self.dpManager addObserver:self];
     self.device = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId];
+    self.deviceModel = self.device.deviceModel;
     self.device.delegate = self;
 }
 - (void)UIConfig{
@@ -535,7 +536,6 @@
 #pragma mark -- deviceDelete
 - (void)device:(TuyaSmartDevice *)device dpsUpdate:(NSDictionary *)dps{
     self.device = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId];
-    self.deviceModel = self.device.deviceModel;
 
     [self.qzTableView reloadData];
 }

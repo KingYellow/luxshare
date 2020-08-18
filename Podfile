@@ -26,5 +26,6 @@ target 'luxshare' do
   pod 'IQKeyboardManager'
   pod 'WMPlayer',  :git => 'https://github.com/zhengwenming/WMPlayer.git'
   pod 'BRPickerView'
+  pod 'Bugly'
 
 end

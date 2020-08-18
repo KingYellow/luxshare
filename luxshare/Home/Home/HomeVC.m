@@ -547,7 +547,7 @@
 - (void)dismiss{
     self.qzTableView.backgroundColor = QZHKIT_Color_BLACK_0;
 
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         self.qzTableView.frame = CGRectMake(0,-QZHScreenHeight, QZHScreenWidth, QZHScreenHeight);
     }];
 
