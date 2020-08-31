@@ -1,0 +1,11 @@
+"CFBundleDisplayName" = "TuyaSmart";
+"NSBluetoothAlwaysUsageDescription" = "This will allow the app to find and connect Bluetooth accessories. This app may also use Bluetooth to locate Bluetooth device.";
+"NSBluetoothPeripheralUsageDescription" = "Để thêm hoặc sử dụng thiết bị Bluetooth, hãy bật Bluetooth trên điện thoại di động của bạn.";
+"NSCameraUsageDescription" = "Ứng dụng yêu cầu quyền truy cập camera để chụp ảnh hồ sơ hoặc quét mã QR.";
+"NSHomeKitUsageDescription" = "Bạn có thể điều khiển các thiết bị được hỗ trợ dưới mục \"Gia đình\" trong ứng dụng.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Ứng dụng có thể cung cấp nhiệt độ và độ ẩm theo vị trí của bạn. \"Rời khỏi hoặc đến (beta)\" luôn yêu cầu quyền truy cập vào vị trí của bạn.";
+"NSLocationAlwaysUsageDescription" = "Ứng dụng có thể cung cấp nhiệt độ và độ ẩm theo vị trí của bạn. \"Rời khỏi hoặc đến (beta)\" luôn yêu cầu quyền truy cập vào vị trí của bạn.";
+"NSLocationWhenInUseUsageDescription" = "Ứng dụng yêu cầu truy cập vị trí để cung cấp thông tin như nhiệt độ và độ ẩm.";
+"NSMicrophoneUsageDescription" = "Ứng dụng yêu cầu truy cập micrô để điều khiển các thiết bị thông minh.";
+"NSPhotoLibraryAddUsageDescription" = "Chúng tôi cần sự cho phép của bạn để lưu hình ảnh và video trong album.";
+"NSPhotoLibraryUsageDescription" = "Ứng dụng yêu cầu quyền truy cập vào album của bạn để tải lên ảnh hồ sơ.";

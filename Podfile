@@ -1,6 +1,8 @@
 source 'https://github.com/CocoaPods/Specs.git'    # 官方库地址
 
 source 'git@github.com:KingYellow/QZHFramework.git' # 私有库地址
+source "https://github.com/TuyaInc/TuyaPublicSpecs.git"
+source 'https://cdn.cocoapods.org/'
 platform :ios, '9.0'
 
 target 'luxshare' do
@@ -9,9 +11,9 @@ target 'luxshare' do
   pod "TuyaSmartHomeKit"
   pod "TuyaSmartActivatorKit"
   pod 'TuyaSmartCameraKit', '~> 4.17.1'
-  pod "TuyaSmartCameraT"
+#  pod "TuyaSmartCameraT"
+  pod 'TuyaSmartHelpCenterBizBundle'
   
-  pod 'MBProgressHUD', '1.1.0'
   pod 'MJRefresh', '3.1.15.3'
   pod 'JKCategories', '1.7'
   pod 'HXPhotoPicker', '2.4.2'
@@ -27,5 +29,5 @@ target 'luxshare' do
   pod 'WMPlayer',  :git => 'https://github.com/zhengwenming/WMPlayer.git'
   pod 'BRPickerView'
   pod 'Bugly'
-
+  pod 'YCBStability'
 end

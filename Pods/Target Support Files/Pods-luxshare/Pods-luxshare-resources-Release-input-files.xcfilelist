@@ -1,2 +1,15 @@
 ${PODS_ROOT}/Target Support Files/Pods-luxshare/Pods-luxshare-resources.sh
+${PODS_ROOT}/TYHybridContainer/TYHybridContainer-1.2.9.bizbundle.3.17.0/Assets/bundles/TYHybridContainer.bundle
+${PODS_ROOT}/TYNavigationController/TYNavigationController-1.10.1/Assets/TYNavigationRes.bundle
+${PODS_ROOT}/TYOEMConfig/TYOEMConfig-1.13.0.bizbundle.3.17.6.1/Assets/resources/customColor.plist
+${PODS_ROOT}/TYReleaseDebugger/TYReleaseDebugger-0.5.0/Assets/bundles/ReleaseDebugger.bundle
+${PODS_ROOT}/TYSmartBusinessLibrary/TYSmartBusinessLibrary-3.17.5.bizbundle.3.17.0.3/Assets/resources/cell_view_arrow@2x.png
+${PODS_ROOT}/TYSmartBusinessLibrary/TYSmartBusinessLibrary-3.17.5.bizbundle.3.17.0.3/Assets/resources/cell_view_arrow@3x.png
+${PODS_ROOT}/TYSmartBusinessLibrary/TYSmartBusinessLibrary-3.17.5.bizbundle.3.17.0.3/Assets/bundles/TPViews.bundle
+${PODS_ROOT}/TYSmartBusinessLibrary/TYSmartBusinessLibrary-3.17.5.bizbundle.3.17.0.3/Assets/bundles/TYCropViewControllerBundle.bundle
+${PODS_ROOT}/TYSmartBusinessLibrary/TYSmartBusinessLibrary-3.17.5.bizbundle.3.17.0.3/Assets/bundles/TYSmartBusinessLibraryRes.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/TYVideoPlayer/TYVideoPlayer.bundle
+${PODS_ROOT}/TuyaSmartBizCore/TuyaSmartBizCore-3.17.6.3/Assets/resources/custom.json
+${PODS_ROOT}/TuyaSmartBizCore/TuyaSmartBizCore-3.17.6.3/Assets/bundles/TuyaSmartBizCore.bundle
+${PODS_ROOT}/TuyaSmartHelpCenterBizBundle/TuyaSmartHelpCenterBizBundle-3.17.0.2/Assets/bundles/TuyaSmartHelpCenterBizBundle.bundle
 ${PODS_ROOT}/TuyaSmartUtil/ios/TuyaSmartUtil.framework/Versions/A/Resources/TuyaSmartUtil.bundle

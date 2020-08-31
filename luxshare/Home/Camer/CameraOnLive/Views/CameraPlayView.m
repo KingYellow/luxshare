@@ -27,7 +27,10 @@
     [self addSubview:self.wifiIMG];
     [self addSubview:self.batteryIMG];
     [self addSubview:self.recordProgressView];
+    [self addSubview:self.talkProgressView];
+
     QZHViewRadius(self.recordProgressView, 20);
+    QZHViewRadius(self.talkProgressView, 20);
     QZHViewRadius(self.definitionBtn, 15);
     QZHViewRadius(self.horizontalBtn, 15);
 
@@ -80,6 +83,13 @@
 
     }];
     [self.recordProgressView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(150);
+        make.height.mas_equalTo(40);
+        make.centerX.mas_equalTo(self);
+        make.bottom.mas_equalTo(-20);
+
+    }];
+    [self.talkProgressView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(150);
         make.height.mas_equalTo(40);
         make.centerX.mas_equalTo(self);
@@ -156,10 +166,22 @@
 -(RecordProgressView *)recordProgressView{
     if (!_recordProgressView) {
         _recordProgressView = [[RecordProgressView alloc] init];
-        _recordProgressView.backgroundColor = QZHKIT_COLOR_SKIN;
+        _recordProgressView.typeLab.text = @"录制中";
+        _recordProgressView.tipIMG.image = QZHLoadIcon(@"ic_all_record_ing");
+        _recordProgressView.backgroundColor = QZHKIT_COLOR_SKIN_AlPHA;
         _recordProgressView.hidden = YES;
     }
     return _recordProgressView;
+}
+-(RecordProgressView *)talkProgressView{
+    if (!_talkProgressView) {
+        _talkProgressView = [[RecordProgressView alloc] init];
+        _talkProgressView.typeLab.text = @"通话中";
+        _talkProgressView.tipIMG.image = QZHLoadIcon(@"ic_calling");
+        _talkProgressView.backgroundColor = QZHKIT_COLOR_SKIN_AlPHA;
+        _talkProgressView.hidden = YES;
+    }
+    return _talkProgressView;
 }
 
 - (void)buttonAction:(UIButton *)sender{

@@ -200,14 +200,18 @@
 
 - (void)activator:(TuyaSmartActivator *)activator didReceiveDevice:(TuyaSmartDeviceModel *)deviceModel error:(NSError *)error
 {
-    if (deviceModel) {
-        NETResultVC *vc = [[NETResultVC alloc] init];
-        vc.isSuccess = YES;
-        [self.navigationController pushViewController:vc animated:YES];
-    }else{
+    if (error) {
         [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
         NETResultVC *vc = [[NETResultVC alloc] init];
+        if([error.userInfo[@"NSLocalizedFailureReason"] isEqualToString:@"DEVICE_ALREADY_BIND"]){
+            vc.isBind = YES;
+        }
         vc.isSuccess = NO;
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }else{
+        NETResultVC *vc = [[NETResultVC alloc] init];
+        vc.isSuccess = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

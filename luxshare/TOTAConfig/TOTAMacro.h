@@ -18,6 +18,19 @@
 #define QZH_WIDTH_SCALE          QZHScreenWidth/375.0
 #define QZH_HEIGHT_SCALE          QZHScreenHeight/667.0
 #define QZH_SCREEN_SCALE          [UIScreen mainScreen].scale
+//是否刘海屏
+#define QZH_ISBANGSSCREEN ({\
+    BOOL isBangsScreen = NO; \
+    if (@available(iOS 11.0, *)) { \
+    UIWindow *window = [[UIApplication sharedApplication].windows firstObject]; \
+    isBangsScreen = window.safeAreaInsets.bottom > 0; \
+    } \
+    isBangsScreen; \
+})
+//视频1920 1080 横屏时图像左右坐标
+
+#define QZH_VIDEO_LEFTMARGIN   (QZHScreenHeight - QZHScreenWidth *1920/1080)/2
+#define QZH_VIDEO_RIGHTMARGIN  (QZHScreenHeight + QZHScreenWidth *1920/1080)/2
 
 //----------------------------------------
 //主代理

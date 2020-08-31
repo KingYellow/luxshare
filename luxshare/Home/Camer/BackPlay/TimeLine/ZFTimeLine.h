@@ -10,8 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 typedef enum{
-    ScaleTypeBig,           //大
-    ScaleTypeSmall          //小
+    ScaleTypeBig,           //大 一小时10格
+    ScaleTypeNormal,        //10分钟10格
+    ScaleTypeSmall          //小 一分钟10格
 }ScaleType;                 //时间轴模式
 
 @class ZFTimeLine;
@@ -22,7 +23,7 @@ typedef enum{
 @interface ZFTimeLine : UIView
 @property (nonatomic, assign) id<ZFTimeLineDelegate> delegate;
 @property (copy, nonatomic)NSArray *dateArr;
-
+@property (assign, nonatomic)BOOL isHor;
 //刷新,但不改变时间
 -(void)refresh;
 #pragma mark --- 刷新到到当前时间

@@ -1,0 +1,1 @@
+../../../TYUIKit/TYUIKit-1.10.2/Headers/Public/UIViewController+TYRotation.h

@@ -336,16 +336,20 @@
     }else{
         model.select = @"0";
     }
+    TuyaSmartMessageListModel *modellll = self.listArr[index.section][index.row];
+
     self.deleteBtn.hidden = ![self ishasselexted];
     self.topView.selectBtn.selected = [self isallselexted];
     [self.qzTableView reloadData];
 
-  
 }
 
 - (void)getMessageList:(NSInteger) page{
     QZHWS(weakSelf)
     [[TuyaSmartMessage new] getMessageListWithType:2 limit:10 offset:self.modelArr.count success:^(NSArray<TuyaSmartMessageListModel *> *list) {
+        if (page == 0) {
+            [weakSelf.modelArr removeAllObjects];
+        }
         [weakSelf.modelArr addObjectsFromArray:list];
         [weakSelf resetArr];
         [weakSelf.qzTableView.mj_footer endRefreshing];

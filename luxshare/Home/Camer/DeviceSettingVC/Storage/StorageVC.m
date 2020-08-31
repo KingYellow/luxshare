@@ -38,6 +38,7 @@
     self.dpManager = [[TuyaSmartCameraDPManager alloc] initWithDeviceId:self.deviceModel.devId];
     [self.dpManager addObserver:self];
     self.device = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId];
+    self.deviceModel= self.device.deviceModel;
     self.deviceArr = [self storageSize];
     [self UIConfig];
 
@@ -230,18 +231,18 @@
         NSArray *stroge = [st componentsSeparatedByString:@"|"];
         for (NSString *str in stroge) {
            NSInteger lon = [str integerValue];
-            if (lon < 1024) {
-                [arr addObject: [NSString stringWithFormat:@"%.2lfK",lon/1.0]];
-            }else if(lon >= 1024 && lon < 1024 * 1024){
-                [arr addObject: [NSString stringWithFormat:@"%.2lfM",lon/1024.0]];
-
-            }else{
+//            if (lon < 1024) {
+//                [arr addObject: [NSString stringWithFormat:@"%.2lfK",lon/1.0]];
+//            }else if(lon >= 1024 && lon < 1024 * 1024){
+//                [arr addObject: [NSString stringWithFormat:@"%.2lfM",lon/1024.0]];
+//
+//            }else{
                 [arr addObject: [NSString stringWithFormat:@"%.2lfG",lon/(1024.0 * 1024)]];
-            }
+//            }
         }
     }
     if (arr.count != 3) {
-        return @[@"0K",@"0K",@"0K"];
+        return @[@"0G",@"0G",@"0G"];
     }
     return arr;
 }

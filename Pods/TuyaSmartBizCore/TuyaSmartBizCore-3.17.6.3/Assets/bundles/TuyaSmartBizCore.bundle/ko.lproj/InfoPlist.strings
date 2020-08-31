@@ -1,0 +1,11 @@
+"CFBundleDisplayName" = "TuyaSmart";
+"NSBluetoothAlwaysUsageDescription" = "블루투스 제품을 사용하기 위해 휴대폰의 블루투스를 켜주세요.";
+"NSBluetoothPeripheralUsageDescription" = "블루투스 제품을 사용하기 위해 휴대폰의 블루투스를 켜주세요.";
+"NSCameraUsageDescription" = "새로운 얼굴을 추가하거나 다른 기능을 사용하기 위해 카메라를 먼저 추가해주세요.";
+"NSHomeKitUsageDescription" = "현재 응용 프로그램의 \"홈\"응용 프로그램에서 지원되는 장치를 제어 할 수 있습니다.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "앱은 사용자의 위치를 기준으로 온도 및 습도를 포함한 날씨 정보를 제공합니다. 앱이 내 위치에 액세스할 수 있도록 허용하면 앱에서 출발 또는 도착(베타) 기능을 제공할 수도 있습니다.";
+"NSLocationAlwaysUsageDescription" = "앱은 사용자의 위치를 기준으로 온도 및 습도를 포함한 날씨 정보를 제공합니다. 앱이 내 위치에 액세스할 수 있도록 허용하면 앱에서 출발 또는 도착(베타) 기능을 제공할 수도 있습니다.";
+"NSLocationWhenInUseUsageDescription" = "날씨, 온도 등 더 다양한 기능을 사용하려면 위치 정보 접근에 동의해야합니다.";
+"NSMicrophoneUsageDescription" = "일부 제품 기능은 오디오 정보를 저장합니다.";
+"NSPhotoLibraryAddUsageDescription" = "스크린샷 및 녹화 기능을 이용하기 위해서는 갤러리 접근 권한이 필요합니다.";
+"NSPhotoLibraryUsageDescription" = "프로필 사진을 설정하기 위해 갤러리에 접근해야합니다.";

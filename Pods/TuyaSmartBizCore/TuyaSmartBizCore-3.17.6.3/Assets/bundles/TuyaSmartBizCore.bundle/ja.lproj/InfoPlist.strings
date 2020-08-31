@@ -1,0 +1,11 @@
+"CFBundleDisplayName" = "TuyaSmart";
+"NSBluetoothAlwaysUsageDescription" = "ブルートゥースを起動し、ブルートゥースデバイスを追加及び起動しなければなりません。";
+"NSBluetoothPeripheralUsageDescription" = "ブルートゥースを起動し、ブルートゥースデバイスを追加及び起動しなければなりません。";
+"NSCameraUsageDescription" = "カメラの対かQRコードのスキャンではカメラの使用が必要です。";
+"NSHomeKitUsageDescription" = "現在のアプリの「ホーム」アプリでサポートされているデバイスを制御できます。";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "このアプリは、位置情報に基づいて気温や湿度などの天気情報を提供します。位置情報へのアクセスを許可すると、出発または到着機能（ベータ版）を使用できます。";
+"NSLocationAlwaysUsageDescription" = "このアプリは、位置情報に基づいて気温や湿度などの天気情報を提供します。位置情報へのアクセスを許可すると、出発または到着機能（ベータ版）を使用できます。";
+"NSLocationWhenInUseUsageDescription" = "気温などのスマートサービスを利用するには、位置情報へのアクセスが必要です。";
+"NSMicrophoneUsageDescription" = "一部の製品機能ではマイクロフォンの使用が必要です";
+"NSPhotoLibraryAddUsageDescription" = "スクリーンプリント及び映像を保存するにはストレージにアクセスする権限を許可する必要があります。";
+"NSPhotoLibraryUsageDescription" = "プロフィール画像を設定する際、アプリからのアルバム訪問が必要です。";

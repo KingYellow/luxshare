@@ -1,0 +1,11 @@
+"CFBundleDisplayName" = "TuyaSmart";
+"NSBluetoothAlwaysUsageDescription" = "La aplicación necesita activar el Bluetooth para agregar y utilizar dispositivos inteligentes. ¿Permite que active el Bluetooth?";
+"NSBluetoothPeripheralUsageDescription" = "La aplicación necesita activar el Bluetooth para agregar y utilizar dispositivos inteligentes. ¿Permite que active el Bluetooth?";
+"NSCameraUsageDescription" = "La aplicación puede crear un nuevo perfil y escanear códigos QR con la cámara. ¿Permite que utilice la cámara?";
+"NSHomeKitUsageDescription" = "Puede controlar los dispositivos que son compatibles con la aplicación \"Inicio\" en la aplicación actual.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "La aplicación proporciona información meteorológica, que incluye la temperatura y la humedad en función de su ubicación. Si permite a la aplicación acceso a su ubicación, la aplicación también puede proporcionar la función de salida o llegada (beta).";
+"NSLocationAlwaysUsageDescription" = "La aplicación proporciona información meteorológica, que incluye la temperatura y la humedad en función de su ubicación. Si permite a la aplicación acceso a su ubicación, la aplicación también puede proporcionar la función de salida o llegada (beta).";
+"NSLocationWhenInUseUsageDescription" = "La aplicación puede proporcionar información meteorológica como temperatura y humedad según su ubicación. ¿Permite que acceda a su ubicación?";
+"NSMicrophoneUsageDescription" = "La aplicación puede usar reconocimiento de voz para controlar dispositivos inteligentes. ¿Permite que acceda al micrófono?";
+"NSPhotoLibraryAddUsageDescription" = "Se necesita permiso para abrir la galería y poder guardar capturas de pantalla y video. ¿Permite el acceso a la galería?";
+"NSPhotoLibraryUsageDescription" = "La aplicación necesita acceder a la galería de fotos para obtener una foto de perfil. ¿Permite el acceso a la galería?";

@@ -175,7 +175,9 @@
     PhotoListCell *Cell = [self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:sender.view.tag inSection:0]];
     model.selected = !model.selected;
     Cell.selectBtn.selected = !Cell.selectBtn.selected;
-    self.selecctResultBlock([self setSelectedArr]);
+    NSArray *select = [self setSelectedArr];
+    self.selecctResultBlock(select,select.count == self.listArr.count);
+    
 }
 
 - (NSArray *)setSelectedArr{
@@ -192,7 +194,7 @@
         model.selected = select;
     }
     [self.qzTableView reloadData];
-    self.selecctResultBlock([self setSelectedArr]);
+    self.selecctResultBlock([self setSelectedArr], YES);
 
 }
 @end

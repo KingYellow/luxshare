@@ -41,7 +41,7 @@
 -(UIImageView *)tipIMG{
     if (!_tipIMG) {
         _tipIMG = [[UIImageView alloc] init];
-        _tipIMG.image = QZHLoadIcon(@"pay_selected");
+        _tipIMG.image = QZHLoadIcon(@"ic_all_record_ing");
     }
     return _tipIMG;
 }

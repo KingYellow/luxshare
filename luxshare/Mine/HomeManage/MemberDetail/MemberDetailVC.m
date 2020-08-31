@@ -15,7 +15,7 @@
 #import <STPopup/STPopup.h>
 
 
-@interface MemberDetailVC ()<UITableViewDelegate,UITableViewDataSource,TuyaSmartHomeDelegate>
+@interface MemberDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic)UITableView *qzTableView;
 @property (copy, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)NSMutableArray *memberArr;
@@ -30,10 +30,14 @@
     self.home =[TuyaSmartHome homeWithHomeId:self.homeModel.homeId];
     [self.qzTableView reloadData];
 }
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initConfig];
-    self.home.delegate = self;
+//    self.home.delegate = self;
     [self getHomeMember];
 }
 - (void)initConfig{
@@ -274,11 +278,8 @@
         [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
-// 家庭下新增房间代理回调
-- (void)home:(TuyaSmartHome *)home didAddRoom:(TuyaSmartRoomModel *)room {
-      [self.qzTableView reloadData];
-}
-#pragma mark -- p判断是否是 管理员或者所有者
+
+#pragma mark -- 判断是否是 管理员或者所有者
 
 - (BOOL)isAdminOrOwner{
     if (self.homeModel.role == TYHomeRoleType_Admin ||self.homeModel.role == TYHomeRoleType_Owner) {
@@ -312,5 +313,8 @@
        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
         
     }];
+}
+- (void)dealloc{
+    
 }
 @end

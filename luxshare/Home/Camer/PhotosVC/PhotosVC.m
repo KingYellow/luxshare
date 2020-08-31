@@ -31,6 +31,7 @@
 @property (strong, nonatomic)UILabel *topNumLab;
 @property (strong, nonatomic)UIView *bottomHandleView;
 @property (strong, nonatomic)NSArray *deleteArr;
+@property (strong, nonatomic)UIButton *btn;
 @end
 
 
@@ -67,12 +68,13 @@
 -(void)loadVcs{
 QZHWS(weakSelf)
     self.photoVC = [[PhotosListVC alloc] init];
-    self.photoVC.selecctResultBlock = ^(NSArray * _Nonnull selectArr) {
+    self.photoVC.selecctResultBlock = ^(NSArray * _Nonnull selectArr, BOOL isall) {
         if (selectArr.count > 0) {
             weakSelf.topHandleView.hidden = NO;
             weakSelf.bottomHandleView.hidden = NO;
             weakSelf.deleteArr = selectArr;
             weakSelf.topNumLab.text = [NSString stringWithFormat:@"%ld个已选定",selectArr.count];
+            weakSelf.btn.selected = isall;
             if (weakSelf.currentIndex == 1) {
               
             }
@@ -87,12 +89,14 @@ QZHWS(weakSelf)
 
     self.videoVC = [[VideoListVC alloc] init];
     
-    self.videoVC.selecctResultBlock = ^(NSArray * _Nonnull selectArr) {
+    self.videoVC.selecctResultBlock = ^(NSArray * _Nonnull selectArr, BOOL isall) {
         if (selectArr.count > 0) {
             weakSelf.topHandleView.hidden = NO;
             weakSelf.bottomHandleView.hidden = NO;
             weakSelf.deleteArr = selectArr;
             weakSelf.topNumLab.text = [NSString stringWithFormat:@"%ld个已选定",selectArr.count];
+            weakSelf.btn.selected = isall;
+
             if (weakSelf.currentIndex == 1) {
               
             }
@@ -269,16 +273,16 @@ QZHWS(weakSelf)
             make.left.mas_equalTo(15);
         }];
         
-        UIButton *btn = [[UIButton alloc] init];
-        [btn setTitle:@"全部选中" forState:UIControlStateNormal];
-        [btn setTitle:@"取消选中" forState:UIControlStateSelected];
+        self.btn  = [[UIButton alloc] init];
+        [self.btn  setTitle:@"全部选中" forState:UIControlStateNormal];
+        [self.btn  setTitle:@"取消全选" forState:UIControlStateSelected];
 
-        btn.titleLabel.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
-        [btn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
-        [btn addTarget:self action:@selector(allSelectAction:) forControlEvents:UIControlEventTouchUpInside];
-        [self.topHandleView addSubview:btn];
+        self.btn.titleLabel.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
+        [self.btn  setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
+        [self.btn  addTarget:self action:@selector(allSelectAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self.topHandleView addSubview:self.btn ];
       
-        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.btn  mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.mas_equalTo(_topHandleView);
             make.right.mas_equalTo(-15);
             make.width.mas_equalTo(80);

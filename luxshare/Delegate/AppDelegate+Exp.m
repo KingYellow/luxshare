@@ -11,9 +11,8 @@
 #import "IQKeyboardManager.h"
 #import <Bugly/Bugly.h>
 
-
-#define APP_KEY @"etfsf3cknjdufuxj5ed3"
-#define APP_SECRET_KEY @"qqupn84qgsawka95tnhgrhkcvndnfkua"
+#define APP_TUYA_KEY @"etfsf3cknjdufuxj5ed3"
+#define APP_TUYA_SECRET_KEY @"qqupn84qgsawka95tnhgrhkcvndnfkua"
 #define APP_BUGLY_ID @"ef3aec3356"
 #define APP_BUGLY_KEY @"618cd2a8-e7d6-4316-bbb3-3aea50d4472d"
 
@@ -26,8 +25,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [Bugly startWithAppId:APP_BUGLY_ID];
 
-    [[TuyaSmartSDK sharedInstance] startWithAppKey:APP_KEY secretKey:APP_SECRET_KEY];
-//    [self loadNotification];
+    [[TuyaSmartSDK sharedInstance] startWithAppKey:APP_TUYA_KEY secretKey:APP_TUYA_SECRET_KEY];
+    [self loadNotification];
     
     if (@available(iOS 11.0, *)) {
         [[UIScrollView appearance] setContentInsetAdjustmentBehavior:UIApplicationBackgroundFetchIntervalNever];
@@ -41,7 +40,7 @@
     [self setVC];
 
     //更新版本检测
-    //  [QZHAppCheck updateCheckAppID:QZHAcAppStoreID];
+//      [QZHAppCheck updateCheckAppID:QZHAcAppStoreID];
     
     //配置UI全局
     [QZHKitHelper.kitHelper configKit];

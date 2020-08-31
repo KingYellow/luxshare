@@ -1,0 +1,11 @@
+"CFBundleDisplayName" = "涂鸦智能";
+"NSBluetoothAlwaysUsageDescription" = "這將允許 App 查找並連接藍牙配件。此 App 還可能使用藍牙來獲取藍牙設備的位置";
+"NSBluetoothPeripheralUsageDescription" = "App需要使用您的手機藍牙來添加和使用藍牙設備。";
+"NSCameraUsageDescription" = "App可以使用相機來添加新頭像和掃描二維碼。";
+"NSHomeKitUsageDescription" = "您可以在當前應用控制“家庭”應用中受支持的設備";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "App可以根據定位提供溫度、濕度等天氣信息；App的“離開或到達（beta）”功能需要始終獲取定位。";
+"NSLocationAlwaysUsageDescription" = "App可以根據定位提供溫度、濕度等天氣信息；App的“離開或到達（beta）”功能需要始終獲取定位。";
+"NSLocationWhenInUseUsageDescription" = "請打開定位權限，以便使用智能、設備定時等功能，並幫助 App 獲取到天氣和時區信息";
+"NSMicrophoneUsageDescription" = "App可以使用語音識別功能來控制智能設備。";
+"NSPhotoLibraryAddUsageDescription" = "App可以保存圖片和視頻到相冊。";
+"NSPhotoLibraryUsageDescription" = "App可以使用相冊來添加個人頭像。";

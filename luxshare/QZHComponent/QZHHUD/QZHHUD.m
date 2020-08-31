@@ -7,14 +7,15 @@
 //
 
 #import "QZHHUD.h"
-#import "MBProgressHUD.h"
+#import "LUXProgressHUD.h"
 #import "QZHHUDImageView.h"
+
 
 @interface QZHHUD ()
 
 @property (nonatomic, strong) UIView *targetView;
-@property (nonatomic, strong) MBProgressHUD *loadHUD;
-@property (nonatomic, strong) MBProgressHUD *textHUD;
+@property (nonatomic, strong) LUXProgressHUD *loadHUD;
+@property (nonatomic, strong) LUXProgressHUD *textHUD;
 
 
 @end
@@ -59,7 +60,7 @@
 - (void)loadingHUD {
     QZHWS(weakSelf);
     dispatch_async(dispatch_get_main_queue(), ^{
-        weakSelf.loadHUD.mode = MBProgressHUDModeIndeterminate;
+        weakSelf.loadHUD.mode = LUXProgressHUDModeIndeterminate;
         weakSelf.loadHUD.label.text = nil;
         weakSelf.loadHUD.customView = nil;
         weakSelf.loadHUD.offset = weakSelf.offset;
@@ -101,7 +102,7 @@
     QZHWS(weakSelf);
     dispatch_async(dispatch_get_main_queue(), ^{
 //        weakSelf.loadHUD = [[MBProgressHUD alloc] initWithView:weakSelf.targetView];
-        weakSelf.loadHUD.mode = MBProgressHUDModeIndeterminate;
+        weakSelf.loadHUD.mode = LUXProgressHUDModeIndeterminate;
         weakSelf.loadHUD.label.text = message;
         weakSelf.loadHUD.offset = self.offset;
         weakSelf.loadHUD.customView = nil;
@@ -141,8 +142,8 @@
 - (QZHHUD *)textHUDWithMessage:(NSString *)message afterDelay:(NSTimeInterval)delay {
     QZHWS(weakSelf);
     dispatch_async(dispatch_get_main_queue(), ^{
-        weakSelf.textHUD = [[MBProgressHUD alloc] initWithView:self.targetView];
-        weakSelf.textHUD.mode = MBProgressHUDModeText;
+        weakSelf.textHUD = [[LUXProgressHUD alloc] initWithView:self.targetView];
+        weakSelf.textHUD.mode = LUXProgressHUDModeText;
         weakSelf.textHUD.label.textColor = weakSelf.textColor;
         weakSelf.textHUD.label.text = message;
         weakSelf.textHUD.label.numberOfLines = 0;
@@ -163,8 +164,8 @@
 - (QZHHUD *)textActivityWithMessage:(NSString *)message afterDelay:(NSTimeInterval)delay {
     QZHWS(weakSelf);
     dispatch_async(dispatch_get_main_queue(), ^{
-        weakSelf.textHUD = [[MBProgressHUD alloc] initWithView:self.targetView];
-        weakSelf.textHUD.mode = MBProgressHUDModeIndeterminate;
+        weakSelf.textHUD = [[LUXProgressHUD alloc] initWithView:self.targetView];
+        weakSelf.textHUD.mode = LUXProgressHUDModeIndeterminate;
         weakSelf.textHUD.label.text = message;
         weakSelf.textHUD.label.numberOfLines = 0;
         weakSelf.textHUD.offset = weakSelf.offset;
@@ -204,7 +205,7 @@
 
  @param HUD 需要显示的HUD
  */
-- (void)showHUD:(MBProgressHUD *)HUD afterDelay:(CGFloat)delay {
+- (void)showHUD:(LUXProgressHUD *)HUD afterDelay:(CGFloat)delay {
     if (!self.targetView) {
         return;
     }
@@ -274,10 +275,10 @@
     return [self exp_getCurrentVC].view;
 }
 
-- (MBProgressHUD *)loadHUD {
+- (LUXProgressHUD *)loadHUD {
     
     if (!_loadHUD && self.targetView) {
-        _loadHUD = [[MBProgressHUD alloc] initWithView:self.targetView];
+        _loadHUD = [[LUXProgressHUD alloc] initWithView:self.targetView];
         _loadHUD.minShowTime = 0.5;
     }
 

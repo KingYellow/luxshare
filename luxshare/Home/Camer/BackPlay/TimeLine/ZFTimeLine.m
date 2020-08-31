@@ -28,8 +28,7 @@
 - (instancetype)init{
     self = [super init];
     if (self) {
-        self.backgroundColor = [UIColor blackColor];
-        self.alpha = 0.8;
+        self.backgroundColor = UIColorFromHex(0x000000);
         intervalValue = 10;
         formatterScale = [[NSDateFormatter alloc]init];
         [formatterScale setDateFormat:@"HH:mm"];
@@ -41,6 +40,13 @@
         [self timeNow];
         self.multipleTouchEnabled = YES;
         onTouch = NO;
+        UIPinchGestureRecognizer *pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchView:)];
+        [self addGestureRecognizer:pinchGestureRecognizer];
+        // 移动手势
+
+        UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
+
+        [self addGestureRecognizer:panGestureRecognizer];
     }
     return self;
 }
@@ -48,81 +54,104 @@
     [self setNeedsDisplay];
 }
 #pragma mark --- 触摸事件
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    if (!self.userInteractionEnabled) {
-        return;
-    }
-    onTouch = YES;
-    if (touches.count == 1) {
-        UITouch *touch = [touches anyObject];
-        moveStart = [touch locationInView:self];
-    }else if (touches.count == 2){
-        NSArray *arr = [touches allObjects];
-        UITouch *touch1 = arr[0];
-        UITouch *touch2 = arr[1];
-        scaleValue = fabs([touch2 locationInView:self].x - [touch1 locationInView:self].x);
-    }
-}
--(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    if (!self.userInteractionEnabled) {
-        return;
-    }
-    if (touches.count == 1) {
-        UITouch *touch = [touches anyObject];
-        CGPoint point = [touch locationInView:self];
-        float x = point.x - moveStart.x;
-        currentInterval = currentInterval - [self secondsOfIntervalValue] * x;
-        moveStart = point;
-        [self setNeedsDisplay];
-    }else if (touches.count == 2){
-        NSArray *arr = [touches allObjects];
-        UITouch *touch1 = arr[0];
-        UITouch *touch2 = arr[1];
-        float value = fabs([touch2 locationInView:self].x - [touch1 locationInView:self].x) ;
-        
-        if (scaleType == ScaleTypeBig) {
-            if (scaleValue - value < 0) {//变大
-                intervalValue = intervalValue + (value - scaleValue)/100;
-                if (intervalValue >= 15) {
-                    scaleType = ScaleTypeSmall;
-                    intervalValue = 10;
-                }
-            }else{//缩小
-                intervalValue = intervalValue + (value - scaleValue)/100;
-                if (intervalValue < 10) {
-                    intervalValue = 10;
-                }
-            }
-        }else{
-            if (scaleValue - value < 0) {//变大
-                intervalValue = intervalValue + (value - scaleValue)/100;
-                if (intervalValue >= 15) {
-                    intervalValue = 15;
-                }
-            }else{//缩小
-                intervalValue = intervalValue + (value - scaleValue)/100;
-                if (intervalValue < 10) {
-                    scaleType = ScaleTypeBig;
-                    intervalValue = 10;
-                }
-            }
-        }
-        [self setNeedsDisplay];
-    }
-}
--(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    if (!self.userInteractionEnabled) {
-        return;
-    }
-    onTouch = NO;
-
-    if (self.delegate && [self.delegate respondsToSelector:@selector(timeLine:moveToDate:)]) {
-        [self.delegate timeLine:self moveToDate:[self currentTimeStr]];
-    }
-//    [DFTime delaySec:0.5 perform:^{
+//-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+//    if (!self.userInteractionEnabled) {
+//        return;
+//    }
+//    onTouch = YES;
+//    if (touches.count == 1) {
+//        UITouch *touch = [touches anyObject];
+//        moveStart = [touch locationInView:self];
+//    }else if (touches.count == 2){
+//        NSArray *arr = [touches allObjects];
+//        UITouch *touch1 = arr[0];
+//        UITouch *touch2 = arr[1];
+//        scaleValue = fabs([touch2 locationInView:self].x - [touch1 locationInView:self].x);
+//    }
+//}
+//-(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
 //
-//    }];
-}
+//    if (!self.userInteractionEnabled) {
+//        return;
+//    }
+//    if (touches.count == 1) {
+//        UITouch *touch = [touches anyObject];
+//        CGPoint point = [touch locationInView:self];
+//        float x = point.x - moveStart.x;
+//        if (fabsf(x) < 1) {
+//            return;
+//        }
+//        currentInterval = currentInterval - [self secondsOfIntervalValue] * x;
+//        moveStart = point;
+//        [self setNeedsDisplay];
+//    }else if (touches.count == 2){
+//        NSLog(@"2");
+
+//        NSArray *arr = [touches allObjects];
+//        UITouch *touch1 = arr[0];
+//        UITouch *touch2 = arr[1];
+//        float value = fabs([touch2 locationInView:self].x - [touch1 locationInView:self].x) ;
+//
+//        if (scaleType == ScaleTypeBig) {
+//            if (scaleValue - value < 0) {//变大
+//                intervalValue = intervalValue + (value - scaleValue)/200;
+//                if (intervalValue >= 15) {
+//                    intervalValue = 10;
+//                    scaleType = ScaleTypeNormal;
+//                }
+//            }else{//缩小
+////                intervalValue = intervalValue + (value - scaleValue)/100;
+////                if (intervalValue < 15) {
+////                    scaleType = ScaleTypeNormal;
+////                    intervalValue = 10;
+////                }
+//            }
+//        }else if (scaleType == ScaleTypeNormal) {
+//                    if (scaleValue - value < 0) {//变大
+//                        intervalValue = intervalValue + (value - scaleValue)/200;
+//                        if (intervalValue >= 15) {
+//                            intervalValue = 10;
+//                            scaleType = ScaleTypeSmall;
+//                        }
+//                    }else{//缩小
+//                        intervalValue = intervalValue + (value - scaleValue)/200;
+//                        if (intervalValue < 5) {
+//                            intervalValue = 10;
+//                            scaleType = ScaleTypeBig;
+//                        }
+//                    }
+//
+//        }else{
+//            if (scaleValue - value < 0) {//变大
+////                intervalValue = intervalValue + (value - scaleValue)/100;
+////                if (intervalValue >= 15) {
+////                    scaleType = ScaleTypeNormal;
+////                    intervalValue = 10;
+////                }
+//            }else{//缩小
+//                intervalValue = intervalValue + (value - scaleValue)/200;
+//                if (intervalValue < 5) {
+//                    intervalValue = 10;
+//                    scaleType = ScaleTypeNormal;
+//                }
+//            }
+//        }
+//        [self setNeedsDisplay];
+//    }
+//}
+//-(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+//    if (!self.userInteractionEnabled) {
+//        return;
+//    }
+//    onTouch = NO;
+//
+//    if (self.delegate && [self.delegate respondsToSelector:@selector(timeLine:moveToDate:)]) {
+//        [self.delegate timeLine:self moveToDate:[self currentTimeStr]];
+//    }
+////    [DFTime delaySec:0.5 perform:^{
+////
+////    }];
+//}
 //锁定 不可拖动
 - (void)lockMove{
     self.userInteractionEnabled = NO;
@@ -167,89 +196,133 @@
 - (float)secondsOfIntervalValue{
     if (scaleType == ScaleTypeBig) {
         return 6.0*60.0/intervalValue;
-    }else if (scaleType == ScaleTypeSmall){
+    }else if (scaleType == ScaleTypeNormal){
         return 60.0/intervalValue;
+    }else{
+        return 6.0/intervalValue;
     }
-    return 6.0*60.0/intervalValue;
 }
 //绘图
+//-(void)drawRect:(CGRect)rect{
+//    //计算x=0时对应的时间戳
+//    float centerX = rect.size.width/2.0;
+//    NSTimeInterval leftInterval = currentInterval - centerX * [self secondsOfIntervalValue];
+//    NSTimeInterval rightInterval = currentInterval + centerX * [self secondsOfIntervalValue];
+//
+//    //左边第一个刻度对应的x值和时间戳
+//    float x;
+//    NSTimeInterval interval;
+//    if (scaleType == ScaleTypeBig) {
+//        float a = leftInterval/(60.0*6.0);
+//        interval = (((int)a) + 1) * (60.0 * 6.0);
+//        x = (interval - leftInterval) / [self secondsOfIntervalValue];
+//    }else if(scaleType == ScaleTypeNormal){
+//        float a = leftInterval/(60.0);
+//        interval = (((int)a) + 1) * (60.0);
+//        x = (interval - leftInterval) / [self secondsOfIntervalValue];
+//    }else{
+//        float a = leftInterval/(6.0);
+//        interval = (((int)a) + 1) * (6.0);
+//        x = (interval - leftInterval) / [self secondsOfIntervalValue];
+//    }
+//  CGContextRef contex = UIGraphicsGetCurrentContext();
+//
+//    while (x >= 0 && x <= rect.size.width) {
+//        int b;
+//        if (scaleType == ScaleTypeBig) {
+//            b = 60 * 6;
+//        }else if (scaleType == ScaleTypeNormal) {
+//            b = 60 ;
+//        }else{
+//            b = 6;
+//        }
+//        int rem = ((int)interval) % (b * 10);
+//        if (rem != 0) {//小刻度
+//            [self drawSmallScale:x context:contex height:rect.size.height];
+//        }else{//大刻度
+//            [self drawBigScale:x context:contex height:rect.size.height];
+//            [self drawText:x interval:interval context:contex height:rect.size.height];
+//        }
+//        x = x + intervalValue;
+//        interval = interval + b;
+//    }
+//    if (self.dateArr.count > 0) {
+//        [self drawGreenRectContext:contex];
+//    }
+//
+//    [self drawCenterLine:rect.size.width/2 context:contex height:rect.size.height];
+//}
 -(void)drawRect:(CGRect)rect{
-    //计算x=0时对应的时间戳
-    float centerX = rect.size.width/2.0;
-    NSTimeInterval leftInterval = currentInterval - centerX * [self secondsOfIntervalValue];
-    NSTimeInterval rightInterval = currentInterval + centerX * [self secondsOfIntervalValue];
-
+    NSTimeInterval centerLeftInterval;
+    NSTimeInterval centerRightInterval;
     //左边第一个刻度对应的x值和时间戳
-    float x;
-    NSTimeInterval interval;
+    float xLeft;
+    float xRight;
+    int b;
     if (scaleType == ScaleTypeBig) {
-        float a = leftInterval/(60.0*6.0);
-        interval = (((int)a) + 1) * (60.0 * 6.0);
-        x = (interval - leftInterval) / [self secondsOfIntervalValue];
-    }else {
-        float a = leftInterval/(60.0);
-        interval = (((int)a) + 1) * (60.0);
-        x = (interval - leftInterval) / [self secondsOfIntervalValue];
+        b = 60 * 6 ;
+        int a = currentInterval/(60 * 6);
+        centerLeftInterval = (a) * (60 * 6);
+        centerRightInterval = (a + 1) * (60 * 6);
+        xLeft = (centerLeftInterval - currentInterval) / [self secondsOfIntervalValue] + rect.size.width/2;
+        xRight = (centerRightInterval - currentInterval) / [self secondsOfIntervalValue] + rect.size.width/2;
+
+    }else if(scaleType == ScaleTypeNormal){
+        b = 60 ;
+        int a = currentInterval/(60);
+        centerLeftInterval = (a) * (60);
+        centerRightInterval = (a + 1) * (60);
+        xLeft = (centerLeftInterval - currentInterval) / [self secondsOfIntervalValue] + rect.size.width/2;
+        xRight = (centerRightInterval - currentInterval) / [self secondsOfIntervalValue] + rect.size.width/2;
+    }else{
+        b = 6;
+        int a = currentInterval/(6);
+        centerLeftInterval = (a) * (6);
+        centerRightInterval = (a + 1) * (6);
+        xLeft = (centerLeftInterval - currentInterval) / [self secondsOfIntervalValue] + rect.size.width/2;
+        xRight = (centerRightInterval - currentInterval) / [self secondsOfIntervalValue] + rect.size.width/2;
     }
   CGContextRef contex = UIGraphicsGetCurrentContext();
+    while (xRight >= rect.size.width/2 && xRight <= rect.size.width + intervalValue) {
 
-//    //视频文件信息
-//    NSArray * array = [NSArray array];
-//    if (array == nil) {
-//        array = @[];
-//    }
-//    for (VideoInfo *info in array) {
-//        NSTimeInterval start = [self intervalWithTime:[NSString stringWithFormat:@"%lld",info.date]];
-//        NSTimeInterval end = start + info.time;
-//        if ((start > leftInterval && start < rightInterval) || (end > leftInterval && end < rightInterval ) || (start < leftInterval && end > rightInterval)) {
-//            //计算起始位置对应的x值
-//            float startX = (start - leftInterval)/[self secondsOfIntervalValue];
-//            //计算时间长度对应的宽度
-//            float length = (info.time)/[self secondsOfIntervalValue] + 0.5;
-////            if ([info.path containsString:@"SOS"]) {
-////                [self drawRedRect:startX Context:contex length:length];
-////            }else{
-//                [self drawGreenRect:startX Context:contex length:length];
-////            }
-//        }
-//    }
-
-    while (x >= 0 && x <= rect.size.width) {
-        int b;
-        if (scaleType == ScaleTypeBig) {
-            b = 60 * 6;
-        }else{
-            b = 60;
-        }
-        int rem = ((int)interval) % (b * 5);
-        if (rem != 0) {//小刻度
-            [self drawSmallScale:x context:contex height:rect.size.height];
+        int remleft = ((int)centerLeftInterval) % (b * 10);
+        if (remleft != 0) {//小刻度
+            [self drawSmallScale:xLeft context:contex height:rect.size.height];
         }else{//大刻度
-            [self drawBigScale:x context:contex height:rect.size.height];
-            [self drawText:x interval:interval context:contex height:rect.size.height];
+            [self drawBigScale:xLeft context:contex height:rect.size.height];
+            [self drawText:xLeft interval:centerLeftInterval context:contex height:rect.size.height];
         }
-        x = x + intervalValue;
-        interval = interval + b;
+        int remright = ((int)centerRightInterval) % (b * 10);
+        if (remright != 0) {//小刻度
+            [self drawSmallScale:xRight context:contex height:rect.size.height];
+        }else{//大刻度
+            [self drawBigScale:xRight context:contex height:rect.size.height];
+            [self drawText:xRight interval:centerRightInterval context:contex height:rect.size.height];
+        }
+        xLeft = xLeft - intervalValue;
+        xRight = xRight + intervalValue;
+
+        centerLeftInterval = centerLeftInterval - b;
+        centerRightInterval = centerRightInterval + b;
+
     }
     if (self.dateArr.count > 0) {
-        [self drawGreenRectContext:contex];
-
+        [self drawGreenRectContext:contex rect:rect];
     }
 
     [self drawCenterLine:rect.size.width/2 context:contex height:rect.size.height];
 }
-
 #pragma mark --- 画小刻度
 -(void)drawSmallScale:(float)x context:(CGContextRef)ctx height:(float)height{
     // 创建一个新的空图形路径。
     CGContextBeginPath(ctx);
     
-    CGContextMoveToPoint(ctx, x-0.5, height-5);
-    CGContextAddLineToPoint(ctx, x-0.5, height);
+    CGContextMoveToPoint(ctx, x-0.5, height/2-2.5);
+    CGContextAddLineToPoint(ctx, x-0.5, height/2 + 2.5);
     // 设置图形的线宽
     CGContextSetLineWidth(ctx, 1.0);
     // 设置图形描边颜色
-    CGContextSetStrokeColorWithColor(ctx, [UIColor whiteColor].CGColor);
+    CGContextSetStrokeColorWithColor(ctx, QZH_KIT_Color_WHITE_70.CGColor);
     // 根据当前路径，宽度及颜色绘制线
     CGContextStrokePath(ctx);
 }
@@ -258,8 +331,8 @@
     // 创建一个新的空图形路径。
     CGContextBeginPath(ctx);
     
-    CGContextMoveToPoint(ctx, x-0.5, height-10);
-    CGContextAddLineToPoint(ctx, x-0.5, height);
+    CGContextMoveToPoint(ctx, x-0.5, height/2-5);
+    CGContextAddLineToPoint(ctx, x-0.5, height/2 + 5);
     // 设置图形的线宽
     CGContextSetLineWidth(ctx, 1.0);
     // 设置图形描边颜色
@@ -275,7 +348,7 @@
     CGContextMoveToPoint(ctx, x-0.5, 0);
     CGContextAddLineToPoint(ctx, x-0.5, height);
     // 设置图形的线宽
-    CGContextSetLineWidth(ctx, 1.0);
+    CGContextSetLineWidth(ctx, 2.0);
     // 设置图形描边颜色
     CGContextSetStrokeColorWithColor(ctx, [UIColor whiteColor].CGColor);
     // 根据当前路径，宽度及颜色绘制线
@@ -309,7 +382,6 @@
 -(void)drawGreenRect:(float)x Context:(CGContextRef)ctx length:(float)length{
     // 创建一个新的空图形路径。
     CGContextBeginPath(ctx);
-    
     CGContextMoveToPoint(ctx, x, 0.0);
     CGContextAddLineToPoint(ctx, x+length, 0.0);
     CGContextAddLineToPoint(ctx, x+length, self.frame.size.height);
@@ -351,20 +423,26 @@
     }
 
 }
-- (void)drawGreenRectContext:(CGContextRef)ctx {
+- (void)drawGreenRectContext:(CGContextRef)ctx rect:(CGRect)rect {
     
     //计算x=0时对应的时间戳
-    float centerX = QZHScreenWidth/2.0;
-    NSTimeInterval leftInterval = currentInterval - centerX * [self secondsOfIntervalValue];    
+    float centerX = rect.size.width/2.0;
+    NSTimeInterval leftInterval = currentInterval - centerX * [self secondsOfIntervalValue];
+    NSTimeInterval rightInterval = currentInterval + centerX * [self secondsOfIntervalValue];
+
     float x;
     NSTimeInterval interval;
     if (scaleType == ScaleTypeBig) {
         float a = leftInterval/(60.0*6.0);
         interval = (((int)a) + 1) * (60.0 * 6.0);
         x = (interval - leftInterval) / [self secondsOfIntervalValue];
-    }else {
+    }else if (scaleType == ScaleTypeNormal) {
         float a = leftInterval/(60.0);
         interval = (((int)a) + 1) * (60.0);
+        x = (interval - leftInterval) / [self secondsOfIntervalValue];
+    }else {
+        float a = leftInterval/(6.0);
+        interval = (((int)a) + 1) * (6.0);
         x = (interval - leftInterval) / [self secondsOfIntervalValue];
     }
       //视频文件信息
@@ -375,7 +453,7 @@
       for (NSDictionary *info in array) {
           NSTimeInterval start = [info[kTuyaSmartTimeSliceStartTime] integerValue];
           NSTimeInterval end = [info[kTuyaSmartTimeSliceStopTime] integerValue];
-          if (start > interval) {
+          if (end > leftInterval && start < rightInterval) {
               //计算起始位置对应的x值
               float startX = x + (start - interval)/[self secondsOfIntervalValue];
               //计算时间长度对应的宽度
@@ -385,5 +463,109 @@
           }
       }
 }
+// 处理缩放手势
 
+- (void) pinchView:(UIPinchGestureRecognizer *)pinchGestureRecognizer{
+
+    if (pinchGestureRecognizer.state == UIGestureRecognizerStateBegan){
+        onTouch = YES;
+    }
+    
+    if (pinchGestureRecognizer.state == UIGestureRecognizerStateChanged){
+        if (scaleType == ScaleTypeBig) {
+            if (pinchGestureRecognizer.scale > 1) {
+                intervalValue = intervalValue *pinchGestureRecognizer.scale;
+                if (intervalValue > 15) {
+                    intervalValue = 10;
+                    scaleType = ScaleTypeNormal;
+                }
+            }else{
+                if (intervalValue > 10) {
+                    intervalValue = intervalValue *pinchGestureRecognizer.scale;
+
+                }else{
+                    intervalValue = 10;
+                }
+            }
+        }else if (scaleType == ScaleTypeNormal) {
+            if (pinchGestureRecognizer.scale > 1) {//变大
+                intervalValue = intervalValue *pinchGestureRecognizer.scale;
+                if (intervalValue > 15) {
+                    intervalValue = 10;
+                    scaleType = ScaleTypeSmall;
+                }
+            }else{//缩小
+                intervalValue = intervalValue *pinchGestureRecognizer.scale;
+                if (intervalValue < 5 ) {
+                    intervalValue = 10;
+                    scaleType = ScaleTypeBig;
+                }
+            }
+            
+        }else{
+            if (pinchGestureRecognizer.scale < 1) {
+                intervalValue = intervalValue *pinchGestureRecognizer.scale;
+                if (intervalValue < 5) {
+                    intervalValue = 10;
+                    scaleType = ScaleTypeNormal;
+                }
+            }else{
+                if (intervalValue < 10) {
+                    intervalValue = intervalValue *pinchGestureRecognizer.scale;
+
+                }else{
+                    intervalValue = 10;
+                }
+            }
+        }
+        pinchGestureRecognizer.scale = 1;
+
+    }
+    if (pinchGestureRecognizer.state == UIGestureRecognizerStateEnded || pinchGestureRecognizer.state == UIGestureRecognizerStateCancelled){
+        pinchGestureRecognizer.scale = 1;
+
+        if (!self.userInteractionEnabled) {
+            return;
+        }
+        onTouch = NO;
+
+        if (self.delegate && [self.delegate respondsToSelector:@selector(timeLine:moveToDate:)]) {
+            [self.delegate timeLine:self moveToDate:[self currentTimeStr]];
+        }
+    };
+    [self setNeedsDisplay];
+
+
+}
+// 处理拖拉手势
+//
+- (void) panView:(UIPanGestureRecognizer *)panGestureRecognizer{
+
+    if (panGestureRecognizer.state == UIGestureRecognizerStateBegan){
+        moveStart = [panGestureRecognizer locationInView:panGestureRecognizer.view];
+        onTouch = YES;
+
+    }
+    if (panGestureRecognizer.state == UIGestureRecognizerStateChanged){
+        CGPoint point = [panGestureRecognizer locationInView:panGestureRecognizer.view];
+        float x = point.x - moveStart.x;
+
+        currentInterval = currentInterval - [self secondsOfIntervalValue] * x;
+        moveStart = point;
+     
+    }
+    if (panGestureRecognizer.state == UIGestureRecognizerStateEnded || panGestureRecognizer.state == UIGestureRecognizerStateCancelled){
+        if (!self.userInteractionEnabled) {
+            return;
+        }
+        onTouch = NO;
+        if (self.delegate && [self.delegate respondsToSelector:@selector(timeLine:moveToDate:)]) {
+            [self.delegate timeLine:self moveToDate:[self currentTimeStr]];
+        }
+    }
+    [self setNeedsDisplay];
+}
+-(void)setIsHor:(BOOL)isHor{
+    _isHor = isHor;
+}
 @end

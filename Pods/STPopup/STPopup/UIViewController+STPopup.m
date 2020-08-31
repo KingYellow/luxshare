@@ -63,6 +63,7 @@
 
 - (void)st_presentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)flag completion:(void (^)(void))completion
 {
+    viewControllerToPresent.modalPresentationStyle = UIModalPresentationOverFullScreen;
     if (!self.popupController) {
         [self st_presentViewController:viewControllerToPresent animated:flag completion:completion];
         return;

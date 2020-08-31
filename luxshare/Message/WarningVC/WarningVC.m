@@ -22,6 +22,7 @@
 @property (strong, nonatomic)UIButton *rightBtn;
 @property (assign, nonatomic)NSInteger page;
 @property (strong, nonatomic)UIButton *deleteBtn;
+@property (assign, nonatomic)BOOL editing;
 @end
 
 @implementation WarningVC
@@ -68,6 +69,7 @@
 -(void)rightAction{
     self.topView.normalBtn.hidden = NO;
     self.topView.selectBtn.hidden = YES;
+    self.editing = NO;
     self.deleteBtn.hidden = YES;
     [self.qzTableView reloadData];
 
@@ -85,7 +87,7 @@
         _qzTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
             weakSelf.page = 0;
             [weakSelf.modelArr removeAllObjects];
-            [weakSelf getMessageList:self.page];
+            [weakSelf getMessageList:weakSelf.page];
         }];
         _qzTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
             weakSelf.page++;
@@ -100,11 +102,9 @@
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     TuyaSmartMessageListModel *model = self.listArr[section][row];
-    
     QZHMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
     cell.nameLab.text = model.msgTypeContent;
     cell.contentLab.text = model.msgContent;
-    TuyaSmartMessageAttachModel *picModel = model.attachPicList.firstObject;
 
     cell.selectBtn.selected = [model.select boolValue];
     if (self.topView.selectBtn.hidden) {
@@ -168,6 +168,9 @@
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.editing) {
+        return;
+    }
     QZHWS(weakSelf)
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
@@ -318,6 +321,7 @@
 }
 - (void)setEditAction:(UIButton *)sender{
     sender.hidden = YES;
+    self.editing = YES;
     self.deleteBtn.hidden = ![self ishasselexted];
     self.topView.selectBtn.hidden = NO;
     self.btnAction(YES);
@@ -328,10 +332,12 @@
 - (void)selectBtn:(UIButton *)sender{
     
     sender.selected = !sender.selected;
-
     UITableViewCell *cell = (UITableViewCell *)sender.superview;
    NSIndexPath *index = [self.qzTableView indexPathForCell:cell];
-    TuyaSmartMessageListModel *model = self.listArr[index.section][index.row];
+    NSInteger section = index.section;
+    NSInteger row = index.row;
+    TuyaSmartMessageListModel *model = self.listArr[section][row];
+    
     if (sender.selected) {
         model.select = @"1";
     }else{
@@ -345,14 +351,12 @@
 
 - (void)getMessageList:(NSInteger) page{
     QZHWS(weakSelf)
-    
-    TuyaSmartMessageListRequestModel *model = [[TuyaSmartMessageListRequestModel alloc] init];
-    model.msgType = TYMessageTypeAlarm;
-    model.limit = 10;
-    model.offset = self.modelArr.count;
-    
-    [[TuyaSmartMessage new] fetchMessageListWithListRequestModel:model success:^(NSArray<TuyaSmartMessageListModel *> * _Nonnull messageList) {
-        [weakSelf.modelArr addObjectsFromArray:messageList];
+
+    [[TuyaSmartMessage new] getMessageListWithType:1 limit:10 offset:self.modelArr.count success:^(NSArray<TuyaSmartMessageListModel *> *list) {
+        if (page == 0) {
+            [weakSelf.modelArr removeAllObjects];
+        }
+        [weakSelf.modelArr addObjectsFromArray:list];
         [weakSelf resetArr];
         [weakSelf.qzTableView.mj_footer endRefreshing];
         [weakSelf.qzTableView.mj_header endRefreshing];
@@ -365,23 +369,39 @@
 ///消息类型（1 - 告警，2 - 家庭，3 - 通知）
 -(void)deleteMessage{
     QZHWS(weakSelf)
+
     TuyaSmartMessageListDeleteRequestModel *model = [[TuyaSmartMessageListDeleteRequestModel alloc] init];
     model.msgType = 1;
-    model.msgIds = [self deleteMessageIds];
+//    model.msgIds = [self deleteMessageIds];
+    model.msgSrcIds = [self deleteMessageDevIds];
+
     [[TuyaSmartMessage new] deleteMessageWithDeleteRequestModel:model success:^(BOOL result) {
         [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
             if (weakSelf.topView.selectBtn.selected && [self ishasselexted]) {
-                
+
             }else{
                 weakSelf.deleteBtn.hidden = YES;
             }
             [weakSelf.qzTableView.mj_header beginRefreshing];
-        });
-    } failure:^(NSError *error) {
+        
+    } failure:^(NSError *error){
         [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
-    
+//    [[TuyaSmartMessage new] deleteMessageWithType:1 ids:[self deleteMessageIds] msgSrcIds:nil success:^{
+//        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            if (weakSelf.topView.selectBtn.selected && [self ishasselexted]) {
+//
+//            }else{
+//                weakSelf.deleteBtn.hidden = YES;
+//            }
+//            [weakSelf.qzTableView.mj_header beginRefreshing];
+//        });
+//
+//    } failure:^(NSError *error) {
+//                [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+//    }];
 }
 
 -(void)checkNewMessage{
@@ -420,7 +440,6 @@
             }
         }
     }
-
     return NO;
 }
 - (void)allselected{
@@ -444,6 +463,17 @@
         for (TuyaSmartMessageListModel *model in arr) {
             if ([model.select isEqualToString:@"1"]) {
                 [messagearr addObject:model.msgId];
+            }
+        }
+    }
+    return messagearr;
+}
+- (NSMutableArray *)deleteMessageDevIds{
+    NSMutableArray *messagearr = [NSMutableArray array];
+    for (NSArray *arr in self.listArr) {
+        for (TuyaSmartMessageListModel *model in arr) {
+            if ([model.select isEqualToString:@"1"]) {
+                [messagearr addObject:model.msgSrcId];
             }
         }
     }

@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^selectResult)(NSArray *selectArr);
+typedef void (^selectResult)(NSArray *selectArr, BOOL isall);
 @interface VideoListVC : UIViewController
 @property (strong, nonatomic)NSArray *listArr;
 @property (copy, nonatomic)selectResult selecctResultBlock;

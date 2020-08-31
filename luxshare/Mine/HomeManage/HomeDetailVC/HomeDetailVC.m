@@ -20,7 +20,6 @@
 @property (copy, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)NSMutableArray *memberArr;
 @property (strong, nonatomic)TuyaSmartHome *home;
-@property (strong, nonatomic)TuyaSmartHomeManager *homeManager;
 @end
 
 @implementation HomeDetailVC
@@ -33,7 +32,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initConfig];
-    self.homeManager = [TuyaSmartHomeManager new];
 }
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
@@ -233,7 +231,7 @@
             vc.disHomeBlock = ^{
                 [weakSelf.navigationController popViewControllerAnimated:NO];
             };
-            [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
+            [self.navigationController pushViewController:vc animated:YES];
         }
 
     }
@@ -304,10 +302,10 @@
         [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
-// 家庭下新增房间代理回调
-- (void)home:(TuyaSmartHome *)home didAddRoom:(TuyaSmartRoomModel *)room {
-      [self.qzTableView reloadData];
-}
+//// 家庭下新增房间代理回调
+//- (void)home:(TuyaSmartHome *)home didAddRoom:(TuyaSmartRoomModel *)room {
+//      [self.qzTableView reloadData];
+//}
 #pragma mark -- p判断是否是 管理员或者所有者
 
 - (BOOL)isAdminOrOwner{

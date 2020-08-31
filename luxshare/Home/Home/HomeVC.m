@@ -185,7 +185,11 @@
     if (nowIndex == self.arrVcs.count - 1) {
         return nil;
     }else{
-        return self.arrVcs[nowIndex + 1];
+        if (nowIndex < (self.arrVcs.count + 1)) {
+            return self.arrVcs[nowIndex + 1];
+        }else{
+            return nil;
+        }
     }
 }
 //代理方法
@@ -346,6 +350,7 @@
         
         }else{
             [self.currentHome getHomeDetailWithSuccess:^(TuyaSmartHomeModel *homeModel) {
+                [self dismiss];
                  NSMutableArray  *arrm = [NSMutableArray array];
                  [arrm addObject:@"所有设备"];
                  for (TuyaSmartRoomModel *room in self.currentHome.roomList) {
@@ -355,7 +360,6 @@
                  self.selectIndex = row;
                  self.topBtnsView.titleArray = arrm;
                 [self loadVcs:self.currentHome];
-                 [self dismiss];
                  
              } failure:^(NSError *error) {
                     [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
@@ -560,4 +564,5 @@
     return NO;
 
 }
+
 @end

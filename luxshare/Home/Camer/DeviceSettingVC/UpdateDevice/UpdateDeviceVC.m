@@ -8,7 +8,7 @@
 
 #import "UpdateDeviceVC.h"
 
-@interface UpdateDeviceVC ()<TuyaSmartDeviceDelegate>
+@interface UpdateDeviceVC ()<TuyaSmartDeviceDelegate,TuyaSmartCameraDPObserver>
 @property (strong, nonatomic)UIView *bigView;
 @property (strong, nonatomic)UILabel *titleLab;
 @property (strong, nonatomic)UILabel *sizeLab;
@@ -19,6 +19,7 @@
 @property (strong, nonatomic)UILabel *tipLab;
 @property (strong, nonatomic)UILabel *contentLab;
 @property (strong, nonatomic)TuyaSmartDevice *device;
+@property (strong, nonatomic)TuyaSmartCameraDPManager *dpManager;
 @end
 
 @implementation UpdateDeviceVC
@@ -33,6 +34,8 @@
     self.navigationItem.title = QZHLoaclString(@"device_deviceInfo");
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
+    self.dpManager = [[TuyaSmartCameraDPManager alloc] initWithDeviceId:self.deviceModel.devId];
+    [self.dpManager addObserver:self];
     [self UIConfig];
     self.titleLab.text = [NSString stringWithFormat:@"发现可更新版本%@",self.upModel.version];
     float size = [self.upModel.fileSize integerValue]/1024.0;
@@ -198,35 +201,42 @@
     return _line;
 }
 - (void)updateAction:(UIButton *)sender{
-    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"更新注意事项" message:@"升级可能持续较长时间,请确保设备处于电量充足状态.更新时设备不可使用" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancelaction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self.titleLab.text = [NSString stringWithFormat:@"%@%@",@"正在更新至",self.upModel.version];
-        [self.sizeLab mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(0);
-        }];
-        [self.progressLab mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(15);
-            make.top.mas_equalTo(self.sizeLab.mas_bottom).offset(20);
+    
+    if ([[self.dpManager valueForDP:TuyaSmartCameraSDCardStatusDPName] intValue] == 5) {
+        [[QZHHUD HUD] textHUDWithMessage:@"该设备无SD卡不支持更新" afterDelay:1.0];
 
+    }else{
+        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"更新注意事项" message:@"升级可能持续较长时间,请确保设备处于电量充足状态.更新时设备不可使用" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelaction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
         }];
-        [self.progress mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(6);
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            self.titleLab.text = [NSString stringWithFormat:@"%@%@",@"正在更新至",self.upModel.version];
+            [self.sizeLab mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_equalTo(0);
+            }];
+            [self.progressLab mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_equalTo(15);
+                make.top.mas_equalTo(self.sizeLab.mas_bottom).offset(20);
 
-        }];
-        [self.line mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(self.progress.mas_bottom).offset(20);
+            }];
+            [self.progress mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_equalTo(6);
 
+            }];
+            [self.line mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(self.progress.mas_bottom).offset(20);
+
+            }];
+            self.updateBtn.hidden = YES;
+            [self upgradeFirmware];
+            
         }];
-        self.updateBtn.hidden = YES;
-        [self upgradeFirmware];
-        
-    }];
-    [alertC addAction:cancelaction];
-    [alertC addAction:action];
-    [self presentViewController:alertC animated:NO completion:nil];
+        [alertC addAction:cancelaction];
+        [alertC addAction:action];
+        [self presentViewController:alertC animated:NO completion:nil];
+    }
+
 }
 
 - (void)upgradeFirmware {
@@ -260,7 +270,9 @@
         });
     }
     if (upgradeStatusModel.upgradeStatus == TuyaSmartDeviceUpgradeStatusTimeout || upgradeStatusModel.upgradeStatus == TuyaSmartDeviceUpgradeStatusFailure) {
+        [[QZHHUD HUD] textHUDWithMessage:@"升级失败,请再次尝试更新" afterDelay:1.0];
         [self viewDidLoad];
+
     }
     
 }

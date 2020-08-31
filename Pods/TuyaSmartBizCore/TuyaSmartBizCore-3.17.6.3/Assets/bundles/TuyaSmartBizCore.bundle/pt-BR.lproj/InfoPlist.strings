@@ -1,0 +1,11 @@
+"CFBundleDisplayName" = "TuyaSmart";
+"NSBluetoothAlwaysUsageDescription" = "Isso permitirá que o aplicativo encontre e ative o bluetooth. O aplivativo também pode usar o bluetooth para localizar um dispositivo.";
+"NSBluetoothPeripheralUsageDescription" = "Deve ligar o Bluetooth para adicionar ou usar o dispositivo Bluetooth.";
+"NSCameraUsageDescription" = "Funções como adicionar uma câmera e digitalizar um código QR requerem o uso de uma câmera";
+"NSHomeKitUsageDescription" = "Você pode controlar dispositivos compatíveis com o aplicativo \"Início\" no aplicativo atual.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "O aplicativo fornece informações sobre o clima, incluindo a temperatura e a humidade com base na localização. Se permitir que o aplicativo acesse tua localização, ele também poderá fornecer a função de partida ou chegada (beta).";
+"NSLocationAlwaysUsageDescription" = "O aplicativo fornece informações sobre o clima, incluindo a temperatura e a humidade com base na localização. Se permitir que o aplicativo acesse tua localização, ele também poderá fornecer a função de partida ou chegada (beta).";
+"NSLocationWhenInUseUsageDescription" = "Precisamos de obter sua localização para que possamos fornecer um serviço mais inteligente, como temperatura .";
+"NSMicrophoneUsageDescription" = "Algumas funções do produto exigem a coleta do áudio via seu telefone.";
+"NSPhotoLibraryAddUsageDescription" = "O aplicativo pode guardar capturas de telas e vídeos na galeria. Concorda em ligar?";
+"NSPhotoLibraryUsageDescription" = "O aplicativo precisa de acesso à galeria  para obter o retrato de seu perfil.";

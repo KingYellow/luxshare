@@ -13,7 +13,7 @@
 #import "AddHomeVC.h"
 
 
-@interface HomeManageVC ()<UITableViewDelegate,UITableViewDataSource,TuyaSmartHomeManagerDelegate>
+@interface HomeManageVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic)UITableView *qzTableView;
 @property (copy, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)TuyaSmartHomeManager *magager;
@@ -123,7 +123,7 @@
         vc.refresh = ^{
             [weakSelf getHomeList];
         };
-        [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
+        [self.navigationController pushViewController:vc animated:YES];
 
     }else{
         TuyaSmartHomeModel *model = self.listArr[row];
@@ -143,7 +143,7 @@
         }else{
              HomeDetailVC *vc = [[HomeDetailVC alloc] init];
              vc.homeModel = model;
-             [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
+             [self.navigationController pushViewController:vc animated:YES];
          }
 
     }
@@ -159,7 +159,7 @@
 }
 - (void)getHomeList {
     QZHWS(weakSelf)
-   self.magager = [TuyaSmartHomeManager new];
+   self.magager = [[TuyaSmartHomeManager alloc] init];
     self.magager.delegate = self;
     [self.magager getHomeListWithSuccess:^(NSArray<TuyaSmartHomeModel *> *homes) {
         [weakSelf.listArr removeAllObjects];
@@ -180,18 +180,18 @@
         [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
-// 添加一个家庭
-- (void)homeManager:(TuyaSmartHomeManager *)manager didAddHome:(TuyaSmartHomeModel *)home {
-
-}
-
-// 删除一个家庭
-- (void)homeManager:(TuyaSmartHomeManager *)manager didRemoveHome:(long long)homeId {
-
-}
-
-// MQTT连接成功
-- (void)serviceConnectedSuccess {
-    // 刷新当前家庭UI
-}
+//// 添加一个家庭
+//- (void)homeManager:(TuyaSmartHomeManager *)manager didAddHome:(TuyaSmartHomeModel *)home {
+//
+//}
+//
+//// 删除一个家庭
+//- (void)homeManager:(TuyaSmartHomeManager *)manager didRemoveHome:(long long)homeId {
+//
+//}
+//
+//// MQTT连接成功
+//- (void)serviceConnectedSuccess {
+//    // 刷新当前家庭UI
+//}
 @end

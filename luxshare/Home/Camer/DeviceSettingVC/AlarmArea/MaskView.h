@@ -19,6 +19,7 @@ typedef void(^gesture)(CGRect rect, BOOL begain);
 @property (strong, nonatomic)UIButton *leftBackBtn;
 @property (copy, nonatomic)dispatch_block_t popVCBlock;
 @property (copy, nonatomic)gesture gestureBolok;
+
 @end
 
 NS_ASSUME_NONNULL_END

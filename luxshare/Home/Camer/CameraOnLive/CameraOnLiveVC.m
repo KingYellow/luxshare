@@ -18,7 +18,6 @@
 #import "BackPlayVC.h"
 #import "UIImageView+Gif.h"
 
-
 @interface CameraOnLiveVC ()<TuyaSmartCameraDelegate,UITableViewDelegate,UITableViewDataSource,TuyaSmartCameraDPObserver,TuyaSmartDeviceDelegate>
 @property (strong, nonatomic)UITableView *qzTableView;
 @property (copy, nonatomic)NSMutableArray *listArr;
@@ -35,8 +34,12 @@
 @property (assign, nonatomic)BOOL HD;
 //静音
 @property (assign, nonatomic)BOOL isMuted;
-@property (strong, nonatomic)NSTimer *timer;
-@property (assign, nonatomic)NSInteger second;
+@property (strong, nonatomic)NSTimer *recordTimer;
+@property (strong, nonatomic)NSTimer *talkTimer;
+
+@property (assign, nonatomic)NSInteger recordSecond;
+@property (assign, nonatomic)NSInteger talkSecond;
+
 @property (assign, nonatomic)BOOL private;
 @property (strong, nonatomic)UIView *privateView;
 @property (assign, nonatomic)BOOL recording;
@@ -78,8 +81,11 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self.camera stopPreview];
-    self.connected = NO;
+    if (self.camera) {
+        [self.camera stopPreview];
+        [self.camera disConnect];
+        self.connected = NO;
+    }
 }
 
 - (void)viewDidLoad {
@@ -123,6 +129,8 @@
     [self exp_addRightItemTitle:QZHLoaclString(@"setting_setting") itemIcon:@""];
 }
 - (void)exp_rightAction{
+
+
     if (self.recording) {
         [[QZHHUD HUD] textHUDWithMessage:@"录制中,请先停止录制" afterDelay:1.0];
         return;
@@ -219,17 +227,9 @@
                 [[QZHHUD HUD] textHUDWithMessage:@"正常播放时才能进行操作" afterDelay:1.0];
                 return;
             }
-            if (self.talking && sender.tag == -1) {
-                [[QZHHUD HUD] textHUDWithMessage:@"通话中不能录屏" afterDelay:1.0];
-                return;
-            }
-            if (self.recording && sender.tag == 0) {
-                [[QZHHUD HUD] textHUDWithMessage:@"录屏中不能通话" afterDelay:1.0];
-                return;
-            }
+
             if (weakSelf.previewing) {
-                sender.selected = !sender.selected;
-                [weakSelf videoHandle:sender.tag isselected:sender.selected];
+                [weakSelf videoHandle:sender isselected:sender.selected];
             }
         };
         if (self.private) {
@@ -288,6 +288,10 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    if (indexPath.row == 0 || indexPath.row == 1|| indexPath.row == 2) {
+        return;
+    }
+    
     if (self.recording) {
         [[QZHHUD HUD] textHUDWithMessage:@"录制中,请先停止录制" afterDelay:1.0];
         return;
@@ -302,9 +306,17 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
     if (row == 4) {
+//        if ([[self.dpManager valueForDP:TuyaSmartCameraSDCardStatusDPName] intValue] == 5) {
+//            [[QZHHUD HUD] textHUDWithMessage:@"该设备没有存储卡不能回放" afterDelay:1.0];
+//
+//        }else{
+        [self.camera stopPreview];
+        [self.camera disConnect];
         BackPlayVC *vc = [[BackPlayVC alloc] init];
         vc.deviceModel = self.deviceModel;
         [self.navigationController pushViewController:vc animated:YES];
+//        }
+
     }
 }
 
@@ -337,34 +349,27 @@
     self.previewing = NO;
     [self.playView.playPreGif stopGif];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-       
         [self.camera connect];
-
     });
     
 }
 -(void)cameraDidStartRecord:(id<TuyaSmartCameraType>)camera{
-    self.playView.recordProgressView.typeLab.text = @"录制中";
-    [self startTimer];
+    [self startRecordTimer];
     self.recording = YES;
+    self.playView.voiceBtn.alpha = 0.5;
+    self.playView.voiceBtn.userInteractionEnabled = NO;
     self.recordTime = [[NSDate date] timeIntervalSince1970];
 }
 -(void)cameraDidStopRecord:(id<TuyaSmartCameraType>)camera{
-
     self.recording = NO;
+    self.playView.voiceBtn.alpha = 1.0;
+    self.playView.voiceBtn.userInteractionEnabled = YES;
 }
 
--(void)cameraDidBeginPlayback:(id<TuyaSmartCameraType>)camera{
-    
-}
--(void)cameraDidStopPlayback:(id<TuyaSmartCameraType>)camera{
-    
-}
 -(void)cameraDidBeginPreview:(id<TuyaSmartCameraType>)camera{
     
     self.previewing = YES;
     if (self.isHor) {
-        
         [_playView addSubview:self.camera.videoView];
         [self.camera.videoView mas_makeConstraints:^(MASConstraintMaker *make) {
            make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0  ));
@@ -399,7 +404,7 @@
     else if (errStepCode == TY_ERROR_START_PREVIEW_FAILED) {
           // 实时视频播放失败
         self.previewing = NO;
-    }
+    }else
     
     if (errStepCode == TY_ERROR_START_TALK_FAILED) {
         // 开启对讲失败，重新打开声音
@@ -410,10 +415,14 @@
     else if (errStepCode == TY_ERROR_ENABLE_MUTE_FAILED) {
                 // 设置静音状态失败
         self.isMuted = NO;
-    }
+    }else
     
     if (errStepCode == TY_ERROR_ENABLE_HD_FAILED) {
                 // 切换视频清晰度失败
+    }else if (errorCode == TY_ERROR_RECORD_FAILED){
+        self.recording = NO;
+        self.playView.voiceBtn.alpha = 1.0;
+        self.playView.voiceBtn.userInteractionEnabled = YES;
     }
 }
 
@@ -490,6 +499,7 @@
         self.playView.playBtn.hidden = YES;
     }else if(tag == 1){
         //sender.tag == 1){
+
             //声音
         if (self.talkType && self.talking) {
             [self stopTalk];
@@ -508,32 +518,78 @@
     }
 }
 //操作视频
-- (void)videoHandle:(NSInteger)tag isselected:(BOOL)selected{
+- (void)videoHandle:(UIButton *)sender isselected:(BOOL)selected{
+    NSInteger tag = sender.tag;
+
     if (tag == -1) {
         //录像
-        if (selected) {
-            [self.camera startRecord];
-            self.recording = YES;
+        if (!sender.selected) {
+            PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+            if (status == PHAuthorizationStatusRestricted || status == PHAuthorizationStatusDenied)
+            {
+                [self goMicroPhoneSetTitle:@"您还没有允许相册权限"];
+
+            }else if(status == AVAuthorizationStatusNotDetermined){
+              [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+                  if(status == PHAuthorizationStatusAuthorized) {
+  
+                  } else {
+
+                  }
+              }];
+                
+            }else{
+                sender.selected = !sender.selected;
+                [self.camera startRecord];
+                self.recording = YES;
+            }
         }else{
+            sender.selected = !sender.selected;
             [self.camera stopRecord];
             self.recording = NO;
             self.recordTime = [[NSDate date] timeIntervalSince1970] - self.recordTime;
              if (self.recordTime < 1) {
                  [[QZHHUD HUD] textHUDWithMessage:@"录制时间短于1S可能导致存储失败" afterDelay:1.0];
              }
-            [self stopTimer];
+            [self stopRecordTimer];
 
         }
     }else if (tag == 0){
         //通话
-        if (selected) {
-            if (self.talkType) {
-                self.talkBigView.hidden = NO;
-            }else{
-                [self startTalk];
-                
-            }
+        if (!sender.selected) {
+            AVAuthorizationStatus microPhoneStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
+              switch (microPhoneStatus) {
+                  case AVAuthorizationStatusDenied:
+                  case AVAuthorizationStatusRestricted:
+                  {
+                      // 被拒绝
+                      [self goMicroPhoneSetTitle:@"您还没有允许麦克风权限"];
+                  }
+                      break;
+                  case AVAuthorizationStatusNotDetermined:
+                  {
+                      // 没弹窗
+                      [self requestMicroPhoneAuth];
+                  }
+                      break;
+                  case AVAuthorizationStatusAuthorized:
+                  {
+                      sender.selected = !sender.selected;
+                      if (self.talkType) {
+                          self.talkBigView.hidden = NO;
+                      }else{
+                          [self startTalk];
+                          
+                      }
+                  }
+                      break;
+
+                  default:
+                      break;
+              }
         }else{
+            sender.selected = !sender.selected;
+
             if (self.talkType) {
                 self.talkBigView.hidden = YES;
             }else{
@@ -541,12 +597,30 @@
             }
         }
     }else{
-        if (self.previewing) {
-            if ([self.camera snapShoot]) {
-                // 截图已成功保存到手机相册
-                [[QZHHUD HUD] textHUDWithMessage:@"截图成功并保存到相册" afterDelay:0.5];
-            }
-        }
+         PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+          if (status == PHAuthorizationStatusRestricted || status == PHAuthorizationStatusDenied)
+          {
+              [self goMicroPhoneSetTitle:@"您还没有允许相册权限"];
+
+          }else if(status == AVAuthorizationStatusNotDetermined){
+            [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+                if(status == PHAuthorizationStatusAuthorized) {
+
+                } else {
+
+                }
+            }];
+              
+          }else{
+              sender.selected = !sender.selected;
+              if (self.previewing) {
+                  if ([self.camera snapShoot]) {
+                      // 截图已成功保存到手机相册
+                      [[QZHHUD HUD] textHUDWithMessage:@"截图成功并保存到相册" afterDelay:0.5];
+                  }
+              }
+          }
+
     }
 }
 //设备
@@ -641,8 +715,7 @@
 
 - (void)cameraDidBeginTalk:(id<TuyaSmartCameraType>)camera {
         // 对讲已成功开启
-    self.playView.recordProgressView.typeLab.text = @"通话中";
-    [self startTimer];
+    [self startTalkTimer];
     self.talking = YES;
     if (self.talkType) {
         
@@ -659,7 +732,7 @@
     if (self.isMuted) {
         [self.camera enableMute:NO forPlayMode:TuyaSmartCameraPlayModePreview];
     }
-    [self stopTimer];
+    [self stopTalkTimer];
     self.talking = NO;
 
 }
@@ -677,7 +750,12 @@
              transform = CGAffineTransformScale(transform, 1,1);
             self.playView.transform = transform;
             self.playView.frame = CGRectMake(0, 0, QZHScreenWidth, QZHScreenHeight);
-            [[UIApplication sharedApplication].keyWindow addSubview:self.playView];
+            self.camera.videoView.frame = CGRectMake(0, 0, QZHScreenHeight , QZHScreenWidth);
+            [self.playView.voiceBtn mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(QZH_VIDEO_LEFTMARGIN + 10);
+            }];
+
+            [self.navigationController.view addSubview:self.playView];
    
         }else{
             OnLiveCell *cell = [self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
@@ -686,6 +764,10 @@
              transform = CGAffineTransformScale(transform, 1,1);
             self.playView.transform = transform;
             self.playView.frame = CGRectMake(0, 0, QZHScreenWidth, QZHScreenWidth * 1080/1920);
+            [self.playView.voiceBtn mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(10);
+            }];
+
             [cell.contentView addSubview:self.playView];
             [cell.contentView sendSubviewToBack:self.playView];
         }
@@ -706,32 +788,84 @@ QZHWS(weakSelf)
                 [[QZHHUD HUD] textHUDWithMessage:@"正常播放时才能进行操作" afterDelay:1.0];
                 return;
             }
+            if (weakSelf.recording && sender.tag ==1) {
+                [[QZHHUD HUD] textHUDWithMessage:@"录屏时不能操作" afterDelay:1.0];
+                return;
+            }
             sender.selected = !sender.selected;
             [weakSelf onLivePlayHandle:sender.tag isselected:sender.selected];
         };
     }
     return _playView;
 }
-- (void)startTimer{
-    if (self.timer) {
-        [self stopTimer];
+- (void)startRecordTimer{
+    if (self.recordTimer) {
+        [self stopRecordTimer];
     }
-    self.second = 0;
+    self.recordSecond = 0;
     self.playView.recordProgressView.hidden = NO;
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction:) userInfo:nil repeats:YES];
+    if (self.talking) {
+        [self.playView.recordProgressView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(-70);
+        }];
+    }else{
+        [self.playView.recordProgressView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(-20);
+        }];
+    }
+    self.recordTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(recordTimerAction:) userInfo:nil repeats:YES];
 }
-- (void)stopTimer{
+- (void)startTalkTimer{
+    if (self.talkTimer) {
+        [self stopTalkTimer];
+    }
+    self.talkSecond = 0;
+    self.playView.talkProgressView.hidden = NO;
+    if (self.recording) {
+        [self.playView.talkProgressView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(-70);
+        }];
+    }else{
+        [self.playView.talkProgressView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(-20);
+        }];
+    }
+    self.talkTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(talkTimerAction:) userInfo:nil repeats:YES];
+}
+- (void)stopRecordTimer{
     self.playView.recordProgressView.hidden = YES;
-    [self.timer invalidate];
-    self.timer = nil;
+    if (self.talking) {
+        [self.playView.talkProgressView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(-20);
+        }];
+    }
+    [self.recordTimer invalidate];
+    self.recordTimer = nil;
     self.playView.recordProgressView.timeLab.text = @"00:00";
 }
+- (void)stopTalkTimer{
+    self.playView.talkProgressView.hidden = YES;
+    if (self.recording) {
+        [self.playView.recordProgressView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(-20);
+        }];
+    }
+    [self.talkTimer invalidate];
+    self.talkTimer = nil;
+    self.playView.talkProgressView.timeLab.text = @"00:00";
+}
 
-- (void)timerAction:(NSTimer *)tiemr{
-    self.second++;
-    NSInteger min = self.second/60;
-    NSInteger sec = self.second%60;
+- (void)recordTimerAction:(NSTimer *)tiemr{
+    self.recordSecond++;
+    NSInteger min = self.recordSecond/60;
+    NSInteger sec = self.recordSecond%60;
     self.playView.recordProgressView.timeLab.text = [NSString stringWithFormat:@"%02ld:%02ld",min,sec];
+}
+- (void)talkTimerAction:(NSTimer *)tiemr{
+    self.talkSecond++;
+    NSInteger min = self.talkSecond/60;
+    NSInteger sec = self.talkSecond%60;
+    self.playView.talkProgressView.timeLab.text = [NSString stringWithFormat:@"%02ld:%02ld",min,sec];
 }
 #pragma mark -- lazy
 -(UIView *)privateView{
@@ -774,23 +908,29 @@ QZHWS(weakSelf)
     return _talkBtn;
 }
 - (void)applicationWillEnterForeground{
+    self.deviceModel = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId].deviceModel;
     [self setConfigs];
 }
 - (void)applicationWillEnterBackground{
-    if (self.recording) {
-        CameraThreeBtnCell *cell = (CameraThreeBtnCell *)[self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-        cell.leftBtn.selected = NO;
-        [self videoHandle:-1 isselected:NO];
-        
+    if (self.camera) {
+        if (self.recording) {
+            CameraThreeBtnCell *cell = (CameraThreeBtnCell *)[self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+            cell.leftBtn.selected = NO;
+            [self videoHandle:cell.leftBtn isselected:cell.leftBtn.selected];
+            
+        }
+        if (self.talking) {
+            CameraThreeBtnCell *cell = [self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+            cell.midBtn.selected = NO;
+            [self videoHandle:cell.midBtn isselected:cell.midBtn.selected];
+            
+        }
+
+        [self.camera stopPreview];
+        [self.camera disConnect];
+
+        self.connected = NO;
     }
-    if (self.talking) {
-        CameraThreeBtnCell *cell = [self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-        cell.midBtn.selected = NO;
-        [self videoHandle:0 isselected:NO];
-        
-    }
-    [self.camera stopPreview];
-    self.connected = NO;
 }
 
 - (void)pressGestuerAction:(UILongPressGestureRecognizer *)longPress{
@@ -807,4 +947,33 @@ QZHWS(weakSelf)
 
     return self.statusHiden;
 }
+
+-(void) requestMicroPhoneAuth
+{
+    [AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL granted) {
+
+    }];
+}
+-(void) goMicroPhoneSetTitle:(NSString *)title
+{
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:title message:@"去设置一下吧" preferredStyle:UIAlertControllerStyleAlert];
+
+    UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+
+    }];
+    UIAlertAction * setAction = [UIAlertAction actionWithTitle:@"去设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSURL * url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+            [UIApplication.sharedApplication openURL:url options:nil completionHandler:^(BOOL success) {
+
+            }];
+        });
+    }];
+
+    [alert addAction:cancelAction];
+    [alert addAction:setAction];
+
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 @end

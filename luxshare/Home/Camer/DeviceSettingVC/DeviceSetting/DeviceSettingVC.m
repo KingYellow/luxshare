@@ -160,6 +160,8 @@
                 }];
                 QZHViewRadius(cell.tagLab, 10);
                 cell.tagLab.text = @"1";
+            }else{
+                cell.tagLab.text = @"";
             }
 
         }
@@ -263,9 +265,8 @@
         }
         if (row == 1) {
 
-            
             if ([[self.dpManager valueForDP:TuyaSmartCameraSDCardStatusDPName] intValue] == 5) {
-                [[QZHHUD HUD] textHUDWithMessage:@"该设备不支持存储功能" afterDelay:1.0];
+                [[QZHHUD HUD] textHUDWithMessage:@"该设备无存储卡不支持存储功能" afterDelay:1.0];
 
             }else{
                 
@@ -290,27 +291,27 @@
         }
     }
     if (section == 2) {
-        TuyaSmartFirmwareUpgradeModel *model = self.deviceUpdateArr.firstObject;
-        if (model.upgradeStatus == 0) {
-            UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"已是最新版本" message:[NSString stringWithFormat:@"当前版本号: %@",model.currentVersion] preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                
-            }];
-            [alertC addAction:action];
-            [self presentViewController:alertC animated:NO completion:nil];
-        }else{
-            //有新版本
-            QZHWS(weakSelf)
-            UpdateDeviceVC *vc = [[UpdateDeviceVC alloc] init];
-            vc.deviceModel = self.deviceModel;
-            vc.homeModel = self.homeModel;
-            vc.upModel = self.deviceUpdateArr.firstObject;
-            vc.refresh = ^{
-                [weakSelf getFirmwareUpgradeInfo];
-            };
-            [self.navigationController pushViewController:vc animated:YES];
-        }
 
+            TuyaSmartFirmwareUpgradeModel *model = self.deviceUpdateArr.firstObject;
+            if (model.upgradeStatus == 0) {
+                UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"已是最新版本" message:[NSString stringWithFormat:@"当前版本号: %@",model.currentVersion] preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    
+                }];
+                [alertC addAction:action];
+                [self presentViewController:alertC animated:NO completion:nil];
+            }else{
+                //有新版本
+                QZHWS(weakSelf)
+                UpdateDeviceVC *vc = [[UpdateDeviceVC alloc] init];
+                vc.deviceModel = self.deviceModel;
+                vc.homeModel = self.homeModel;
+                vc.upModel = self.deviceUpdateArr.firstObject;
+                vc.refresh = ^{
+                    [weakSelf getFirmwareUpgradeInfo];
+                };
+                [self.navigationController pushViewController:vc animated:YES];
+            }    
     }
 }
 
@@ -416,7 +417,5 @@ QZHWS(weakSelf)
     }
     return NO;
 }
--(void)dealloc{
-    
-}
+
 @end

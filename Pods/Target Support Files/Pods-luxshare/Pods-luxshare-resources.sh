@@ -97,9 +97,35 @@ EOM
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "${PODS_ROOT}/TYHybridContainer/TYHybridContainer-1.2.9.bizbundle.3.17.0/Assets/bundles/TYHybridContainer.bundle"
+  install_resource "${PODS_ROOT}/TYNavigationController/TYNavigationController-1.10.1/Assets/TYNavigationRes.bundle"
+  install_resource "${PODS_ROOT}/TYOEMConfig/TYOEMConfig-1.13.0.bizbundle.3.17.6.1/Assets/resources/customColor.plist"
+  install_resource "${PODS_ROOT}/TYReleaseDebugger/TYReleaseDebugger-0.5.0/Assets/bundles/ReleaseDebugger.bundle"
+  install_resource "${PODS_ROOT}/TYSmartBusinessLibrary/TYSmartBusinessLibrary-3.17.5.bizbundle.3.17.0.3/Assets/resources/cell_view_arrow@2x.png"
+  install_resource "${PODS_ROOT}/TYSmartBusinessLibrary/TYSmartBusinessLibrary-3.17.5.bizbundle.3.17.0.3/Assets/resources/cell_view_arrow@3x.png"
+  install_resource "${PODS_ROOT}/TYSmartBusinessLibrary/TYSmartBusinessLibrary-3.17.5.bizbundle.3.17.0.3/Assets/bundles/TPViews.bundle"
+  install_resource "${PODS_ROOT}/TYSmartBusinessLibrary/TYSmartBusinessLibrary-3.17.5.bizbundle.3.17.0.3/Assets/bundles/TYCropViewControllerBundle.bundle"
+  install_resource "${PODS_ROOT}/TYSmartBusinessLibrary/TYSmartBusinessLibrary-3.17.5.bizbundle.3.17.0.3/Assets/bundles/TYSmartBusinessLibraryRes.bundle"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/TYVideoPlayer/TYVideoPlayer.bundle"
+  install_resource "${PODS_ROOT}/TuyaSmartBizCore/TuyaSmartBizCore-3.17.6.3/Assets/resources/custom.json"
+  install_resource "${PODS_ROOT}/TuyaSmartBizCore/TuyaSmartBizCore-3.17.6.3/Assets/bundles/TuyaSmartBizCore.bundle"
+  install_resource "${PODS_ROOT}/TuyaSmartHelpCenterBizBundle/TuyaSmartHelpCenterBizBundle-3.17.0.2/Assets/bundles/TuyaSmartHelpCenterBizBundle.bundle"
   install_resource "${PODS_ROOT}/TuyaSmartUtil/ios/TuyaSmartUtil.framework/Versions/A/Resources/TuyaSmartUtil.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "${PODS_ROOT}/TYHybridContainer/TYHybridContainer-1.2.9.bizbundle.3.17.0/Assets/bundles/TYHybridContainer.bundle"
+  install_resource "${PODS_ROOT}/TYNavigationController/TYNavigationController-1.10.1/Assets/TYNavigationRes.bundle"
+  install_resource "${PODS_ROOT}/TYOEMConfig/TYOEMConfig-1.13.0.bizbundle.3.17.6.1/Assets/resources/customColor.plist"
+  install_resource "${PODS_ROOT}/TYReleaseDebugger/TYReleaseDebugger-0.5.0/Assets/bundles/ReleaseDebugger.bundle"
+  install_resource "${PODS_ROOT}/TYSmartBusinessLibrary/TYSmartBusinessLibrary-3.17.5.bizbundle.3.17.0.3/Assets/resources/cell_view_arrow@2x.png"
+  install_resource "${PODS_ROOT}/TYSmartBusinessLibrary/TYSmartBusinessLibrary-3.17.5.bizbundle.3.17.0.3/Assets/resources/cell_view_arrow@3x.png"
+  install_resource "${PODS_ROOT}/TYSmartBusinessLibrary/TYSmartBusinessLibrary-3.17.5.bizbundle.3.17.0.3/Assets/bundles/TPViews.bundle"
+  install_resource "${PODS_ROOT}/TYSmartBusinessLibrary/TYSmartBusinessLibrary-3.17.5.bizbundle.3.17.0.3/Assets/bundles/TYCropViewControllerBundle.bundle"
+  install_resource "${PODS_ROOT}/TYSmartBusinessLibrary/TYSmartBusinessLibrary-3.17.5.bizbundle.3.17.0.3/Assets/bundles/TYSmartBusinessLibraryRes.bundle"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/TYVideoPlayer/TYVideoPlayer.bundle"
+  install_resource "${PODS_ROOT}/TuyaSmartBizCore/TuyaSmartBizCore-3.17.6.3/Assets/resources/custom.json"
+  install_resource "${PODS_ROOT}/TuyaSmartBizCore/TuyaSmartBizCore-3.17.6.3/Assets/bundles/TuyaSmartBizCore.bundle"
+  install_resource "${PODS_ROOT}/TuyaSmartHelpCenterBizBundle/TuyaSmartHelpCenterBizBundle-3.17.0.2/Assets/bundles/TuyaSmartHelpCenterBizBundle.bundle"
   install_resource "${PODS_ROOT}/TuyaSmartUtil/ios/TuyaSmartUtil.framework/Versions/A/Resources/TuyaSmartUtil.bundle"
 fi
 

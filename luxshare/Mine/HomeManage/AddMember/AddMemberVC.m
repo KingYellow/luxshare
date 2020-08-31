@@ -230,10 +230,6 @@
     return _home;
 }
 
-// 家庭下新增房间代理回调
-- (void)home:(TuyaSmartHome *)home didAddRoom:(TuyaSmartRoomModel *)room {
-      [self.qzTableView reloadData];
-}
 - (void)valueChanged:(UITextField *)sender{
     if (sender.tag == 0) {
         self.name = sender.text;

@@ -144,16 +144,17 @@
     vc.deviceModel = model;
     vc.homeModel = self.homeModel;
     [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
-    TuyaSmartDevice *device = [TuyaSmartDevice deviceWithDeviceId:model.devId];
-    device.delegate = self;
+//    TuyaSmartDevice *device = [TuyaSmartDevice deviceWithDeviceId:model.devId];
+////    device.delegate = self;
 }
 
-- (void)longPressAction:(UITableViewCell *)cell{
+- (void)longPressAction:(UILongPressGestureRecognizer *)gesture{
     UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"提示" message:@"确认要删除设备吗?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         
     }];
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        DeviceListCell *cell = (DeviceListCell *)gesture.view;
         NSIndexPath *path = [self.qzTableView indexPathForCell:cell];
         TuyaSmartDeviceModel *model = self.listArr[path.row];
         
@@ -237,4 +238,5 @@
 //- (void)device:(TuyaSmartDevice *)device firmwareUpgradeStatusModel:(TuyaSmartFirmwareUpgradeStatusModel *)upgradeStatusModel {
 //    // 设备升级状态的回调
 //}
+
 @end

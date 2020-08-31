@@ -1,0 +1,11 @@
+"CFBundleDisplayName" = "TuyaSmart";
+"NSBluetoothAlwaysUsageDescription" = "يجب تشغيل البلوتوث لإضافة أجهزة Bluetooth واستخدامها.";
+"NSBluetoothPeripheralUsageDescription" = "يجب تشغيل البلوتوث لإضافة أجهزة Bluetooth واستخدامها.";
+"NSCameraUsageDescription" = "نحتاج إلى استخدام الكاميرا لإضافة صورة جديدة ، ومسح رموز ثنائية الأبعاد ، ووظائف أخرى.";
+"NSHomeKitUsageDescription" = "يمكنك التحكم في الأجهزة المدعومة ضمن \"الأسرة\" في التطبيق.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "يمكن أن يوفر التطبيق درجة الحرارة والرطوبة وفقًا لموقعك. \"المغادرة أو الوصول (التجريبي)\" تطلب دائمًا الوصول إلى موقعك.";
+"NSLocationAlwaysUsageDescription" = "يمكن أن يوفر التطبيق درجة الحرارة والرطوبة وفقًا لموقعك. \"المغادرة أو الوصول (التجريبي)\" تطلب دائمًا الوصول إلى موقعك.";
+"NSLocationWhenInUseUsageDescription" = "من أجل تقديم خدمات أكثر ذكاءاً لحضرتاك، فنحن بحاجة لمعرفة بيانات درجات الحرارة بالمكان المتواجد به وغيرها من البيانات.";
+"NSMicrophoneUsageDescription" = "جزء من وظيفة المنتج هو جمع الصوت من خلال هاتفك.";
+"NSPhotoLibraryAddUsageDescription" = "مطلوب الوصول إلى معرض الصور الخاص بك من أجل حفظ لقطات الشاشة وتسجيلات الشاشة.";
+"NSPhotoLibraryUsageDescription" = "نحتاج لزيارة المعرض لإعداد صورتك.";

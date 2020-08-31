@@ -86,6 +86,16 @@
                   cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
                   return cell;
+        }else if (row == 2) {
+                  SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
+                  cell.nameLab.text = @"图像翻转";
+                  cell.radioPosition = 0;
+                  cell.switchBtn.tag = 2;
+                  cell.switchBtn.on =              cell.switchBtn.on = [self.deviceModel.dps[@"103"] boolValue];;
+                  [cell.switchBtn addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
+                  cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+                  return cell;
         }else{
             
             SettingDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
@@ -105,7 +115,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+    return 4;
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -123,7 +133,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = indexPath.row;
 
-    if (row == 2) {
+    if (row == 3) {
         QZHWS(weakSelf)
         TalkTypeVC *vc = [[TalkTypeVC alloc] init];
         vc.deviceModel = self.deviceModel;
@@ -133,7 +143,6 @@
         };
         [self.navigationController pushViewController:vc animated:YES];
     }
-
 }
 
 #pragma mark -- action
@@ -151,7 +160,7 @@
                 sender.on = !sender.on;
             }];
         }
-    }else{
+    }else if(sender.tag == 1){
         //水印
         if ([self.dpManager isSupportDP:TuyaSmartCameraBasicOSDDPName]) {
                  
@@ -163,6 +172,17 @@
                      sender.on = !sender.on;
                  }];
              }
+    }else{
+        
+        NSDictionary  *dps = @{@"103": @(sender.on)};
+          [self.device publishDps:dps success:^{
+              [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
+ 
+          } failure:^(NSError *error) {
+              sender.on = !sender.on;
+              [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+
+          }];
     }
 }
 

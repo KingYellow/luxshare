@@ -16,8 +16,7 @@
         //设置 背景为clear
         self.backgroundColor = [UIColor clearColor];
         self.opaque = NO;
-        self.selectView.frame = CGRectMake(0, 0, QZHScreenHeight, QZHScreenWidth);
-            
+        self.selectView.frame = CGRectMake(QZH_VIDEO_LEFTMARGIN, 0, QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN, QZHScreenWidth);
         self.oldFrame = self.selectView.frame;
         [self addGestureRecognizerToView:self.selectView];
         [self addSubview:self.selectView];
@@ -106,14 +105,14 @@
             CGFloat xlen = view.center.x + view.frame.size.width * pinchGestureRecognizer.scale/2;
             CGFloat ylen = view.center.y + view.frame.size.height * pinchGestureRecognizer.scale/2;
             
-            if (x < 0) {
-                view.frame = CGRectMake(0, view.center.y - view.center.x * self.oldFrame.size.height/self.oldFrame.size.width, view.center.x * 2, view.center.x * 2 * self.oldFrame.size.height/self.oldFrame.size.width);
+            if (x < QZH_VIDEO_LEFTMARGIN) {
+                view.frame = CGRectMake(QZH_VIDEO_LEFTMARGIN, view.center.y - view.center.x * self.oldFrame.size.height/self.oldFrame.size.width, view.center.x * 2, view.center.x * 2 * self.oldFrame.size.height/self.oldFrame.size.width);
             }else
             if (y < 0) {
                 view.frame = CGRectMake(view.center.x - view.center.y * self.oldFrame.size.width/self.oldFrame.size.height, 0, view.center.y * 2 * self.oldFrame.size.width/self.oldFrame.size.height, view.center.y * 2);
             }else
-            if (xlen > QZHScreenHeight) {
-                view.frame = CGRectMake(view.center.x * 2 - QZHScreenHeight, view.center.y - (QZHScreenHeight - view.center.x) * self.oldFrame.size.height/self.oldFrame.size.width, (QZHScreenHeight - view.center.x) * 2, (QZHScreenHeight - view.center.x) * 2 * self.oldFrame.size.height/self.oldFrame.size.width);
+            if (xlen > QZH_VIDEO_RIGHTMARGIN) {
+                view.frame = CGRectMake(view.center.x * 2 - QZH_VIDEO_RIGHTMARGIN, view.center.y - (QZH_VIDEO_RIGHTMARGIN - view.center.x) * self.oldFrame.size.height/self.oldFrame.size.width, (QZH_VIDEO_RIGHTMARGIN - view.center.x) * 2, (QZH_VIDEO_RIGHTMARGIN - view.center.x) * 2 * self.oldFrame.size.height/self.oldFrame.size.width);
             }else
             if (ylen > QZHScreenWidth) {
                 view.frame = CGRectMake(view.center.x - (QZHScreenWidth - view.center.y) * self.oldFrame.size.width/self.oldFrame.size.height,2 * view.center.y - QZHScreenWidth, (QZHScreenWidth - view.center.y) * 2 * self.oldFrame.size.width/self.oldFrame.size.height, (QZHScreenWidth - view.center.y) * 2);
@@ -185,8 +184,8 @@
                     yLen = yLen + translation.y;
                 }
             }
-            x = MAX(0, x);
-            xLen = MIN(QZHScreenHeight, xLen);
+            x = MAX(QZH_VIDEO_LEFTMARGIN, x);
+            xLen = MIN(QZH_VIDEO_RIGHTMARGIN, xLen);
             y = MAX(0, y);
             yLen = MIN(QZHScreenWidth, yLen);
 
@@ -194,8 +193,8 @@
 
         }else{
             CGPoint centerP = (CGPoint){view.center.x + translation.x, view.center.y + translation.y};
-            centerP.x = MAX(view.frame.size.width/2, centerP.x);
-            centerP.x = MIN(QZHScreenHeight - view.frame.size.width/2, centerP.x);
+            centerP.x = MAX(view.frame.size.width/2 + QZH_VIDEO_LEFTMARGIN, centerP.x);
+            centerP.x = MIN(QZH_VIDEO_RIGHTMARGIN - view.frame.size.width/2, centerP.x);
             centerP.y = MAX(view.frame.size.height/2, centerP.y);
             centerP.y = MIN(QZHScreenWidth - view.frame.size.height/2, centerP.y);
             [view setCenter:centerP];

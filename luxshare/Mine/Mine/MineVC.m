@@ -5,7 +5,8 @@
 //  Created by 黄振 on 2020/4/1.
 //  Copyright © 2020 KingYellow. All rights reserved.
 //
-
+#import <TuyaSmartBizCore/TuyaSmartBizCore.h>
+#import <TYModuleServices/TYHelpCenteProtocol.h>
 #import "MineVC.h"
 #import "MineHeaderCell.h"
 #import "MineDefaultCell.h"
@@ -25,6 +26,10 @@
 @implementation MineVC
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
+
+    [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [self.qzTableView reloadData];
 }
 - (void)viewDidLoad {
@@ -34,9 +39,7 @@
 
 }
 - (void)initConfig{
-    
-    [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
-    [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
+
      self.navigationItem.title = QZHLoaclString(@"mine");
     
     [self UIConfig];
@@ -141,9 +144,14 @@
         [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
     }
     if (section == 1 && row == 0) {
-        TOTAWebVC *vc = [[TOTAWebVC alloc] init];
-        vc.urlString = @"https://smartapp.tuya.com/tuyasmart/help";
-        [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
+
+
+        id<TYHelpCenteProtocol> impl = [[TuyaSmartBizCore sharedInstance] serviceOfProtocol:@protocol(TYHelpCenteProtocol)];
+
+        [impl gotoHelpCenter];
+//        TOTAWebVC *vc = [[TOTAWebVC alloc] init];
+//        vc.urlString = @"https://smartapp.tuya.com/tuyasmart/help";
+//        [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
     }
     if (section == 1 && row == 1) {
         HomeManageVC *vc = [[HomeManageVC alloc] init];

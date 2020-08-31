@@ -15,7 +15,7 @@
 #import "ResetPWVC.h"
 #import "RegisterVC.h"
 
-@interface PerInfoVC ()<UITableViewDelegate,UITableViewDataSource,HXPhotoViewControllerDelegate,HXAlbumListViewControllerDelegate>
+@interface PerInfoVC ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate,HXPhotoViewControllerDelegate,HXAlbumListViewControllerDelegate>
 @property (strong, nonatomic)UITableView *qzTableView;
 @property (copy, nonatomic)NSMutableArray *listArr;
 @property (copy, nonatomic)NSMutableArray *logoArr;
@@ -44,10 +44,9 @@
 - (void)UIConfig{
     
     [self.view addSubview:self.qzTableView];
-    
-     [self.qzTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-         make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0 ));
-     }];
+    [self.qzTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0 ));
+    }];
 }
 
 #pragma mark -tableView
@@ -132,7 +131,7 @@
     NSInteger section = indexPath.section;
     if (section == 0) {
          if (indexPath.row == 0) {
-               [self selectedPhoto];
+               [self camerAction];
            }else if (indexPath.row == 1){
                UIAlertController *alert = [UIAlertController alertWithTextfieldTitle:@"修改昵称" originaltext:[TuyaSmartUser sharedInstance].nickname textblock:^(NSString * _Nonnull fieldtext) {
                    if (fieldtext.length > 0) {
@@ -152,15 +151,12 @@
         
     }else if(section == 2){
         [[TuyaSmartUser sharedInstance] loginOut:^{
-               NSLog(@"logOut success");
             [QZHDataHelper removeForKey:QZHKEY_TOKEN];
-                 [QZHROOT_DELEGATE setVC];
-           } failure:^(NSError *error) {
+            [QZHROOT_DELEGATE setVC];
+        } failure:^(NSError *error) {
                [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
-           }];
-     
+        }];
     }
-   
 }
 
 #pragma mark --lazy
@@ -179,6 +175,113 @@
     return _logoArr;
 }
 
+// 打开相机相册
+- (void)camerAction{
+  
+    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"" message:@"选择头像" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]){
+            UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+            // 打开相册
+            picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+
+            picker.delegate =self;
+            picker.modalPresentationStyle = UIModalPresentationOverFullScreen;
+            UIButton *rightBtn =  [picker exp_addRightItemTitle:@"取消" itemIcon:@""];
+           [picker.navigationItem.rightBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+            [UIColor greenColor], NSForegroundColorAttributeName,
+            nil] forState:UIControlStateNormal];
+            
+            [rightBtn setTitleColor:QZHKIT_COLOR_SKIN forState:UIControlStateNormal];
+             [self presentViewController:picker animated:YES completion:nil];
+        }
+        
+    }];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"打开相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            
+            UIImagePickerController * picker = [[UIImagePickerController alloc]init];
+            picker.delegate = self;
+            //摄像头
+            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            picker.modalPresentationStyle = UIModalPresentationOverFullScreen;
+            [self presentViewController:picker animated:YES completion:nil];
+        }else{
+            
+            //如果没有提示用户
+            [[QZHHUD HUD] textHUDWithMessage:@"当前相机不可用" afterDelay:1.0];
+        }
+    }];
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+
+    }];
+    [alertC addAction:action1];
+    [alertC addAction:action2];
+    [alertC addAction:action3];
+    [self presentViewController:alertC animated:YES completion:nil];
+    
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+    QZHWS(weakSelf)
+    UIImage *image=[info objectForKey:UIImagePickerControllerOriginalImage];//获取原始照片
+    HXPhotoModel *photoModel = [HXPhotoModel photoModelWithImage:image];
+    [picker hx_presentPhotoEditViewControllerWithManager:self.manager photoModel:photoModel delegate:nil done:^(HXPhotoModel *beforeModel,
+        HXPhotoModel *afterModel, HXPhotoEditViewController *viewController) {
+            [weakSelf performSelector:@selector(selectPic:) withObject:afterModel.previewPhoto afterDelay:0.1];
+            [self dismissViewControllerAnimated:YES completion:nil];
+
+    } cancel:^(HXPhotoEditViewController *viewController) {
+        // 取消
+        [self dismissViewControllerAnimated:YES completion:nil];
+
+    }];
+    // 获取照片
+
+}
+// 选择照片显示
+- (void)selectPic:(UIImage *)image
+{
+    NSLog(@"image:%@",image);
+    NSData *imageData;
+    if (UIImagePNGRepresentation(image) == nil) {
+        
+        imageData = UIImageJPEGRepresentation(image, 1);
+        
+    } else {
+        
+        imageData = UIImageJPEGRepresentation(image, 0.3);
+        if (imageData.length > 2*1024*1024) {
+            imageData = UIImageJPEGRepresentation(image, 0.1);
+        }
+    }
+    [self uploadHeadPic:[UIImage imageWithData:imageData]];
+}
+
+
+- (void)uploadHeadPic:(UIImage *)headIcon{
+    [[TuyaSmartUser sharedInstance] updateHeadIcon:headIcon success:^{
+        [UIImage exp_saveImageToLocal:headIcon path:QZHICON_HEADPIC];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
+    
+        [self.qzTableView reloadData];
+    } failure:^(NSError *error) {
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+        
+    }];
+    
+}
+- (void)uploadNickname:(NSString *)nickname{
+    QZHWS(weakSelf)
+    [[TuyaSmartUser sharedInstance] updateNickname:nickname success:^{
+        [weakSelf.qzTableView reloadData];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
+
+    } failure:^(NSError *error) {
+           [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+    }];
+}
 #pragma mark -- HXHhotoPicker框架
 - (HXPhotoManager *)manager {
     if (!_manager) {
@@ -192,63 +295,8 @@
         _manager.configuration.singleJumpEdit = YES;
         _manager.configuration.movableCropBox = YES;
         _manager.configuration.movableCropBoxEditSize = YES;
-        _manager.configuration.movableCropBoxCustomRatio = CGPointMake(1, 1);
 
     }
     return _manager;
-}
-- (void)selectedPhoto {
-    self.manager.configuration.saveSystemAblum = YES;
-    QZHWS(weakSelf)
-    [self hx_presentSelectPhotoControllerWithManager:self.manager didDone:^(NSArray<HXPhotoModel *> *allList, NSArray<HXPhotoModel *> *photoList, NSArray<HXPhotoModel *> *videoList, BOOL isOriginal, UIViewController *viewController, HXPhotoManager *manager) {
-        HXPhotoModel *model = allList.firstObject;
-        
-        if (model.subType == HXPhotoModelMediaSubTypePhoto) {
-            [weakSelf.view hx_showLoadingHUDText:@"获取图片中"];
-            [model requestPreviewImageWithSize:PHImageManagerMaximumSize startRequestICloud:nil progressHandler:nil success:^(UIImage *image, HXPhotoModel *model, NSDictionary *info) {
-                UIImage *scaleImage = [UIImage exp_imageScaleWithImage:image toByte:0];
-                [weakSelf.view hx_handleLoading];
-                weakSelf.image = scaleImage;
-                [self uploadHeadPic:scaleImage];
-
-            } failed:^(NSDictionary *info, HXPhotoModel *model) {
-                [weakSelf.view hx_handleLoading];
-                [weakSelf.view hx_showImageHUDText:@"获取失败"];
-            }];
-        }
-    } cancel:^(UIViewController *viewController, HXPhotoManager *manager) {
-        NSSLog(@"取消了");
-        [viewController dismissViewControllerAnimated:YES completion:nil];
-    }];
-}
-- (void)albumListViewController:(HXAlbumListViewController *)albumListViewController didDoneAllList:(NSArray<HXPhotoModel *> *)allList photos:(NSArray<HXPhotoModel *> *)photoList videos:(NSArray<HXPhotoModel *> *)videoList original:(BOOL)original {
-    if (photoList.count > 0) {
-        HXPhotoModel *model = photoList.firstObject;
-        UIImage *scaleImage = [UIImage exp_imageScaleWithImage:model.previewPhoto toByte:0];
-        self.image = scaleImage;
-        [self uploadHeadPic:scaleImage];
-    }else if (videoList.count > 0) {
-        
-    }
-}
-
-- (void)uploadHeadPic:(UIImage *)headIcon{
-    [[TuyaSmartUser sharedInstance] updateHeadIcon:headIcon success:^{
-        NSLog(@"update head icon success");
-        [UIImage exp_saveImageToLocal:headIcon path:QZHICON_HEADPIC];
-        [self.qzTableView reloadData];
-    } failure:^(NSError *error) {
-        NSLog(@"update head icon failure: %@", error);
-    }];
-    
-}
-- (void)uploadNickname:(NSString *)nickname{
-    QZHWS(weakSelf)
-    [[TuyaSmartUser sharedInstance] updateNickname:nickname success:^{
-        NSLog(@"updateNickname success");
-        [weakSelf.qzTableView reloadData];
-    } failure:^(NSError *error) {
-           [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
-    }];
 }
 @end

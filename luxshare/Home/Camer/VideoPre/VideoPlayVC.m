@@ -16,6 +16,10 @@
 
 @implementation VideoPlayVC
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.player pause];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
    [self initConfig];
@@ -70,8 +74,9 @@
 }
 //点击关闭按钮代理方法
 -(void)wmplayer:(WMPlayer *)wmplayer clickedCloseButton:(UIButton *)backBtn;{
-    [self.navigationController popViewControllerAnimated:YES];
     [self.player removeFromSuperview];
+
+    [self.navigationController popViewControllerAnimated:YES];
 }
 //点击全屏按钮代理方法
 -(void)wmplayer:(WMPlayer *)wmplayer clickedFullScreenButton:(UIButton *)fullScreenBtn;{

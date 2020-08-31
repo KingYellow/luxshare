@@ -1,0 +1,11 @@
+"CFBundleDisplayName" = "TuyaSmart";
+"NSBluetoothAlwaysUsageDescription" = "This will allow the app to find and connect Bluetooth accessories. This app may also use Bluetooth to locate Bluetooth device.";
+"NSBluetoothPeripheralUsageDescription" = "To add or use Bluetooth devices, enable Bluetooth on your mobile phone.";
+"NSCameraUsageDescription" = "The App can use camera to take new profile and to scan QR Code.";
+"NSHomeKitUsageDescription" = "You can control all \"Home\" devices in the app.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "The app can provide temperature and humidity according to your location. \"Leave or Arrive (beta)\" always requests access to your location.";
+"NSLocationAlwaysUsageDescription" = "The app can provide temperature and humidity according to your location. \"Leave or Arrive (beta)\" always requests access to your location.";
+"NSLocationWhenInUseUsageDescription" = "Please enable location Service to use smart, device timer, weather and time zone information";
+"NSMicrophoneUsageDescription" = "The app requests microphone access to control smart devices.";
+"NSPhotoLibraryAddUsageDescription" = "We need your authorization to save pictures and videos in albums.";
+"NSPhotoLibraryUsageDescription" = "The app requests access to your albums for profile photo uploading.";

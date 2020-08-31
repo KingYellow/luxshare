@@ -24,6 +24,7 @@
     [self initConfig];
     [self getNewData];
     self.device = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId];
+    self.deviceModel = self.device.deviceModel;
 }
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
@@ -73,6 +74,7 @@
     }else{
         
         PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (row == 0) {
             cell.nameLab.text = QZHLoaclString(@"device_deviceName");
             if (self.deviceModel.name) {
@@ -81,7 +83,9 @@
             }else{
                 cell.describeLab.text = QZHLoaclString(@"device_deviceNamePlace");
             }
-        }else{
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+        }else if(row == 1){
             if (self.deviceModel.roomId) {
                 TuyaSmartRoom *room = [TuyaSmartRoom roomWithRoomId:self.deviceModel.roomId homeId:self.homeModel.homeId];
                 cell.describeLab.text = room.roomModel.name;
@@ -90,9 +94,13 @@
                 cell.describeLab.text = @"";
             }
             cell.nameLab.text = QZHLoaclString(@"device_deviceLocation");
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+        }else{
+            cell.nameLab.text = @"设备ID";
+            cell.describeLab.text = self.deviceModel.devId;
         }
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
         return cell;
     }
 
@@ -106,7 +114,7 @@
     if (section == 0 ) {
         return 1;
     }else{
-        return 2;
+        return 3;
     }
     
 }

@@ -539,5 +539,7 @@
 
     [self.qzTableView reloadData];
 }
-
+-(void)dealloc{
+    self.device.delegate = nil;
+}
 @end

@@ -24,12 +24,14 @@
 		8928524E24D13FA700B987D7 /* UIImageView+Gif.m in Sources */ = {isa = PBXBuildFile; fileRef = 8928524D24D13FA700B987D7 /* UIImageView+Gif.m */; };
 		892F997424BFFDCD007A0B08 /* ZFTimeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 892F997324BFFDCD007A0B08 /* ZFTimeLine.m */; };
 		893A40D124C95F1800F51261 /* WarningDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 893A40D024C95F1800F51261 /* WarningDetailVC.m */; };
+		893B3A3E24EE5E2D00EFCAE8 /* FeedUpBindVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 893B3A3D24EE5E2D00EFCAE8 /* FeedUpBindVC.m */; };
+		893EFD4724ECDB4200F56742 /* LUXProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 893EFD4624ECDB4200F56742 /* LUXProgressHUD.m */; };
+		893F073124FCA8E8009352E3 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 893F073024FCA8E8009352E3 /* Reachability.m */; };
 		89408A4124AC1F3400AF20F8 /* QZHSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89408A4024AC1F3400AF20F8 /* QZHSelectCell.m */; };
 		894B54F624CE606600D5C0D2 /* MessageSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 894B54F524CE606600D5C0D2 /* MessageSettingVC.m */; };
 		894B54F924CE625C00D5C0D2 /* MessageTimeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 894B54F824CE625C00D5C0D2 /* MessageTimeVC.m */; };
 		894FB72524CA66E300E5346C /* WarningListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 894FB72424CA66E300E5346C /* WarningListCell.m */; };
 		895636E524C14EBF0040A59A /* BasicFunVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 895636E424C14EBF0040A59A /* BasicFunVC.m */; };
-		895C8E5324D29D6000463235 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 895C8E5124D29D5F00463235 /* Reachability.m */; };
 		895DFE1F24B05651004F986D /* AddQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 895DFE1E24B05651004F986D /* AddQRCodeVC.m */; };
 		895DFE2124B068D2004F986D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 895DFE2024B068D2004F986D /* SystemConfiguration.framework */; };
 		895DFE2424B06902004F986D /* SetWIFIVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 895DFE2324B06902004F986D /* SetWIFIVC.m */; };
@@ -115,14 +117,6 @@
 		89DB0AB624A05A3900324E36 /* SettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DB0A4524A05A3800324E36 /* SettingVC.m */; };
 		89DB0AB724A05A3900324E36 /* CodeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DB0A4B24A05A3800324E36 /* CodeButton.m */; };
 		89DB0AB824A05A3900324E36 /* DDLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DB0A4C24A05A3800324E36 /* DDLoginVC.m */; };
-		89DB0AB924A05A3900324E36 /* TOTAUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DB0A5124A05A3800324E36 /* TOTAUtils.m */; };
-		89DB0ABA24A05A3900324E36 /* TOTANaviOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DB0A5224A05A3800324E36 /* TOTANaviOptions.m */; };
-		89DB0ABB24A05A3900324E36 /* TOTANavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DB0A5524A05A3800324E36 /* TOTANavigationController.m */; };
-		89DB0ABC24A05A3900324E36 /* UIView+EasyNavigationExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DB0A5724A05A3800324E36 /* UIView+EasyNavigationExt.m */; };
-		89DB0ABD24A05A3900324E36 /* UIViewController+TOTANavExp.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DB0A5A24A05A3800324E36 /* UIViewController+TOTANavExp.m */; };
-		89DB0ABE24A05A3900324E36 /* UIScrollView+EasyNavigationExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DB0A5D24A05A3800324E36 /* UIScrollView+EasyNavigationExt.m */; };
-		89DB0ABF24A05A3900324E36 /* TOTACurrentBackGestureDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DB0A5E24A05A3800324E36 /* TOTACurrentBackGestureDelegate.m */; };
-		89DB0AC024A05A3900324E36 /* TOTANavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DB0A5F24A05A3800324E36 /* TOTANavigationBar.m */; };
 		89DB0AC124A05A3900324E36 /* DDBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DB0A6424A05A3900324E36 /* DDBanner.m */; };
 		89DB0AC224A05A3900324E36 /* QZHKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DB0A6724A05A3900324E36 /* QZHKitHelper.m */; };
 		89DB0AC324A05A3900324E36 /* TOTACardCCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DB0A6C24A05A3900324E36 /* TOTACardCCell.m */; };
@@ -241,6 +235,12 @@
 		89373BE324B2B75800681A57 /* luxshare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = luxshare.entitlements; sourceTree = "<group>"; };
 		893A40CF24C95F1800F51261 /* WarningDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WarningDetailVC.h; sourceTree = "<group>"; };
 		893A40D024C95F1800F51261 /* WarningDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WarningDetailVC.m; sourceTree = "<group>"; };
+		893B3A3C24EE5E2D00EFCAE8 /* FeedUpBindVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedUpBindVC.h; sourceTree = "<group>"; };
+		893B3A3D24EE5E2D00EFCAE8 /* FeedUpBindVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedUpBindVC.m; sourceTree = "<group>"; };
+		893EFD4524ECDB4200F56742 /* LUXProgressHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LUXProgressHUD.h; sourceTree = "<group>"; };
+		893EFD4624ECDB4200F56742 /* LUXProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LUXProgressHUD.m; sourceTree = "<group>"; };
+		893F072F24FCA8E8009352E3 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		893F073024FCA8E8009352E3 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		89408A3F24AC1F3400AF20F8 /* QZHSelectCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QZHSelectCell.h; sourceTree = "<group>"; };
 		89408A4024AC1F3400AF20F8 /* QZHSelectCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QZHSelectCell.m; sourceTree = "<group>"; };
 		894B54F424CE606600D5C0D2 /* MessageSettingVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageSettingVC.h; sourceTree = "<group>"; };
@@ -251,8 +251,6 @@
 		894FB72424CA66E300E5346C /* WarningListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WarningListCell.m; sourceTree = "<group>"; };
 		895636E324C14EBF0040A59A /* BasicFunVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BasicFunVC.h; sourceTree = "<group>"; };
 		895636E424C14EBF0040A59A /* BasicFunVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BasicFunVC.m; sourceTree = "<group>"; };
-		895C8E5124D29D5F00463235 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		895C8E5224D29D5F00463235 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		895DFE1D24B05651004F986D /* AddQRCodeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddQRCodeVC.h; sourceTree = "<group>"; };
 		895DFE1E24B05651004F986D /* AddQRCodeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddQRCodeVC.m; sourceTree = "<group>"; };
 		895DFE2024B068D2004F986D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -423,23 +421,6 @@
 		89DB0A4C24A05A3800324E36 /* DDLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLoginVC.m; sourceTree = "<group>"; };
 		89DB0A4D24A05A3800324E36 /* DDLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLoginVC.h; sourceTree = "<group>"; };
 		89DB0A4E24A05A3800324E36 /* CodeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeButton.h; sourceTree = "<group>"; };
-		89DB0A5124A05A3800324E36 /* TOTAUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOTAUtils.m; sourceTree = "<group>"; };
-		89DB0A5224A05A3800324E36 /* TOTANaviOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOTANaviOptions.m; sourceTree = "<group>"; };
-		89DB0A5324A05A3800324E36 /* UIViewController+TOTANavExp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+TOTANavExp.h"; sourceTree = "<group>"; };
-		89DB0A5424A05A3800324E36 /* UIScrollView+EasyNavigationExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EasyNavigationExt.h"; sourceTree = "<group>"; };
-		89DB0A5524A05A3800324E36 /* TOTANavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOTANavigationController.m; sourceTree = "<group>"; };
-		89DB0A5624A05A3800324E36 /* TOTANavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOTANavigation.h; sourceTree = "<group>"; };
-		89DB0A5724A05A3800324E36 /* UIView+EasyNavigationExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+EasyNavigationExt.m"; sourceTree = "<group>"; };
-		89DB0A5824A05A3800324E36 /* TOTANavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOTANavigationBar.h; sourceTree = "<group>"; };
-		89DB0A5924A05A3800324E36 /* TOTACurrentBackGestureDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOTACurrentBackGestureDelegate.h; sourceTree = "<group>"; };
-		89DB0A5A24A05A3800324E36 /* UIViewController+TOTANavExp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+TOTANavExp.m"; sourceTree = "<group>"; };
-		89DB0A5B24A05A3800324E36 /* TOTANaviOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOTANaviOptions.h; sourceTree = "<group>"; };
-		89DB0A5C24A05A3800324E36 /* TOTAUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOTAUtils.h; sourceTree = "<group>"; };
-		89DB0A5D24A05A3800324E36 /* UIScrollView+EasyNavigationExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EasyNavigationExt.m"; sourceTree = "<group>"; };
-		89DB0A5E24A05A3800324E36 /* TOTACurrentBackGestureDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOTACurrentBackGestureDelegate.m; sourceTree = "<group>"; };
-		89DB0A5F24A05A3800324E36 /* TOTANavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOTANavigationBar.m; sourceTree = "<group>"; };
-		89DB0A6024A05A3800324E36 /* UIView+EasyNavigationExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+EasyNavigationExt.h"; sourceTree = "<group>"; };
-		89DB0A6124A05A3800324E36 /* TOTANavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOTANavigationController.h; sourceTree = "<group>"; };
 		89DB0A6324A05A3900324E36 /* DDBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDBanner.h; sourceTree = "<group>"; };
 		89DB0A6424A05A3900324E36 /* DDBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDBanner.m; sourceTree = "<group>"; };
 		89DB0A6624A05A3900324E36 /* QZHKitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZHKitHelper.h; sourceTree = "<group>"; };
@@ -762,6 +743,15 @@
 			path = TimeLine;
 			sourceTree = "<group>";
 		};
+		893EFD3D24ECC54F00F56742 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				893EFD4524ECDB4200F56742 /* LUXProgressHUD.h */,
+				893EFD4624ECDB4200F56742 /* LUXProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		894B54F324CE5F1B00D5C0D2 /* MessageSetting */ = {
 			isa = PBXGroup;
 			children = (
@@ -782,15 +772,6 @@
 				89FD4B9B24C825D500084E29 /* UpdateDeviceVC.m */,
 			);
 			path = UpdateDevice;
-			sourceTree = "<group>";
-		};
-		895C8E5024D29D5F00463235 /* Reachability */ = {
-			isa = PBXGroup;
-			children = (
-				895C8E5124D29D5F00463235 /* Reachability.m */,
-				895C8E5224D29D5F00463235 /* Reachability.h */,
-			);
-			path = Reachability;
 			sourceTree = "<group>";
 		};
 		895DFE1B24B0561D004F986D /* AddDeviceWIFI */ = {
@@ -819,6 +800,8 @@
 				897399AB24B2F84600DFF4EB /* ProgressVC.m */,
 				89F5FDE824B6F89000CD0980 /* NETResultVC.h */,
 				89F5FDE924B6F89000CD0980 /* NETResultVC.m */,
+				893B3A3C24EE5E2D00EFCAE8 /* FeedUpBindVC.h */,
+				893B3A3D24EE5E2D00EFCAE8 /* FeedUpBindVC.m */,
 			);
 			path = AddDeviceQRCode;
 			sourceTree = "<group>";
@@ -1359,12 +1342,12 @@
 		89DB0A4F24A05A3800324E36 /* QZHComponent */ = {
 			isa = PBXGroup;
 			children = (
-				895C8E5024D29D5F00463235 /* Reachability */,
+				893F072F24FCA8E8009352E3 /* Reachability.h */,
+				893F073024FCA8E8009352E3 /* Reachability.m */,
 				89F7D01B24A5B444007B5A32 /* Categories */,
 				89E591C624A34DBE00EEB26A /* UITableView+MoveCell.h */,
 				89E591C524A34DBE00EEB26A /* UITableView+MoveCell.m */,
 				898C4EAB24A1EC8600A574E0 /* QZHAlertField */,
-				89DB0A5024A05A3800324E36 /* TOTANavigation */,
 				89DB0A6224A05A3900324E36 /* DDBanner */,
 				89DB0A6524A05A3900324E36 /* QZHKitHelper */,
 				89DB0A6824A05A3900324E36 /* TOTAMulltiCollectionView */,
@@ -1379,30 +1362,6 @@
 				89DB0A9124A05A3900324E36 /* TOTAUIImageView */,
 			);
 			path = QZHComponent;
-			sourceTree = "<group>";
-		};
-		89DB0A5024A05A3800324E36 /* TOTANavigation */ = {
-			isa = PBXGroup;
-			children = (
-				89DB0A5124A05A3800324E36 /* TOTAUtils.m */,
-				89DB0A5224A05A3800324E36 /* TOTANaviOptions.m */,
-				89DB0A5324A05A3800324E36 /* UIViewController+TOTANavExp.h */,
-				89DB0A5424A05A3800324E36 /* UIScrollView+EasyNavigationExt.h */,
-				89DB0A5524A05A3800324E36 /* TOTANavigationController.m */,
-				89DB0A5624A05A3800324E36 /* TOTANavigation.h */,
-				89DB0A5724A05A3800324E36 /* UIView+EasyNavigationExt.m */,
-				89DB0A5824A05A3800324E36 /* TOTANavigationBar.h */,
-				89DB0A5924A05A3800324E36 /* TOTACurrentBackGestureDelegate.h */,
-				89DB0A5A24A05A3800324E36 /* UIViewController+TOTANavExp.m */,
-				89DB0A5B24A05A3800324E36 /* TOTANaviOptions.h */,
-				89DB0A5C24A05A3800324E36 /* TOTAUtils.h */,
-				89DB0A5D24A05A3800324E36 /* UIScrollView+EasyNavigationExt.m */,
-				89DB0A5E24A05A3800324E36 /* TOTACurrentBackGestureDelegate.m */,
-				89DB0A5F24A05A3800324E36 /* TOTANavigationBar.m */,
-				89DB0A6024A05A3800324E36 /* UIView+EasyNavigationExt.h */,
-				89DB0A6124A05A3800324E36 /* TOTANavigationController.h */,
-			);
-			path = TOTANavigation;
 			sourceTree = "<group>";
 		};
 		89DB0A6224A05A3900324E36 /* DDBanner */ = {
@@ -1439,6 +1398,7 @@
 		89DB0A6F24A05A3900324E36 /* QZHHUD */ = {
 			isa = PBXGroup;
 			children = (
+				893EFD3D24ECC54F00F56742 /* MBProgressHUD */,
 				89DB0A7024A05A3900324E36 /* QZHHUDImageView.m */,
 				89DB0A7124A05A3900324E36 /* QZHHUD.h */,
 				89DB0A7224A05A3900324E36 /* QZHHUDImageView.h */,
@@ -2076,7 +2036,6 @@
 				898CF6C024D3A146009B7232 /* RecordProgressView.m in Sources */,
 				8962F20D24BEE21E00D85A65 /* DateListTools.m in Sources */,
 				89F7D08F24A5C3FB007B5A32 /* EasyEmptyTypes.m in Sources */,
-				89DB0AB924A05A3900324E36 /* TOTAUtils.m in Sources */,
 				89FD4B9624C7DC2200084E29 /* ShareDeviceVC.m in Sources */,
 				89DB09EB24A059DA00324E36 /* AppDelegate+Exp.m in Sources */,
 				8970BE7024B97C1E008C5D76 /* CameraPlayView.m in Sources */,
@@ -2088,8 +2047,8 @@
 				89B1324724BBEAF200869B3F /* PhotoListCell.m in Sources */,
 				897806CC24B7F7F800BE79EB /* DeviceWifiVC.m in Sources */,
 				894B54F624CE606600D5C0D2 /* MessageSettingVC.m in Sources */,
+				893F073124FCA8E8009352E3 /* Reachability.m in Sources */,
 				89ADD6AB24ADCCEA00817129 /* QZHMessageModel.m in Sources */,
-				89DB0ABD24A05A3900324E36 /* UIViewController+TOTANavExp.m in Sources */,
 				89160D7C24A9AF8D00511F84 /* RoomManageVC.m in Sources */,
 				89DB0A9624A05A3900324E36 /* TOTANewFeatureVC.m in Sources */,
 				8902258424C173DF0060DEDF /* TalkTypeCell.m in Sources */,
@@ -2125,13 +2084,13 @@
 				8980891324E286F8003BA61A /* MaskView.m in Sources */,
 				89DB0AD424A05A3900324E36 /* TOTAImageView.m in Sources */,
 				89B1324D24BC1ABB00869B3F /* VideoListVC.m in Sources */,
-				89DB0ABC24A05A3900324E36 /* UIView+EasyNavigationExt.m in Sources */,
 				89F7D02024A5B4B4007B5A32 /* UIColor+Grade.m in Sources */,
 				89F7D07824A5C3FA007B5A32 /* QZHFileModel.m in Sources */,
 				8995274124AB18C20038E765 /* QZHMessageCell.m in Sources */,
 				89FD4B9C24C825D500084E29 /* UpdateDeviceVC.m in Sources */,
 				895DFE2424B06902004F986D /* SetWIFIVC.m in Sources */,
 				8995273B24AB0B590038E765 /* WarningVC.m in Sources */,
+				893B3A3E24EE5E2D00EFCAE8 /* FeedUpBindVC.m in Sources */,
 				8995273524AB0B300038E765 /* HomeMessageVC.m in Sources */,
 				89DB0AA324A05A3900324E36 /* DDListCell.m in Sources */,
 				895DFE1F24B05651004F986D /* AddQRCodeVC.m in Sources */,
@@ -2164,7 +2123,6 @@
 				89FE1BF324DA96BB008FB0AC /* AlarmTimerVC.m in Sources */,
 				89E591A124A2FC0F00EEB26A /* QZHTextfieldCell.m in Sources */,
 				89160D8A24A9E7DE00511F84 /* PayTopTableViewCell.m in Sources */,
-				895C8E5324D29D6000463235 /* Reachability.m in Sources */,
 				89F7D07F24A5C3FB007B5A32 /* QZHDataHelper.m in Sources */,
 				89DB0AC624A05A3900324E36 /* QZHHUDImageView.m in Sources */,
 				89E591BE24A3360C00EEB26A /* NSString+Utils.m in Sources */,
@@ -2180,7 +2138,6 @@
 				89E591C424A3360D00EEB26A /* UITableView+SCIndexView.m in Sources */,
 				8902258C24C18E1F0060DEDF /* StorageVC.m in Sources */,
 				89F7D07E24A5C3FB007B5A32 /* QZHNetworkConfig.m in Sources */,
-				89DB0ABB24A05A3900324E36 /* TOTANavigationController.m in Sources */,
 				89F7D01A24A5AE40007B5A32 /* CountrySelectView.m in Sources */,
 				89160D8324A9E73E00511F84 /* AddMemberVC.m in Sources */,
 				89DB0ACA24A05A3900324E36 /* YCXMenuItem.m in Sources */,
@@ -2195,7 +2152,6 @@
 				8990114E24B435590097A401 /* OnLiveCell.m in Sources */,
 				897399A924B2EE1F00DFF4EB /* QRCodeVC.m in Sources */,
 				89DB0ACC24A05A3900324E36 /* DDPullTabView.m in Sources */,
-				89DB0ABF24A05A3900324E36 /* TOTACurrentBackGestureDelegate.m in Sources */,
 				89DB0AB624A05A3900324E36 /* SettingVC.m in Sources */,
 				8990114B24B423580097A401 /* CameraThreeBtnCell.m in Sources */,
 				892F997424BFFDCD007A0B08 /* ZFTimeLine.m in Sources */,
@@ -2225,7 +2181,6 @@
 				89F7D08124A5C3FB007B5A32 /* UIView+Exp.m in Sources */,
 				898C4EB424A1F97A00A574E0 /* UMengEngine.m in Sources */,
 				89F7D08E24A5C3FB007B5A32 /* EasyEmptyGlobalConfig.m in Sources */,
-				89DB0AC024A05A3900324E36 /* TOTANavigationBar.m in Sources */,
 				897399AF24B2F8CC00DFF4EB /* CircleView.m in Sources */,
 				8960491A24AC1C1E0031C2F0 /* AddHomeVC.m in Sources */,
 				8962F22224BEFBD400D85A65 /* SelectRoomCell.m in Sources */,
@@ -2236,18 +2191,17 @@
 				89DB0ACF24A05A3900324E36 /* DDPullMenuView.m in Sources */,
 				8962F22524BEFC3600D85A65 /* SelectRooeVC.m in Sources */,
 				89E591BF24A3360C00EEB26A /* ContactDataHelper.m in Sources */,
-				89DB0ABA24A05A3900324E36 /* TOTANaviOptions.m in Sources */,
 				89ADD6A424AD5D2900817129 /* JSAddOtherCollectionViewCell.m in Sources */,
 				89ADD6A824ADB36D00817129 /* RoomDetailVC.m in Sources */,
 				8962F20C24BEE21E00D85A65 /* zyyy_DateListView.m in Sources */,
 				89DB0AD124A05A3900324E36 /* UIViewController+Exp.m in Sources */,
 				89E591C724A34DBE00EEB26A /* UITableView+MoveCell.m in Sources */,
-				89DB0ABE24A05A3900324E36 /* UIScrollView+EasyNavigationExt.m in Sources */,
 				89DB0AAC24A05A3900324E36 /* NameEditVC.m in Sources */,
 				89DB0AD324A05A3900324E36 /* UIImageView+Exp.m in Sources */,
 				89F7D08B24A5C3FB007B5A32 /* EasyShowUtils.m in Sources */,
 				89ADD6B124AF072D00817129 /* HomeSelectCell.m in Sources */,
 				8928524E24D13FA700B987D7 /* UIImageView+Gif.m in Sources */,
+				893EFD4724ECDB4200F56742 /* LUXProgressHUD.m in Sources */,
 				89F7D08A24A5C3FB007B5A32 /* QZHEmptyView.m in Sources */,
 				897399AC24B2F84600DFF4EB /* ProgressVC.m in Sources */,
 			);
@@ -2407,7 +2361,7 @@
 				CODE_SIGN_ENTITLEMENTS = luxshare/luxshare.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = V46XVDX494;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2434,7 +2388,7 @@
 				CODE_SIGN_ENTITLEMENTS = luxshare/luxshare.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = V46XVDX494;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

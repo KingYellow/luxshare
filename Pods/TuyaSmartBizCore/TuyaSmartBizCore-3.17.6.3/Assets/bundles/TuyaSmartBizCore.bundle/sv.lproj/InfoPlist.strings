@@ -1,0 +1,11 @@
+"CFBundleDisplayName" = "TuyaSmart";
+"NSBluetoothAlwaysUsageDescription" = "This will allow the app to find and connect Bluetooth accessories. This app may also use Bluetooth to locate Bluetooth device.";
+"NSBluetoothPeripheralUsageDescription" = "Vi måste öppna Bluetooth för att lägga till och använda Bluetooth-enheten.";
+"NSCameraUsageDescription" = "Vi behöver använda kameran för att lägga till nytt porträtt, skanna tvådimensionella koder och andra funktioner.";
+"NSHomeKitUsageDescription" = "You can control all \"Home\" devices in the app.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "The app can provide temperature and humidity according to your location. \"Leave or Arrive (beta)\" always requests access to your location.";
+"NSLocationAlwaysUsageDescription" = "The app can provide temperature and humidity according to your location. \"Leave or Arrive (beta)\" always requests access to your location.";
+"NSLocationWhenInUseUsageDescription" = "Vi behöver få din plats, så vi kan få lite nödvändig information för att ge dig en smartare tjänst, som väder, temperatur mm";
+"NSMicrophoneUsageDescription" = "En del av produktens funktion kräver tillgång till ljud från telefonen.";
+"NSPhotoLibraryAddUsageDescription" = "För att spara skärmdumpar och videoband måste tills behörigheten för lagringsgalleriet godkännas.";
+"NSPhotoLibraryUsageDescription" = "Vi måste besöka galleriet för att ställa in ditt porträtt.";

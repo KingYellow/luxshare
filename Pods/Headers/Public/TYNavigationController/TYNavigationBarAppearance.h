@@ -1,0 +1,1 @@
+../../../TYNavigationController/TYNavigationController-1.10.1/Headers/Public/TYNavigationBarAppearance.h

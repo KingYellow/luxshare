@@ -1,0 +1,13 @@
+CONFIGURATION_BUILD_DIR = ${PODS_CONFIGURATION_BUILD_DIR}/TuyaSmartHelpCenterBizBundle
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/CocoaAsyncSocket" "${PODS_CONFIGURATION_BUILD_DIR}/MBProgressHUD" "${PODS_CONFIGURATION_BUILD_DIR}/MJRefresh" "${PODS_CONFIGURATION_BUILD_DIR}/MMKV" "${PODS_CONFIGURATION_BUILD_DIR}/MMKVCore" "${PODS_CONFIGURATION_BUILD_DIR}/MQTTClient" "${PODS_CONFIGURATION_BUILD_DIR}/Masonry" "${PODS_CONFIGURATION_BUILD_DIR}/Reachability" "${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage" "${PODS_CONFIGURATION_BUILD_DIR}/UICKeyChainStore" "${PODS_CONFIGURATION_BUILD_DIR}/YYModel" "${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios" "${PODS_ROOT}/TuyaSmartBaseKit/ios" "${PODS_ROOT}/TuyaSmartDeviceKit/ios" "${PODS_ROOT}/TuyaSmartMQTTChannelKit/ios" "${PODS_ROOT}/TuyaSmartSocketChannelKit/ios" "${PODS_ROOT}/TuyaSmartUtil/ios"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/TuyaSmartHelpCenterBizBundle" "${PODS_ROOT}/Headers/Public"
+LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/TuyaSmartHelpCenterBizBundle/TuyaSmartHelpCenterBizBundle-3.17.0.2"
+OTHER_LDFLAGS = $(inherited) -l"TuyaSmartHelpCenterBizBundle" -framework "AVFoundation" -framework "Accelerate" -framework "AddressBook" -framework "AddressBookUI" -framework "AssetsLibrary" -framework "AudioToolbox" -framework "CFNetwork" -framework "CoreFoundation" -framework "CoreGraphics" -framework "CoreLocation" -framework "CoreMedia" -framework "CoreTelephony" -framework "Foundation" -framework "ImageIO" -framework "JavaScriptCore" -framework "MapKit" -framework "MobileCoreServices" -framework "Photos" -framework "QuartzCore" -framework "Security" -framework "SystemConfiguration" -framework "UIKit" -framework "UserNotifications" -framework "WebKit"
+PODS_BUILD_DIR = ${BUILD_DIR}
+PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_ROOT = ${SRCROOT}
+PODS_TARGET_SRCROOT = ${PODS_ROOT}/TuyaSmartHelpCenterBizBundle
+PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.${PRODUCT_NAME:rfc1034identifier}
+SKIP_INSTALL = YES
+USE_RECURSIVE_SCRIPT_INPUTS_IN_SCRIPT_PHASES = YES

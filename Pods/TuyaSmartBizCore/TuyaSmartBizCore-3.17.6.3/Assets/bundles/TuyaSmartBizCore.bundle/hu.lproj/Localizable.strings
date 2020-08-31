@@ -1,0 +1,4 @@
+"ipc_settings_anti_flicker_50hz" = "50Hz";
+"ipc_settings_anti_flicker_60hz" = "60Hz";
+"ipc_tutk_not_support" = "Unsupported Device";
+"ty_mesh_ble_lowpower_state" = "working";

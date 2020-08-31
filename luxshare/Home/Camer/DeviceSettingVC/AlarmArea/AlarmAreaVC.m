@@ -31,6 +31,9 @@
 @implementation AlarmAreaVC
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    if([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
     UIApplication *app = [UIApplication sharedApplication];
     [QZHNotification addObserver:self
     selector:@selector(applicationWillEnterForeground)
@@ -47,13 +50,22 @@
     // 刷新状态栏
     [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
 }
-
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self.camera stopPreview];
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    if([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    }
     [self.playView removeFromSuperview];
 
+
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    if (self.camera) {
+        [self.camera stopPreview];
+    }
 }
 -(void)viewDidLoad {
     [super viewDidLoad];
@@ -78,7 +90,7 @@
     [self.maskView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0 ));
     }];
-    if (self.deviceModel.dps[@"169"]) {
+    if (self.deviceModel.dps[@"1691"]) {
         NSData *jsonData = [self.deviceModel.dps[@"169"] dataUsingEncoding:NSUTF8StringEncoding];
         if (!jsonData) {
             return;
@@ -122,6 +134,7 @@
 
 -(void)cameraDidConnected:(id<TuyaSmartCameraType>)camera{
     [self scrollHor];
+//    camera.videoView.scaleToFill = YES;
     self.connected = YES;
     [self.camera startPreview];
 

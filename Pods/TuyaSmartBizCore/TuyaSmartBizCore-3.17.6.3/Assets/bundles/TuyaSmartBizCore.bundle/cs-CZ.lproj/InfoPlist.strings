@@ -1,0 +1,11 @@
+"CFBundleDisplayName" = "TuyaSmart";
+"NSBluetoothAlwaysUsageDescription" = "This will allow the app to find and connect Bluetooth accessories. This app may also use Bluetooth to locate Bluetooth device.";
+"NSBluetoothPeripheralUsageDescription" = "Aplikace potřebuje telefon k otevření Bluetooth pro přidání a používání zařízení Bluetooth. Dovolíte aplikaci povolit Bluetooth?";
+"NSCameraUsageDescription" = "Funkce, jako je přidání kamery a skenování QR kódu, vyžadují použití kamery";
+"NSHomeKitUsageDescription" = "Můžete ovládat zařízení, která jsou podporována v aplikaci \"Domů\" v aktuální aplikaci.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Aplikace poskytuje informace o počasí, například informace o teplotě a vlhkosti, podle určovacího orgánu; umístění je vždy povoleno a aplikace je rovněž vybavena funkcí \"Odjezd/příjezd (beta)\".";
+"NSLocationAlwaysUsageDescription" = "Aplikace poskytuje informace o počasí, například informace o teplotě a vlhkosti, podle určovacího orgánu; umístění je vždy povoleno a aplikace je rovněž vybavena funkcí \"Odjezd/příjezd (beta)\".";
+"NSLocationWhenInUseUsageDescription" = "Abychom vám poskytli chytřejší služby, jako je teplota, je nutný přístup k informacím o poloze.";
+"NSMicrophoneUsageDescription" = "Některé funkce produktu vyžadují nahrávání zvuku prostřednictvím telefonu";
+"NSPhotoLibraryAddUsageDescription" = "Aplikace může uložit snímek obrazovky a video do galerie. Souhlasíte s tím, že se zapnete?";
+"NSPhotoLibraryUsageDescription" = "Aplikace potřebuje přístup k galerii, aby získala profilový obrázek.";

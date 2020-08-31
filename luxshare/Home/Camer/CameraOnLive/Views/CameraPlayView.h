@@ -22,6 +22,8 @@ typedef void(^playbuttontag)(UIButton *sender, BOOL selected);
 @property (strong, nonatomic)UIImageView *wifiIMG;
 @property (strong, nonatomic)UIImageView *batteryIMG;
 @property (strong, nonatomic)RecordProgressView *recordProgressView;
+@property (strong, nonatomic)RecordProgressView *talkProgressView;
+
 @end
 
 NS_ASSUME_NONNULL_END
