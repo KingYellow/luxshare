@@ -6,8 +6,7 @@
 //  Copyright © 2020 KingYellow. All rights reserved.
 //
 //zyyy_DateListView *dateView = [[zyyy_DateListView alloc]initWithFrame:self.view.bounds];
-#define kTuyaSmartIPCConfigAPI @"tuya.m.rtc.session.init"
-#define kTuyaSmartIPCConfigAPIVersion @"1.0"
+
 
 
 #import "BackPlayVC.h"
@@ -19,7 +18,7 @@
 @interface BackPlayVC ()<ZFTimeLineDelegate,TuyaSmartCameraDelegate,TuyaSmartCameraDPObserver>
 @property (strong, nonatomic)CameraPlayView *playView;
 @property (strong, nonatomic)ZFTimeLine *timeLine;
-@property (strong, nonatomic)id<TuyaSmartCameraType> camera;
+//@property (strong, nonatomic)id<TuyaSmartCameraType> camera;
 @property (strong, nonatomic)TuyaSmartCameraDPManager *dpManager;
 @property (strong, nonatomic)UIView<TuyaSmartVideoViewType> * preview;
 @property (assign, nonatomic)BOOL connected;
@@ -51,17 +50,24 @@
     UIApplication *app = [UIApplication sharedApplication];
     [QZHNotification addObserver:self
     selector:@selector(applicationWillEnterForeground)
-                                                 name:UIApplicationWillEnterForegroundNotification
+                                                 name:UIApplicationDidBecomeActiveNotification
     object:app];
     [QZHNotification addObserver:self
     selector:@selector(applicationWillEnterBackground)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+    object:app];
+    
+    [QZHNotification addObserver:self
+    selector:@selector(applicationWillResignActive)
                                                  name:UIApplicationWillResignActiveNotification
     object:app];
 
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-
+    if (_camera && _camera.delegate) {
+        [self.camera stopPlayback];
+    }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
 }
@@ -74,18 +80,17 @@
     self.navigationItem.title = QZHLoaclString(@"device_playBack");
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
-    [self exp_addLeftItemTitle:@"" itemIcon:QZHICON_BACK_ITEM];
     [self UIConfig];
-    [self startPlayback];
+    
+    if (self.camera) {
+        self.camera.delegate = self;
+        [self cameraDidConnected];
+    }else{
+        [self creatP2PConnectChannel];
+    }
+}
 
-}
--(void)exp_leftAction{
-    [self.camera stopPreview];
-    [self.camera disConnect];
-    [self.navigationController popViewControllerAnimated:YES];
-}
 - (void)UIConfig{
-    self.playView = [[CameraPlayView alloc] init];
 
 //    self.playView.horizontalBtn.hidden = YES;
     self.playView.definitionBtn.hidden = YES;
@@ -93,7 +98,7 @@
     [self.view addSubview:self.selectDateBtn];
     [self.view addSubview:self.recordBtn];
     [self.view addSubview:self.shotBtn];
-QZHWS(weakSelf)
+    QZHWS(weakSelf)
     self.timeLine.delegate = self;
     self.playView.buttonBlock = ^(UIButton *sender, BOOL selected) {
         if (sender.tag == 3) {
@@ -189,22 +194,43 @@ QZHWS(weakSelf)
     if (self.connected) {
         return;
     }
+    [self creatP2PConnectChannel];
+}
+#pragma mark -建立P2P连接通道,创建相机
+- (void)creatP2PConnectChannel{
+    // deviceModel 为设备列表中的摄像机设备的数据模型
+    id p2pType = [self.deviceModel.skills objectForKey:@"p2pType"];
+       [[TuyaSmartRequest new] requestWithApiName:kTuyaSmartIPCConfigAPI postData:@{@"devId": self.deviceModel.devId} version:kTuyaSmartIPCConfigAPIVersion success:^(id result) {
+           TuyaSmartCameraConfig *config = [TuyaSmartCameraFactory ipcConfigWithUid:[TuyaSmartUser sharedInstance].uid localKey:self.deviceModel.localKey configData:result];
+           self.camera = [TuyaSmartCameraFactory cameraWithP2PType:p2pType config:config delegate:self];
+           [self connectCamera];
+
+       } failure:^(NSError *error) {
+          [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+       }];
+}
+#pragma mark -- 连接摄像机
+- (void)connectCamera{
+    if (self.camera) {
+        [self.camera.videoView tuya_clear];
+    }
+    [self startPlayGif]; dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.camera connect];
+
+    });
+    
+}
+#pragma mark -- 播放加载动画
+- (void)startPlayGif{
     [self.playView.playPreGif startPlayGifWithImages:@[@"img_loading_anima1",@"img_loading_anima2",@"img_loading_anima3"]];
     self.playView.playPreGif.hidden = NO;
-    
-    id p2pType = [self.deviceModel.skills objectForKey:@"p2pType"];
-    [[TuyaSmartRequest new] requestWithApiName:kTuyaSmartIPCConfigAPI postData:@{@"devId": self.deviceModel.devId} version:kTuyaSmartIPCConfigAPIVersion success:^(id result) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            TuyaSmartCameraConfig *config = [TuyaSmartCameraFactory ipcConfigWithUid:[TuyaSmartUser sharedInstance].uid localKey:self.deviceModel.localKey configData:result];
-            self.camera = [TuyaSmartCameraFactory cameraWithP2PType:p2pType config:config delegate:self];
-            [self.camera connect];
 
-        });
-    } failure:^(NSError *error) {
-        // 获取配置信息失败
-           [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
-    }];
 }
+#pragma mark -- 关闭加载动画
+- (void)stopPlayGif{
+    [self.playView.playPreGif stopGif];
+}
+
 
 - (void)pausePlayback {
     [self.camera pausePlayback];
@@ -217,10 +243,7 @@ QZHWS(weakSelf)
 - (void)stopPlayback {
     [self.camera stopPlayback];
 }
-
-#pragma mark - TuyaSmartCameraDelegate
-
-- (void)cameraDidConnected:(id<TuyaSmartCameraType>)camera {
+- (void)cameraDidConnected{
     self.connected = YES;
       // 需要 p2p 连接成功后查询某天的视频录像片段
     NSDate *date = [NSDate date];
@@ -239,6 +262,27 @@ QZHWS(weakSelf)
     [self.camera queryRecordTimeSliceWithYear:currentYear  month:currentMonth day:currentDay];
 }
 
+#pragma mark - TuyaSmartCameraDelegate
+-(void)cameraDidConnected:(id<TuyaSmartCameraType>)camera{
+    self.connected = YES;
+         // 需要 p2p 连接成功后查询某天的视频录像片段
+       NSDate *date = [NSDate date];
+       NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+       if (self.nowDate) {
+           date = [NSDate jk_dateWithString:self.nowDate format:@"yyyyMMddHHmmss"];
+       }
+        
+       [formatter setDateFormat:@"yyyy"];
+       NSInteger currentYear=[[formatter stringFromDate:date] integerValue];
+       [formatter setDateFormat:@"MM"];
+       NSInteger currentMonth=[[formatter stringFromDate:date]integerValue];
+       [formatter setDateFormat:@"dd"];
+       NSInteger currentDay=[[formatter stringFromDate:date] integerValue];
+        
+       [self.camera queryRecordTimeSliceWithYear:currentYear  month:currentMonth day:currentDay];
+}
+
+
 - (void)cameraDisconnected:(id<TuyaSmartCameraType>)camera {
       // p2p 连接被动断开，一般为网络波动导致
     self.connected = NO;
@@ -249,7 +293,7 @@ QZHWS(weakSelf)
       // 如果当天没有视频录像，则不播放
     if (timeSlices.count == 0) {
         self.tipLab.hidden = NO;
-        self.playView.playPreGif.hidden = YES;
+        [self stopPlayGif];;
         return;
     }
     self.tipLab.hidden = YES;
@@ -320,7 +364,7 @@ QZHWS(weakSelf)
         self.camera.videoView.frame = CGRectMake(0, 0, QZHScreenHeight , QZHScreenWidth - 50);
     }
     [self.playView sendSubviewToBack:camera.videoView];
-    self.playView.playPreGif.hidden = YES;
+    [self stopPlayGif];
 
 }
 - (void)cameraDidPausePlayback:(id<TuyaSmartCameraType>)camera {
@@ -362,24 +406,34 @@ QZHWS(weakSelf)
 - (void)camera:(id<TuyaSmartCameraType>)camera didOccurredErrorAtStep:(TYCameraErrorCode)errStepCode specificErrorCode:(NSInteger)errorCode {
         if (errStepCode == TY_ERROR_CONNECT_FAILED) {
           // p2p 连接失败
-        self.connected = NO;
-    }
-    else if (errStepCode == TY_ERROR_START_PLAYBACK_FAILED) {
+            self.connected = NO;
+            [self connectCamera];
+        }else if (errStepCode == TY_ERROR_START_PLAYBACK_FAILED) {
           // 存储卡录像播放失败
-        self.playbacking = NO;
-        self.playbackPaused = NO;
-    }else if (errStepCode == TY_ERROR_RECORD_FAILED) {
-        self.recording = NO;
-        self.playView.voiceBtn.alpha = 1.0;
-        self.playView.voiceBtn.userInteractionEnabled = YES;
-    }else if (errStepCode == TY_ERROR_PAUSE_PLAYBACK_FAILED) {
+            self.playbacking = NO;
+            self.playbackPaused = NO;
+        }else if (errStepCode == TY_ERROR_RECORD_FAILED) {
+            self.recording = NO;
+            self.playView.voiceBtn.alpha = 1.0;
+            self.playView.voiceBtn.userInteractionEnabled = YES;
+        }else if (errStepCode == TY_ERROR_PAUSE_PLAYBACK_FAILED) {
                 // 暂停播放失败
-    }else if (errStepCode == TY_ERROR_RESUME_PLAYBACK_FAILED) {
+        }else if (errStepCode == TY_ERROR_RESUME_PLAYBACK_FAILED) {
                 // 恢复播放失败
-    }
+        }
 }
 
 #pragma mark -- lazy
+-(CameraPlayView *)playView{
+    if (!_playView) {
+        _playView = [[CameraPlayView alloc] init];
+        id traget = self.navigationController.interactivePopGestureRecognizer.delegate;
+        UIPanGestureRecognizer * pan = [[UIPanGestureRecognizer alloc]initWithTarget:traget action:nil];
+        [_playView addGestureRecognizer:pan];
+
+    }
+    return _playView;
+}
 -(UIButton *)leftBackBtn{
     if (!_leftBackBtn) {
         _leftBackBtn = [[UIButton alloc] init];
@@ -446,6 +500,7 @@ QZHWS(weakSelf)
     return _tipFinishLab;
 }
 - (void)backAction:(UIButton *)sender{
+    self.playView.horizontalBtn.selected = NO;
     [self scrollHor:NO];
 }
 - (void)selectaction:(UIButton *)sender{
@@ -492,7 +547,9 @@ QZHWS(weakSelf)
             sender.selected = !sender.selected;
            [self.camera stopRecord];
            self.recording = NO;
-           self.recordTime = [[NSDate date] timeIntervalSince1970] - self.recordTime;
+            self.playView.voiceBtn.alpha = 1.0;
+            self.playView.voiceBtn.userInteractionEnabled = YES;
+            self.recordTime = [[NSDate date] timeIntervalSince1970] - self.recordTime;
             if (self.recordTime < 1) {
                 [[QZHHUD HUD] textHUDWithMessage:@"录制时间短于1S可能导致存储失败" afterDelay:1.0];
             }
@@ -567,13 +624,25 @@ QZHWS(weakSelf)
     NSInteger sec = self.second%60;
     self.playView.recordProgressView.timeLab.text = [NSString stringWithFormat:@"%02ld:%02ld",min,sec];
 }
+#pragma mark -- 系统通知
 - (void)applicationWillEnterForeground{
     self.nowDate = [self.timeLine currentTimeStr];
-    [self startPlayback];
+    if (self.connected) {
+        [self cameraDidConnected];
+    }else{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self.camera connect];
+
+        });
+    }
+    
 }
 - (void)applicationWillEnterBackground{
     self.connected = NO;
     [self.camera disConnect];
+}
+- (void)applicationWillResignActive{
+    [self.camera stopPlayback];
 }
 
 -(void) requestMicroPhoneAuth
@@ -613,64 +682,44 @@ QZHWS(weakSelf)
     self.leftBackBtn.hidden = !isHor;
     self.playView.horizontalBtn.hidden = isHor;
 
-        if (isHor) {
-            self.playView.transform = CGAffineTransformMakeRotation(90*M_PI/180);
-            self.timeLine.transform = CGAffineTransformMakeRotation(90*M_PI/180);
-            CGAffineTransform transform = self.playView.transform;
-            CGAffineTransform transformtime = self.timeLine.transform;
+    if (isHor) {
+        self.playView.transform = CGAffineTransformMakeRotation(90*M_PI/180);
+        self.timeLine.transform = CGAffineTransformMakeRotation(90*M_PI/180);
 
-            transform = CGAffineTransformScale(transform, 1,1);
-            transformtime = CGAffineTransformScale(transformtime, 1,1);
+        self.playView.frame = CGRectMake(50, 0, QZHScreenWidth - 50, QZHScreenHeight);
+        self.timeLine.frame = CGRectMake(0, 0, 50, QZHScreenHeight);
+        self.camera.videoView.frame = CGRectMake(0, 0, QZHScreenHeight , QZHScreenWidth - 50);
 
-            self.playView.transform = transform;
-            self.timeLine.transform = transformtime;
-            self.camera.videoView.frame = CGRectMake(0, 0, QZHScreenHeight , QZHScreenWidth - 50);
+        self.leftBackBtn.frame = CGRectMake(10 + QZH_VIDEO_LEFTMARGIN, 30, 30, 30);
+        [self.navigationController.view addSubview:self.playView];
+        [self.navigationController.view addSubview:self.timeLine];
+        [self.playView updateConstraints];
+       [self.playView.voiceBtn mas_updateConstraints:^(MASConstraintMaker *make) {
+           make.left.mas_equalTo(QZH_VIDEO_LEFTMARGIN + 10);
+       }];
+    }else{
 
-            self.playView.frame = CGRectMake(50, 0, QZHScreenWidth - 50, QZHScreenHeight);
-            self.timeLine.frame = CGRectMake(0, 0, 50, QZHScreenHeight);
-            [self.playView.voiceBtn mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.left.mas_equalTo(QZH_VIDEO_LEFTMARGIN + 10);
-            }];
-            self.leftBackBtn.frame = CGRectMake(10 + QZH_VIDEO_LEFTMARGIN, 30, 30, 30);
+        self.playView.transform = CGAffineTransformMakeRotation(0*M_PI/90);
+        self.timeLine.transform = CGAffineTransformMakeRotation(0*M_PI/90);
+        self.playView.frame = CGRectMake(0, 0, QZHScreenWidth, QZHScreenWidth *1080/1920);
+        self.camera.videoView.frame = CGRectMake(0, 0, QZHScreenWidth , QZHScreenWidth *1080/1920);
+        self.timeLine.frame = CGRectMake(0, QZHScreenWidth *1080/1920, QZHScreenWidth, 50);
+        [self.selectDateBtn mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(self.timeLine.mas_bottom);
+        }];
+        [self.recordBtn mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(self.timeLine.mas_bottom);
+        }];
+        [self.playView.voiceBtn mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(10);
+        }];
+        self.leftBackBtn.frame = CGRectMake(10, 30, 30, 30);
 
-            [self.navigationController.view addSubview:self.playView];
-            [self.navigationController.view addSubview:self.timeLine];
-
-   
-        }else{
-
-            self.playView.transform = CGAffineTransformMakeRotation(0*M_PI/90);
-            self.timeLine.transform = CGAffineTransformMakeRotation(0*M_PI/90);
-
-            CGAffineTransform transform = self.playView.transform;
-            CGAffineTransform transformtime = self.timeLine.transform;
-
-            transform = CGAffineTransformScale(transform, 1,1);
-            transformtime = CGAffineTransformScale(transformtime, 1,1);
-
-            self.playView.transform = transform;
-            self.timeLine.transform = transformtime;
-
-            self.playView.frame = CGRectMake(0, 0, QZHScreenWidth, QZHScreenWidth *1080/1920);
-            self.camera.videoView.frame = CGRectMake(0, 0, QZHScreenWidth , QZHScreenWidth *1080/1920);
-            self.timeLine.frame = CGRectMake(0, QZHScreenWidth *1080/1920, QZHScreenWidth, 50);
-            [self.selectDateBtn mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(self.timeLine.mas_bottom);
-            }];
-            [self.recordBtn mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(self.timeLine.mas_bottom);
-            }];
-            [self.playView.voiceBtn mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.left.mas_equalTo(10);
-            }];
-            self.leftBackBtn.frame = CGRectMake(10, 30, 30, 30);
-
-            [self.view addSubview:self.playView];
-            [self.view addSubview:self.timeLine];
-        }
+        [self.view addSubview:self.playView];
+        [self.view addSubview:self.timeLine];
+    }
 }
 - (BOOL)prefersStatusBarHidden{
-
     return self.statusHidden;
 }
 @end

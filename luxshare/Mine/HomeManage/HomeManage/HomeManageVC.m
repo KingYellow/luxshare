@@ -12,7 +12,6 @@
 #import "HomeDetailVC.h"
 #import "AddHomeVC.h"
 
-
 @interface HomeManageVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic)UITableView *qzTableView;
 @property (copy, nonatomic)NSMutableArray *listArr;
@@ -44,7 +43,7 @@
     [self.view addSubview:self.qzTableView];
     
      [self.qzTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-         make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0 ));
+         make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, QZHHeightBottom, 0 ));
      }];
 }
 
@@ -160,7 +159,6 @@
 - (void)getHomeList {
     QZHWS(weakSelf)
    self.magager = [[TuyaSmartHomeManager alloc] init];
-    self.magager.delegate = self;
     [self.magager getHomeListWithSuccess:^(NSArray<TuyaSmartHomeModel *> *homes) {
         [weakSelf.listArr removeAllObjects];
         [weakSelf.listArr addObjectsFromArray:homes];
@@ -180,18 +178,5 @@
         [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
-//// 添加一个家庭
-//- (void)homeManager:(TuyaSmartHomeManager *)manager didAddHome:(TuyaSmartHomeModel *)home {
-//
-//}
-//
-//// 删除一个家庭
-//- (void)homeManager:(TuyaSmartHomeManager *)manager didRemoveHome:(long long)homeId {
-//
-//}
-//
-//// MQTT连接成功
-//- (void)serviceConnectedSuccess {
-//    // 刷新当前家庭UI
-//}
+
 @end

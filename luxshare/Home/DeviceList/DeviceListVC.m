@@ -74,11 +74,17 @@
     if (!_qzTableView) {
         _qzTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         [_qzTableView exp_tableViewDefault];
-        _qzTableView.bounces = NO;
         self.qzTableView.backgroundColor = QZHKIT_COLOR_LEADBACK;
         self.qzTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _qzTableView.delegate = self;
         _qzTableView.dataSource = self;
+        QZHWS(weakSelf)
+        _qzTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+            weakSelf.updateDevice();
+            
+        }];
+
+
         [self.qzTableView registerClass:[DeviceListCell class] forCellReuseIdentifier:QZHCELL_REUSE_TEXT];
 
     }
@@ -139,11 +145,9 @@
     if (![model.category isEqualToString:@"sp"]) {
         return;
     };
+    self.naviPushBlock(model, self.homeModel);
 
-    CameraOnLiveVC *vc = [[CameraOnLiveVC alloc] init];
-    vc.deviceModel = model;
-    vc.homeModel = self.homeModel;
-    [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
+
 //    TuyaSmartDevice *device = [TuyaSmartDevice deviceWithDeviceId:model.devId];
 ////    device.delegate = self;
 }
@@ -234,9 +238,6 @@
 - (void)device:(TuyaSmartDevice *)device firmwareUpgradeProgress:(NSInteger)type progress:(double)progress {
     // 固件升级进度
 }
-//
-//- (void)device:(TuyaSmartDevice *)device firmwareUpgradeStatusModel:(TuyaSmartFirmwareUpgradeStatusModel *)upgradeStatusModel {
-//    // 设备升级状态的回调
-//}
+
 
 @end

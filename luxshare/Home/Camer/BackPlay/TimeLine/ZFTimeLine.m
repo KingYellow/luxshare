@@ -54,104 +54,7 @@
     [self setNeedsDisplay];
 }
 #pragma mark --- 触摸事件
-//-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-//    if (!self.userInteractionEnabled) {
-//        return;
-//    }
-//    onTouch = YES;
-//    if (touches.count == 1) {
-//        UITouch *touch = [touches anyObject];
-//        moveStart = [touch locationInView:self];
-//    }else if (touches.count == 2){
-//        NSArray *arr = [touches allObjects];
-//        UITouch *touch1 = arr[0];
-//        UITouch *touch2 = arr[1];
-//        scaleValue = fabs([touch2 locationInView:self].x - [touch1 locationInView:self].x);
-//    }
-//}
-//-(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-//
-//    if (!self.userInteractionEnabled) {
-//        return;
-//    }
-//    if (touches.count == 1) {
-//        UITouch *touch = [touches anyObject];
-//        CGPoint point = [touch locationInView:self];
-//        float x = point.x - moveStart.x;
-//        if (fabsf(x) < 1) {
-//            return;
-//        }
-//        currentInterval = currentInterval - [self secondsOfIntervalValue] * x;
-//        moveStart = point;
-//        [self setNeedsDisplay];
-//    }else if (touches.count == 2){
-//        NSLog(@"2");
 
-//        NSArray *arr = [touches allObjects];
-//        UITouch *touch1 = arr[0];
-//        UITouch *touch2 = arr[1];
-//        float value = fabs([touch2 locationInView:self].x - [touch1 locationInView:self].x) ;
-//
-//        if (scaleType == ScaleTypeBig) {
-//            if (scaleValue - value < 0) {//变大
-//                intervalValue = intervalValue + (value - scaleValue)/200;
-//                if (intervalValue >= 15) {
-//                    intervalValue = 10;
-//                    scaleType = ScaleTypeNormal;
-//                }
-//            }else{//缩小
-////                intervalValue = intervalValue + (value - scaleValue)/100;
-////                if (intervalValue < 15) {
-////                    scaleType = ScaleTypeNormal;
-////                    intervalValue = 10;
-////                }
-//            }
-//        }else if (scaleType == ScaleTypeNormal) {
-//                    if (scaleValue - value < 0) {//变大
-//                        intervalValue = intervalValue + (value - scaleValue)/200;
-//                        if (intervalValue >= 15) {
-//                            intervalValue = 10;
-//                            scaleType = ScaleTypeSmall;
-//                        }
-//                    }else{//缩小
-//                        intervalValue = intervalValue + (value - scaleValue)/200;
-//                        if (intervalValue < 5) {
-//                            intervalValue = 10;
-//                            scaleType = ScaleTypeBig;
-//                        }
-//                    }
-//
-//        }else{
-//            if (scaleValue - value < 0) {//变大
-////                intervalValue = intervalValue + (value - scaleValue)/100;
-////                if (intervalValue >= 15) {
-////                    scaleType = ScaleTypeNormal;
-////                    intervalValue = 10;
-////                }
-//            }else{//缩小
-//                intervalValue = intervalValue + (value - scaleValue)/200;
-//                if (intervalValue < 5) {
-//                    intervalValue = 10;
-//                    scaleType = ScaleTypeNormal;
-//                }
-//            }
-//        }
-//        [self setNeedsDisplay];
-//    }
-//}
-//-(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-//    if (!self.userInteractionEnabled) {
-//        return;
-//    }
-//    onTouch = NO;
-//
-//    if (self.delegate && [self.delegate respondsToSelector:@selector(timeLine:moveToDate:)]) {
-//        [self.delegate timeLine:self moveToDate:[self currentTimeStr]];
-//    }
-////    [DFTime delaySec:0.5 perform:^{
-////
-////    }];
-//}
 //锁定 不可拖动
 - (void)lockMove{
     self.userInteractionEnabled = NO;
@@ -202,59 +105,11 @@
         return 6.0/intervalValue;
     }
 }
-//绘图
-//-(void)drawRect:(CGRect)rect{
-//    //计算x=0时对应的时间戳
-//    float centerX = rect.size.width/2.0;
-//    NSTimeInterval leftInterval = currentInterval - centerX * [self secondsOfIntervalValue];
-//    NSTimeInterval rightInterval = currentInterval + centerX * [self secondsOfIntervalValue];
-//
-//    //左边第一个刻度对应的x值和时间戳
-//    float x;
-//    NSTimeInterval interval;
-//    if (scaleType == ScaleTypeBig) {
-//        float a = leftInterval/(60.0*6.0);
-//        interval = (((int)a) + 1) * (60.0 * 6.0);
-//        x = (interval - leftInterval) / [self secondsOfIntervalValue];
-//    }else if(scaleType == ScaleTypeNormal){
-//        float a = leftInterval/(60.0);
-//        interval = (((int)a) + 1) * (60.0);
-//        x = (interval - leftInterval) / [self secondsOfIntervalValue];
-//    }else{
-//        float a = leftInterval/(6.0);
-//        interval = (((int)a) + 1) * (6.0);
-//        x = (interval - leftInterval) / [self secondsOfIntervalValue];
-//    }
-//  CGContextRef contex = UIGraphicsGetCurrentContext();
-//
-//    while (x >= 0 && x <= rect.size.width) {
-//        int b;
-//        if (scaleType == ScaleTypeBig) {
-//            b = 60 * 6;
-//        }else if (scaleType == ScaleTypeNormal) {
-//            b = 60 ;
-//        }else{
-//            b = 6;
-//        }
-//        int rem = ((int)interval) % (b * 10);
-//        if (rem != 0) {//小刻度
-//            [self drawSmallScale:x context:contex height:rect.size.height];
-//        }else{//大刻度
-//            [self drawBigScale:x context:contex height:rect.size.height];
-//            [self drawText:x interval:interval context:contex height:rect.size.height];
-//        }
-//        x = x + intervalValue;
-//        interval = interval + b;
-//    }
-//    if (self.dateArr.count > 0) {
-//        [self drawGreenRectContext:contex];
-//    }
-//
-//    [self drawCenterLine:rect.size.width/2 context:contex height:rect.size.height];
-//}
 -(void)drawRect:(CGRect)rect{
     NSTimeInterval centerLeftInterval;
     NSTimeInterval centerRightInterval;
+    NSTimeInterval zeroInterval = [self getZeroInterval:currentInterval];
+    NSTimeInterval twofourInterva = [self getTwoFourInterval:currentInterval];
     //左边第一个刻度对应的x值和时间戳
     float xLeft;
     float xRight;
@@ -285,27 +140,33 @@
   CGContextRef contex = UIGraphicsGetCurrentContext();
     while (xRight >= rect.size.width/2 && xRight <= rect.size.width + intervalValue) {
 
-        int remleft = ((int)centerLeftInterval) % (b * 10);
-        if (remleft != 0) {//小刻度
-            [self drawSmallScale:xLeft context:contex height:rect.size.height];
-        }else{//大刻度
-            [self drawBigScale:xLeft context:contex height:rect.size.height];
-            [self drawText:xLeft interval:centerLeftInterval context:contex height:rect.size.height];
+        if (centerLeftInterval >= zeroInterval) {
+            int remleft = ((int)centerLeftInterval) % (b * 10);
+            if (remleft != 0) {//小刻度
+                    [self drawSmallScale:xLeft context:contex height:rect.size.height];
+            }else{//大刻度
+
+                [self drawBigScale:xLeft context:contex height:rect.size.height];
+                [self drawText:xLeft interval:centerLeftInterval context:contex height:rect.size.height];
+            }
         }
-        int remright = ((int)centerRightInterval) % (b * 10);
-        if (remright != 0) {//小刻度
-            [self drawSmallScale:xRight context:contex height:rect.size.height];
-        }else{//大刻度
-            [self drawBigScale:xRight context:contex height:rect.size.height];
-            [self drawText:xRight interval:centerRightInterval context:contex height:rect.size.height];
+        if (centerRightInterval <= (twofourInterva + 1)) {
+            int remright = ((int)centerRightInterval) % (b * 10);
+
+            if (remright != 0) {//小刻度
+                [self drawSmallScale:xRight context:contex height:rect.size.height];
+            }else{//大刻度
+                [self drawBigScale:xRight context:contex height:rect.size.height];
+                [self drawText:xRight interval:centerRightInterval context:contex height:rect.size.height];
+            }
         }
         xLeft = xLeft - intervalValue;
         xRight = xRight + intervalValue;
 
         centerLeftInterval = centerLeftInterval - b;
         centerRightInterval = centerRightInterval + b;
-
     }
+    
     if (self.dateArr.count > 0) {
         [self drawGreenRectContext:contex rect:rect];
     }
@@ -549,8 +410,15 @@
     if (panGestureRecognizer.state == UIGestureRecognizerStateChanged){
         CGPoint point = [panGestureRecognizer locationInView:panGestureRecognizer.view];
         float x = point.x - moveStart.x;
+        if ((currentInterval - [self secondsOfIntervalValue] * x) > [self getTwoFourInterval:currentInterval]) {
+            currentInterval = [self getTwoFourInterval:currentInterval];
+        }else if((currentInterval - [self secondsOfIntervalValue] * x) < [self getZeroInterval:currentInterval]){
+            currentInterval = [self getZeroInterval:currentInterval];
 
-        currentInterval = currentInterval - [self secondsOfIntervalValue] * x;
+        }else{
+            currentInterval = currentInterval - [self secondsOfIntervalValue] * x;
+        }
+        
         moveStart = point;
      
     }
@@ -564,6 +432,24 @@
         }
     }
     [self setNeedsDisplay];
+}
+- (NSTimeInterval)getZeroInterval:(NSTimeInterval)timeInterval{
+    NSString *date = [self projectTimeWithInterval:timeInterval];
+    NSString *dateStr;
+    if (date.length == 14) {
+       dateStr = [date stringByReplacingCharactersInRange:NSMakeRange(8, 6) withString:@"000000"];
+    }
+    NSTimeInterval lastTimeInterval = [self intervalWithTime:dateStr];
+    return lastTimeInterval;
+}
+- (NSTimeInterval)getTwoFourInterval:(NSTimeInterval)timeInterval{
+    NSString *date = [self projectTimeWithInterval:timeInterval];
+    NSString *dateStr;
+    if (date.length == 14) {
+       dateStr = [date stringByReplacingCharactersInRange:NSMakeRange(8, 6) withString:@"235959"];
+    }
+    NSTimeInterval lastTimeInterval = [self intervalWithTime:dateStr];
+    return lastTimeInterval;
 }
 -(void)setIsHor:(BOOL)isHor{
     _isHor = isHor;

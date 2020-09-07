@@ -144,7 +144,9 @@
 //图片加载失败  显示文字长度
 #define QZHKIT_LENGTH_TEXT_NOIMAGE              10
 
-
+//p2p通道建立参数
+#define kTuyaSmartIPCConfigAPI @"tuya.m.rtc.session.init"
+#define kTuyaSmartIPCConfigAPIVersion @"1.0"
 
 // --------------------------margin-------------------------------
 static NSString * const BATTERY_PRODUCT_ID = @"b4hq7aoy4m4ciabx";
@@ -183,7 +185,8 @@ static NSString * const QZHICON_NAVI_BACK = @"xxx";
 
 //头像名称
 static NSString * const QZHICON_HEADPIC = @"xxx";
-
+//邮箱格式
+#define QZHEMAILRIGHT(string) [(string) jk_isEmailAddress]
 
 // NSLocalizedString(key, comment) 本质
 // NSlocalizeString 第一个参数是内容,根据第一个参数去对应语言的文件中取对应的字符串，第二个参数将会转化为字符串文件里的注释，可以传nil，也可以传空字符串@""。

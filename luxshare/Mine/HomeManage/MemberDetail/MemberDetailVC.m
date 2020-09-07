@@ -17,28 +17,17 @@
 
 @interface MemberDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic)UITableView *qzTableView;
-@property (copy, nonatomic)NSMutableArray *listArr;
-@property (strong, nonatomic)NSMutableArray *memberArr;
+
 @property (strong, nonatomic)TuyaSmartHome *home;
 @property (strong, nonatomic)NSString *role;
 
 @end
 
 @implementation MemberDetailVC
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.home =[TuyaSmartHome homeWithHomeId:self.homeModel.homeId];
-    [self.qzTableView reloadData];
-}
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
 
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initConfig];
-//    self.home.delegate = self;
-    [self getHomeMember];
 }
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
@@ -51,7 +40,6 @@
 - (void)UIConfig{
     
     [self.view addSubview:self.qzTableView];
-    
      [self.qzTableView mas_makeConstraints:^(MASConstraintMaker *make) {
          make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0 ));
      }];
@@ -178,7 +166,7 @@
     if (section == 0 && row == 0) {
         
      UIAlertController *alert = [UIAlertController alertWithTextfieldTitle:QZHLoaclString(@"home_editMemberName") originaltext:self.memberModel.name textblock:^(NSString * _Nonnull fieldtext) {
-         [weakSelf updateHomeInfo:fieldtext loca:nil];
+         [weakSelf updateMemberInfo:fieldtext role:self.memberModel.role];
         }];
         [self presentViewController:alert animated:YES completion:nil];
     }
@@ -200,13 +188,14 @@
          pop.payType = ^(NSInteger index) {
              if (index == 0) {
                  self.role = QZHLoaclString(@"role_normal");
+                 [weakSelf updateMemberInfo:nil role:TYHomeRoleType_Member];
+
              }else{
                  self.role = QZHLoaclString(@"role_admin");
-             }
-             [self.qzTableView reloadData];
-         };
+                 [weakSelf updateMemberInfo:nil role:TYHomeRoleType_Admin];
 
-     
+             }
+         };
     }
 
     if (section == 2) {
@@ -214,69 +203,29 @@
     }
 }
 
-#pragma mark --lazy
-- (NSMutableArray *)listArr{
-    if (!_listArr) {
-        _listArr = [NSMutableArray array];
- 
-    }
-    return _listArr;
-}
-- (NSMutableArray *)memberArr{
-    if (!_memberArr) {
-        _memberArr = [NSMutableArray array];
- 
-    }
-    return _memberArr;
-}
+#pragma mark  -- Action
 
-- (void)getHomeDetailInfo {
-    [self.home getHomeDetailWithSuccess:^(TuyaSmartHomeModel *homeModel) {
-        // homeModel 家庭信息
-        NSLog(@"get home detail success");
-    } failure:^(NSError *error) {
-        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
-    }];
-}
--(TuyaSmartHome *)home{
-    if (!_home) {
-        self.home =[TuyaSmartHome homeWithHomeId:self.homeModel.homeId];
-    }
-    return _home;
-}
-
-- (void)updateHomeInfo:(NSString *)name loca:(NSString *)geoname{
+- (void)updateMemberInfo:(NSString *)name role:(TYHomeRoleType)type{
     QZHWS(weakSelf)
-    TuyaSmartHome *home = [TuyaSmartHome homeWithHomeId:self.homeModel.homeId];
-    NSString *hname =self.homeModel.name;
-    NSString *gname = self.homeModel.geoName;
+    TuyaSmartHomeMember *homeMember = [[TuyaSmartHomeMember alloc] init];
+    TuyaSmartHomeMemberRequestModel *requestModel = [[TuyaSmartHomeMemberRequestModel alloc] init];
+    requestModel.memberId = self.memberModel.memberId;
     if (name) {
-        hname = name;
+        requestModel.name = name;
     }
-    if (geoname) {
-        gname = geoname;
-    }
-    [home updateHomeInfoWithName:hname geoName:gname latitude:0 longitude:0 success:^{
-        
+    requestModel.role = type;
+    [homeMember updateHomeMemberInfoWithMemberRequestModel:requestModel  success:^{
         [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf.qzTableView reloadData];
-
-        });
+        weakSelf.memberModel.role = requestModel.role;
+        if (name) {
+            weakSelf.memberModel.name = name;
+        }
+        [weakSelf.qzTableView reloadData];
     } failure:^(NSError *error) {
-
         [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+        
     }];
-    
   
-}
--(void)getHomeMember{
-    [self.home getHomeMemberListWithSuccess:^(NSArray<TuyaSmartHomeMemberModel *> *memberList) {
-        [self.memberArr addObjectsFromArray:memberList];
-        [self.qzTableView reloadData];
-    } failure:^(NSError *error) {
-        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
-    }];
 }
 
 #pragma mark -- 判断是否是 管理员或者所有者
@@ -288,10 +237,13 @@
     return NO;
 }
 - (NSString *)getRole:(TYHomeRoleType) role{
-    
-    NSString *str = QZHLoaclString(@"role_normal");
-    if (role == -1) {
+    NSString *str;
+    if (role == TYHomeRoleType_Owner) {
+        str =QZHLoaclString(@"role_owner");
+    }else if(role == TYHomeRoleType_Admin){
         str = QZHLoaclString(@"role_admin");
+    }else{
+        str = QZHLoaclString(@"role_normal");
     }
     return str;
 }
@@ -314,7 +266,5 @@
         
     }];
 }
-- (void)dealloc{
-    
-}
+
 @end

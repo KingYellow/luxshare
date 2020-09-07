@@ -10,12 +10,8 @@
 #import "PerInfoDefaultCell.h"
 #import "QZHDefaultButtonCell.h"
 
-
-
 @interface RoomDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic)UITableView *qzTableView;
-@property (copy, nonatomic)NSMutableArray *listArr;
-@property (strong, nonatomic)NSMutableArray *memberArr;
 @property (strong, nonatomic)TuyaSmartRoom *room;
 @property (strong, nonatomic)UIButton *rightBtn;
 
@@ -140,20 +136,6 @@
 }
 
 #pragma mark --lazy
-- (NSMutableArray *)listArr{
-    if (!_listArr) {
-        _listArr = [NSMutableArray array];
- 
-    }
-    return _listArr;
-}
-- (NSMutableArray *)memberArr{
-    if (!_memberArr) {
-        _memberArr = [NSMutableArray array];
- 
-    }
-    return _memberArr;
-}
 
 -(TuyaSmartRoom *)room{
     if (!_room) {

@@ -840,7 +840,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
             }
             if(!self.loopPlay){
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                    self.state = WMPlayerStateFinished;
+                    self.state = WMPlayerStateFinished;
                     self.bottomProgress.progress = 0;
                     self.playOrPauseBtn.selected = YES;
                 });

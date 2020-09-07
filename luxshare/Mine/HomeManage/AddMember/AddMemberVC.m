@@ -16,7 +16,6 @@
 
 @interface AddMemberVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic)UITableView *qzTableView;
-@property (copy, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)NSString *name;
 @property (strong, nonatomic)NSString *account;
 @property (strong, nonatomic)NSString *country;
@@ -214,15 +213,6 @@
 }
 
 #pragma mark --lazy
-- (NSMutableArray *)listArr{
-    if (!_listArr) {
-        _listArr = [NSMutableArray array];
- 
-    }
-    return _listArr;
-}
-
-
 -(TuyaSmartHome *)home{
     if (!_home) {
         self.home =[TuyaSmartHome homeWithHomeId:self.homeModel.homeId];

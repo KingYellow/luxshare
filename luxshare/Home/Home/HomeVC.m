@@ -16,10 +16,11 @@
 #import "AddQRCodeVC.h"
 #import "DeviceListVC.h"
 #import "AddDeviceWifiVC.h"
-#import "AddHomeVC.h"
+#import "HomeManageVC.h"
 #import "RoomManageVC.h"
 #import "DeviceSettingVC.h"
 #import "Reachability.h"
+#import "CameraOnLiveVC.h"
 
 @interface HomeVC ()<UITableViewDelegate,UITableViewDataSource,TuyaSmartHomeManagerDelegate,UIPageViewControllerDelegate,UIPageViewControllerDataSource,TuyaSmartHomeDelegate,UIGestureRecognizerDelegate>
 @property (strong, nonatomic)UITableView *qzTableView;
@@ -38,6 +39,9 @@
 @property (assign, nonatomic)NSInteger oldSelectIndex;
 @property (assign, nonatomic)NSInteger currentIndex;
 @property (strong, nonatomic)TuyaSmartHome *currentHome;
+
+@property (strong, nonatomic)WMZPageController *pageController;
+@property (strong, nonatomic)WMZPageParam *param;
 @end
 
 @implementation HomeVC
@@ -49,8 +53,8 @@
     self.selectIndex = 0;
     [self initConfig];
     [self getHomeList];
-    
-    
+
+  
 }
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
@@ -62,24 +66,25 @@
 
 }
 - (void)UIConfig{
-    [self.view addSubview:self.topBtnsView];
-    [self.view addSubview:self.rightBtn];
-    
+//    [self.view addSubview:self.topBtnsView];
+    [self.view addSubview:self.pageController.view];
+    self.pageController.view.frame = CGRectMake(0, 0, QZHScreenWidth, QZHScreenHeight);
+
+//    [self.view addSubview:self.rightBtn];
+//    [self.view bringSubviewToFront:self.rightBtn];
     [QZHROOT_DELEGATE.window addSubview:self.qzTableView];
     self.qzTableView.frame = CGRectMake(0, -QZHScreenHeight, QZHScreenWidth, QZHScreenHeight);
  
-    [self.topBtnsView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.mas_equalTo(0);
-        make.right.mas_equalTo(-60);
-        make.height.mas_equalTo(50);
-    }];
-    [self.rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.top.mas_equalTo(0);
-        make.height.mas_equalTo(50);
-        make.width.mas_equalTo(60);
-    }];
-    
-
+//    [self.topBtnsView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.top.mas_equalTo(0);
+//        make.right.mas_equalTo(-60);
+//        make.height.mas_equalTo(50);
+//    }];
+//    [self.rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.top.mas_equalTo(0);
+//        make.height.mas_equalTo(50);
+//        make.width.mas_equalTo(50);
+//    }];
 }
 -(void)exp_leftAction{
     [self getHomeList];
@@ -98,7 +103,6 @@
              [YCXMenu dismissMenu];
          } else {
              [YCXMenu showMenuInView:self.tabBarController.view fromRect:CGRectMake(self.navigationController.view.frame.size.width - 50, QZHNAVI_HEIGHT, 50, 0) menuItems:self.items selected:^(NSInteger index, YCXMenuItem *item) {
-                 NSLog(@"%@ %ld",item,index);
                  if (item.tag == 100) {
                      AddQRCodeVC *vc = [[AddQRCodeVC alloc] init];
                      vc.homemodel = self.listArr[self.selectIndex];
@@ -134,6 +138,12 @@
         vc.addDevice = ^{
             [weakSelf exp_rightAction];
         };
+        vc.naviPushBlock = ^(TuyaSmartDeviceModel * _Nonnull deviceModel, TuyaSmartHomeModel * _Nonnull homeModel) {
+            CameraOnLiveVC *vc = [[CameraOnLiveVC alloc] init];
+            vc.deviceModel = deviceModel;
+            vc.homeModel = homeModel;
+            [weakSelf.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
+        };
 
         if (i>0) {
             TuyaSmartRoomModel *roommodel = home.roomList[i - 1];
@@ -155,16 +165,35 @@
         vc.homeModel = home.homeModel;
         [vcArr addObject:vc];
     }
-    
-    self.arrVcs = [NSArray arrayWithArray:vcArr];
-    self.pageVc = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
-    [self.pageVc setViewControllers:@[self.arrVcs[0]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
-    self.pageVc.delegate = self;
-    self.pageVc.dataSource = self;
-    self.pageVc.view.frame = CGRectMake(0, 50, QZHScreenWidth, QZHScreenHeight-50);
-    [self addChildViewController:self.pageVc];
-    [self.pageVc didMoveToParentViewController:self];
-    [self.view addSubview:self.pageVc.view];
+    self.param.wControllers = vcArr;
+    self.pageController.param = self.param;
+//    [self.pageController updatePageController];
+//    self.arrVcs = [NSArray arrayWithArray:vcArr];
+//    NSDictionary *options =[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:UIPageViewControllerSpineLocationNone]
+//                                                       forKey: UIPageViewControllerOptionSpineLocationKey];
+//    self.pageVc = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:options];
+//    [self.pageVc setViewControllers:@[self.arrVcs[0]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+//    self.pageVc.doubleSided = NO;
+//    self.pageVc.delegate = self;
+//    self.pageVc.dataSource = self;
+//    self.pageVc.view.frame = CGRectMake(0, 50, QZHScreenWidth, QZHScreenHeight-50);
+//    [self addChildViewController:self.pageVc];
+//    [self.pageVc didMoveToParentViewController:self];
+//    [self.view addSubview:self.pageVc.view];
+//     __block UIScrollView *scrollView = nil;
+//    [self.pageVc.view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        if ([obj isKindOfClass:[UIScrollView class]]) scrollView = (UIScrollView *)obj;
+//
+//    }];
+//    if(scrollView)
+//    {
+//    //新添加的手势，起手势锁的作用
+//       self.fakePan = [UIPanGestureRecognizer new];
+//        self.fakePan.delegate = self;
+//        [scrollView addGestureRecognizer:self.fakePan];
+//        [scrollView.panGestureRecognizer requireGestureRecognizerToFail:self.fakePan];
+//    }
+
 }
 
 //DataSource方法
@@ -198,7 +227,8 @@
     if (!completed) {
         return;
     }
-    NSLog(@"previousViewControllers == %@", previousViewControllers.lastObject);
+
+    NSLog(@"previousViewControllers == %@  com = %d  fin = %d", previousViewControllers.lastObject,completed,finished);
     UIViewController *vc = previousViewControllers.firstObject;
     NSInteger previousIndex = [self.arrVcs indexOfObject:vc];
     if (previousIndex == self.currentIndex) {
@@ -244,7 +274,7 @@
     }
 }
 
-- (void)romeListAction:(UIButton *)sender{
+- (void)romeListAction{
     
     RoomManageVC *vc = [[RoomManageVC alloc] init];
     vc.homeModel = self.currentHome.homeModel;
@@ -297,7 +327,7 @@
         
     }else{
         QZHDefaultButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_DEFAULT];
-        cell.nameLab.text = QZHLoaclString(@"home_addHome");
+        cell.nameLab.text = QZHLoaclString(@"home_manage");
         [cell.nameLab mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(20);
             make.centerY.mas_equalTo(cell);
@@ -330,7 +360,6 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
-    QZHWS(weakSelf)
     if (section == 0) {
         TuyaSmartHomeModel *model = self.listArr[row];
         self.currentHome =[TuyaSmartHome homeWithHomeId:model.homeId];
@@ -368,10 +397,7 @@
  
     }else{
         [self dismiss];
-        AddHomeVC *vc = [[AddHomeVC alloc] init];
-        vc.refresh = ^{
-            
-        };
+        HomeManageVC *vc = [[HomeManageVC alloc] init];
         [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
 
     }
@@ -427,7 +453,29 @@
     }
     return _rightBtn;
 }
+-(WMZPageController *)pageController{
 
+    if (!_pageController) {
+        _pageController =  [WMZPageController new];
+
+    }
+    return _pageController;
+}
+-(WMZPageParam *)param{
+    if (!_param) {
+        _param = PageParam()
+        .wMenuTitleSelectColorSet(QZHKIT_COLOR_SKIN)
+        .wMenuFixRightDataSet(@"≡")
+        .wMenuDefaultIndexSet(0)
+        .wMenuAnimalSet(PageTitleMenuAiQY);
+        QZHWS(weakSelf)
+        _param.wEventFixedClick = ^(id anyID, NSInteger index) {
+            [weakSelf romeListAction];
+        };
+        
+    }
+    return _param;
+}
 #pragma mark -- action
 - (void)getHomeList {
     QZHWS(weakSelf)
@@ -454,7 +502,7 @@
                   [arrm addObject:room.name];
               }
               [self.leftBtn setTitle:model.name forState:UIControlStateNormal];
-              self.topBtnsView.titleArray = arrm;
+              self.param.wTitleArr = arrm;
             [self loadVcs:self.currentHome];
             
          } failure:^(NSError *error) {

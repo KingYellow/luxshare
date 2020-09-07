@@ -58,10 +58,8 @@
         [_qzTableView exp_tableViewDefault];
         self.qzTableView.backgroundColor = QZHKIT_COLOR_LEADBACK;
         self.qzTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
         _qzTableView.delegate = self;
         _qzTableView.dataSource = self;
-
         [self.qzTableView registerClass:[PerInfoDefaultCell class] forCellReuseIdentifier:QZHCELL_REUSE_TEXT];
         [self.qzTableView registerClass:[SettingSwitchCell class] forCellReuseIdentifier:QZHCELL_REUSE_IMAGE];
         [self.qzTableView registerClass:[QZHDefaultButtonCell class] forCellReuseIdentifier:QZHCELL_REUSE_DEFAULT];
@@ -228,6 +226,11 @@
     if ([self.dpManager isSupportDP:TuyaSmartCameraSDCardStorageDPName]) {
              
         NSString *st =  [self.dpManager valueForDP:TuyaSmartCameraSDCardStorageDPName];
+//        [self.dpManager valueForDP:TuyaSmartCameraSDCardStorageDPName success:^(id result) {
+//
+//        } failure:^(NSError *error){
+//               [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+//        }];
         NSArray *stroge = [st componentsSeparatedByString:@"|"];
         for (NSString *str in stroge) {
            NSInteger lon = [str integerValue];

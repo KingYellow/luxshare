@@ -69,7 +69,7 @@
     self.navigationController.navigationBar.translucent = YES;
     self.navigationController.navigationBar.tintColor = QZHKIT_COLOR_NAVIBAR_TITLE;
     
-    self.navigationController.delegate = self;
+//    self.navigationController.delegate = self;
 }
 
 /**
@@ -89,7 +89,7 @@
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_NAVIBAR_TITLE];
 //    [self exp_navigationBarShadowHidden:show];
     
-    self.navigationController.delegate = self;
+//    self.navigationController.delegate = self;
 }
 
 /**

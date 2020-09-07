@@ -26,7 +26,6 @@
 		893A40D124C95F1800F51261 /* WarningDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 893A40D024C95F1800F51261 /* WarningDetailVC.m */; };
 		893B3A3E24EE5E2D00EFCAE8 /* FeedUpBindVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 893B3A3D24EE5E2D00EFCAE8 /* FeedUpBindVC.m */; };
 		893EFD4724ECDB4200F56742 /* LUXProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 893EFD4624ECDB4200F56742 /* LUXProgressHUD.m */; };
-		893F073124FCA8E8009352E3 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 893F073024FCA8E8009352E3 /* Reachability.m */; };
 		89408A4124AC1F3400AF20F8 /* QZHSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89408A4024AC1F3400AF20F8 /* QZHSelectCell.m */; };
 		894B54F624CE606600D5C0D2 /* MessageSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 894B54F524CE606600D5C0D2 /* MessageSettingVC.m */; };
 		894B54F924CE625C00D5C0D2 /* MessageTimeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 894B54F824CE625C00D5C0D2 /* MessageTimeVC.m */; };
@@ -239,8 +238,6 @@
 		893B3A3D24EE5E2D00EFCAE8 /* FeedUpBindVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedUpBindVC.m; sourceTree = "<group>"; };
 		893EFD4524ECDB4200F56742 /* LUXProgressHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LUXProgressHUD.h; sourceTree = "<group>"; };
 		893EFD4624ECDB4200F56742 /* LUXProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LUXProgressHUD.m; sourceTree = "<group>"; };
-		893F072F24FCA8E8009352E3 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		893F073024FCA8E8009352E3 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		89408A3F24AC1F3400AF20F8 /* QZHSelectCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QZHSelectCell.h; sourceTree = "<group>"; };
 		89408A4024AC1F3400AF20F8 /* QZHSelectCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QZHSelectCell.m; sourceTree = "<group>"; };
 		894B54F424CE606600D5C0D2 /* MessageSettingVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageSettingVC.h; sourceTree = "<group>"; };
@@ -743,13 +740,13 @@
 			path = TimeLine;
 			sourceTree = "<group>";
 		};
-		893EFD3D24ECC54F00F56742 /* MBProgressHUD */ = {
+		893EFD3D24ECC54F00F56742 /* LUXProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
 				893EFD4524ECDB4200F56742 /* LUXProgressHUD.h */,
 				893EFD4624ECDB4200F56742 /* LUXProgressHUD.m */,
 			);
-			path = MBProgressHUD;
+			path = LUXProgressHUD;
 			sourceTree = "<group>";
 		};
 		894B54F324CE5F1B00D5C0D2 /* MessageSetting */ = {
@@ -1342,8 +1339,6 @@
 		89DB0A4F24A05A3800324E36 /* QZHComponent */ = {
 			isa = PBXGroup;
 			children = (
-				893F072F24FCA8E8009352E3 /* Reachability.h */,
-				893F073024FCA8E8009352E3 /* Reachability.m */,
 				89F7D01B24A5B444007B5A32 /* Categories */,
 				89E591C624A34DBE00EEB26A /* UITableView+MoveCell.h */,
 				89E591C524A34DBE00EEB26A /* UITableView+MoveCell.m */,
@@ -1398,11 +1393,11 @@
 		89DB0A6F24A05A3900324E36 /* QZHHUD */ = {
 			isa = PBXGroup;
 			children = (
-				893EFD3D24ECC54F00F56742 /* MBProgressHUD */,
-				89DB0A7024A05A3900324E36 /* QZHHUDImageView.m */,
+				893EFD3D24ECC54F00F56742 /* LUXProgressHUD */,
 				89DB0A7124A05A3900324E36 /* QZHHUD.h */,
-				89DB0A7224A05A3900324E36 /* QZHHUDImageView.h */,
 				89DB0A7324A05A3900324E36 /* QZHHUD.m */,
+				89DB0A7224A05A3900324E36 /* QZHHUDImageView.h */,
+				89DB0A7024A05A3900324E36 /* QZHHUDImageView.m */,
 			);
 			path = QZHHUD;
 			sourceTree = "<group>";
@@ -2047,7 +2042,6 @@
 				89B1324724BBEAF200869B3F /* PhotoListCell.m in Sources */,
 				897806CC24B7F7F800BE79EB /* DeviceWifiVC.m in Sources */,
 				894B54F624CE606600D5C0D2 /* MessageSettingVC.m in Sources */,
-				893F073124FCA8E8009352E3 /* Reachability.m in Sources */,
 				89ADD6AB24ADCCEA00817129 /* QZHMessageModel.m in Sources */,
 				89160D7C24A9AF8D00511F84 /* RoomManageVC.m in Sources */,
 				89DB0A9624A05A3900324E36 /* TOTANewFeatureVC.m in Sources */,
@@ -2361,7 +2355,7 @@
 				CODE_SIGN_ENTITLEMENTS = luxshare/luxshare.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = V46XVDX494;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2388,7 +2382,7 @@
 				CODE_SIGN_ENTITLEMENTS = luxshare/luxshare.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = V46XVDX494;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

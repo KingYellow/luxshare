@@ -33,70 +33,69 @@
     QZHViewRadius(self.talkProgressView, 20);
     QZHViewRadius(self.definitionBtn, 15);
     QZHViewRadius(self.horizontalBtn, 15);
-
     [self.playBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(60);
-        make.height.mas_equalTo(40);
-        make.center.mas_equalTo(self);
-    }];
-    [self.playPreGif mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(88);
-        make.height.mas_equalTo(88);
-        make.center.mas_equalTo(self);
-    }];
+          make.width.mas_equalTo(60);
+          make.height.mas_equalTo(40);
+          make.center.mas_equalTo(self);
+      }];
+      [self.playPreGif mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.width.mas_equalTo(88);
+          make.height.mas_equalTo(88);
+          make.center.mas_equalTo(self);
+      }];
 
-    [self.voiceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(30);
-        make.height.mas_equalTo(30);
-        make.left.mas_equalTo(10);
-        make.bottom.mas_equalTo(-15);
+      [self.voiceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.width.mas_equalTo(30);
+          make.height.mas_equalTo(30);
+          make.left.mas_equalTo(10);
+          make.bottom.mas_equalTo(-15);
 
-    }];
-    
-    [self.definitionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(50);
-        make.height.mas_equalTo(30);
-        make.left.mas_equalTo(self.voiceBtn.mas_right).offset(10);
-        make.bottom.mas_equalTo(-15);
+      }];
+      
+      [self.definitionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.width.mas_equalTo(50);
+          make.height.mas_equalTo(30);
+          make.left.mas_equalTo(self.voiceBtn.mas_right).offset(10);
+          make.bottom.mas_equalTo(-15);
 
-    }];
-    
-    [self.horizontalBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(30);
-        make.height.mas_equalTo(30);
-        make.right.mas_equalTo(-20);
-        make.bottom.mas_equalTo(-15);
+      }];
+      
+      [self.horizontalBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.width.mas_equalTo(30);
+          make.height.mas_equalTo(30);
+          make.right.mas_equalTo(-20);
+          make.bottom.mas_equalTo(-15);
 
-    }];
-    [self.wifiIMG mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(20);
-        make.height.mas_equalTo(20);
-        make.right.mas_equalTo(-15);
-        make.top.mas_equalTo(20);
+      }];
+      [self.wifiIMG mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.width.mas_equalTo(20);
+          make.height.mas_equalTo(20);
+          make.right.mas_equalTo(-15);
+          make.top.mas_equalTo(20);
 
-    }];
-    [self.batteryIMG mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(20);
-        make.height.mas_equalTo(20);
-        make.right.mas_equalTo(self.wifiIMG.mas_left).offset(-5);
-        make.top.mas_equalTo(20);
+      }];
+      [self.batteryIMG mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.width.mas_equalTo(20);
+          make.height.mas_equalTo(20);
+          make.right.mas_equalTo(self.wifiIMG.mas_left).offset(-5);
+          make.top.mas_equalTo(20);
 
-    }];
-    [self.recordProgressView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(150);
-        make.height.mas_equalTo(40);
-        make.centerX.mas_equalTo(self);
-        make.bottom.mas_equalTo(-20);
+      }];
+      [self.recordProgressView mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.width.mas_equalTo(150);
+          make.height.mas_equalTo(40);
+          make.centerX.mas_equalTo(self);
+          make.bottom.mas_equalTo(-20);
 
-    }];
-    [self.talkProgressView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(150);
-        make.height.mas_equalTo(40);
-        make.centerX.mas_equalTo(self);
-        make.bottom.mas_equalTo(-20);
+      }];
+      [self.talkProgressView mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.width.mas_equalTo(150);
+          make.height.mas_equalTo(40);
+          make.centerX.mas_equalTo(self);
+          make.bottom.mas_equalTo(-20);
 
-    }];
-    
+      }];
+  
 }
 #pragma mark -lazy
 
@@ -123,7 +122,7 @@
 -(UIButton *)definitionBtn{
     if (!_definitionBtn) {
         _definitionBtn = [[UIButton alloc] init];
-        [_definitionBtn setTitle:@"HD" forState:UIControlStateNormal];
+        [_definitionBtn setTitle:@"高清" forState:UIControlStateNormal];
         [_definitionBtn setTitleColor:QZH_KIT_Color_WHITE_70 forState:UIControlStateNormal];
         _definitionBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
         _definitionBtn.tag = 2;

@@ -14,7 +14,6 @@
 #import <TuyaSmartCameraKit/TuyaSmartCameraKit.h>
 #import <TuyaSmartMessageKit/TuyaSmartMessageKit.h>
 #import <TuyaSmartTimerKit/TuyaSmartTimerKit.h>
-#import <TuyaSmartFeedbackKit/TuyaSmartFeedbackKit.h>
 
 #import "QZHFramework.h"
 #import "Masonry.h"
@@ -49,5 +48,5 @@
 #import "TuyaSmartMessageListModel+EXP.h"
 #import "WMPlayer.h"
 #import "BRPickerView.h"
-//#import "YCBStability.h"
+#import "WMZPageController.h"
 #endif /* luxshare_pch */

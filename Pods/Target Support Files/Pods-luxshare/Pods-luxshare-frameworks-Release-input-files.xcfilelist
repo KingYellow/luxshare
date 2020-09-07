@@ -18,6 +18,7 @@ ${BUILT_PRODUCTS_DIR}/STPopup/STPopup.framework
 ${PODS_ROOT}/TuyaCameraSDK/ios/TuyaCameraSDK.framework
 ${BUILT_PRODUCTS_DIR}/UICKeyChainStore/UICKeyChainStore.framework
 ${BUILT_PRODUCTS_DIR}/WMPlayer/WMPlayer.framework
+${BUILT_PRODUCTS_DIR}/WMZPageController/WMZPageController.framework
 ${BUILT_PRODUCTS_DIR}/YYCache/YYCache.framework
 ${BUILT_PRODUCTS_DIR}/YYImage/YYImage.framework
 ${BUILT_PRODUCTS_DIR}/YYModel/YYModel.framework

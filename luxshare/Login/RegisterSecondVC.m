@@ -264,13 +264,15 @@
             [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"verify_code_success") afterDelay:0.5];
 
         } failure:^(NSError *error) {
-            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"verify_code_fail") afterDelay:0.5];        }];
+            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+
+        }];
     }else{
         
         [[TuyaSmartUser sharedInstance] sendVerifyCodeByRegisterEmail:self.conutry email:self.account success:^{
               [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"verify_code_success") afterDelay:0.5];
         } failure:^(NSError *error) {
-            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"verify_code_fail") afterDelay:0.5];
+            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
         }];
     }
 

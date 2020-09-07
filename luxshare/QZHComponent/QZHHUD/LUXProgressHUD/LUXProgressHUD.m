@@ -383,7 +383,7 @@ static const CGFloat LUXDefaultDetailsLabelFontSize = 12.f;
 - (void)updateIndicators {
     UIView *indicator = self.indicator;
     BOOL isActivityIndicator = [indicator isKindOfClass:[UIActivityIndicatorView class]];
-    BOOL isRoundIndicator = [indicator isKindOfClass:[MBRoundProgressView class]];
+    BOOL isRoundIndicator = [indicator isKindOfClass:[LUXRoundProgressView class]];
 
     LUXProgressHUDMode mode = self.mode;
     if (mode == LUXProgressHUDModeIndeterminate) {
@@ -405,11 +405,11 @@ static const CGFloat LUXDefaultDetailsLabelFontSize = 12.f;
         if (!isRoundIndicator) {
             // Update to determinante indicator
             [indicator removeFromSuperview];
-            indicator = [[MBRoundProgressView alloc] init];
+            indicator = [[LUXRoundProgressView alloc] init];
             [self.bezelView addSubview:indicator];
         }
         if (mode == LUXProgressHUDModeAnnularDeterminate) {
-            [(MBRoundProgressView *)indicator setAnnular:YES];
+            [(LUXRoundProgressView *)indicator setAnnular:YES];
         }
     }
     else if (mode == LUXProgressHUDModeCustomView && self.customView != indicator) {
@@ -465,18 +465,18 @@ static const CGFloat LUXDefaultDetailsLabelFontSize = 12.f;
         if (appearance.color == nil) {
             ((UIActivityIndicatorView *)indicator).color = color;
         }
-    } else if ([indicator isKindOfClass:[MBRoundProgressView class]]) {
-        MBRoundProgressView *appearance = nil;
+    } else if ([indicator isKindOfClass:[LUXRoundProgressView class]]) {
+        LUXRoundProgressView *appearance = nil;
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < 90000
-        appearance = [MBRoundProgressView appearanceWhenContainedIn:[LUXProgressHUD class], nil];
+        appearance = [LUXRoundProgressView appearanceWhenContainedIn:[LUXProgressHUD class], nil];
 #else
-        appearance = [MBRoundProgressView appearanceWhenContainedInInstancesOfClasses:@[[LUXProgressHUD class]]];
+        appearance = [LUXRoundProgressView appearanceWhenContainedInInstancesOfClasses:@[[LUXProgressHUD class]]];
 #endif
         if (appearance.progressTintColor == nil) {
-            ((MBRoundProgressView *)indicator).progressTintColor = color;
+            ((LUXRoundProgressView *)indicator).progressTintColor = color;
         }
         if (appearance.backgroundTintColor == nil) {
-            ((MBRoundProgressView *)indicator).backgroundTintColor = [color colorWithAlphaComponent:0.1];
+            ((LUXRoundProgressView *)indicator).backgroundTintColor = [color colorWithAlphaComponent:0.1];
         }
     } else if ([indicator isKindOfClass:[LUXBarProgressView class]]) {
         LUXBarProgressView *appearance = nil;
@@ -830,7 +830,7 @@ static const CGFloat LUXDefaultDetailsLabelFontSize = 12.f;
 @end
 
 
-@implementation MBRoundProgressView
+@implementation LUXRoundProgressView
 
 #pragma mark - Lifecycle
 

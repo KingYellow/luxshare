@@ -59,7 +59,7 @@
     
     [self.view addSubview:self.qzTableView];
          [self.qzTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-         make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0 ));
+         make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, QZHHeightBottom, 0 ));
      }];
 }
 

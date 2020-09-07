@@ -45,7 +45,7 @@
     
     [self.view addSubview:self.qzTableView];
          [self.qzTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-         make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0 ));
+         make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, QZHHeightBottom, 0 ));
      }];
 }
 
@@ -255,7 +255,14 @@
     }
     return _memberArr;
 }
+-(TuyaSmartHome *)home{
+    if (!_home) {
+        self.home =[TuyaSmartHome homeWithHomeId:self.homeModel.homeId];
+    }
+    return _home;
+}
 
+#pragma mark -- action
 - (void)getHomeDetailInfo {
    
     [self.home getHomeDetailWithSuccess:^(TuyaSmartHomeModel *homeModel) {
@@ -266,12 +273,6 @@
            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
 }
--(TuyaSmartHome *)home{
-    if (!_home) {
-        self.home =[TuyaSmartHome homeWithHomeId:self.homeModel.homeId];
-    }
-    return _home;
-}
 
 - (void)updateHomeInfo:(NSString *)name loca:(NSString *)geoname{
     QZHWS(weakSelf)
@@ -280,11 +281,15 @@
     NSString *gname = self.homeModel.geoName;
     if (name) {
         hname = name;
+        self.homeModel.name = name;
     }
     if (geoname) {
         gname = geoname;
+        self.homeModel.geoName = geoname;
     }
     [home updateHomeInfoWithName:hname geoName:gname latitude:0 longitude:0 success:^{
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
+ 
         [weakSelf.qzTableView reloadData];
         NSLog(@"update home info success");
     } failure:^(NSError *error) {

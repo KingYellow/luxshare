@@ -41,7 +41,7 @@
     // Do any additional setup after loading the view.
     self.rightBtn =  [self exp_addRightItemTitle:QZHLoaclString(@"finish") itemIcon:@""];
 //    self.setBtn =  [self exp_addRightItemTitle:@"" itemIcon:@"pay_normal"];
-    [self.rightBtn setImage:QZHLoadIcon(@"pay_normal") forState:UIControlStateNormal];
+    [self.rightBtn setImage:QZHLoadIcon(@"shezhi") forState:UIControlStateNormal];
     [self.rightBtn setImage:[UIImage new] forState:UIControlStateSelected];
     [self.rightBtn setTitle:@"" forState:UIControlStateNormal];
     [self.rightBtn setTitle:QZHLoaclString(@"finish") forState:UIControlStateSelected];
@@ -196,7 +196,7 @@ offset    已请求到的消息总数
     if (!_titleView) {
 
         self.titleView = [[UIView alloc] init];
-        self.titleView.frame = CGRectMake(0, 0, 180, 44);
+        self.titleView.frame = CGRectMake(100, 0, 180, 44);
         
         NSArray *picarr = @[@"home_1",@"book_1",@"mine_1"];
         self.bottomView = [[UIView alloc] init];

@@ -1,0 +1,6 @@
+framework module WMZPageController {
+  umbrella header "WMZPageController-umbrella.h"
+
+  export *
+  module * { export * }
+}

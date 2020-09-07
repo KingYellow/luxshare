@@ -29,5 +29,5 @@ target 'luxshare' do
   pod 'WMPlayer',  :git => 'https://github.com/zhengwenming/WMPlayer.git'
   pod 'BRPickerView'
   pod 'Bugly'
-  pod 'YCBStability'
+  pod 'WMZPageController'
 end

@@ -128,7 +128,7 @@
             [[QZHHUD HUD] textHUDWithMessage:@"手机号不正确" afterDelay:0.5];
             return;
         }
-    }else if(![self.phoneText.text containsString:@"@."]){
+    }else if(!QZHEMAILRIGHT(self.phoneText.text)){
         [[QZHHUD HUD] textHUDWithMessage:@"邮箱不正确" afterDelay:0.5];
         return;
     }

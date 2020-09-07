@@ -15,12 +15,11 @@
 #define APP_TUYA_SECRET_KEY @"qqupn84qgsawka95tnhgrhkcvndnfkua"
 #define APP_BUGLY_ID @"ef3aec3356"
 #define APP_BUGLY_KEY @"618cd2a8-e7d6-4316-bbb3-3aea50d4472d"
-
+#define QZHAcAppStoreID @""
 
 @implementation AppDelegate (Exp)
 //- 启动配置
 - (BOOL)exp_application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [Bugly startWithAppId:APP_BUGLY_ID];
@@ -40,7 +39,7 @@
     [self setVC];
 
     //更新版本检测
-//      [QZHAppCheck updateCheckAppID:QZHAcAppStoreID];
+      [QZHAppCheck updateCheckAppID:QZHAcAppStoreID];
     
     //配置UI全局
     [QZHKitHelper.kitHelper configKit];

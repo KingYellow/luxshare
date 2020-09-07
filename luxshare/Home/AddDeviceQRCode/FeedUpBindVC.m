@@ -5,7 +5,7 @@
 //  Created by 黄振 on 2020/8/20.
 //  Copyright © 2020 KingYellow. All rights reserved.
 //
-
+#import <TuyaSmartFeedbackKit/TuyaSmartFeedbackKit.h>
 #import "FeedUpBindVC.h"
 
 @interface FeedUpBindVC ()<UITextViewDelegate>

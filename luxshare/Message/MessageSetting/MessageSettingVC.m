@@ -96,9 +96,7 @@
             }
             [cell.switchBtn addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
             return cell;
-
         }
         
     }else{

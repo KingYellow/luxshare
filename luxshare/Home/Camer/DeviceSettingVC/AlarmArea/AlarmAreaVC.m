@@ -10,6 +10,7 @@
 #import "CameraPlayView.h"
 #import "UIImageView+Gif.h"
 #import "MaskView.h"
+#import "LUXProgressHUD.h"
 
 @interface AlarmAreaVC ()<TuyaSmartCameraDelegate,TuyaSmartCameraDPObserver,TuyaSmartDeviceDelegate>
 
@@ -57,13 +58,12 @@
     }
     [self.playView removeFromSuperview];
 
-
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    if (self.camera) {
+    if (_camera) {
         [self.camera stopPreview];
     }
 }
@@ -81,16 +81,15 @@
 }
 - (void)setUIConfigs{
     self.playView.transform = CGAffineTransformMakeRotation(90*M_PI/180);
-    CGAffineTransform transform = self.playView.transform;
-     transform = CGAffineTransformScale(transform, 1,1);
-    self.playView.transform = transform;
+
     self.playView.frame = CGRectMake(0, 0, QZHScreenWidth, QZHScreenHeight);
     [self.navigationController.view addSubview:self.playView];
     [self.playView addSubview:self.maskView];
     [self.maskView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0 ));
     }];
-    if (self.deviceModel.dps[@"1691"]) {
+    
+    if (self.deviceModel.dps[@"169"]) {
         NSData *jsonData = [self.deviceModel.dps[@"169"] dataUsingEncoding:NSUTF8StringEncoding];
         if (!jsonData) {
             return;
@@ -100,13 +99,13 @@
                                                             options:NSJSONReadingMutableContainers
                                                               error:&err];
         NSDictionary *dic = dicjson[@"region0"];
-        
-        if (([dic[@"xlen"] intValue] - [dic[@"x"] intValue])/100.0*QZHScreenHeight < QZHSIZE_WIDTH_ALARMAREA  || ([dic[@"ylen"] intValue] - [dic[@"y"] intValue])/100.0*QZHScreenWidth < QZHSIZE_WIDTH_ALARMAREA) {
+
+        if (([dic[@"xlen"] intValue] - [dic[@"x"] intValue])/100.0*(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN) < (QZHSIZE_WIDTH_ALARMAREA - 5)  || ([dic[@"ylen"] intValue] - [dic[@"y"] intValue])/100.0*QZHScreenWidth < (QZHSIZE_WIDTH_ALARMAREA - 5)) {
             return;
         }
-        self.maskView.centerRect = CGRectMake([dic[@"x"] intValue]/100.0*QZHScreenHeight, [dic[@"y"] intValue]/100.0*QZHScreenWidth, ([dic[@"xlen"] intValue] - [dic[@"x"] intValue])/100.0*QZHScreenHeight, ([dic[@"ylen"] intValue] - [dic[@"y"] intValue])/100.0*QZHScreenWidth);
+        self.maskView.centerRect = CGRectMake([dic[@"x"] intValue]/100.0*(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN) + QZH_VIDEO_LEFTMARGIN, [dic[@"y"] intValue]/100.0*QZHScreenWidth, ([dic[@"xlen"] intValue] - [dic[@"x"] intValue])/100.0*(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN), ([dic[@"ylen"] intValue] - [dic[@"y"] intValue])/100.0*QZHScreenWidth);
+        self.selectRect = CGRectMake([dic[@"x"] intValue]/100.0*(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN) + QZH_VIDEO_LEFTMARGIN, [dic[@"y"] intValue]/100.0*QZHScreenWidth, ([dic[@"xlen"] intValue] - [dic[@"x"] intValue])/100.0*(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN), ([dic[@"ylen"] intValue] - [dic[@"y"] intValue])/100.0*QZHScreenWidth);
     }
-  
 }
 - (void)setConfigs{
     if (self.connected) {
@@ -168,10 +167,7 @@
           // 实时视频播放失败
         self.previewing = NO;
     }
-
 }
-
-
 #pragma mark -- 唤醒设备
 // 判断是否是低功耗门铃
 - (BOOL)isDoorbell {
@@ -212,7 +208,6 @@
         make.height.mas_equalTo(50);
         
     }];
-
 }
 
 -(CameraPlayView *)playView{
@@ -248,7 +243,7 @@
         weakSelf.statusHiden = NO;
         // 刷新状态栏
         [weakSelf performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf.navigationController popViewControllerAnimated:YES];
 
             });
@@ -273,7 +268,7 @@
 }
 - (void)submitAction{
     
-    NSDictionary *dic = @{@"num":@(1),@"region0":@{@"x":@((int)(self.selectRect.origin.x * 100/QZHScreenHeight)),@"xlen":@((int)((self.selectRect.origin.x + self.selectRect.size.width) *100/QZHScreenHeight)),@"y":@((int)(self.selectRect.origin.y * 100/QZHScreenWidth)),@"ylen":@((int)((self.selectRect.origin.y + self.selectRect.size.height) * 100/QZHScreenWidth))}};
+    NSDictionary *dic = @{@"num":@(1),@"region0":@{@"x":@((int)((self.selectRect.origin.x - QZH_VIDEO_LEFTMARGIN) * 100/(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN))),@"xlen":@((int)((self.selectRect.origin.x + self.selectRect.size.width - QZH_VIDEO_LEFTMARGIN) *100/(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN))),@"y":@((int)(self.selectRect.origin.y * 100/QZHScreenWidth)),@"ylen":@((int)((self.selectRect.origin.y + self.selectRect.size.height) * 100/QZHScreenWidth))}};
     
      NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
     NSString *area = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -282,11 +277,20 @@
     NSDictionary  *dps = @{@"169": areaClear};
 
     [self.device publishDps:dps success:^{
-        [[QZHHUD HUD] textHUDWithMessage:@"设置成功" afterDelay:1.0];
-        self.statusHiden = NO;
+        
+     LUXProgressHUD *hud =   [LUXProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.transform = CGAffineTransformMakeRotation(90*M_PI/180);
+    CGAffineTransform transform = hud.transform;
+     transform = CGAffineTransformScale(transform, 1,1);
+    hud.transform = transform;
+    hud.detailsLabel.text = @"设置成功";
+    self.statusHiden = NO;
+        
         // 刷新状态栏
         [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [hud hideAnimated:YES];
+
             [self.navigationController popViewControllerAnimated:YES];
         });
 

@@ -36,8 +36,8 @@
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
     self.navigationItem.title = @"个人信息";
-    [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
-    [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
+//    [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
+//    [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     [self UIConfig];
 
 }
@@ -187,12 +187,7 @@
 
             picker.delegate =self;
             picker.modalPresentationStyle = UIModalPresentationOverFullScreen;
-            UIButton *rightBtn =  [picker exp_addRightItemTitle:@"取消" itemIcon:@""];
-           [picker.navigationItem.rightBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-            [UIColor greenColor], NSForegroundColorAttributeName,
-            nil] forState:UIControlStateNormal];
-            
-            [rightBtn setTitleColor:QZHKIT_COLOR_SKIN forState:UIControlStateNormal];
+
              [self presentViewController:picker animated:YES completion:nil];
         }
         

@@ -131,10 +131,8 @@
         text.placeholder = QZHLoaclString(@"login_account");
         text.textColor = QZHKIT_Color_BLACK_87;
         text.font = QZHTEXT_FONT(17);
-        text.keyboardType = UIKeyboardTypeNumberPad;
         text.clearButtonMode =  UITextFieldViewModeWhileEditing;
         text.tag = 1;
-
         [text addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventEditingChanged];
         _phoneText = text;
     }
@@ -214,7 +212,7 @@
     if ([self.phoneText.text length] == 11 && [self.phoneText.text exp_isPureInt] && self.passwordText.text.length > 0) {
        [self.submitBtn exp_buttonState:QZHButtonStateEnable];
 
-    }else if ([self.phoneText.text containsString:@"@."] && self.passwordText.text.length > 0){
+    }else if (QZHEMAILRIGHT(self.phoneText.text) && self.passwordText.text.length > 0){
         [self.submitBtn exp_buttonState:QZHButtonStateEnable];
 
     }else{
@@ -233,16 +231,16 @@
 
 
         } failure:^(NSError *error) {
-            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"login_fail") afterDelay:0.5];
+            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
         }];
     }else{
         
-        [[TuyaSmartUser sharedInstance] loginByEmail:self.countryCodeText.text email:@"your_email" password:self.phoneText.text success:^{
+        [[TuyaSmartUser sharedInstance] loginByEmail:self.countryModel.code email:self.phoneText.text password:self.passwordText.text success:^{
             //登录接口请求成功后
                [self getHomeList];
 
         } failure:^(NSError *error) {
-            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"login_fail") afterDelay:0.5];
+               [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
         }];
     }
 

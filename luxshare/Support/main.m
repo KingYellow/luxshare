@@ -12,7 +12,6 @@
 
 int main(int argc, char * argv[]) {
     @autoreleasepool {
-        
         sigaction(SIGPIPE, &(struct sigaction){SIG_IGN}, NULL);
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }

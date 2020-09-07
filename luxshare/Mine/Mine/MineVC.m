@@ -5,6 +5,7 @@
 //  Created by 黄振 on 2020/4/1.
 //  Copyright © 2020 KingYellow. All rights reserved.
 //
+#import <TuyaSmartFeedbackKit/TuyaSmartFeedbackKit.h>
 #import <TuyaSmartBizCore/TuyaSmartBizCore.h>
 #import <TYModuleServices/TYHelpCenteProtocol.h>
 #import "MineVC.h"

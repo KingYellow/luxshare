@@ -19,6 +19,7 @@
 "role_normal" = "普通成员";
 "role_normalTip" = "使用设备/使用智能";
 "role_admin" = "管理员";
+"role_owner" = "家庭所有者";
 "role_adminTip" = "管理设备和房间/管理智能/管理人员";
 "home_role" = "家庭角色";
 "role_addMemberTip" = "关联账号接受邀请后,才能成为家庭成员并使用相关功能";
