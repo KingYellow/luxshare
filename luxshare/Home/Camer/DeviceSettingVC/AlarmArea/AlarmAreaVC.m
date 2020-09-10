@@ -10,7 +10,7 @@
 #import "CameraPlayView.h"
 #import "UIImageView+Gif.h"
 #import "MaskView.h"
-#import "LUXProgressHUD.h"
+#import "MBProgressHUD+NJ.h"
 
 @interface AlarmAreaVC ()<TuyaSmartCameraDelegate,TuyaSmartCameraDPObserver,TuyaSmartDeviceDelegate>
 
@@ -278,18 +278,12 @@
 
     [self.device publishDps:dps success:^{
         
-     LUXProgressHUD *hud =   [LUXProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.transform = CGAffineTransformMakeRotation(90*M_PI/180);
-    CGAffineTransform transform = hud.transform;
-     transform = CGAffineTransformScale(transform, 1,1);
-    hud.transform = transform;
-    hud.detailsLabel.text = @"设置成功";
+    [MBProgressHUD showError:@"设置成功" toView:self.playView];
     self.statusHiden = NO;
         
         // 刷新状态栏
         [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [hud hideAnimated:YES];
 
             [self.navigationController popViewControllerAnimated:YES];
         });

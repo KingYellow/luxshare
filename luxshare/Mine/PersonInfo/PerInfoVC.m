@@ -13,7 +13,7 @@
 #import "HXPhotoPicker.h"
 #import "NameEditVC.h"
 #import "ResetPWVC.h"
-#import "RegisterVC.h"
+#import "RegisterSecondVC.h"
 
 @interface PerInfoVC ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate,HXPhotoViewControllerDelegate,HXAlbumListViewControllerDelegate>
 @property (strong, nonatomic)UITableView *qzTableView;
@@ -82,11 +82,23 @@
             PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
             if (row == 1) {
                 cell.nameLab.text = QZHLoaclString(@"personInfo_nickName");
-                cell.describeLab.text = [TuyaSmartUser sharedInstance].nickname;
+                if ([[TuyaSmartUser sharedInstance].nickname exp_Length] > 0) {
+                    cell.describeLab.text = [TuyaSmartUser sharedInstance].nickname;
+                }else{
+                    cell.describeLab.text = [TuyaSmartUser sharedInstance].userName;
+                }
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }else{
-                cell.nameLab.text = QZHLoaclString(@"personInfo_phoneNum");
-                cell.describeLab.text = [TuyaSmartUser sharedInstance].phoneNumber;
+                NSString *phone = [TuyaSmartUser sharedInstance].phoneNumber;
+                if ([[TuyaSmartUser sharedInstance].phoneNumber exp_Length] > 0) {
+                    cell.nameLab.text = QZHLoaclString(@"personInfo_phoneNum");
+                    cell.describeLab.text = [TuyaSmartUser sharedInstance].phoneNumber;
+                    
+                }else{
+                    cell.nameLab.text = QZHLoaclString(@"mine_email");
+                    cell.describeLab.text = [TuyaSmartUser sharedInstance].email;
+                }
+
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
@@ -133,7 +145,7 @@
          if (indexPath.row == 0) {
                [self camerAction];
            }else if (indexPath.row == 1){
-               UIAlertController *alert = [UIAlertController alertWithTextfieldTitle:@"修改昵称" originaltext:[TuyaSmartUser sharedInstance].nickname textblock:^(NSString * _Nonnull fieldtext) {
+               UIAlertController *alert = [UIAlertController alertWithTextfieldTitle:@"修改昵称" originaltext:[[TuyaSmartUser sharedInstance].nickname exp_Length] > 0 ? [TuyaSmartUser sharedInstance].nickname:[TuyaSmartUser sharedInstance].userName textblock:^(NSString * _Nonnull fieldtext) {
                    if (fieldtext.length > 0) {
                        [self uploadNickname:fieldtext];
                    }else{
@@ -145,8 +157,20 @@
                }];
            }
     }else if(section == 1){
-        RegisterVC *vc = [[RegisterVC alloc] init];
-        vc.titleText = QZHLoaclString(@"login_resetPassword");
+
+        RegisterSecondVC *vc = [[RegisterSecondVC alloc] init];
+        vc.conutry = [TuyaSmartUser sharedInstance].countryCode;
+        if ([[TuyaSmartUser sharedInstance].phoneNumber exp_Length] > 0){
+            NSString *phone = [TuyaSmartUser sharedInstance].phoneNumber;
+            NSArray *arr  = [phone componentsSeparatedByString:@"-"];
+            if (arr.count > 1) {
+                phone = arr[1];
+            }
+            vc.account = phone;
+        }else{
+            vc.account = [TuyaSmartUser sharedInstance].email;
+        }
+        vc.titleText = QZHLoaclString(@"login_resetPassword");;
         [self.navigationController pushViewController:vc animated:YES];
         
     }else if(section == 2){

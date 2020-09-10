@@ -38,7 +38,7 @@
     self.countryModel = [ContactModel new];
     self.countryModel.code = @"86";
     self.countryModel.chinese = @"中国";
-    
+    [self.navigationItem.titleView sizeThatFits:CGSizeMake(100, 44)];
 }
 -(void)exp_rightAction{
     RegisterVC *vc = [[RegisterVC alloc] init];

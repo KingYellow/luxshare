@@ -17,7 +17,7 @@
 @property (strong, nonatomic)UITextField *passwordText;
 @property (strong, nonatomic)UIButton *submitBtn;
 @property (strong, nonatomic)UIButton *openBtn;
-@property (strong, nonatomic)UIButton *sendBtn;
+@property (strong, nonatomic)CodeButton *sendBtn;
 @property (strong, nonatomic)CountrySelectView *countryView;
 @property (strong, nonatomic)ContactModel *countryModel;
 @property (strong, nonatomic)TuyaSmartHomeManager *magager;
@@ -140,7 +140,7 @@
     }
     return _passwordText;
 }
--(UIButton *)sendBtn{
+-(CodeButton *)sendBtn{
     if (!_sendBtn) {
         _sendBtn = [[CodeButton alloc] init];
         
@@ -212,6 +212,7 @@
        NSLog(@"sendVerifyCode success");
    } failure:^(NSError *error) {
           [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+       [self.sendBtn stop];
    }];
 }
 

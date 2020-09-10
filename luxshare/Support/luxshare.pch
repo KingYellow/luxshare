@@ -49,4 +49,5 @@
 #import "WMPlayer.h"
 #import "BRPickerView.h"
 #import "WMZPageController.h"
+#import "MBProgressHUD.h"
 #endif /* luxshare_pch */

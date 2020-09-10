@@ -164,7 +164,6 @@
         }else{
             PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
              cell.nameLab.text = QZHLoaclString(@"setting_decetecVoiceSensitivity");
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             int state = [[self.dpManager valueForDP:TuyaSmartCameraDecibelSensitivityDPName] intValue];
             if (state == 0) {
                 cell.describeLab.text = @"低灵敏度";
@@ -173,6 +172,8 @@
                 cell.describeLab.text = @"高灵敏度";
             }
              cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
              return cell;
         }
          
@@ -259,16 +260,29 @@
     }else if(section == 1){
        
         return 2;
+    }else if(section == 2){
+       
+        return 0;
     }else{
         return 2;
     }
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSInteger section = indexPath.section;
+    NSInteger row = indexPath.row;
+    if (section == 0 && row == 0) {
+        return 0;
+    }
+    if (section == 2) {
+        return 0;
+    }
     return 50;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-
+    if (section == 2) {
+        return 0;
+    }
      return 50;
 }
 

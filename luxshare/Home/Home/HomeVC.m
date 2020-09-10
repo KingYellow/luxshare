@@ -154,7 +154,6 @@
                     [deviceArr addObject:dmodel];
                 }
             }
-
             vc.listArr = deviceArr;
         }else{
             

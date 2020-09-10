@@ -28,12 +28,14 @@
     }];
      
      [self.switchBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-         make.centerY.mas_equalTo(self.contentView);
+         make.top.mas_equalTo(10);
+         make.bottom.mas_equalTo(0);
          make.right.mas_equalTo(-30);
 
      }];
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
-         make.centerY.mas_equalTo(self.contentView);
+         make.top.mas_equalTo(0);
+         make.bottom.mas_equalTo(0);
         make.left.mas_equalTo(30);
      }];
 

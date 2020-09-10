@@ -39,7 +39,7 @@
     [self.dpManager addObserver:self];
     self.device = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId];
     self.deviceModel= self.device.deviceModel;
-    self.deviceArr = [self storageSize];
+    [self getStorageSize];
     [self UIConfig];
 
 }
@@ -74,7 +74,7 @@
     if (section == 0) {
 
             PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
-            int state = [[self.dpManager valueForDP:TuyaSmartCameraBasicPIRDPName] intValue];
+            int state = [[self.dpManager valueForDP:TuyaSmartCameraSDCardStatusDPName] intValue];
             if (row == 0) {
                 cell.nameLab.text = @"总容量";
                 cell.describeLab.text = self.deviceArr.firstObject;
@@ -221,33 +221,33 @@
     }
 }
 
-- (NSArray *)storageSize{
+- (void)getStorageSize{
     NSMutableArray *arr = [NSMutableArray array];
-    if ([self.dpManager isSupportDP:TuyaSmartCameraSDCardStorageDPName]) {
+    QZHWS(weakSelf)
              
-        NSString *st =  [self.dpManager valueForDP:TuyaSmartCameraSDCardStorageDPName];
-//        [self.dpManager valueForDP:TuyaSmartCameraSDCardStorageDPName success:^(id result) {
-//
-//        } failure:^(NSError *error){
-//               [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
-//        }];
-        NSArray *stroge = [st componentsSeparatedByString:@"|"];
+    [self.dpManager valueForDP:TuyaSmartCameraSDCardStorageDPName success:^(id result) {
+        NSArray *stroge = [result componentsSeparatedByString:@"|"];
         for (NSString *str in stroge) {
-           NSInteger lon = [str integerValue];
-//            if (lon < 1024) {
-//                [arr addObject: [NSString stringWithFormat:@"%.2lfK",lon/1.0]];
-//            }else if(lon >= 1024 && lon < 1024 * 1024){
-//                [arr addObject: [NSString stringWithFormat:@"%.2lfM",lon/1024.0]];
-//
-//            }else{
-                [arr addObject: [NSString stringWithFormat:@"%.2lfG",lon/(1024.0 * 1024)]];
-//            }
-        }
-    }
-    if (arr.count != 3) {
-        return @[@"0G",@"0G",@"0G"];
-    }
-    return arr;
+                   NSInteger lon = [str integerValue];
+        //            if (lon < 1024) {
+        //                [arr addObject: [NSString stringWithFormat:@"%.2lfK",lon/1.0]];
+        //            }else if(lon >= 1024 && lon < 1024 * 1024){
+        //                [arr addObject: [NSString stringWithFormat:@"%.2lfM",lon/1024.0]];
+        //
+        //            }else{
+                        [arr addObject: [NSString stringWithFormat:@"%.2lfG",lon/(1024.0 * 1024)]];
+        //            }
+            }
+            if(arr.count != 3) {
+                self.deviceArr = @[@"0.00G",@"0.00G",@"0.00G"];
+            }else{
+                self.deviceArr = [NSArray arrayWithArray:arr];
+            }
+        [weakSelf.qzTableView reloadData];
+
+    } failure:^(NSError *error){
+           [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+    }];
 }
 
 -(FormatProgressView *)progessView{
@@ -355,10 +355,7 @@
 }
 
 - (void)getStorageInfo {
-    __weak typeof(self) weakSelf = self;
-
-    weakSelf.deviceArr = [self storageSize];
-    [weakSelf.qzTableView reloadData];
-        
+    
+    [self getStorageSize];
 }
 @end

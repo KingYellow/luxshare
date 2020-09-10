@@ -28,11 +28,19 @@
     [self addSubview:self.batteryIMG];
     [self addSubview:self.recordProgressView];
     [self addSubview:self.talkProgressView];
+    [self addSubview:self.videoPhotoBtn];
+    [self addSubview:self.videoTalkBtn];
+    [self addSubview:self.videoRecordBtn];
+
 
     QZHViewRadius(self.recordProgressView, 20);
     QZHViewRadius(self.talkProgressView, 20);
     QZHViewRadius(self.definitionBtn, 15);
     QZHViewRadius(self.horizontalBtn, 15);
+    QZHViewRadius(self.videoRecordBtn, 15);
+    QZHViewRadius(self.videoTalkBtn, 15);
+    QZHViewRadius(self.videoPhotoBtn, 15);
+
     [self.playBtn mas_makeConstraints:^(MASConstraintMaker *make) {
           make.width.mas_equalTo(60);
           make.height.mas_equalTo(40);
@@ -95,6 +103,28 @@
           make.bottom.mas_equalTo(-20);
 
       }];
+    
+    [self.videoTalkBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(60);
+        make.height.mas_equalTo(30);
+        make.centerX.mas_equalTo(self);
+        make.bottom.mas_equalTo(-15);
+
+    }];
+    [self.videoRecordBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(60);
+        make.height.mas_equalTo(30);
+        make.right.mas_equalTo(self.videoTalkBtn.mas_left).offset(-15);
+        make.bottom.mas_equalTo(-15);
+
+    }];
+    [self.videoPhotoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(60);
+        make.height.mas_equalTo(30);
+        make.left.mas_equalTo(self.videoTalkBtn.mas_right).offset(15);
+        make.bottom.mas_equalTo(-15);
+
+    }];
   
 }
 #pragma mark -lazy
@@ -127,7 +157,7 @@
         _definitionBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
         _definitionBtn.tag = 2;
         [_definitionBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
-        _definitionBtn.backgroundColor = QZHKIT_Color_BLACK_70;
+        _definitionBtn.backgroundColor = QZHKIT_Color_BLACK_54;
     }
     return _definitionBtn;
 }
@@ -139,9 +169,51 @@
         _horizontalBtn.tag = 3;
         [_horizontalBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
         _horizontalBtn.contentMode = UIViewContentModeScaleToFill;
-        _horizontalBtn.backgroundColor = QZHKIT_Color_BLACK_70;
+        _horizontalBtn.backgroundColor = QZHKIT_Color_BLACK_54;
     }
     return _horizontalBtn;
+}
+
+-(UIButton *)videoTalkBtn{
+    if (!_videoTalkBtn) {
+        _videoTalkBtn = [[UIButton alloc] init];
+        [_videoTalkBtn setTitle:@"通话" forState:UIControlStateNormal];
+        [_videoTalkBtn setTitle:@"挂断" forState:UIControlStateSelected];
+        [_videoTalkBtn setTitleColor:QZH_KIT_Color_WHITE_70 forState:UIControlStateNormal];
+        _videoTalkBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
+        _videoTalkBtn.tag = 102;
+        [_videoTalkBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+        _videoTalkBtn.hidden = YES;
+        _videoTalkBtn.backgroundColor = QZHKIT_Color_BLACK_54;
+    }
+    return _videoTalkBtn;
+}
+-(UIButton *)videoPhotoBtn{
+    if (!_videoPhotoBtn) {
+        _videoPhotoBtn = [[UIButton alloc] init];
+        [_videoPhotoBtn setTitle:@"截屏" forState:UIControlStateNormal];
+        [_videoPhotoBtn setTitleColor:QZH_KIT_Color_WHITE_70 forState:UIControlStateNormal];
+        _videoPhotoBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
+        _videoPhotoBtn.tag = 103;
+        _videoPhotoBtn.hidden = YES;
+        [_videoPhotoBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+        _videoPhotoBtn.backgroundColor = QZHKIT_Color_BLACK_54;
+    }
+    return _videoPhotoBtn;
+}
+-(UIButton *)videoRecordBtn{
+    if (!_videoRecordBtn) {
+        _videoRecordBtn = [[UIButton alloc] init];
+        [_videoRecordBtn setTitle:@"录像" forState:UIControlStateNormal];
+        [_videoRecordBtn setTitle:@"停止" forState:UIControlStateSelected];
+        [_videoRecordBtn setTitleColor:QZH_KIT_Color_WHITE_70 forState:UIControlStateNormal];
+        _videoRecordBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
+        _videoRecordBtn.tag = 101;
+        _videoRecordBtn.hidden = YES;
+        [_videoRecordBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+        _videoRecordBtn.backgroundColor = QZHKIT_Color_BLACK_54;
+    }
+    return _videoRecordBtn;
 }
 
 - (UIImageView *)playPreGif{

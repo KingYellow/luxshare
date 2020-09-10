@@ -13,11 +13,11 @@
 @interface RegisterSecondVC ()
 @property (strong, nonatomic)UITextField *passwordText;
 @property (strong, nonatomic)UITextField *codeText;
-@property (strong, nonatomic)UIButton *sendBtn;
+@property (strong, nonatomic)CodeButton *sendBtn;
 @property (strong, nonatomic)UIButton *submitBtn;
 @property (strong, nonatomic)UIButton *openBtn;
 @property (strong, nonatomic)TuyaSmartHomeManager *magager;
-
+@property (strong, nonatomic)NSString *phone;
 @end
 
 @implementation RegisterSecondVC
@@ -46,7 +46,7 @@
     [self.view addSubview:label1];
     [self.view addSubview:label2];
     
-    if ([self.account exp_isPureInt]) {
+    if ([self.account exp_isPureInt]){
         label1.text = @"验证码将发到你手机:";
         
     }else {
@@ -162,7 +162,7 @@
     }
     return _openBtn;
 }
--(UIButton *)sendBtn{
+-(CodeButton *)sendBtn{
     if (!_sendBtn) {
         _sendBtn = [[CodeButton alloc] init];
         
@@ -203,7 +203,7 @@
     if ([self.titleText isEqualToString:QZHLoaclString(@"login_getPassword")]||[self.titleText isEqualToString:QZHLoaclString(@"login_resetPassword")]){
         //重置密码
 
-        if ([self.account exp_isPureInt]) {
+        if ([self.account exp_isPureInt]){
             //手机
             [[TuyaSmartUser sharedInstance] resetPasswordByPhone:self.conutry phoneNumber:self.account newPassword:self.passwordText.text code:self.codeText.text success:^{
                 [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"resetPasswordByPhonesuccess") afterDelay:0.5];
@@ -230,7 +230,7 @@
 
     }else{
         //注册
-        if ([self.account exp_isPureInt]) {
+         if ([self.account exp_isPureInt]) {
             [[TuyaSmartUser sharedInstance] registerByPhone:self.conutry phoneNumber:self.account password:self.passwordText.text code:self.codeText.text success:^{
                    
                 //登录接口请求成功后
@@ -265,15 +265,30 @@
 
         } failure:^(NSError *error) {
             [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
-
+            [self.sendBtn stop];
         }];
     }else{
-        
-        [[TuyaSmartUser sharedInstance] sendVerifyCodeByRegisterEmail:self.conutry email:self.account success:^{
-              [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"verify_code_success") afterDelay:0.5];
-        } failure:^(NSError *error) {
-            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
-        }];
+        if (type == 2) {
+            [[TuyaSmartUser sharedInstance] sendVerifyCodeByEmail:self.conutry email:self.account success:^{
+                [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"verify_code_success") afterDelay:0.5];
+
+            } failure:^(NSError *error) {
+                [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+                [self.sendBtn stop];
+                
+            }];
+            
+        }else{
+            [[TuyaSmartUser sharedInstance] sendVerifyCodeByRegisterEmail:self.conutry email:self.account success:^{
+                [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"verify_code_success") afterDelay:0.5];
+            } failure:^(NSError *error) {
+                [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+                [self.sendBtn stop];
+                
+            }];
+        }
+
+  
     }
 
 }

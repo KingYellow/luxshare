@@ -24,16 +24,20 @@
     [self.contentView addSubview:self.statusLab];
 
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.mas_equalTo(self.contentView);
+        make.top.mas_equalTo(0);
+        make.bottom.mas_equalTo(0);
         make.left.mas_equalTo(QZHKIT_MARGIN_LEFT_LISTCELL_TEXT);
      }];
     [self.statusLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.mas_equalTo(self.contentView);
+        make.top.mas_equalTo(0);
+        make.bottom.mas_equalTo(0);
         make.left.mas_equalTo(self.nameLab.mas_right).offset(10);
      }];
     [self.describeLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-QZHKIT_MARGIN_RIGHT_LISTCELL_TEXT);
-        make.centerY.mas_equalTo(self.nameLab);
+        make.top.mas_equalTo(0);
+        make.bottom.mas_equalTo(0);
+        make.left.mas_equalTo(self.nameLab.mas_right).offset(5);
     }];
 
     

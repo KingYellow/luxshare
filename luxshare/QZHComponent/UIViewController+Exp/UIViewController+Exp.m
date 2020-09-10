@@ -172,7 +172,7 @@
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
 
     if (title.length> 3) {
-        button.frame = CGRectMake(0, 0, 180, 44);
+        button.frame = CGRectMake(0, 0, 80, 44);
     }
     button.titleLabel.font = QZHKIT_FONT_NAVIBAR_ITEM_TITLE;
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;

@@ -34,10 +34,13 @@
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
          make.top.mas_equalTo(QZHKIT_MARGIN_TOP_LISTCELL_TEXT);
         make.left.mas_equalTo(self.IMGView.mas_right).offset(QZHKIT_MARGIN_H_LISTCELL_IMAGE_AND_TEXT);
+        make.right.mas_equalTo(-5);
      }];
     [self.describeLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.IMGView.mas_right).offset(QZHKIT_MARGIN_H_LISTCELL_IMAGE_AND_TEXT);
         make.top.mas_equalTo(self.nameLab.mas_bottom).offset(QZHKIT_MARGIN_TOP_LISTCELL_TEXT);
+        make.right.mas_equalTo(-5);
+
     }];
     [self.tagLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-QZHKIT_MARGIN_RIGHT_LISTCELL_TEXT);

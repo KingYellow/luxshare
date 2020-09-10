@@ -44,7 +44,7 @@
     [self.view addSubview:lab];
     self.nameField.text = self.titleName;
     [self.view addSubview:self.mineCollection];
-        _infoArr = @[@"客厅",@"主卧",@"次卧",@"餐厅",@"厨房",@"书房",@"玄关",@"阳台",@"儿童房",@"衣帽间"];
+    _infoArr = @[@"客厅",@"主卧",@"次卧",@"餐厅",@"厨房",@"书房",@"玄关",@"阳台",@"儿童房",@"衣帽间"];
     [self.nameField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.mas_equalTo(0);
         make.top.mas_equalTo(20);
@@ -52,12 +52,12 @@
     }];
     [lab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.mas_equalTo(20);
-        make.top.mas_equalTo(80);
-        make.height.mas_equalTo(60);
+        make.top.mas_equalTo(self.nameField.mas_bottom);
+        make.height.mas_equalTo(40);
     }];
     [self.mineCollection mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.mas_equalTo(0);
-        make.top.mas_equalTo(100);
+        make.top.mas_equalTo(lab.mas_bottom);
         make.bottom.mas_equalTo(-QZHHeightBottom);
     }];
     
@@ -70,7 +70,6 @@
         _nameField.backgroundColor = QZH_KIT_Color_WHITE_100;
         _nameField.clearButtonMode = UITextFieldViewModeWhileEditing;
         [_nameField exp_setContentInset:UIEdgeInsetsMake(0, 15, 0, 15)];
-        [_nameField becomeFirstResponder];
         _nameField.placeholder = QZHLoaclString(@"member_max25");
         _nameField.jk_maxLength = 25;
         _nameField.delegate = self;

@@ -14,17 +14,17 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
-  - BRPickerView (2.6.3):
-    - BRPickerView/AddressPickerView (= 2.6.3)
-    - BRPickerView/Base (= 2.6.3)
-    - BRPickerView/DatePickerView (= 2.6.3)
-    - BRPickerView/StringPickerView (= 2.6.3)
-  - BRPickerView/AddressPickerView (2.6.3):
+  - BRPickerView (2.7.0):
+    - BRPickerView/AddressPickerView (= 2.7.0)
+    - BRPickerView/Base (= 2.7.0)
+    - BRPickerView/DatePickerView (= 2.7.0)
+    - BRPickerView/StringPickerView (= 2.7.0)
+  - BRPickerView/AddressPickerView (2.7.0):
     - BRPickerView/Base
-  - BRPickerView/Base (2.6.3)
-  - BRPickerView/DatePickerView (2.6.3):
+  - BRPickerView/Base (2.7.0)
+  - BRPickerView/DatePickerView (2.7.0):
     - BRPickerView/Base
-  - BRPickerView/StringPickerView (2.6.3):
+  - BRPickerView/StringPickerView (2.7.0):
     - BRPickerView/Base
   - Bugly (2.5.71)
   - CocoaAsyncSocket (7.6.4)
@@ -49,9 +49,9 @@ PODS:
   - MQTTClient/Min (0.15.2)
   - OpenSSL-Universal (1.0.2.17)
   - Reachability (3.2)
-  - SDWebImage (5.8.3):
-    - SDWebImage/Core (= 5.8.3)
-  - SDWebImage/Core (5.8.3)
+  - SDWebImage (5.9.0):
+    - SDWebImage/Core (= 5.9.0)
+  - SDWebImage/Core (5.9.0)
   - SGQRCode (3.0.1)
   - STPopup (1.8.7)
   - TuyaCameraSDK (3.17.3)
@@ -90,6 +90,9 @@ PODS:
     - TuyaSmartBaseKit
     - TuyaSmartCameraBase
     - TuyaSmartDeviceKit
+  - TuyaSmartCameraT (4.17.6):
+    - TuyaSmartBaseKit
+    - TuyaSmartCameraBase
   - TuyaSmartDeviceKit (3.17.11):
     - TuyaSmartBaseKit
     - TuyaSmartMQTTChannelKit
@@ -265,8 +268,8 @@ PODS:
     - TYFoundationKit
     - TYSmartBusinessLibrary
   - UICKeyChainStore (2.2.0)
-  - UMCCommon (7.1.0)
-  - UMCPush (3.2.4):
+  - UMCCommon (7.1.1)
+  - UMCPush (3.2.5):
     - UMCCommon
   - UMCSecurityPlugins (1.0.6)
   - WMPlayer (5.1.0):
@@ -294,6 +297,7 @@ DEPENDENCIES:
   - STPopup
   - TuyaSmartActivatorKit
   - TuyaSmartCameraKit (~> 4.17.1)
+  - TuyaSmartCameraT
   - TuyaSmartHelpCenterBizBundle
   - TuyaSmartHomeKit
   - UMCCommon
@@ -307,11 +311,14 @@ SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - AFNetworking
     - BRPickerView
+    - Bugly
     - CocoaAsyncSocket
     - HXPhotoPicker
+    - IQKeyboardManager
     - JKCategories
     - Masonry
-    - MJRefresh
+    - MMKV
+    - MMKVCore
     - MQTTClient
     - OpenSSL-Universal
     - Reachability
@@ -326,6 +333,7 @@ SPEC REPOS:
     - TuyaSmartCameraBase
     - TuyaSmartCameraKit
     - TuyaSmartCameraM
+    - TuyaSmartCameraT
     - TuyaSmartDeviceKit
     - TuyaSmartFeedbackKit
     - TuyaSmartHomeKit
@@ -340,6 +348,7 @@ SPEC REPOS:
     - UMCCommon
     - UMCPush
     - UMCSecurityPlugins
+    - WMZPageController
     - YYCache
     - YYImage
     - YYModel
@@ -371,13 +380,10 @@ SPEC REPOS:
     - TYUIKit
     - TYVideoPlayer
   trunk:
-    - Bugly
-    - IQKeyboardManager
     - lottie-ios
     - MBProgressHUD
-    - MMKV
-    - MMKVCore
-    - WMZPageController
+    - MJRefresh
+    - SDWebImage
 
 EXTERNAL SOURCES:
   WMPlayer:
@@ -390,7 +396,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
-  BRPickerView: 67ce855d07ff61771b586fea719053612bfeb1d6
+  BRPickerView: 882991201e8a27b9f41e4b6888d2871418e71f84
   Bugly: fd066c75c4a0eca1440f9b6a84bd37d51bfc85ac
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   dsBridge: f7698ec8790017bec8be7764b17fbdbc90c3c4bb
@@ -406,7 +412,7 @@ SPEC CHECKSUMS:
   MQTTClient: 902c7bcac1501595f3d0b15178c7205b40331fb0
   OpenSSL-Universal: ff04c2e6befc3f1247ae039e60c93f76345b3b5a
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  SDWebImage: 112503ec94a5a2a41869503844a15e8d8f1ead5c
+  SDWebImage: 62ae4a18473520c67b79e9724c31a63599cc9423
   SGQRCode: bf02d60e18d6660a9d75ff1c8b9b467f064f054e
   STPopup: a9045557bc48a0df51fbb7bf0544447c5fe84d34
   TuyaCameraSDK: 04056efc44f06d5eabdf693989e6d7ba7c84c189
@@ -418,6 +424,7 @@ SPEC CHECKSUMS:
   TuyaSmartCameraBase: eeed37caf4a6489a507f8b2f0c4510d210a536ec
   TuyaSmartCameraKit: f7609fd0ae5cebf21b823fbd6ca21812ac347a1d
   TuyaSmartCameraM: e98946f83e1f6249f3f233c6499330768f0123b3
+  TuyaSmartCameraT: 04884cbd29989bc233177d3d8ed3db7f03323787
   TuyaSmartDeviceKit: 7649464a184017f5f35450c80c652bc83cf77a17
   TuyaSmartFeedbackKit: 88101dccbeeb1a17a93f2ee72bd9ae84d9ce7eb4
   TuyaSmartHelpCenterBizBundle: 4df7678cf617b665b1717482a940f32224bfaaae
@@ -452,8 +459,8 @@ SPEC CHECKSUMS:
   TYUIKit: 422e309dbe553e2371025a1a9210cec43f2f347f
   TYVideoPlayer: 3469dce3d20e29a2dfe5d8f8e07b1f1474755b7e
   UICKeyChainStore: 6a218644594e12f855ec2a10f4fc576c1a69daee
-  UMCCommon: 4e80f93492d300245683236668763dc5d0b04dbd
-  UMCPush: 1edd856027dcf905333effb4040ace5d236a7316
+  UMCCommon: f455f92c125342e360d6ad9eafe484945351eeb5
+  UMCPush: 078b5818e0e47c4cf8ab42a5a30e8b54a0854077
   UMCSecurityPlugins: 0831a08f3988f3cea9f1d3a7626cd9bee4fef150
   WMPlayer: aa27d59db872e897581e1fd335e59fbccf5a6f17
   WMZPageController: 041c8fa9902fd39db215272b27d8db644c230bbd
@@ -462,6 +469,6 @@ SPEC CHECKSUMS:
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: dd06a623e6907bfb02e25048ede1c5d0ecdc46b2
+PODFILE CHECKSUM: 84351c255ae152cde71f5364a5cf9d3b111fee4b
 
 COCOAPODS: 1.9.1

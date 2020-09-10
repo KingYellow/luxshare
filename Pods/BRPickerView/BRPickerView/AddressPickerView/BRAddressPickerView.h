@@ -2,8 +2,8 @@
 //  BRAddressPickerView.h
 //  BRPickerViewDemo
 //
-//  Created by 任波 on 2017/8/11.
-//  Copyright © 2017年 91renb. All rights reserved.
+//  Created by renbo on 2017/8/11.
+//  Copyright © 2017 irenb. All rights reserved.
 //
 //  最新代码下载地址：https://github.com/91renb/BRPickerView
 
@@ -49,7 +49,7 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel * _Nullable province, BRCity
 @property (nullable, nonatomic, copy) BRAddressResultBlock changeBlock;
 
 /**
- *  地区数据源（不传或为nil，默认就获取框架内 BRCity.json 文件的数据）
+ *  地区数据源（不传或为nil，默认就获取本地 BRCity.json 文件的数据）
  *  1.可以传 JSON数组，要注意 层级结构 和 key 要与 BRCity.json 保持一致
  *  2.可以传 模型数组(NSArray <BRProvinceModel *> * 类型)，自己解析数据源 只需要注意层级结构就行
  */

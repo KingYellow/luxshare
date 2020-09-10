@@ -2,9 +2,10 @@
 //  BRDatePickerView+BR.m
 //  BRPickerViewDemo
 //
-//  Created by 筑龙股份 on 2020/6/16.
-//  Copyright © 2020 91renb. All rights reserved.
+//  Created by renbo on 2020/6/16.
+//  Copyright © 2020 irenb. All rights reserved.
 //
+//  最新代码下载地址：https://github.com/91renb/BRPickerView
 
 #import "BRDatePickerView+BR.h"
 #import "NSBundle+BRPickerView.h"
@@ -94,8 +95,25 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
                 selectDate = date;
             }
         } else {
-            // 不设置默认日期，就默认选中今天的日期
-            selectDate = [NSDate date];
+            // 不设置默认日期
+            if (self.pickerMode == BRDatePickerModeTime ||
+                self.pickerMode == BRDatePickerModeCountDownTimer ||
+                self.pickerMode == BRDatePickerModeHM ||
+                self.pickerMode == BRDatePickerModeHMS ||
+                self.pickerMode == BRDatePickerModeMS) {
+                // 默认选中最小时间
+                selectDate = self.minDate;
+            } else {
+                if (self.minuteInterval > 1 || self.secondInterval > 1) {
+                    NSDate *date = [NSDate date];
+                    NSInteger minute = self.minDate.br_minute % self.minuteInterval == 0 ? self.minDate.br_minute : 0;
+                    NSInteger second = self.minDate.br_second % self.secondInterval == 0 ? self.minDate.br_second : 0;
+                    selectDate = [NSDate br_setYear:date.br_year month:date.br_month day:date.br_day hour:date.br_hour minute:minute second:second];
+                } else {
+                    // 默认选中今天的时间
+                    selectDate = [NSDate date];
+                }
+            }
         }
     }
     
@@ -116,34 +134,12 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
 
 #pragma mark - NSDate 转 NSString
 - (NSString *)br_stringFromDate:(NSDate *)date dateFormat:(NSString *)dateFormat {
-    return [date br_convertDateWithFormat:dateFormat timeZone:[self currentTimeZone] language:self.pickerStyle.language];
+    return [NSDate br_stringFromDate:date dateFormat:dateFormat timeZone:self.timeZone language:self.pickerStyle.language];
 }
 
 #pragma mark - NSString 转 NSDate
 - (NSDate *)br_dateFromString:(NSString *)dateString dateFormat:(NSString *)dateFormat {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    // 设置日期格式
-    dateFormatter.dateFormat = dateFormat;
-    // 设置时区(默认不使用夏时制)
-    dateFormatter.timeZone = [self currentTimeZone];
-    dateFormatter.locale = [[NSLocale alloc]initWithLocaleIdentifier:self.pickerStyle.language];
-    // 如果当前时间不存在，就获取距离最近的整点时间
-    dateFormatter.lenient = YES;
-    
-    return [dateFormatter dateFromString:dateString];
-}
-
-- (NSTimeZone *)currentTimeZone {
-    if (!self.timeZone) {
-        // 当前时区
-        NSTimeZone *localTimeZone = [NSTimeZone localTimeZone];
-        // 当前时区相对于GMT(零时区)的偏移秒数
-        NSInteger interval = [localTimeZone secondsFromGMTForDate:[NSDate date]];
-        // 当前时区(不使用夏时制)：由偏移量获得对应的NSTimeZone对象
-        // 注意：一些夏令时时间 NSString 转 NSDate 时，默认会导致 NSDateFormatter 格式化失败，返回 null
-        return [NSTimeZone timeZoneForSecondsFromGMT:interval];
-    }
-    return self.timeZone;
+    return [NSDate br_dateFromString:dateString dateFormat:dateFormat timeZone:self.timeZone language:self.pickerStyle.language];
 }
 
 #pragma mark - 比较两个时间大小（可以指定比较级数，即按指定格式进行比较）
@@ -153,11 +149,11 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     NSDate *date1 = [self br_dateFromString:dateString1 dateFormat:dateFormat];
     NSDate *date2 = [self br_dateFromString:dateString2 dateFormat:dateFormat];
     if ([date1 compare:date2] == NSOrderedDescending) {
-        return 1;
+        return 1; // 大于
     } else if ([date1 compare:date2] == NSOrderedAscending) {
-        return -1;
+        return -1; // 小于
     } else {
-        return 0;
+        return 0; // 等于
     }
 }
 
@@ -467,18 +463,6 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
                 if (self.pickerStyle.selectRowTextFont) {
                     selectLabel.font = self.pickerStyle.selectRowTextFont;
                 }
-                // 上一个选中的 label
-                UILabel *lastLabel = (UILabel *)[pickerView viewForRow:row - 1 forComponent:component];
-                if (lastLabel) {
-                    lastLabel.textColor = self.pickerStyle.pickerTextColor;
-                    lastLabel.font = self.pickerStyle.pickerTextFont;
-                }
-                // 下一个选中的 label
-                UILabel *nextLabel = (UILabel*)[pickerView viewForRow:row + 1 forComponent:component];
-                if (nextLabel) {
-                    nextLabel.textColor = self.pickerStyle.pickerTextColor;
-                    nextLabel.font = self.pickerStyle.pickerTextFont;
-                }
             }
         });
     }
@@ -500,7 +484,12 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     return string;
 }
 
-- (NSString *)getYearText:(NSString *)yearString {
+- (NSString *)getYearText:(NSArray *)yearArr row:(NSInteger)row {
+    NSInteger index = 0;
+    if (row >= 0) {
+        index = MIN(row, yearArr.count - 1);
+    }
+    NSString *yearString = [yearArr objectAtIndex:index];
     if (self.addCustomString && [yearString isEqualToString:self.addCustomString]) {
         return yearString;
     }
@@ -508,7 +497,12 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     return [NSString stringWithFormat:@"%@%@", yearString, yearUnit];
 }
 
-- (NSString *)getMonthText:(NSString *)monthString monthNames:(NSArray *)monthNames {
+- (NSString *)getMonthText:(NSArray *)monthArr row:(NSInteger)row monthNames:(NSArray *)monthNames {
+    NSInteger index = 0;
+    if (row >= 0) {
+        index = MIN(row, monthArr.count - 1);
+    }
+    NSString *monthString = [monthArr objectAtIndex:index];
     if ([self.pickerStyle.language hasPrefix:@"zh"]) {
         self.monthNameType = BRMonthNameTypeNumber;
     }
@@ -523,7 +517,12 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     return [NSString stringWithFormat:@"%@%@", monthString, monthUnit];
 }
 
-- (NSString *)getDayText:(NSString *)dayString mSelectDate:(NSDate *)mSelectDate {
+- (NSString *)getDayText:(NSArray *)dayArr row:(NSInteger)row mSelectDate:(NSDate *)mSelectDate {
+    NSInteger index = 0;
+    if (row >= 0) {
+        index = MIN(row, dayArr.count - 1);
+    }
+    NSString *dayString = [dayArr objectAtIndex:index];
     if (self.isShowToday && mSelectDate.br_year == [NSDate date].br_year && mSelectDate.br_month == [NSDate date].br_month && [dayString integerValue] == [NSDate date].br_day) {
         return [NSBundle br_localizedStringForKey:@"今天" language:self.pickerStyle.language];
     }
@@ -537,7 +536,12 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     return dayString;
 }
 
-- (NSString *)getHourText:(NSString *)hourString {
+- (NSString *)getHourText:(NSArray *)hourArr row:(NSInteger)row {
+    NSInteger index = 0;
+    if (row >= 0) {
+        index = MIN(row, hourArr.count - 1);
+    }
+    NSString *hourString = [hourArr objectAtIndex:index];
     if (self.addCustomString && [hourString isEqualToString:self.addCustomString]) {
         return hourString;
     }
@@ -545,12 +549,22 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     return [NSString stringWithFormat:@"%@%@", hourString, hourUnit];
 }
 
-- (NSString *)getMinuteText:(NSString *)minuteString {
+- (NSString *)getMinuteText:(NSArray *)minuteArr row:(NSInteger)row {
+    NSInteger index = 0;
+    if (row >= 0) {
+        index = MIN(row, minuteArr.count - 1);
+    }
+    NSString *minuteString = [minuteArr objectAtIndex:index];
     NSString *minuteUnit = self.showUnitType == BRShowUnitTypeAll ? [self getMinuteUnit] : @"";
     return [NSString stringWithFormat:@"%@%@", minuteString, minuteUnit];
 }
 
-- (NSString *)getSecondText:(NSString *)secondString {
+- (NSString *)getSecondText:(NSArray *)secondArr row:(NSInteger)row {
+    NSInteger index = 0;
+    if (row >= 0) {
+        index = MIN(row, secondArr.count - 1);
+    }
+    NSString *secondString = [secondArr objectAtIndex:index];
     NSString *secondUnit = self.showUnitType == BRShowUnitTypeAll ? [self getSecondUnit] : @"";
     return [NSString stringWithFormat:@"%@%@", secondString, secondUnit];
 }
@@ -606,6 +620,16 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
         return @"";
     }
     return [NSBundle br_localizedStringForKey:@"秒" language:self.pickerStyle.language];
+}
+
+- (NSInteger)getIndexWithArray:(NSArray *)array object:(NSString *)obj {
+    if (!array || array.count == 0 || !obj) {
+        return 0;
+    }
+    if ([array containsObject:obj]) {
+        return [array indexOfObject:obj];
+    }
+    return 0;
 }
 
 @end

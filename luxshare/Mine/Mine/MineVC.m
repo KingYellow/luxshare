@@ -77,8 +77,16 @@
     if (section == 0) {
         MineHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
         [cell.IMGView exp_loadImageUrlString:[TuyaSmartUser sharedInstance].headIconUrl placeholder:QZHICON_HEAD_PLACEHOLDER];
-        cell.nameLab.text = [TuyaSmartUser sharedInstance].nickname;
-        cell.describeLab.text = [TuyaSmartUser sharedInstance].phoneNumber;
+        if ([[TuyaSmartUser sharedInstance].nickname exp_Length] > 0) {
+            cell.nameLab.text = [TuyaSmartUser sharedInstance].nickname;
+        }else{
+            cell.nameLab.text = [TuyaSmartUser sharedInstance].userName;
+        }
+        if ([[TuyaSmartUser sharedInstance].phoneNumber exp_Length] > 0) {
+            cell.describeLab.text = [TuyaSmartUser sharedInstance].phoneNumber;
+        }else{
+            cell.describeLab.text = [TuyaSmartUser sharedInstance].email;
+        }
 
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;

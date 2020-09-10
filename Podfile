@@ -11,7 +11,7 @@ target 'luxshare' do
   pod "TuyaSmartHomeKit"
   pod "TuyaSmartActivatorKit"
   pod 'TuyaSmartCameraKit', '~> 4.17.1'
-#  pod "TuyaSmartCameraT"
+  pod "TuyaSmartCameraT"
   pod 'TuyaSmartHelpCenterBizBundle'
   
   pod 'MJRefresh', '3.1.15.3'

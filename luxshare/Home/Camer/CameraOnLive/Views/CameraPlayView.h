@@ -23,6 +23,9 @@ typedef void(^playbuttontag)(UIButton *sender, BOOL selected);
 @property (strong, nonatomic)UIImageView *batteryIMG;
 @property (strong, nonatomic)RecordProgressView *recordProgressView;
 @property (strong, nonatomic)RecordProgressView *talkProgressView;
+@property (strong, nonatomic)UIButton *videoRecordBtn;
+@property (strong, nonatomic)UIButton *videoTalkBtn;
+@property (strong, nonatomic)UIButton *videoPhotoBtn;
 
 @end
 
