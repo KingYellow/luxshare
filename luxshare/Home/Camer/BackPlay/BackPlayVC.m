@@ -61,6 +61,13 @@
     selector:@selector(applicationWillResignActive)
                                                  name:UIApplicationWillResignActiveNotification
     object:app];
+    
+    if (self.camera) {
+        self.camera.delegate = self;
+        [self connectCamera];
+    }else{
+        [self creatP2PConnectChannel];
+    }
 
 }
 -(void)viewWillDisappear:(BOOL)animated{
@@ -83,12 +90,7 @@
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     [self UIConfig];
     
-    if (self.camera) {
-        self.camera.delegate = self;
-        [self connectCamera];
-    }else{
-        [self creatP2PConnectChannel];
-    }
+
 }
 
 - (void)UIConfig{

@@ -301,10 +301,17 @@
     }
     if (section == 1) {
         if (row == 1) {
-            AlarmAreaVC *vc = [[AlarmAreaVC alloc] init];
-            vc.deviceModel = self.deviceModel;
-            vc.homeModel = self.homeModel;
-            [self.navigationController pushViewController:vc animated:YES];
+           BOOL private =  [[self.dpManager valueForDP:TuyaSmartCameraBasicPrivateDPName] boolValue];
+
+            if (private) {
+                [[QZHHUD HUD] textHUDWithMessage:@"隐私模式下不能设置报警区域" afterDelay:1.0];
+            }else{
+                AlarmAreaVC *vc = [[AlarmAreaVC alloc] init];
+                vc.deviceModel = self.deviceModel;
+                vc.homeModel = self.homeModel;
+                [self.navigationController pushViewController:vc animated:YES];
+                
+            }
         }
     }
     if (section == 2) {

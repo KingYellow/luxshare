@@ -205,6 +205,7 @@
         NETResultVC *vc = [[NETResultVC alloc] init];
         if([error.userInfo[@"NSLocalizedFailureReason"] isEqualToString:@"DEVICE_ALREADY_BIND"]){
             vc.isBind = YES;
+            vc.deviceModel = deviceModel;
         }
         vc.isSuccess = NO;
         [self.navigationController pushViewController:vc animated:YES];

@@ -212,7 +212,7 @@
 }
 #pragma mark -- 停止播放视频
 - (void)cameraStopPreview{
-//    [self.camera.videoView tuya_clear];
+    [self.camera.videoView tuya_clear];
     [self.camera stopPreview];
 }
 #pragma mark -- 播放加载动画

@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FeedUpBindVC : UIViewController
-
+@property (strong, nonatomic)TuyaSmartDeviceModel *deviceModel;
 @end
 
 NS_ASSUME_NONNULL_END

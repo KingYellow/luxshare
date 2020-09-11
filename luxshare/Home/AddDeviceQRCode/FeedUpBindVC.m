@@ -226,9 +226,16 @@
 }
 - (void)addFeedback {
     
+    
     TuyaSmartFeedback *feedBack = [[TuyaSmartFeedback alloc] init];
+    //    self.feedBack = [[TuyaSmartFeedback alloc] init];
+        [feedBack getFeedbackTypeList:^(NSArray<TuyaSmartFeedbackTypeListModel *> *list) {
+            NSLog(@"get feedback type list success:%@", list);
+        } failure:^(NSError *error) {
+            NSLog(@"get feedback type list failure:%@", error);
+        }];
 
-    [feedBack addFeedback:self.diyTextView.text hdId:@"OTHER_HDID" hdType:7 contact:self.accountText.text success:^{
+    [feedBack addFeedback:self.diyTextView.text hdId:self.deviceModel.devId hdType:2 contact:self.accountText.text success:^{
         [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
         QZHWS(weakSelf)
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

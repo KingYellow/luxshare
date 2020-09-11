@@ -90,9 +90,6 @@ PODS:
     - TuyaSmartBaseKit
     - TuyaSmartCameraBase
     - TuyaSmartDeviceKit
-  - TuyaSmartCameraT (4.17.6):
-    - TuyaSmartBaseKit
-    - TuyaSmartCameraBase
   - TuyaSmartDeviceKit (3.17.11):
     - TuyaSmartBaseKit
     - TuyaSmartMQTTChannelKit
@@ -297,7 +294,6 @@ DEPENDENCIES:
   - STPopup
   - TuyaSmartActivatorKit
   - TuyaSmartCameraKit (~> 4.17.1)
-  - TuyaSmartCameraT
   - TuyaSmartHelpCenterBizBundle
   - TuyaSmartHomeKit
   - UMCCommon
@@ -322,7 +318,6 @@ SPEC REPOS:
     - MQTTClient
     - OpenSSL-Universal
     - Reachability
-    - SDWebImage
     - SGQRCode
     - STPopup
     - TuyaCameraSDK
@@ -333,7 +328,6 @@ SPEC REPOS:
     - TuyaSmartCameraBase
     - TuyaSmartCameraKit
     - TuyaSmartCameraM
-    - TuyaSmartCameraT
     - TuyaSmartDeviceKit
     - TuyaSmartFeedbackKit
     - TuyaSmartHomeKit
@@ -424,7 +418,6 @@ SPEC CHECKSUMS:
   TuyaSmartCameraBase: eeed37caf4a6489a507f8b2f0c4510d210a536ec
   TuyaSmartCameraKit: f7609fd0ae5cebf21b823fbd6ca21812ac347a1d
   TuyaSmartCameraM: e98946f83e1f6249f3f233c6499330768f0123b3
-  TuyaSmartCameraT: 04884cbd29989bc233177d3d8ed3db7f03323787
   TuyaSmartDeviceKit: 7649464a184017f5f35450c80c652bc83cf77a17
   TuyaSmartFeedbackKit: 88101dccbeeb1a17a93f2ee72bd9ae84d9ce7eb4
   TuyaSmartHelpCenterBizBundle: 4df7678cf617b665b1717482a940f32224bfaaae
@@ -469,6 +462,6 @@ SPEC CHECKSUMS:
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 84351c255ae152cde71f5364a5cf9d3b111fee4b
+PODFILE CHECKSUM: 598012db340a14e0afd8443d26bfe44f781d5563
 
 COCOAPODS: 1.9.1

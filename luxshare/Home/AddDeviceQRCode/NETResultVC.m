@@ -133,9 +133,8 @@
 }
 - (void)feedBackAction:(UIButton *)sender{
     FeedUpBindVC *VC = [[FeedUpBindVC alloc] init];
+    VC.deviceModel = self.deviceModel;
     [self.navigationController pushViewController:VC animated:YES];
 }
-
-
 
 @end

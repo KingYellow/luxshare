@@ -25,6 +25,8 @@
     [Bugly startWithAppId:APP_BUGLY_ID];
 
     [[TuyaSmartSDK sharedInstance] startWithAppKey:APP_TUYA_KEY secretKey:APP_TUYA_SECRET_KEY];
+//    [TYCameraCloudServicePanelSDK setupWithAppScheme:@"your_scheme"];
+
     [self loadNotification];
     
     if (@available(iOS 11.0, *)) {
