@@ -94,7 +94,7 @@
        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (row == 0) {
             cell.nameLab.text = QZHLoaclString(@"member_memberAccount");
-            cell.describeLab.text = self.memberModel.mobile;
+            cell.describeLab.text = self.memberModel.userName;
 
         }else{
             cell.nameLab.text = QZHLoaclString(@"member_homeRole");

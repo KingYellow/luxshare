@@ -53,6 +53,8 @@
 @property (strong, nonatomic)UIButton *talkBtn;
 @property (assign, nonatomic)BOOL isHor;
 @property(nonatomic,assign) BOOL statusHiden;
+@property (assign, nonatomic)BOOL isAwake;
+@property (strong, nonatomic)MBProgressHUD *talkHud;
 @end
 
 @implementation CameraOnLiveVC
@@ -75,10 +77,14 @@
 //    selector:@selector(applicationDidBecomeActive)
 //                                                 name:UIApplicationDidBecomeActiveNotification
 //    object:app];
-
+    self.device.delegate = self;
     self.talkType = [[QZHDataHelper readValueForKey:@"talkType"] boolValue];
-
     self.private =  [[self.dpManager valueForDP:TuyaSmartCameraBasicPrivateDPName] boolValue];
+    self.isAwake = YES;
+    if ([QZHDeviceStatus deviceIsBattery:self.deviceModel]) {
+        self.isAwake = [self.deviceModel.dps[@"149"] boolValue];
+        [self setConfigsWhenIsAwake];
+    }
 
     if (self.private) {
         [self startPrivateModel];
@@ -92,6 +98,9 @@
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     if (_camera) {
+        self.camera.delegate = nil;
+        self.device.delegate = nil;
+        [self.talkHud hide:YES];
         [self cameraStopPreview];
     }
 }
@@ -105,13 +114,18 @@
     self.isMuted = YES;
     self.dpManager = [[TuyaSmartCameraDPManager alloc] initWithDeviceId:self.deviceModel.devId];
     self.device = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId];
+    self.deviceModel = self.device.deviceModel;
       // 添加 DP 监听
     self.device.delegate = self;
     [self.dpManager addObserver:self];
-    [self start];
+    if ([QZHDeviceStatus deviceIsBattery:self.deviceModel]) {
+        bool isAwake = [self.deviceModel.dps[@"149"] boolValue];
+        if (!isAwake) {
+            [self startAwakeDevice];
+        }
+    }
     [self getWifiSignalStrength];
     [self getBatteryStrength];
-
 }
 
 - (void)UIConfig{
@@ -160,7 +174,7 @@
         [self cameraStartPreview];
         return;
     }
-    
+
     self.playView.playBtn.hidden = YES;
     [self creatP2PConnectChannel];
 }
@@ -194,6 +208,7 @@
 }
 #pragma mark -- 断开连接摄像机
 - (void)disconnectCamera{
+
     if (self.camera) {
         [self.camera.videoView tuya_clear];
     }
@@ -235,9 +250,9 @@
 }
 #pragma mark -- 关闭隐私模式
 - (void)closePrivateModel{
+    self.camera.delegate = self;
     if (self.connected) {
         [self cameraStartPreview];
-        self.camera.delegate = self;
     }else{
         [self connectCamera];
     }
@@ -408,7 +423,7 @@
         if (self.private) {
             
         }else{
-            vc.camera = self.camera;
+            vc.backCamera = self.camera;
         }
         [self.navigationController pushViewController:vc animated:YES];
 //        }
@@ -430,11 +445,15 @@
 }
 
 
-#pragma mark -- camerDelegate
+#pragma mark -- 摄像机代理camerDelegate
 
 -(void)cameraDidConnected:(id<TuyaSmartCameraType>)camera{
     
     self.connected = YES;
+    if ([self.deviceModel.productId isEqualToString:BATTERY_PRODUCT_ID]) {
+            self.playView.wifiIMG.hidden = NO;
+            self.playView.batteryIMG.hidden = NO;
+    }
     [self cameraStartPreview];
 
 }
@@ -442,6 +461,12 @@
       // p2p 连接被动断开，一般为网络波动导致
     self.connected = NO;
     self.previewing = NO;
+    if ([QZHDeviceStatus deviceIsBattery:self.deviceModel]) {
+        if (!self.isAwake) {
+            return;
+        }
+    }
+
     [self stopPlayGif];
     [self connectCamera];
     
@@ -462,6 +487,7 @@
 -(void)cameraDidBeginPreview:(id<TuyaSmartCameraType>)camera{
     
     self.previewing = YES;
+    self.playView.playBtn.hidden = YES;
     if (self.isHor) {
         [_playView addSubview:self.camera.videoView];
         [self.camera.videoView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -499,19 +525,31 @@
 
 }
 -(void)camera:(id<TuyaSmartCameraType>)camera didOccurredErrorAtStep:(TYCameraErrorCode)errStepCode specificErrorCode:(NSInteger)errorCode{
+    [self.talkHud hide:YES];
      if (errStepCode == TY_ERROR_CONNECT_FAILED) {
+         [[QZHHUD HUD] textHUDWithMessage:@"连接失败,正在重连" afterDelay:1.0];
           // p2p 连接失败
         self.connected = NO;
+         if ([QZHDeviceStatus deviceIsBattery:self.deviceModel]) {
+             if (!self.isAwake) {
+                 return;
+             }
+         }
          [self connectCamera];
-
-    }
-    else if (errStepCode == TY_ERROR_START_PREVIEW_FAILED) {
+    }else if (errStepCode == TY_ERROR_START_PREVIEW_FAILED) {
+        [[QZHHUD HUD] textHUDWithMessage:@"预览播放失败" afterDelay:1.0];
           // 实时视频播放失败
         self.previewing = NO;
+        if ([QZHDeviceStatus deviceIsBattery:self.deviceModel]) {
+            if (!self.isAwake) {
+                return;
+            }
+        }
         [self connectCamera];
     }else
     
     if (errStepCode == TY_ERROR_START_TALK_FAILED) {
+        [self stopTalkTimer];
         // 开启对讲失败，重新打开声音
 //        if (self.isMuted) {
 //            [self.camera enableMute:NO forPlayMode:TuyaSmartCameraPlayModePreview];
@@ -526,6 +564,7 @@
                 // 切换视频清晰度失败
     }else if (errorCode == TY_ERROR_RECORD_FAILED){
         self.recording = NO;
+        [self stopRecordTimer];
         self.playView.voiceBtn.alpha = 1.0;
         self.playView.voiceBtn.userInteractionEnabled = YES;
     }
@@ -540,9 +579,9 @@
     }];
 }
 - (void)getBatteryStrength{
-    if ([self.deviceModel.productId isEqualToString:BATTERY_PRODUCT_ID]) {
-     int type = [[self.dpManager valueForDP:TuyaSmartCameraWirelessPowerModeDPName] intValue];
-    int strength = [[self.dpManager valueForDP:TuyaSmartCameraWirelessElectricityDPName] intValue];
+      if ([QZHDeviceStatus deviceIsBattery:self.deviceModel]) {
+        int type = [[self.dpManager valueForDP:TuyaSmartCameraWirelessPowerModeDPName] intValue];
+        int strength = [[self.dpManager valueForDP:TuyaSmartCameraWirelessElectricityDPName] intValue];
         NSString *imgStr;
         //0 电池  1 电源
         if (type) {
@@ -574,11 +613,11 @@
             }
         }
         self.playView.batteryIMG.image = QZHLoadIcon(imgStr);
-
     }
     
 }
 #pragma mark - TuyaSmartDeviceDelegate
+
 -(void)device:(TuyaSmartDevice *)device dpsUpdate:(NSDictionary *)dps{
     if ([dps jk_hasKey:@"105"]) {
             if ([dps[@"105"] boolValue]) {
@@ -593,8 +632,38 @@
             [self closePrivateModel];
         }
     }
-}
+    
+    if ([QZHDeviceStatus deviceIsBattery:self.deviceModel]) {
+        if ([dps jk_hasKey:@"146"]) {//电池电量
+            [self getBatteryStrength];
+        }
+        if ([dps jk_hasKey:@"149"]) {//设备状态  YES唤醒  NO休眠
+            if ([dps[@"149"] boolValue]) {
+                self.isAwake = YES;
+                
+                [[QZHHUD HUD] textHUDWithMessage:@"唤醒成功" afterDelay:1.0];
 
+            }else{
+                self.isAwake = NO;
+                [[QZHHUD HUD] textHUDWithMessage:@"休眠成功" afterDelay:1.0];
+
+            }
+            [self setConfigsWhenIsAwake];
+        }
+    }
+}
+- (void)setConfigsWhenIsAwake{
+    
+    self.playView.wifiIMG.hidden = !self.isAwake;
+    self.playView.batteryIMG.hidden = !self.isAwake;
+    self.playView.playBtn.hidden = self.isAwake;
+    if (!self.playView.wifiIMG.hidden) {
+        [self getWifiSignalStrength];
+        
+    }
+
+}
+//WiFi信号状态代理
 - (void)device:(TuyaSmartDevice *)device signal:(NSString *)signal {
     NSInteger wifi = [signal integerValue];
     if (wifi < -80) {
@@ -615,7 +684,7 @@
     //sender.tag == 0) {
          //播放
     if (tag == 0) {
-        [self start];
+        [self startAwakeDevice];
         self.playView.playBtn.hidden = YES;
     }else if(tag == 1){
         //sender.tag == 1){
@@ -766,20 +835,25 @@
 - (void)deviceHandle:(NSInteger)tag{
     if (tag == -1) {
         //唤醒
-        [self start];
+        [self startAwakeDevice];
     }else{
         //休眠
         [self cameraStopPreview];
     
         NSDictionary  *dps = @{@"231": @(NO)};
-          [self.device publishDps:dps success:^{
+        [self.device publishDps:dps success:^{
               NSLog(@"publishDps success");
+//            [[QZHHUD HUD] textHUDWithMessage:@"休眠成功" afterDelay:1.0];
               //下发成功，状态上报通过 deviceDpsUpdate方法 回调
 //              [self.camera.videoView removeFromSuperview];
-              [self.camera pausePlayback];
-              self.playView.playBtn.hidden = NO;
-              self.connected = NO;
-              self.previewing = NO;
+            [self.camera pausePlayback];
+            self.playView.playBtn.hidden = NO;
+            if ([self.deviceModel.productId isEqualToString:BATTERY_PRODUCT_ID]) {
+                self.playView.wifiIMG.hidden = YES;
+                self.playView.batteryIMG.hidden = YES;
+            }
+            self.connected = NO;
+            self.previewing = NO;
           } failure:^(NSError *error) {
               [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
           }];
@@ -792,12 +866,11 @@
     return [self.dpManager isSupportDP:TuyaSmartCameraWirelessAwakeDPName];
 }
 
-- (void)start {
+/// 唤醒设备(电池版)
+- (void)startAwakeDevice {
     if ([self isDoorbell]) {
-        // 获取设备的状态
-            
         [self.device awakeDeviceWithSuccess:^{
-            
+//            [[QZHHUD HUD] textHUDWithMessage:@"唤醒成功" afterDelay:1.0];
             [self setConfigs];
             
         } failure:^(NSError *error) {
@@ -806,7 +879,6 @@
         }];
     }
 }
-
 
 #pragma mark -- 清晰度
 - (void)changeHD {
@@ -839,6 +911,17 @@
 }
 #pragma mark -- 对讲
 - (void)startTalk {
+    if (self.isHor) {
+        self.talkHud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        self.talkHud.labelText = @"建立通话通道中";
+        self.talkHud.transform = CGAffineTransformMakeRotation(90*M_PI/180);
+
+    }else{
+        self.talkHud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        self.talkHud.labelText = @"建立通话通道中";
+    }
+
+    [self.talkHud show:YES];
     [self.camera startTalk];
 }
 
@@ -847,6 +930,8 @@
 }
 
 - (void)cameraDidBeginTalk:(id<TuyaSmartCameraType>)camera {
+    [self.talkHud hide:YES];
+
         // 对讲已成功开启
     [self startTalkTimer];
     self.talking = YES;
@@ -861,7 +946,6 @@
             [self.camera enableMute:NO forPlayMode:TuyaSmartCameraPlayModePreview];
         }
     }
-
 }
 
 - (void)cameraDidStopTalk:(id<TuyaSmartCameraType>)camera {
@@ -870,6 +954,7 @@
     if (self.isMuted) {
         [self.camera enableMute:NO forPlayMode:TuyaSmartCameraPlayModePreview];
     }
+    
     [self stopTalkTimer];
     self.talking = NO;
 }
@@ -897,7 +982,6 @@
 
         }];
         [self.navigationController.view addSubview:self.playView];
-
 
     }else{
         OnLiveCell *cell = [self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
@@ -1023,13 +1107,13 @@ QZHWS(weakSelf)
     self.recordSecond++;
     NSInteger min = self.recordSecond/60;
     NSInteger sec = self.recordSecond%60;
-    self.playView.recordProgressView.timeLab.text = [NSString stringWithFormat:@"%02ld:%02ld",min,sec];
+    self.playView.recordProgressView.timeLab.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)min,sec];
 }
 - (void)talkTimerAction:(NSTimer *)tiemr{
     self.talkSecond++;
     NSInteger min = self.talkSecond/60;
     NSInteger sec = self.talkSecond%60;
-    self.playView.talkProgressView.timeLab.text = [NSString stringWithFormat:@"%02ld:%02ld",min,sec];
+    self.playView.talkProgressView.timeLab.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)min,sec];
 }
 #pragma mark -- lazy
 -(UIView *)privateView{
@@ -1071,6 +1155,7 @@ QZHWS(weakSelf)
     }
     return _talkBtn;
 }
+
 #pragma mark  -- 系统消息
 - (void)applicationWillEnterForeground{
     if (self.connected) {

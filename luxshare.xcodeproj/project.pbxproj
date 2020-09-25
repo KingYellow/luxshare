@@ -21,6 +21,7 @@
 		89160D8324A9E73E00511F84 /* AddMemberVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 89160D8224A9E73E00511F84 /* AddMemberVC.m */; };
 		89160D8924A9E7DE00511F84 /* YFMPaymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89160D8524A9E7DE00511F84 /* YFMPaymentView.m */; };
 		89160D8A24A9E7DE00511F84 /* PayTopTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89160D8624A9E7DE00511F84 /* PayTopTableViewCell.m */; };
+		8920D48A251C29980097FDE4 /* HomeManageListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8920D489251C29980097FDE4 /* HomeManageListCell.m */; };
 		8928524E24D13FA700B987D7 /* UIImageView+Gif.m in Sources */ = {isa = PBXBuildFile; fileRef = 8928524D24D13FA700B987D7 /* UIImageView+Gif.m */; };
 		892F997424BFFDCD007A0B08 /* ZFTimeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 892F997324BFFDCD007A0B08 /* ZFTimeLine.m */; };
 		893A40D124C95F1800F51261 /* WarningDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 893A40D024C95F1800F51261 /* WarningDetailVC.m */; };
@@ -30,6 +31,7 @@
 		89408A4124AC1F3400AF20F8 /* QZHSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89408A4024AC1F3400AF20F8 /* QZHSelectCell.m */; };
 		894B54F624CE606600D5C0D2 /* MessageSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 894B54F524CE606600D5C0D2 /* MessageSettingVC.m */; };
 		894B54F924CE625C00D5C0D2 /* MessageTimeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 894B54F824CE625C00D5C0D2 /* MessageTimeVC.m */; };
+		894F07D9250F021800ACA0FB /* QZHDeviceStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 894F07D8250F021800ACA0FB /* QZHDeviceStatus.m */; };
 		894FB72524CA66E300E5346C /* WarningListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 894FB72424CA66E300E5346C /* WarningListCell.m */; };
 		895636E524C14EBF0040A59A /* BasicFunVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 895636E424C14EBF0040A59A /* BasicFunVC.m */; };
 		895DFE1F24B05651004F986D /* AddQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 895DFE1E24B05651004F986D /* AddQRCodeVC.m */; };
@@ -228,6 +230,8 @@
 		89160D8624A9E7DE00511F84 /* PayTopTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayTopTableViewCell.m; sourceTree = "<group>"; };
 		89160D8724A9E7DE00511F84 /* YFMPaymentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFMPaymentView.h; sourceTree = "<group>"; };
 		89160D8824A9E7DE00511F84 /* PayTopTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayTopTableViewCell.h; sourceTree = "<group>"; };
+		8920D488251C29980097FDE4 /* HomeManageListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeManageListCell.h; sourceTree = "<group>"; };
+		8920D489251C29980097FDE4 /* HomeManageListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeManageListCell.m; sourceTree = "<group>"; };
 		8928524C24D13FA700B987D7 /* UIImageView+Gif.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Gif.h"; sourceTree = "<group>"; };
 		8928524D24D13FA700B987D7 /* UIImageView+Gif.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Gif.m"; sourceTree = "<group>"; };
 		892F997224BFFDCD007A0B08 /* ZFTimeLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZFTimeLine.h; sourceTree = "<group>"; };
@@ -247,6 +251,8 @@
 		894B54F524CE606600D5C0D2 /* MessageSettingVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageSettingVC.m; sourceTree = "<group>"; };
 		894B54F724CE625C00D5C0D2 /* MessageTimeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageTimeVC.h; sourceTree = "<group>"; };
 		894B54F824CE625C00D5C0D2 /* MessageTimeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageTimeVC.m; sourceTree = "<group>"; };
+		894F07D7250F021800ACA0FB /* QZHDeviceStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QZHDeviceStatus.h; sourceTree = "<group>"; };
+		894F07D8250F021800ACA0FB /* QZHDeviceStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QZHDeviceStatus.m; sourceTree = "<group>"; };
 		894FB72324CA66E300E5346C /* WarningListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WarningListCell.h; sourceTree = "<group>"; };
 		894FB72424CA66E300E5346C /* WarningListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WarningListCell.m; sourceTree = "<group>"; };
 		895636E324C14EBF0040A59A /* BasicFunVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BasicFunVC.h; sourceTree = "<group>"; };
@@ -765,6 +771,15 @@
 			path = MessageSetting;
 			sourceTree = "<group>";
 		};
+		894F07D6250F01D700ACA0FB /* DeviceStatus */ = {
+			isa = PBXGroup;
+			children = (
+				894F07D7250F021800ACA0FB /* QZHDeviceStatus.h */,
+				894F07D8250F021800ACA0FB /* QZHDeviceStatus.m */,
+			);
+			path = DeviceStatus;
+			sourceTree = "<group>";
+		};
 		895636DF24C13DC00040A59A /* UpdateDevice */ = {
 			isa = PBXGroup;
 			children = (
@@ -831,6 +846,8 @@
 				89F7D01324A57D8C007B5A32 /* View */,
 				89F7D01424A57DA8007B5A32 /* HomeManageVC.h */,
 				89F7D01524A57DA8007B5A32 /* HomeManageVC.m */,
+				8920D488251C29980097FDE4 /* HomeManageListCell.h */,
+				8920D489251C29980097FDE4 /* HomeManageListCell.m */,
 			);
 			path = HomeManage;
 			sourceTree = "<group>";
@@ -1344,9 +1361,8 @@
 			children = (
 				894045D725076AAA003CBA1F /* MBProgressHUD+NJ.h */,
 				894045D825076AAB003CBA1F /* MBProgressHUD+NJ.m */,
+				894F07D6250F01D700ACA0FB /* DeviceStatus */,
 				89F7D01B24A5B444007B5A32 /* Categories */,
-				89E591C624A34DBE00EEB26A /* UITableView+MoveCell.h */,
-				89E591C524A34DBE00EEB26A /* UITableView+MoveCell.m */,
 				898C4EAB24A1EC8600A574E0 /* QZHAlertField */,
 				89DB0A6224A05A3900324E36 /* DDBanner */,
 				89DB0A6524A05A3900324E36 /* QZHKitHelper */,
@@ -1430,6 +1446,8 @@
 		89DB0A7C24A05A3900324E36 /* UITableView+Exp */ = {
 			isa = PBXGroup;
 			children = (
+				89E591C624A34DBE00EEB26A /* UITableView+MoveCell.h */,
+				89E591C524A34DBE00EEB26A /* UITableView+MoveCell.m */,
 				89DB0A7D24A05A3900324E36 /* UITableView+FooterHide.m */,
 				89DB0A7E24A05A3900324E36 /* UITableView+FooterHide.h */,
 			);
@@ -2128,6 +2146,7 @@
 				89E591BE24A3360C00EEB26A /* NSString+Utils.m in Sources */,
 				897806CF24B8429000BE79EB /* DeviceSettingVC.m in Sources */,
 				8962F20B24BEE21E00D85A65 /* zyyy_DateView.m in Sources */,
+				894F07D9250F021800ACA0FB /* QZHDeviceStatus.m in Sources */,
 				89DB0AC924A05A3900324E36 /* YCXMenu.m in Sources */,
 				897806D724B8485400BE79EB /* SettingSwitchCell.m in Sources */,
 				89F7D08C24A5C3FB007B5A32 /* EasyShowLabel.m in Sources */,
@@ -2140,6 +2159,7 @@
 				89F7D07E24A5C3FB007B5A32 /* QZHNetworkConfig.m in Sources */,
 				89F7D01A24A5AE40007B5A32 /* CountrySelectView.m in Sources */,
 				89160D8324A9E73E00511F84 /* AddMemberVC.m in Sources */,
+				8920D48A251C29980097FDE4 /* HomeManageListCell.m in Sources */,
 				89DB0ACA24A05A3900324E36 /* YCXMenuItem.m in Sources */,
 				89DB09E324A0591700324E36 /* main.m in Sources */,
 				8902258F24C19D160060DEDF /* FormatProgressView.m in Sources */,
@@ -2361,7 +2381,7 @@
 				CODE_SIGN_ENTITLEMENTS = luxshare/luxshare.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = V46XVDX494;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2388,7 +2408,7 @@
 				CODE_SIGN_ENTITLEMENTS = luxshare/luxshare.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = V46XVDX494;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

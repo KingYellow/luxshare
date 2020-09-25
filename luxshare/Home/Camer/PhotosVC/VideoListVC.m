@@ -144,7 +144,6 @@
 
 - (void)getphotosList{
  HXPhotoManager *manager =   [[HXPhotoManager alloc]initWithType:HXPhotoManagerSelectedTypeVideo];
-    HXAlbumModel *model = [[HXAlbumModel alloc] init];
     QZHWS(weakSelf)
     [manager getAllAlbumModelFilter:NO select:^(HXAlbumModel *selectedModel) {
     

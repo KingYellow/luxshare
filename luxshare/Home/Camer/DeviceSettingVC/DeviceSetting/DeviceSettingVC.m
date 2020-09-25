@@ -94,10 +94,10 @@
             }else if (row == 3){
                 cell.radioPosition = 1;
                 int state = [[self.dpManager valueForDP:TuyaSmartCameraBasicNightvisionDPName] intValue];
-                if (state == 0) {
+                if (state == 1) {
                     cell.tagLab.text = @"关闭";
                 }
-                if (state == 1) {
+                if (state == 0) {
                     cell.tagLab.text = @"自动";
                 }
                 if (state == 2) {
@@ -135,6 +135,8 @@
              cell.nameLab.text = self.memberArr[row];
              if (row == 0) {
                  cell.radioPosition = -1;
+             }else if (row == 4){
+                 cell.radioPosition = 1;
              }else{
                  cell.radioPosition = 0;
              }
@@ -186,18 +188,18 @@
 
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    if ([self isAdminOrOwner]) {
+//    if ([self isAdminOrOwner]) {
         return 3;
-    }
+//    }
    
-    return 2;
+//    return 2;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0 ) {
         return 4;
     }else if(section == 1){
        
-        return self.memberArr.count;
+        return self.memberArr.count - 1;
     }else{
         return 1;
     }
@@ -244,6 +246,10 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
         if (row == 3) {
+            if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
+                [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+                return;
+            }
             [self creatActionSheet];
         }
     }
@@ -291,7 +297,7 @@
         }
     }
     if (section == 2) {
-
+        if ([self isAdminOrOwner]) {
             TuyaSmartFirmwareUpgradeModel *model = self.deviceUpdateArr.firstObject;
             if (model.upgradeStatus == 0) {
                 UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"已是最新版本" message:[NSString stringWithFormat:@"当前版本号: %@",model.currentVersion] preferredStyle:UIAlertControllerStyleAlert];
@@ -311,7 +317,18 @@
                     [weakSelf getFirmwareUpgradeInfo];
                 };
                 [self.navigationController pushViewController:vc animated:YES];
-            }    
+            }
+            
+        }else{
+            UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"版本信息" message:[NSString stringWithFormat:@"当前版本号: %@",self.deviceModel.verSw] preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            [alertC addAction:action];
+            [self presentViewController:alertC animated:NO completion:nil];
+        }
+
+   
     }
 }
 
@@ -332,6 +349,11 @@
 }
 #pragma mark -- action
 - (void)valueChange:(UISwitch *) sender{
+    if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
+        sender.on = !sender.on;
+        [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+        return;
+    }
     QZHWS(weakSelf)
     if (sender.tag == 1) {
         //隐私
@@ -352,14 +374,14 @@
 }
 #pragma mark -- 红外夜视
 -(void)creatActionSheet {
-
+//"0"：关闭；"1"：自动；"2"：打开
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"红外夜视" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 
     QZHWS(weakSelf)
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"自动" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self.dpManager isSupportDP:TuyaSmartCameraBasicNightvisionDPName]) {
             
-            [self.dpManager setValue:@"1" forDP:TuyaSmartCameraBasicNightvisionDPName success:^(id result) {
+            [self.dpManager setValue:@"0" forDP:TuyaSmartCameraBasicNightvisionDPName success:^(id result) {
                 [weakSelf.qzTableView reloadData];
             } failure:^(NSError *error) {
                [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
@@ -369,7 +391,7 @@
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
           if ([self.dpManager isSupportDP:TuyaSmartCameraBasicNightvisionDPName]) {
               
-              [self.dpManager setValue:@"0" forDP:TuyaSmartCameraBasicNightvisionDPName success:^(id result) {
+              [self.dpManager setValue:@"1" forDP:TuyaSmartCameraBasicNightvisionDPName success:^(id result) {
                   [weakSelf.qzTableView reloadData];
               } failure:^(NSError *error) {
                  [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
@@ -412,7 +434,7 @@ QZHWS(weakSelf)
     }];
 }
 - (BOOL)isAdminOrOwner{
-    if (self.homeModel.role == TYHomeRoleType_Admin ||self.homeModel.role == TYHomeRoleType_Owner) {
+    if ((self.homeModel.role == TYHomeRoleType_Admin ||self.homeModel.role == TYHomeRoleType_Owner )&& !self.deviceModel.isShare) {
         return YES;
     }
     return NO;

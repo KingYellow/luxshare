@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BackPlayVC : UIViewController<TuyaSmartCameraDelegate>
 @property (strong, nonatomic)TuyaSmartDeviceModel *deviceModel;
-@property (strong, nonatomic)id<TuyaSmartCameraType> camera;
+@property (strong, nonatomic)id<TuyaSmartCameraType> backCamera;
 
 @end
 

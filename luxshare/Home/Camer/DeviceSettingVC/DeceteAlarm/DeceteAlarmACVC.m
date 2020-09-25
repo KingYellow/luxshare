@@ -111,11 +111,12 @@
             }];
             if (row == 0) {
                 cell.nameLab.text = QZHLoaclString(@"setting_decrteAlarmSwitch");
-                cell.switchBtn.on = [self.deviceModel.dps[@"134"] boolValue];
+                cell.switchBtn.on = [self.deviceModel.dps[@"170"] boolValue];
+                cell.switchBtn.hidden = YES;
                 cell.switchBtn.tag = 0;
             }else{
                 cell.nameLab.text = QZHLoaclString(@"setting_personFilter");
-                cell.switchBtn.on = [self.deviceModel.dps[@"170"] boolValue];
+                cell.switchBtn.on = [self.deviceModel.dps[@"134"] boolValue];
                 cell.switchBtn.tag = 1;
             }
 
@@ -295,11 +296,19 @@
     NSInteger row = indexPath.row;
     NSInteger section = indexPath.section;
     if (section == 0) {
+        if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
+            [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+            return;
+        }
         if (row == 2) {
             [self creatPIRActionSheet];
         }
     }
     if (section == 1) {
+        if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
+            [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+            return;
+        }
         if (row == 1) {
            BOOL private =  [[self.dpManager valueForDP:TuyaSmartCameraBasicPrivateDPName] boolValue];
 
@@ -315,11 +324,19 @@
         }
     }
     if (section == 2) {
+        if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
+            [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+            return;
+        }
         if (row == 1) {
             [self creatDecibelActionSheet];
         }
     }
     if (section == 3) {
+        if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
+            [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+            return;
+        }
         if (row == 1) {
             [self creatCryActionSheet];
         }
@@ -334,14 +351,23 @@
         if (row == 1) {
             QZHWS(weakSelf)
            [BRStringPickerView showPickerWithTitle:@"时间间隔" dataSourceArr:self.timeArr selectIndex:0 resultBlock:^(BRResultModel * _Nullable resultModel) {
-                NSDictionary  *dps = @{@"133": @(resultModel.index*2 + 1)};
+               NSString *time = @"0";
+               if (resultModel.index == 0) {
+                   time = @"1";
+               }
+               if (resultModel.index == 1) {
+                   time = @"3";
+               }
+               if (resultModel.index == 2) {
+                   time = @"5";
+               }
+                NSDictionary  *dps = @{@"133": time};
 
                 [weakSelf.device publishDps:dps success:^{
                       [weakSelf.qzTableView reloadData];
 
                 } failure:^(NSError *error) {
-                    [[QZHHUD HUD]textHUDWithMessage:@"设备暂不支持" afterDelay:1.0];
-//                      [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+                   [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
 
                   }];
             }];
@@ -358,11 +384,17 @@
     return _timeArr;
 }
 #pragma mark -- action
-- (void)valueChange:(UISwitch *) sender{
+- (void)valueChange:(UISwitch *)sender{
+    
+    if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
+        sender.on = !sender.on;
+        [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+        return;
+    }
     QZHWS(weakSelf)
     if (sender.tag == 0) {
         
-        NSDictionary  *dps = @{@"134": @(sender.on)};
+        NSDictionary  *dps = @{@"170": @(sender.on)};
           [self.device publishDps:dps success:^{
 
           } failure:^(NSError *error) {
@@ -378,7 +410,7 @@
 //        }];
     }
     if (sender.tag == 1) {
-        NSDictionary  *dps = @{@"170": @(sender.on)};
+        NSDictionary  *dps = @{@"134": @(sender.on)};
           [self.device publishDps:dps success:^{
 
           } failure:^(NSError *error) {
@@ -557,10 +589,9 @@
 #pragma mark -- deviceDelete
 - (void)device:(TuyaSmartDevice *)device dpsUpdate:(NSDictionary *)dps{
     self.device = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId];
-
+    self.device.delegate = self;
+    self.deviceModel = self.device.deviceModel;
     [self.qzTableView reloadData];
 }
--(void)dealloc{
-    self.device.delegate = nil;
-}
+
 @end

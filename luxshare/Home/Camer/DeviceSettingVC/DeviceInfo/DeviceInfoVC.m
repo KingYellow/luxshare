@@ -35,6 +35,7 @@
 
 }
 - (void)UIConfig{
+    TuyaSmartDeviceModel *mode = self.deviceModel;
     
     [self.view addSubview:self.qzTableView];
          [self.qzTableView mas_makeConstraints:^(MASConstraintMaker *make) {

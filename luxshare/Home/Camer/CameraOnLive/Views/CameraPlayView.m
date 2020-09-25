@@ -225,6 +225,7 @@
 - (UIImageView *)wifiIMG{
     if (!_wifiIMG) {
         _wifiIMG = [[UIImageView alloc] init];
+        _wifiIMG.image = QZHLoadIcon(@"wifi_0");
     }
     return _wifiIMG;
 }

@@ -298,7 +298,5 @@
 
     return self.statusHiden;
 }
--(void)dealloc{
-    
-}
+
 @end

@@ -113,11 +113,10 @@
             }else if (model.dealStatus == TYHomeStatusReject) {
                 cell.describeLab.text = QZHLoaclString(@"home_memberstatus_reject");
             }else{
-                cell.describeLab.text = model.mobile;
+                cell.describeLab.text = model.userName;
             }
             
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-           
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }else{
@@ -324,10 +323,7 @@
     QZHWS(weakSelf)
     [self.home dismissHomeWithSuccess:^() {
         [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-            
-        });
+        [weakSelf getHomeList];
         
     } failure:^(NSError *error) {
         [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
@@ -335,5 +331,30 @@
     }];
 }
 
+- (void)getHomeList {
+   TuyaSmartHomeManager *magager = [TuyaSmartHomeManager new];
+    [magager getHomeListWithSuccess:^(NSArray<TuyaSmartHomeModel *> *homes) {
+        if (homes.count == 0) {
+            [self addDefaultHome];
+        }else{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+                
+            });
+        }
 
+    } failure:^(NSError *error) {
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+        
+    }];
+}
+- (void)addDefaultHome{
+    QZHWS(weakSelf)
+    [[[TuyaSmartHomeManager alloc] init] addHomeWithName:@"我的家" geoName:@"" rooms:@[] latitude:0 longitude:0 success:^(long long result) {
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+
+    } failure:^(NSError *error) {
+           [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+    }];
+}
 @end

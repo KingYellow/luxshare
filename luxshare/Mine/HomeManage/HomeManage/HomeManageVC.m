@@ -7,7 +7,7 @@
 //
 
 #import "HomeManageVC.h"
-#import "PerInfoDefaultCell.h"
+#import "HomeManageListCell.h"
 #import "QZHDefaultButtonCell.h"
 #import "HomeDetailVC.h"
 #import "AddHomeVC.h"
@@ -57,7 +57,7 @@
 
         _qzTableView.delegate = self;
         _qzTableView.dataSource = self;
-        [self.qzTableView registerClass:[PerInfoDefaultCell class] forCellReuseIdentifier:QZHCELL_REUSE_TEXT];
+        [self.qzTableView registerClass:[HomeManageListCell class] forCellReuseIdentifier:QZHCELL_REUSE_TEXT];
         [self.qzTableView registerClass:[QZHDefaultButtonCell class] forCellReuseIdentifier:QZHCELL_REUSE_DEFAULT];
 
     }
@@ -68,7 +68,7 @@
     NSInteger row = indexPath.row;
     if (section == 0) {
         
-        PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
+        HomeManageListCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
         TuyaSmartHomeModel *model = self.listArr[row];
         
         cell.nameLab.text = model.name;

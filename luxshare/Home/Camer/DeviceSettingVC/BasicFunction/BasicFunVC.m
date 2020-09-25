@@ -147,6 +147,11 @@
 
 #pragma mark -- action
 - (void)valueChange:(UISwitch *) sender{
+    if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
+        sender.on = !sender.on;
+        [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+        return;
+    }
     QZHWS(weakSelf)
     if (sender.tag == 0) {
         //状态指示灯

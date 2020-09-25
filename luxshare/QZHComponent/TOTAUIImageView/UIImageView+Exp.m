@@ -43,9 +43,9 @@
         return [image yy_imageByResizeToSize:CGSizeMake(width, height) contentMode:UIViewContentModeScaleToFill];
     } completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, YYWebImageFromType from, YYWebImageStage stage, NSError * _Nullable error) {
         if (image && image.size.width > 2) {
-            weakSelf.image = [UIImage exp_imageScaleWithImage:image toByte:0];
+            weakSelf.image = image;
         }else{
-            
+            weakSelf.image = placeholderImage;
         }
     }];
     return;

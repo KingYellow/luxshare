@@ -25,11 +25,13 @@
 
     [self.timeLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
         make.top.mas_equalTo(self.contentView.mas_top).offset(15);
 
     }];
     [self.weekLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(15);
+        make.right.mas_equalTo(self.statusSwitch.mas_left).offset(-5);
         make.top.mas_equalTo(self.timeLab.mas_bottom).offset(10);
 
     }];
@@ -41,8 +43,8 @@
     [self.statusSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-15);
         make.centerY.mas_equalTo(self.contentView);
-        make.width.mas_equalTo(100);
-        make.height.mas_equalTo(50);
+        make.width.mas_equalTo(51);
+        make.height.mas_equalTo(31);
     }];
 }
 
@@ -60,7 +62,7 @@
     if (!_weekLab) {
         _weekLab = [[UILabel alloc] init];
         _weekLab.textColor = QZHKIT_Color_BLACK_54;
-        _weekLab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
+        _weekLab.font = QZHKIT_FONT_LISTCELL_DESCRIBE_TITLE;
         
     }
     return _weekLab;
@@ -69,7 +71,7 @@
     if (!_itemLab) {
         _itemLab = [[UILabel alloc] init];
         _itemLab.textColor = QZHKIT_Color_BLACK_54;
-        _itemLab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
+        _itemLab.font = QZHKIT_FONT_LISTCELL_DESCRIBE_TITLE;
         
     }
     return _itemLab;

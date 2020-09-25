@@ -28,7 +28,6 @@
 @property (strong, nonatomic)TuyaSmartHomeManager *magager;
 @property (strong, nonatomic)BWTopMenuView *topBtnsView;
 @property (strong, nonatomic)UIButton *leftBtn;
-@property (strong, nonatomic)UIButton *rightBtn;
 @property (strong, nonatomic)NSMutableArray *items;
 @property (assign, nonatomic)NSInteger selectIndex;
 
@@ -70,8 +69,6 @@
     [self.view addSubview:self.pageController.view];
     self.pageController.view.frame = CGRectMake(0, 0, QZHScreenWidth, QZHScreenHeight);
 
-//    [self.view addSubview:self.rightBtn];
-//    [self.view bringSubviewToFront:self.rightBtn];
     [QZHROOT_DELEGATE.window addSubview:self.qzTableView];
     self.qzTableView.frame = CGRectMake(0, -QZHScreenHeight, QZHScreenWidth, QZHScreenHeight);
  
@@ -80,11 +77,7 @@
 //        make.right.mas_equalTo(-60);
 //        make.height.mas_equalTo(50);
 //    }];
-//    [self.rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.top.mas_equalTo(0);
-//        make.height.mas_equalTo(50);
-//        make.width.mas_equalTo(50);
-//    }];
+
 }
 -(void)exp_leftAction{
     [self getHomeList];
@@ -94,6 +87,11 @@
     }];
 }
  -(void)exp_rightAction{
+     
+     if (self.listArr.count == 0) {
+         [[QZHHUD HUD]textHUDWithMessage:@"请先添加家庭" afterDelay:1.0];
+         return;
+     }
      
      Reachability *reach = [Reachability reachabilityWithHostName:@"www.apple.com"];
      if ([reach currentReachabilityStatus] == ReachableViaWiFi) {
@@ -378,7 +376,6 @@
         
         }else{
             [self.currentHome getHomeDetailWithSuccess:^(TuyaSmartHomeModel *homeModel) {
-                [self dismiss];
                  NSMutableArray  *arrm = [NSMutableArray array];
                  [arrm addObject:@"所有设备"];
                  for (TuyaSmartRoomModel *room in self.currentHome.roomList) {
@@ -386,9 +383,11 @@
                  }
                  [self.leftBtn setTitle:model.name forState:UIControlStateNormal];
                  self.selectIndex = row;
-                 self.topBtnsView.titleArray = arrm;
+                [self.qzTableView reloadData];
+                 self.param.wTitleArr = arrm;
                 [self loadVcs:self.currentHome];
-                 
+                [self dismiss];
+
              } failure:^(NSError *error) {
                     [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
              }];
@@ -444,14 +443,7 @@
     }
     return _topBtnsView;
 }
-- (UIButton *)rightBtn{
-    if (!_rightBtn) {
-        _rightBtn = [[UIButton alloc] init];
-        [_rightBtn setImage:QZHLoadIcon(@"ellipsis") forState:UIControlStateNormal];
-        [_rightBtn addTarget:self action:@selector(romeListAction:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _rightBtn;
-}
+
 -(WMZPageController *)pageController{
 
     if (!_pageController) {
@@ -466,6 +458,7 @@
         .wMenuTitleSelectColorSet(QZHKIT_COLOR_SKIN)
         .wMenuFixRightDataSet(@"≡")
         .wMenuDefaultIndexSet(0)
+        .wScrollCanTransferSet(YES)//控制器能否滑动切换
         .wMenuAnimalSet(PageTitleMenuAiQY);
         QZHWS(weakSelf)
         _param.wEventFixedClick = ^(id anyID, NSInteger index) {
@@ -546,7 +539,7 @@
 
 // 我收到的共享设备列表变化
 - (void)homeDidUpdateSharedInfo:(TuyaSmartHome *)home {
-    
+    [self getHomeList];
 }
 
 // 家庭下新增房间代理回调
@@ -609,7 +602,6 @@
         return YES;
     }
     return NO;
-
 }
 
 @end

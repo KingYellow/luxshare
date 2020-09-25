@@ -233,4 +233,10 @@
 - (void)camera:(id<TuyaSmartCameraType>)camera ty_didReceiveVideoFrame:(CMSampleBufferRef)sampleBuffer frameInfo:(TuyaSmartVideoFrameInfo)frameInfo {
    
 }
+-(void)cameraDidBeginPlayback:(id<TuyaSmartCameraType>)camera{
+    
+}
+-(void)cameraDidStopPlayback:(id<TuyaSmartCameraType>)camera{
+    
+}
 @end

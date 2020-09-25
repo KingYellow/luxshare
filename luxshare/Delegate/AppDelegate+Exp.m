@@ -45,12 +45,10 @@
     
     //配置UI全局
     [QZHKitHelper.kitHelper configKit];
-
     
     //添加数据存储白名单
     [QZHDataHelper addWhiteList:QZHKEY_PUSHOPEN];
     [QZHDataHelper addWhiteList:QZHKEY_DEVICE_TOKEN];
-    
     
     ///监控网络状态
     [QZHReachability reachability:^(QZHNetworkStatus status, NSString *describe) {

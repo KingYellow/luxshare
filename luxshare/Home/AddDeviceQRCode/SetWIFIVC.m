@@ -314,10 +314,12 @@
     }
 }
 - (void)getTokenFromTY{
-    
+    MBProgressHUD  *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    hud.labelText = @"请求中";
+    [hud show:YES];
     [[TuyaSmartActivator sharedInstance] getTokenWithHomeId:self.homemodel.homeId success:^(NSString *token) {
         NSLog(@"getToken success: %@", token);
-        
+        [hud hide:YES];
         NSDictionary *dictionary = @{
         @"s": self.phoneText.text,
         @"p": self.passwordText.text,
@@ -345,7 +347,7 @@
         // TODO: startConfigWiFi
     } failure:^(NSError *error) {
         [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
-        
+        [hud hide:YES];
     }];
   
 }

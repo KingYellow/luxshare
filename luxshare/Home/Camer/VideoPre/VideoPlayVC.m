@@ -12,6 +12,7 @@
 @property (strong, nonatomic)WMPlayer *player;
 @property (assign, nonatomic)WMPlayerState state;
 @property (assign, nonatomic)BOOL isHor;
+@property (strong, nonatomic)UIButton *playBtn;
 @end
 
 @implementation VideoPlayVC
@@ -41,19 +42,26 @@
     model.verticalVideo = YES;
     self.player = [WMPlayer playerWithModel:model];
     self.player.backBtnStyle = BackBtnStyleNone;
+    self.player.loopPlay = YES;
     self.player.delegate = self;
     [self.view addSubview:self.player];
-    self.player.frame = CGRectMake(0, 0, QZHScreenWidth, QZHScreenHeight-QZHHeightTop);
+    self.player.frame = CGRectMake(0, 0, QZHScreenWidth, QZHScreenHeight-QZHHeightTop - QZHHeightBottom);
+    [self.player addSubview:self.playBtn];
+    [self.playBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.mas_equalTo(self.player);
+    }];
     [self.player play];
 }
 
 -(void)wmplayerFinishedPlay:(WMPlayer *)wmplayer;{
-    self.state = WMPlayerStateFinished;
+//    self.state = WMPlayerStateFinished;
+    [self.player pause];
+    self.playBtn.hidden = NO;
     
 }
 -(void)wmplayerReadyToPlay:(WMPlayer *)wmplayer WMPlayerStatus:(WMPlayerState)state{
     self.state = state;
-    
+    self.playBtn.hidden = YES;
 }
 
 -(void)wmplayer:(WMPlayer *)wmplayer clickedPlayOrPauseButton:(UIButton *)playOrPauseBtn{
@@ -65,8 +73,10 @@
     }else{
 
         if (!playOrPauseBtn.selected) {
+            self.playBtn.hidden  = YES;
             [self.player play];
         }else{
+            self.playBtn.hidden  = NO;
             [self.player pause];
         }
     }
@@ -108,5 +118,18 @@
         self.player.frame = CGRectMake(0, 0, QZHScreenWidth, QZHScreenHeight - QZHHeightTop);
     }
 }
-
+#pragma mark -- lazy
+-(UIButton *)playBtn{
+    if (!_playBtn) {
+        _playBtn = [[UIButton alloc] init];
+        [_playBtn setImage:QZHLoadIcon(@"btn_doc_video_play_video") forState:UIControlStateNormal];
+        _playBtn.hidden = YES;
+        [_playBtn addTarget:self action:@selector(buttonAction) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _playBtn;
+}
+- (void)buttonAction{
+    self.playBtn.hidden = YES;
+    [self.player play];
+}
 @end

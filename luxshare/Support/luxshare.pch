@@ -50,4 +50,5 @@
 #import "BRPickerView.h"
 #import "WMZPageController.h"
 #import "MBProgressHUD.h"
+#import "QZHDeviceStatus.h"
 #endif /* luxshare_pch */

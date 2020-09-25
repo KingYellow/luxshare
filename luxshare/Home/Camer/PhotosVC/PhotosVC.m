@@ -32,6 +32,8 @@
 @property (strong, nonatomic)UIView *bottomHandleView;
 @property (strong, nonatomic)NSArray *deleteArr;
 @property (strong, nonatomic)UIButton *btn;
+@property (strong, nonatomic)UIScrollView *scrollView;
+@property (assign, nonatomic)BOOL isEditing;
 @end
 
 
@@ -40,6 +42,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initConfig];
+    self.isEditing = NO;
 }
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
@@ -72,8 +75,11 @@ QZHWS(weakSelf)
         if (selectArr.count > 0) {
             weakSelf.topHandleView.hidden = NO;
             weakSelf.bottomHandleView.hidden = NO;
+            weakSelf.scrollView.scrollEnabled = NO;
+            weakSelf.isEditing = YES;
+
             weakSelf.deleteArr = selectArr;
-            weakSelf.topNumLab.text = [NSString stringWithFormat:@"%ld个已选定",selectArr.count];
+            weakSelf.topNumLab.text = [NSString stringWithFormat:@"%lu个已选定",(unsigned long)selectArr.count];
             weakSelf.btn.selected = isall;
             if (weakSelf.currentIndex == 1) {
               
@@ -81,7 +87,8 @@ QZHWS(weakSelf)
         }else{
             weakSelf.topHandleView.hidden = YES;
             weakSelf.bottomHandleView.hidden = YES;
-         
+            weakSelf.scrollView.scrollEnabled = YES;
+            weakSelf.isEditing = NO;
         }
 
     };
@@ -93,6 +100,8 @@ QZHWS(weakSelf)
         if (selectArr.count > 0) {
             weakSelf.topHandleView.hidden = NO;
             weakSelf.bottomHandleView.hidden = NO;
+            weakSelf.scrollView.scrollEnabled = NO;
+            weakSelf.isEditing = YES;
             weakSelf.deleteArr = selectArr;
             weakSelf.topNumLab.text = [NSString stringWithFormat:@"%ld个已选定",selectArr.count];
             weakSelf.btn.selected = isall;
@@ -103,7 +112,8 @@ QZHWS(weakSelf)
         }else{
             weakSelf.topHandleView.hidden = YES;
             weakSelf.bottomHandleView.hidden = YES;
-         
+            weakSelf.scrollView.scrollEnabled = YES;
+            weakSelf.isEditing = NO;
         }
 
     };
@@ -113,6 +123,7 @@ QZHWS(weakSelf)
     self.arrBtn = [NSArray arrayWithObjects:self.leftBtn, self.rightBtn, nil];
     
     self.pageVc = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+
     [self.pageVc setViewControllers:@[self.arrVcs[0]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
     self.pageVc.delegate = self;
     self.pageVc.dataSource = self;
@@ -121,6 +132,17 @@ QZHWS(weakSelf)
     [self addChildViewController:self.pageVc];
     [self.pageVc didMoveToParentViewController:self];
     [self.view addSubview:self.pageVc.view];
+    
+        [self.pageVc.view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj isKindOfClass:[UIScrollView class]]) self.scrollView = (UIScrollView *)obj;
+    
+        }];
+        if(self.scrollView)
+        {
+        //新添加的手势，起手势锁的作用
+            self.scrollView.scrollEnabled = YES;
+
+        }
 }
 //点击按钮事件
 #pragma mark ----按钮点击事件
@@ -346,6 +368,8 @@ QZHWS(weakSelf)
 - (void)cancelAction:(UIButton *)sender{
     self.topHandleView.hidden = YES;
     self.bottomHandleView.hidden = YES;
+    self.scrollView.scrollEnabled = YES;
+    self.isEditing = NO;
     if (self.currentIndex == 1) {
         [self.photoVC selectAllVideosOrPhotos:NO];
     }else{
@@ -367,6 +391,8 @@ QZHWS(weakSelf)
                // UI更新代码
                self.topHandleView.hidden = YES;
                self.bottomHandleView.hidden = YES;
+               self.scrollView.scrollEnabled = YES;
+               self.isEditing = NO;
                if (self.currentIndex == 1) {
                     [self.photoVC getphotosList];
                }else{

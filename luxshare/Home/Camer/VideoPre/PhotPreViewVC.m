@@ -40,11 +40,13 @@
 - (void)layOutImage{
     [self.view addSubview:self.photoIMG];
     [self.photoIMG addSubview:self.horizontalBtn];
+    self.horizontalBtn.backgroundColor = QZHKIT_Color_BLACK_54;
+    QZHViewRadius(self.horizontalBtn, 15)
     self.photoIMG.frame = CGRectMake(0, 200 *QZHScaleWidth, QZHScreenWidth, QZHScreenWidth * 1080/1920);
 
     [self.horizontalBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(-20);
-        make.bottom.mas_equalTo(-20);
+        make.right.mas_equalTo(-15);
+        make.bottom.mas_equalTo(-15);
         make.width.height.mas_equalTo(30);
     }];
     

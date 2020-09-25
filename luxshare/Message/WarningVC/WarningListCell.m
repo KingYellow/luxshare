@@ -27,7 +27,7 @@
     [self.contentView addSubview:self.contentLab];
     [self.contentView addSubview:self.checkBtn];
     [self.contentView addSubview:self.picIMG];
-     
+
      [self.selectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
          make.right.mas_equalTo(-15);
          make.width.height.mas_equalTo(20);
@@ -60,8 +60,13 @@
         make.top.mas_equalTo(self.tagLab.mas_bottom).offset(10);
         make.right.mas_equalTo(self.selectBtn.mas_left).offset(-5);
         make.width.mas_equalTo(65);
-
     }];
+//    [self.checkBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.mas_equalTo(self.contentLab.mas_bottom).offset(-1);
+//        make.right.mas_equalTo(self.contentLab.mas_right).offset(-3);
+//        make.width.mas_equalTo(65);
+//
+//    }];
     [self.bigView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(UIEdgeInsetsMake(10, 10, 10, 10));
     }];
@@ -116,9 +121,6 @@
     if (!_checkBtn) {
         _checkBtn = [[UIButton alloc] init];
         [_checkBtn setTitle:@"点击查看" forState:UIControlStateNormal];
-        NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:@"点击查看"
-                                                                                    attributes:@{NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle),NSForegroundColorAttributeName:QZHKIT_COLOR_SKIN}];
-        [_checkBtn setAttributedTitle:attrStr forState:UIControlStateNormal];
         _checkBtn.titleLabel.font =QZHTEXT_FONT(14);
         [_checkBtn setTitleColor:QZHKIT_COLOR_SKIN forState:UIControlStateNormal];
         

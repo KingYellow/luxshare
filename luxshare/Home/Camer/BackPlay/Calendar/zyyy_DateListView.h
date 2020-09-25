@@ -13,5 +13,5 @@ typedef void(^selectDate) (NSDictionary *date);
 @property(nonatomic,strong)UIScrollView *dateScroView;
 @property (strong, nonatomic)id<TuyaSmartCameraType> camera;
 @property (copy, nonatomic)selectDate selectDateBlock;
-- (void)iiiii;
+- (void)initConfigs;
 @end

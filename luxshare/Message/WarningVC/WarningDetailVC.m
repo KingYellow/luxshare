@@ -483,7 +483,6 @@
 }
 - (void)gotoOnlineLive:(UIButton *)sender{
     WarningListCell *cell = (WarningListCell*)sender.superview.superview;
-    
     NSIndexPath *index = [self.qzTableView indexPathForCell:cell];
     TuyaSmartMessageListModel *model = self.listArr[index.section][index.row];
     TuyaSmartDevice *device = [TuyaSmartDevice deviceWithDeviceId:model.msgSrcId];

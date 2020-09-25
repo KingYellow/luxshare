@@ -79,7 +79,6 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     TYTimerModel *model = self.listArr[row];
     AlarmTimeListCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];

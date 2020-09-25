@@ -61,9 +61,8 @@
     selector:@selector(applicationWillResignActive)
                                                  name:UIApplicationWillResignActiveNotification
     object:app];
-    
-    if (self.camera) {
-        self.camera.delegate = self;
+    if (self.backCamera) {
+        self.backCamera.delegate = self;
         [self connectCamera];
     }else{
         [self creatP2PConnectChannel];
@@ -73,15 +72,16 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    if (_camera) {
-        [self.camera stopPlayback];
+    if (_backCamera) {
+        [self.backCamera stopPlayback];
         NSLog(@"跳转后");
     }
-    _camera.delegate = nil;
+    _backCamera.delegate = nil;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initConfig];
+
 }
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
@@ -89,8 +89,6 @@
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     [self UIConfig];
-    
-
 }
 
 - (void)UIConfig{
@@ -181,14 +179,14 @@
         NSInteger startTime = [playInfo[kTuyaSmartTimeSliceStartTime] integerValue];
         NSInteger stopTime = [playInfo[kTuyaSmartTimeSliceStopTime] integerValue];
         NSInteger playTime = (NSInteger)nowT;
-        [self.camera startPlayback:playTime startTime:startTime stopTime:stopTime];
+        [self.backCamera startPlayback:playTime startTime:startTime stopTime:stopTime];
     }else{
         if (spaceIndex < self.timeSlicesInCurrentDay.count) {
             NSDictionary *playInfo = self.timeSlicesInCurrentDay[spaceIndex];
             NSInteger startTime = [playInfo[kTuyaSmartTimeSliceStartTime] integerValue];
             NSInteger stopTime = [playInfo[kTuyaSmartTimeSliceStopTime] integerValue];
             NSInteger playTime = startTime;
-            [self.camera startPlayback:playTime startTime:startTime stopTime:stopTime];
+            [self.backCamera startPlayback:playTime startTime:startTime stopTime:stopTime];
         }
     }
     
@@ -206,7 +204,7 @@
     id p2pType = [self.deviceModel.skills objectForKey:@"p2pType"];
        [[TuyaSmartRequest new] requestWithApiName:kTuyaSmartIPCConfigAPI postData:@{@"devId": self.deviceModel.devId} version:kTuyaSmartIPCConfigAPIVersion success:^(id result) {
            TuyaSmartCameraConfig *config = [TuyaSmartCameraFactory ipcConfigWithUid:[TuyaSmartUser sharedInstance].uid localKey:self.deviceModel.localKey configData:result];
-           self.camera = [TuyaSmartCameraFactory cameraWithP2PType:p2pType config:config delegate:self];
+           self.backCamera = [TuyaSmartCameraFactory cameraWithP2PType:p2pType config:config delegate:self];
            [self connectCamera];
 
        } failure:^(NSError *error) {
@@ -219,7 +217,7 @@
 //        [self.camera.videoView tuya_clear];
 //    }
     [self startPlayGif]; dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.camera connect];
+        [self.backCamera connect];
 
     });
     
@@ -237,15 +235,15 @@
 
 
 - (void)pausePlayback {
-    [self.camera pausePlayback];
+    [self.backCamera pausePlayback];
 }
 
 - (void)resumePlayback {
-    [self.camera resumePlayback];
+    [self.backCamera resumePlayback];
 }
 
 - (void)stopPlayback {
-    [self.camera stopPlayback];
+    [self.backCamera stopPlayback];
 }
 - (void)cameraDidConnected{
     [self startPlayGif];
@@ -265,7 +263,7 @@
     [formatter setDateFormat:@"dd"];
     NSInteger currentDay=[[formatter stringFromDate:date] integerValue];
      
-    [self.camera queryRecordTimeSliceWithYear:currentYear  month:currentMonth day:currentDay];
+    [self.backCamera queryRecordTimeSliceWithYear:currentYear  month:currentMonth day:currentDay];
 }
 
 #pragma mark - TuyaSmartCameraDelegate
@@ -285,8 +283,8 @@
        NSInteger currentMonth=[[formatter stringFromDate:date]integerValue];
        [formatter setDateFormat:@"dd"];
        NSInteger currentDay=[[formatter stringFromDate:date] integerValue];
-        
-       [self.camera queryRecordTimeSliceWithYear:currentYear  month:currentMonth day:currentDay];
+    self.backCamera.delegate = self;
+       [self.backCamera queryRecordTimeSliceWithYear:currentYear  month:currentMonth day:currentDay];
 }
 
 
@@ -294,6 +292,9 @@
       // p2p 连接被动断开，一般为网络波动导致
     self.connected = NO;
     self.playbacking = NO;
+    self.nowDate = [self.timeLine currentTimeStr];
+    [self connectCamera];
+
 }
 
 - (void)camera:(id<TuyaSmartCameraType>)camera didReceiveTimeSliceQueryData:(NSArray<NSDictionary *> *)timeSlices {
@@ -345,7 +346,7 @@
       // 如果当前视频帧的时间戳大于等于当前视频片段的结束时间，则播放下一个视频片段
     if (frameInfo.nTimeStamp >= stopTime) {
         self.playView.playPreGif.hidden = NO;
-        [self.camera.videoView tuya_clear];
+        [self.backCamera.videoView tuya_clear];
         self.timeSlicesIndex++;
         NSDictionary *nextTimeSlice = [self.timeSlicesInCurrentDay objectAtIndex:index];
         NSInteger startTime = [nextTimeSlice[kTuyaSmartTimeSliceStartTime] integerValue];
@@ -367,12 +368,12 @@
     }
     self.nowDate = nil;
     // 将视频渲染视图添加到屏幕上
-    [self.playView addSubview:self.camera.videoView];
+    [self.playView addSubview:self.backCamera.videoView];
 
     if (self.isHor) {
         camera.videoView.frame = CGRectMake(0, 0, QZHScreenHeight , QZHScreenWidth - 50);
     }else{
-        [self.camera.videoView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.backCamera.videoView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0 ));
             make.top.mas_equalTo(0);
             make.left.mas_equalTo(0);
@@ -382,7 +383,7 @@
         }];
     }
 
-    [self.playView sendSubviewToBack:self.camera.videoView];
+    [self.playView sendSubviewToBack:self.backCamera.videoView];
     [self stopPlayGif];
 
 }
@@ -400,10 +401,9 @@
       // 视频录像已停止播放
     self.playbacking = NO;
     self.playbackPaused = NO;
-    NSLog(@"backback ********* stopplay");
 }
 
-- (void)cameraPlaybackDidFinished:(id<TuyaSmartCameraType>)camera {
+-(void)cameraPlaybackDidFinished:(id<TuyaSmartCameraType>)camera {
       // 视频录像已结束播放
     self.playbacking = NO;
     self.playbackPaused = NO;
@@ -431,10 +431,13 @@
 - (void)camera:(id<TuyaSmartCameraType>)camera didOccurredErrorAtStep:(TYCameraErrorCode)errStepCode specificErrorCode:(NSInteger)errorCode {
         if (errStepCode == TY_ERROR_CONNECT_FAILED) {
           // p2p 连接失败
+            [[QZHHUD HUD] textHUDWithMessage:@"连接失败" afterDelay:0.5];
+
             self.connected = NO;
             [self connectCamera];
         }else if (errStepCode == TY_ERROR_START_PLAYBACK_FAILED) {
           // 存储卡录像播放失败
+            [[QZHHUD HUD] textHUDWithMessage:@"回放预览失败" afterDelay:0.5];
             self.playbacking = NO;
             self.playbackPaused = NO;
             [self connectCamera];
@@ -442,6 +445,7 @@
             self.recording = NO;
             self.playView.voiceBtn.alpha = 1.0;
             self.playView.voiceBtn.userInteractionEnabled = YES;
+        }else if (errStepCode == TY_ERROR_START_PREVIEW_FAILED) {
         }else if (errStepCode == TY_ERROR_PAUSE_PLAYBACK_FAILED) {
                 // 暂停播放失败
         }else if (errStepCode == TY_ERROR_RESUME_PLAYBACK_FAILED) {
@@ -532,16 +536,21 @@
 - (void)selectaction:(UIButton *)sender{
     QZHWS(weakSelf)
     zyyy_DateListView *v =[[zyyy_DateListView alloc] initWithFrame:self.navigationController.view.bounds];
-    v.camera = self.camera;
+    v.camera = self.backCamera;
     v.selectDateBlock = ^(NSDictionary *date) {
-        self.tipFinishLab.hidden = YES;
+        weakSelf.tipFinishLab.hidden = YES;
         [weakSelf startPlayGif];
-        weakSelf.camera.delegate = self;
-        [weakSelf.camera queryRecordTimeSliceWithYear:[date[@"year"] integerValue] month:[date[@"month"] integerValue] day:[date[@"day"] integerValue]];
+//        weakSelf.backCamera.delegate = weakSelf;
+        [weakSelf begainPlayback:date];
+
     };
-    [v iiiii];
+    [v initConfigs];
 
     [self.navigationController.view addSubview:v];
+}
+- (void)begainPlayback:(NSDictionary *)date{
+    self.backCamera.delegate = self;
+    [self.backCamera queryRecordTimeSliceWithYear:[date[@"year"] integerValue] month:[date[@"month"] integerValue] day:[date[@"day"] integerValue]];
 }
 - (void)recordAction:(UIButton *)sender{
 
@@ -563,7 +572,7 @@
            }else{
                if (self.playbacking) {
                    sender.selected = !sender.selected;
-                   [self.camera startRecord];
+                   [self.backCamera startRecord];
                    self.recording = YES;
                }else{
                    [[QZHHUD HUD]textHUDWithMessage:@"正常播放时才能录制视频" afterDelay:1.0];
@@ -573,7 +582,7 @@
 
         }else{
             sender.selected = !sender.selected;
-           [self.camera stopRecord];
+           [self.backCamera stopRecord];
            self.recording = NO;
             self.playView.voiceBtn.alpha = 1.0;
             self.playView.voiceBtn.userInteractionEnabled = YES;
@@ -604,10 +613,10 @@
      }else{
          if (self.playbacking) {
              
-             if ([self.camera snapShoot]) {
+             if ([self.backCamera snapShoot]) {
                  sender.selected = !sender.selected;
                  // 截图已成功保存到手机相册
-                 [[QZHHUD HUD] textHUDWithMessage:@"截图成功并保存到相册" afterDelay:0.5];
+                 [[QZHHUD HUD] textHUDWithMessage:@"截图成功并保存到相册" afterDelay:1.0];
              }
          }else{
              [[QZHHUD HUD]textHUDWithMessage:@"正常播放时才能录截屏" afterDelay:1.0];
@@ -630,7 +639,7 @@
             [[QZHHUD HUD] textHUDWithMessage:@"录屏时不能操作" afterDelay:1.0];
             return;
         }
-        [self.camera enableMute:select forPlayMode:TuyaSmartCameraPlayModePlayback];
+        [self.backCamera enableMute:select forPlayMode:TuyaSmartCameraPlayModePlayback];
         
     }
 }
@@ -650,7 +659,7 @@
     self.second++;
     NSInteger min = self.second/60;
     NSInteger sec = self.second%60;
-    self.playView.recordProgressView.timeLab.text = [NSString stringWithFormat:@"%02ld:%02ld",min,sec];
+    self.playView.recordProgressView.timeLab.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)min,(long)sec];
 }
 #pragma mark -- 系统通知
 - (void)applicationWillEnterForeground{
@@ -659,17 +668,17 @@
         [self cameraDidConnected];
     }else{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self.camera connect];
+            [self.backCamera connect];
         });
     }
     
 }
 - (void)applicationWillEnterBackground{
     self.connected = NO;
-    [self.camera disConnect];
+    [self.backCamera disConnect];
 }
 - (void)applicationWillResignActive{
-    [self.camera stopPlayback];
+    [self.backCamera stopPlayback];
 }
 
 -(void) requestMicroPhoneAuth
@@ -715,7 +724,7 @@
 
         self.playView.frame = CGRectMake(50, 0, QZHScreenWidth - 50, QZHScreenHeight);
         self.timeLine.frame = CGRectMake(0, 0, 50, QZHScreenHeight);
-        self.camera.videoView.frame = CGRectMake(0, 0, QZHScreenHeight , QZHScreenWidth - 50);
+        self.backCamera.videoView.frame = CGRectMake(0, 0, QZHScreenHeight , QZHScreenWidth - 50);
 
         self.leftBackBtn.frame = CGRectMake(10 + QZH_VIDEO_LEFTMARGIN, 30, 30, 30);
         [self.navigationController.view addSubview:self.playView];
@@ -729,7 +738,7 @@
         self.playView.transform = CGAffineTransformMakeRotation(0*M_PI/90);
         self.timeLine.transform = CGAffineTransformMakeRotation(0*M_PI/90);
         self.playView.frame = CGRectMake(0, 0, QZHScreenWidth, QZHScreenWidth *1080/1920);
-        self.camera.videoView.frame = CGRectMake(0, 0, QZHScreenWidth , QZHScreenWidth *1080/1920);
+        self.backCamera.videoView.frame = CGRectMake(0, 0, QZHScreenWidth , QZHScreenWidth *1080/1920);
         self.timeLine.frame = CGRectMake(0, QZHScreenWidth *1080/1920, QZHScreenWidth, 50);
         [self.selectDateBtn mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self.timeLine.mas_bottom);
@@ -746,6 +755,7 @@
         [self.view addSubview:self.timeLine];
     }
 }
+#pragma mark -- 隐藏/显示状态栏
 - (BOOL)prefersStatusBarHidden{
     return self.statusHidden;
 }

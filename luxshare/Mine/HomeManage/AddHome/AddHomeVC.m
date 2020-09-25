@@ -208,17 +208,15 @@
  
         self.name = sender.text;
     }else{
-        
         self.location = sender.text;
     }
-    if (self.name.length > 0 && self.location.length > 0) {
+    if (self.name.length > 0) {
         [self.rightBtn setTitleColor:QZH_KIT_Color_WHITE_100 forState:UIControlStateNormal];
         self.rightBtn.enabled = YES;
     }else{
         [self.rightBtn setTitleColor:QZH_KIT_Color_WHITE_30 forState:UIControlStateNormal];
         self.rightBtn.enabled = NO;
     }
-    
 }
 
 - (void)addHome {
@@ -228,10 +226,10 @@
             [arr addObject:dic[@"name"]];
         }
     }
-    if (arr.count == 0) {
-        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"home_selectOneRoom") afterDelay:0.5];
-        return;
-    }
+//    if (arr.count == 0) {
+//        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"home_selectOneRoom") afterDelay:0.5];
+//        return;
+//    }
     QZHWS(weakSelf)
     [[[TuyaSmartHomeManager alloc] init] addHomeWithName:self.name geoName:self.location rooms:arr latitude:0 longitude:0 success:^(long long result) {
         if (self.isFirst) {

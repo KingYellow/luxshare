@@ -37,4 +37,9 @@ typedef NS_ENUM(NSUInteger, QZHImageViewCornerStyle){
     QZHImageViewCornerCircle,       ///圆形图片
     QZHImageViewCornerTriangle      ///三角型
 };
+///账号注册类型
+typedef NS_ENUM(NSUInteger, TYAccountType){
+    TYAccountPhone = 0,         ///手机注册
+    TYAccountEmail,        ///邮箱注册
+};
 #endif /* QZHEnum_h */

@@ -101,7 +101,7 @@
     [self dismiss];
 }
 
--(void)iiiii{
+-(void)initConfigs{
      width = self.frame.size.width;
      height = self.frame.size.height;
      self.backgroundColor = QZHKIT_Color_BLACK_54;

@@ -222,10 +222,7 @@
 
     // 开始配网，二维码模式对应 mode 为 TYActivatorModeQRCode
     
-    [self.activator startConfigWiFi:self.actModel ssid:ssid password:password token:token timeout:100];
-    
-
+    [self.activator startConfigWiFi:self.actModel ssid:ssid password:password token:token timeout:60];
 }
-
 
 @end

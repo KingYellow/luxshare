@@ -34,6 +34,10 @@
     self.selectIndex = 0;
 }
 - (void)exp_rightAction{
+    if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
+        [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+        return;
+    }
     self.selectBlack(self.listArr[self.selectIndex]);
     [self.navigationController popViewControllerAnimated:YES];
 }
