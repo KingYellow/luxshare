@@ -37,27 +37,20 @@
     [EAGLContext setCurrentContext:eaglContext];
     
     _imageContext = [CIContext contextWithEAGLContext:eaglContext options:@{kCIContextWorkingColorSpace:[NSNull null]}];
-    
-    
 }
-
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect{
     
     [self.imageContext drawImage:self.renderImg inRect:CGRectMake(0, 0, self.glkView.drawableWidth, self.glkView.drawableHeight) fromRect:[self.renderImg extent]];
-    
 }
-
 
 - (void)setRenderImg:(CIImage *)renderImg{
     _renderImg = renderImg;
-    
     [self.glkView display];
 }
 
 - (void)layoutSubviews{
     [super layoutSubviews];
-    
     self.glkView.frame = self.bounds;
 }
 

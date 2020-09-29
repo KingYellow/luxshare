@@ -534,14 +534,13 @@
     [self scrollHor:NO];
 }
 - (void)selectaction:(UIButton *)sender{
-    QZHWS(weakSelf)
     zyyy_DateListView *v =[[zyyy_DateListView alloc] initWithFrame:self.navigationController.view.bounds];
     v.camera = self.backCamera;
     v.selectDateBlock = ^(NSDictionary *date) {
-        weakSelf.tipFinishLab.hidden = YES;
-        [weakSelf startPlayGif];
+        self.tipFinishLab.hidden = YES;
+        [self startPlayGif];
 //        weakSelf.backCamera.delegate = weakSelf;
-        [weakSelf begainPlayback:date];
+        [self begainPlayback:date];
 
     };
     [v initConfigs];

@@ -101,6 +101,7 @@
 //- 程序即将退出
 - (void)exp_applicationWillTerminate:(UIApplication *)application {
     ///保存用户书数据
+    NSLog(@"UIApplication WillTerminate  程序即将退出了程序即将退出了程序即将退出了程序即将退出了");
     [QZHDataHelper saveValue:QZHUserModel.User forKey:QZHKEY_USER];
 }
 

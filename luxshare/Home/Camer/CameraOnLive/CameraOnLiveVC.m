@@ -98,10 +98,10 @@
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     if (_camera) {
-        self.camera.delegate = nil;
-        self.device.delegate = nil;
         [self.talkHud hide:YES];
         [self cameraStopPreview];
+        self.camera.delegate = nil;
+        self.device.delegate = nil;
     }
 }
 
@@ -366,7 +366,6 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 5;
-    
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 10;
@@ -1107,13 +1106,13 @@ QZHWS(weakSelf)
     self.recordSecond++;
     NSInteger min = self.recordSecond/60;
     NSInteger sec = self.recordSecond%60;
-    self.playView.recordProgressView.timeLab.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)min,sec];
+    self.playView.recordProgressView.timeLab.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)min,(long)sec];
 }
 - (void)talkTimerAction:(NSTimer *)tiemr{
     self.talkSecond++;
     NSInteger min = self.talkSecond/60;
     NSInteger sec = self.talkSecond%60;
-    self.playView.talkProgressView.timeLab.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)min,sec];
+    self.playView.talkProgressView.timeLab.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)min,(long)sec];
 }
 #pragma mark -- lazy
 -(UIView *)privateView{
@@ -1155,7 +1154,12 @@ QZHWS(weakSelf)
     }
     return _talkBtn;
 }
+-(id<TuyaSmartCameraType>)camera{
+    if (!_camera) {
 
+    }
+    return _camera;
+}
 #pragma mark  -- 系统消息
 - (void)applicationWillEnterForeground{
     if (self.connected) {
