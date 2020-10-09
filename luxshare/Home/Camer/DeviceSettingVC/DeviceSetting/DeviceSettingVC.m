@@ -135,7 +135,13 @@
              cell.nameLab.text = self.memberArr[row];
              if (row == 0) {
                  cell.radioPosition = -1;
-             }else if (row == 4){
+             }else if (row == 2){
+                 if ([QZHDeviceStatus deviceIsBattery:self.deviceModel]) {
+                     cell.radioPosition = 0;
+                 }else{
+                     cell.radioPosition = 1;
+                 }
+             }else if (row == 3){
                  cell.radioPosition = 1;
              }else{
                  cell.radioPosition = 0;
@@ -199,7 +205,7 @@
         return 4;
     }else if(section == 1){
        
-        return self.memberArr.count - 1;
+        return self.memberArr.count - 2;
     }else{
         return 1;
     }
@@ -211,6 +217,9 @@
         if (indexPath.section == 1 && indexPath.row == 3) {
             return 0;
         }
+    }
+    if (indexPath.section == 1 && indexPath.row == 4) {
+        return 0;
     }
     
     return 50;

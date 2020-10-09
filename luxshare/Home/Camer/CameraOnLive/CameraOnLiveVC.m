@@ -150,6 +150,13 @@
     }];
     
     [self exp_addRightItemTitle:QZHLoaclString(@"setting_setting") itemIcon:@""];
+    [self exp_addLeftItemTitle:@"" itemIcon:QZHICON_BACK_ITEM];
+}
+- (void)exp_leftAction{
+    if (self.recording) {
+        [self.camera stopRecord];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)exp_rightAction{
 
@@ -561,7 +568,12 @@
     
     if (errStepCode == TY_ERROR_ENABLE_HD_FAILED) {
                 // 切换视频清晰度失败
-    }else if (errorCode == TY_ERROR_RECORD_FAILED){
+    }else if (errStepCode == TY_ERROR_RECORD_FAILED){
+        if (self.recording) {
+            CameraThreeBtnCell *cell = (CameraThreeBtnCell *)[self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+            [self videoHandle:cell.leftBtn isselected:cell.leftBtn.selected];
+            
+        }
         self.recording = NO;
         [self stopRecordTimer];
         self.playView.voiceBtn.alpha = 1.0;
@@ -639,18 +651,18 @@
         if ([dps jk_hasKey:@"149"]) {//设备状态  YES唤醒  NO休眠
             if ([dps[@"149"] boolValue]) {
                 self.isAwake = YES;
-                
                 [[QZHHUD HUD] textHUDWithMessage:@"唤醒成功" afterDelay:1.0];
 
             }else{
                 self.isAwake = NO;
+                [self stopPlayGif];
                 [[QZHHUD HUD] textHUDWithMessage:@"休眠成功" afterDelay:1.0];
-
             }
             [self setConfigsWhenIsAwake];
         }
     }
 }
+
 - (void)setConfigsWhenIsAwake{
     
     self.playView.wifiIMG.hidden = !self.isAwake;
@@ -658,7 +670,6 @@
     self.playView.playBtn.hidden = self.isAwake;
     if (!self.playView.wifiIMG.hidden) {
         [self getWifiSignalStrength];
-        
     }
 
 }
@@ -1172,7 +1183,6 @@ QZHWS(weakSelf)
     if (self.camera) {
         if (self.recording) {
             CameraThreeBtnCell *cell = (CameraThreeBtnCell *)[self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-            cell.leftBtn.selected = NO;
             [self videoHandle:cell.leftBtn isselected:cell.leftBtn.selected];
             
         }
@@ -1183,12 +1193,18 @@ QZHWS(weakSelf)
             
         }
 
+
         [self cameraStopPreview];
         [self disconnectCamera];
         self.connected = NO;
     }
 }
 - (void)applicationWillResignActive{
+    if (self.recording) {
+        CameraThreeBtnCell *cell = (CameraThreeBtnCell *)[self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+        [self videoHandle:cell.leftBtn isselected:cell.leftBtn.selected];
+        
+    }
     [self.camera stopPreview];
 }
 ////获取焦点

@@ -207,6 +207,26 @@
              return cell;
         }
          
+    }else if(section == 4){
+
+        PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
+         cell.nameLab.text = QZHLoaclString(@"setting_deceteMusic");
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        int state = [self.deviceModel.dps[@"233"] intValue];
+        if (state == 0) {
+            cell.describeLab.text = @"关闭";
+        }
+        if (state == 1) {
+            cell.describeLab.text = @"欢迎光临";
+        }
+        if (state == 2) {
+            cell.describeLab.text = @"危险区域请勿靠近";
+        }
+        if (state == 3) {
+            cell.describeLab.text = @"私人住宅请离开";
+        }
+         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+         return cell;
     }else{
         PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
         if (row == 0) {
@@ -239,6 +259,9 @@
         }else if(section == 3){
             lab.text = QZHLoaclString(@"setting_decetecCry");
 
+        }else if(section == 4){
+            lab.text = QZHLoaclString(@"setting_deceteMusic");
+
         }else{
             lab.text = QZHLoaclString(@"setting_timerAlarm");
 
@@ -253,7 +276,7 @@
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
    
-    return 5;
+    return 6;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0 ) {
@@ -264,6 +287,9 @@
     }else if(section == 2){
        
         return 0;
+    }else if(section == 4){
+       
+        return 1;
     }else{
         return 2;
     }
@@ -342,6 +368,13 @@
         }
     }
     if (section == 4) {
+        if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
+            [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+            return;
+        }
+        [self creatDeceteMusicSheet];
+    }
+    if (section == 5) {
         if (row == 0) {
             AlarmTimeListVC *vc = [[AlarmTimeListVC alloc] init];
             vc.deviceModel = self.deviceModel;
@@ -579,6 +612,73 @@
     
     //把action添加到actionSheet里
     [actionSheet addAction:action2];
+    [actionSheet addAction:action4];
+    [actionSheet addAction:action5];
+
+
+    //相当于之前的[actionSheet show];
+    [self presentViewController:actionSheet animated:YES completion:nil];
+}
+//报警声音
+-(void)creatDeceteMusicSheet{
+    QZHWS(weakSelf)
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"报警提示音" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"关闭提示音" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSDictionary  *dps = @{@"233": @"0"};
+
+        [self.device publishDps:dps success:^{
+            [weakSelf.qzTableView reloadData];
+
+        } failure:^(NSError *error) {
+            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+
+        }];
+
+    }];
+
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"欢迎光临" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSDictionary  *dps = @{@"233": @"1"};
+
+        [self.device publishDps:dps success:^{
+              [weakSelf.qzTableView reloadData];
+
+          } failure:^(NSError *error) {
+              [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+
+          }];
+    }];
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"危险区域请勿靠近" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSDictionary  *dps = @{@"233": @"2"};
+
+        [self.device publishDps:dps success:^{
+            [weakSelf.qzTableView reloadData];
+
+        } failure:^(NSError *error) {
+            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+
+        }];
+
+    }];
+
+    UIAlertAction *action4 = [UIAlertAction actionWithTitle:@"私人住宅请离开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSDictionary  *dps = @{@"233": @"3"};
+
+        [self.device publishDps:dps success:^{
+              [weakSelf.qzTableView reloadData];
+
+          } failure:^(NSError *error) {
+              [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+
+          }];
+    }];
+    UIAlertAction *action5 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"取消");
+    }];
+    
+    //把action添加到actionSheet里
+    [actionSheet addAction:action1];
+    [actionSheet addAction:action2];
+    [actionSheet addAction:action3];
     [actionSheet addAction:action4];
     [actionSheet addAction:action5];
 

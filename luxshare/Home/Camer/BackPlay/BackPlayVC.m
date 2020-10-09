@@ -88,9 +88,15 @@
     self.navigationItem.title = QZHLoaclString(@"device_playBack");
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
+    [self exp_addLeftItemTitle:@"" itemIcon:QZHICON_BACK_ITEM];
     [self UIConfig];
 }
-
+-(void)exp_leftAction{
+    if (self.recording) {
+        [self.backCamera stopRecord];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)UIConfig{
 
 //    self.playView.horizontalBtn.hidden = YES;
@@ -442,10 +448,14 @@
             self.playbackPaused = NO;
             [self connectCamera];
         }else if (errStepCode == TY_ERROR_RECORD_FAILED) {
+            if (self.recording) {
+                [self recordAction:self.recordBtn];
+            }
             self.recording = NO;
             self.playView.voiceBtn.alpha = 1.0;
             self.playView.voiceBtn.userInteractionEnabled = YES;
         }else if (errStepCode == TY_ERROR_START_PREVIEW_FAILED) {
+            
         }else if (errStepCode == TY_ERROR_PAUSE_PLAYBACK_FAILED) {
                 // 暂停播放失败
         }else if (errStepCode == TY_ERROR_RESUME_PLAYBACK_FAILED) {
@@ -673,10 +683,16 @@
     
 }
 - (void)applicationWillEnterBackground{
+    if (self.recording) {
+        [self recordAction:self.recordBtn];
+    }
     self.connected = NO;
     [self.backCamera disConnect];
 }
 - (void)applicationWillResignActive{
+    if (self.recording) {
+        [self recordAction:self.recordBtn];
+    }
     [self.backCamera stopPlayback];
 }
 

@@ -178,9 +178,7 @@
 "setting_decrteAlarmSwitch" = "移动侦测报警开关";
 "setting_personFilter" = "人形侦测";
 "setting_alarmSensitivity" = "报警灵敏度";
-
-
-
+"setting_deceteMusic" = "报警提示音";
 
 "setting_storage" = "存储设置";
 "setting_basicFun" = "基本功能";
@@ -196,12 +194,3 @@
 //消息
 "message_warningDetail" = "告警消息详情";
 "message_selectWeek" = "选择星期";
-
-
-
-
-
-
-
-
-

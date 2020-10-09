@@ -323,34 +323,31 @@
 
 - (void)handleFormatting {
     QZHWS(weakSelf)
-    
     [self.dpManager valueForDP:TuyaSmartCameraSDCardFormatStateDPName success:^(id result) {
           // 主动查询格式化进度，因为部分厂商的设备不会自动上报进度
         int status = [result intValue];
-            if (status >= 0 && status < 100) {
-                self.progessView.numberLab.text = [[NSString stringWithFormat:@"%d",status] stringByAppendingString:@"%"];
-            } else if (status == 100) {
-                self.progessView.numberLab.text = [[NSString stringWithFormat:@"%d",status] stringByAppendingString:@"%"];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [[QZHHUD HUD] textHUDWithMessage:@"格式化成功" afterDelay:1.0];
-                     [self dismiss];
-                       // 格式化成功后，主动获取设备的容量信息
-                     [self getStorageInfo];
-                });
- 
-            } else{
-                [[QZHHUD HUD] textHUDWithMessage:@"格式化失败" afterDelay:1.0];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [weakSelf dismiss];
-                });
+        if (status >= 0 && status < 100) {
+            self.progessView.numberLab.text = [[NSString stringWithFormat:@"%d",status] stringByAppendingString:@"%"];
+        } else if (status == 100) {
+            self.progessView.numberLab.text = [[NSString stringWithFormat:@"%d",status] stringByAppendingString:@"%"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [[QZHHUD HUD] textHUDWithMessage:@"格式化成功" afterDelay:1.0];
+                 [self dismiss];
+                   // 格式化成功后，主动获取设备的容量信息
+                 [self getStorageInfo];
+            });
 
-            }
+        } else{
+            [[QZHHUD HUD] textHUDWithMessage:@"格式化失败" afterDelay:1.0];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf dismiss];
+            });
+
+        }
         
     } failure:^(NSError *error) {
         [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
-
-
 
 }
 

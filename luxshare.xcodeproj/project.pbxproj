@@ -65,6 +65,7 @@
 		897806D424B8439900BE79EB /* SettingDefaultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 897806D324B8439900BE79EB /* SettingDefaultCell.m */; };
 		897806D724B8485400BE79EB /* SettingSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 897806D624B8485400BE79EB /* SettingSwitchCell.m */; };
 		897CE2DD24D511D000055681 /* DeceteAlarmACVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 897CE2DC24D511D000055681 /* DeceteAlarmACVC.m */; };
+		897ECE03252E924F00AA650C /* NSString+ExpDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 897ECE02252E924F00AA650C /* NSString+ExpDate.m */; };
 		8980891324E286F8003BA61A /* MaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8980891224E286F8003BA61A /* MaskView.m */; };
 		8987856224C518750012B71B /* ElectricManageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8987856124C518750012B71B /* ElectricManageVC.m */; };
 		8987856524C51B680012B71B /* ElectricManageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8987856424C51B680012B71B /* ElectricManageCell.m */; };
@@ -317,6 +318,8 @@
 		897806D624B8485400BE79EB /* SettingSwitchCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingSwitchCell.m; sourceTree = "<group>"; };
 		897CE2DB24D511D000055681 /* DeceteAlarmACVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeceteAlarmACVC.h; sourceTree = "<group>"; };
 		897CE2DC24D511D000055681 /* DeceteAlarmACVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeceteAlarmACVC.m; sourceTree = "<group>"; };
+		897ECE01252E924F00AA650C /* NSString+ExpDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+ExpDate.h"; sourceTree = "<group>"; };
+		897ECE02252E924F00AA650C /* NSString+ExpDate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+ExpDate.m"; sourceTree = "<group>"; };
 		8980891124E286F8003BA61A /* MaskView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaskView.h; sourceTree = "<group>"; };
 		8980891224E286F8003BA61A /* MaskView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MaskView.m; sourceTree = "<group>"; };
 		8987856024C518750012B71B /* ElectricManageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElectricManageVC.h; sourceTree = "<group>"; };
@@ -1633,6 +1636,8 @@
 				89F7D01D24A5B4B4007B5A32 /* UIColor+Grade.m */,
 				8928524C24D13FA700B987D7 /* UIImageView+Gif.h */,
 				8928524D24D13FA700B987D7 /* UIImageView+Gif.m */,
+				897ECE01252E924F00AA650C /* NSString+ExpDate.h */,
+				897ECE02252E924F00AA650C /* NSString+ExpDate.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -2186,6 +2191,7 @@
 				89F7D08524A5C3FB007B5A32 /* UITextField+Exp.m in Sources */,
 				89DB0AA224A05A3900324E36 /* HomeVC.m in Sources */,
 				89F7D09024A5C3FB007B5A32 /* QZHCodeButton.m in Sources */,
+				897ECE03252E924F00AA650C /* NSString+ExpDate.m in Sources */,
 				89F5FDEA24B6F89000CD0980 /* NETResultVC.m in Sources */,
 				89F7D07C24A5C3FB007B5A32 /* QZHAppCheck.m in Sources */,
 				89F7D07B24A5C3FA007B5A32 /* QZHNetWorkRequest.m in Sources */,

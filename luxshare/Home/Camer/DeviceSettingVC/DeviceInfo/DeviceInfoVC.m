@@ -100,8 +100,9 @@
         }else{
             cell.nameLab.text = @"设备ID";
             cell.describeLab.text = self.deviceModel.devId;
+            UILongPressGestureRecognizer *tap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longpressCopyAction:)];
+            [cell addGestureRecognizer:tap];
         }
-
         return cell;
     }
 
@@ -205,5 +206,9 @@
 
 
 }
-
+- (void)longpressCopyAction:(UILongPressGestureRecognizer *)press{
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = self.deviceModel.devId;
+    [[QZHHUD HUD] textHUDWithMessage:@"设备ID复制成功" afterDelay:1.0];
+}
 @end

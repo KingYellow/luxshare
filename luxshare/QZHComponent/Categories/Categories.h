@@ -9,5 +9,5 @@
 #ifndef Categories_h
 #define Categories_h
 #import "UIButton+Exp.h"
-
+#import "NSString+ExpDate.h"
 #endif /* Categories_h */

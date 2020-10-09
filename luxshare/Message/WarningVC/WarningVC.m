@@ -137,20 +137,21 @@
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     NSString *dateStr = self.timeArr[section];
-
     UIView *view = [[UIView alloc] init];
     if ([dateStr containsString:@"-"]) {
         UILabel *lab = [[UILabel alloc] init];
-        lab.text = [[dateStr componentsSeparatedByString:@"-"].firstObject stringByAppendingString:@"月"];
+        NSArray *dateArr = [dateStr componentsSeparatedByString:@"-"];
+        NSString *month = dateArr[1];
+        lab.text = [month stringByAppendingString:@"月"];
         lab.font = QZHKIT_FONT_LISTCELL_DESCRIBE_TITLE;
         lab.textColor = QZHKIT_Color_BLACK_54;
-        lab.frame = CGRectMake(15, 20, 32, 20);
+        lab.frame = CGRectMake(15, 20, 37, 20);
         [view addSubview:lab];
         UILabel *lab2 = [[UILabel alloc] init];
-        lab2.text = [dateStr componentsSeparatedByString:@"-"].lastObject ;
+        lab2.text = dateArr[2] ;
         lab2.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
         lab2.textColor = QZHKIT_Color_BLACK_87;
-        lab2.frame = CGRectMake(47, 20, 80, 20);
+        lab2.frame = CGRectMake(52, 20, 80, 20);
         [view addSubview:lab2];
     }
 
@@ -227,15 +228,7 @@
         TuyaSmartMessageListModel *currentmodel = obj;
 
         NSString *time1 = currentmodel.dateTime;
-
-        NSString *month1 = [[[[time1 componentsSeparatedByString:@" "] firstObject] componentsSeparatedByString:@"-"] objectAtIndex:1];
-
-        NSString *day1=[[[[time1 componentsSeparatedByString:@" "] firstObject] componentsSeparatedByString:@"-"] objectAtIndex:2];
-        if (day1.length == 1) {
-            day1 = [@"0" stringByAppendingString:day1];
-        }
-        NSString *currentStr1=[NSString stringWithFormat:@"%@-%@",month1,day1];
-        
+        NSString *currentStr1 = [time1 exp_dateStringChangeStyle];
         [self.timeArr addObject:currentStr1];
 
      }];
@@ -282,20 +275,12 @@
          }
 
         NSString *time1 = currentmodel.dateTime;
-
-         NSString *month1=[[[[time1 componentsSeparatedByString:@" "] firstObject] componentsSeparatedByString:@"-"] objectAtIndex:1];
-
-         NSString *day1=[[[[time1 componentsSeparatedByString:@" "] firstObject] componentsSeparatedByString:@"-"] objectAtIndex:2];
-         if (day1.length == 1) {
-             day1 = [@"0" stringByAppendingString:day1];
-         }
-        NSString *currentStr1=[NSString stringWithFormat:@"%@-%@",month1,day1];
+        NSString *currentStr1 = [time1 exp_dateStringChangeStyle];
 
         for (NSString *str in myary)
 
         {
             if([str isEqualToString:currentStr1])
-
             {
                 NSMutableArray *arr=[self.listArr objectAtIndex:[myary indexOfObject:str]];
                 [arr addObject:currentmodel];
@@ -305,6 +290,7 @@
     
     [self.qzTableView reloadData];
 }
+
 #pragma mark -- action
 //topview 的选择按钮
 - (void)setSelectAction:(UIButton *)sender{
