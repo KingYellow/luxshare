@@ -38,17 +38,21 @@
     UIApplication *app = [UIApplication sharedApplication];
     [QZHNotification addObserver:self
     selector:@selector(applicationWillEnterForeground)
-                                                 name:UIApplicationWillEnterForegroundNotification
+                                                 name:UIApplicationDidBecomeActiveNotification
     object:app];
     [QZHNotification addObserver:self
     selector:@selector(applicationWillEnterBackground)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+    object:app];
+    
+    [QZHNotification addObserver:self
+    selector:@selector(applicationWillResignActive)
                                                  name:UIApplicationWillResignActiveNotification
     object:app];
     if (self.connected) {
         [self.camera startPreview];
     }
     self.statusHiden = YES;
-    // 刷新状态栏
     [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
 }
 -(void)viewDidDisappear:(BOOL)animated{
@@ -77,7 +81,7 @@
       // 添加 DP 监听
     self.device.delegate = self;
     [self.dpManager addObserver:self];
-    [self start];
+    [self startAwakeDevice];
 }
 - (void)setUIConfigs{
     self.playView.transform = CGAffineTransformMakeRotation(90*M_PI/180);
@@ -133,7 +137,6 @@
 
 -(void)cameraDidConnected:(id<TuyaSmartCameraType>)camera{
     [self scrollHor];
-//    camera.videoView.scaleToFill = YES;
     self.connected = YES;
     [self.camera startPreview];
 
@@ -146,7 +149,6 @@
     [self.playView.playPreGif stopGif];
 }
 
-
 -(void)cameraDidBeginPreview:(id<TuyaSmartCameraType>)camera{
     
     self.previewing = YES;
@@ -154,6 +156,7 @@
 
 }
 -(void)cameraDidStopPreview:(id<TuyaSmartCameraType>)camera{
+  
     self.previewing = NO;
 
 }
@@ -171,10 +174,11 @@
 #pragma mark -- 唤醒设备
 // 判断是否是低功耗门铃
 - (BOOL)isDoorbell {
+
     return [self.dpManager isSupportDP:TuyaSmartCameraWirelessAwakeDPName];
 }
 
-- (void)start {
+- (void)startAwakeDevice {
     if ([self isDoorbell]) {
         // 获取设备的状态
             
@@ -225,7 +229,7 @@
 -(UIButton *)submitBtn{
     if (!_submitBtn) {
         _submitBtn = [[UIButton alloc] init];
-        [_submitBtn setTitle:@"设置报警区域" forState:UIControlStateNormal];
+        [_submitBtn setTitle:QZHLoaclString(@"setAlarmArea") forState:UIControlStateNormal];
         [_submitBtn setTitleColor:QZH_KIT_Color_WHITE_70 forState:UIControlStateNormal];
         _submitBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
         [_submitBtn exp_buttonState:QZHButtonStateEnable];
@@ -266,6 +270,10 @@
 - (void)applicationWillEnterBackground{
     [self.camera stopPreview];
 }
+- (void)applicationWillResignActive{
+
+    [self.camera stopPreview];
+}
 - (void)submitAction{
     
     NSDictionary *dic = @{@"num":@(1),@"region0":@{@"x":@((int)((self.selectRect.origin.x - QZH_VIDEO_LEFTMARGIN) * 100/(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN))),@"xlen":@((int)((self.selectRect.origin.x + self.selectRect.size.width - QZH_VIDEO_LEFTMARGIN) *100/(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN))),@"y":@((int)(self.selectRect.origin.y * 100/QZHScreenWidth)),@"ylen":@((int)((self.selectRect.origin.y + self.selectRect.size.height) * 100/QZHScreenWidth))}};
@@ -278,7 +286,7 @@
 
     [self.device publishDps:dps success:^{
         
-    [MBProgressHUD showError:@"设置成功" toView:self.playView];
+    [MBProgressHUD showError:QZHLoaclString(@"setSuccess") toView:self.playView];
     self.statusHiden = NO;
         
         // 刷新状态栏

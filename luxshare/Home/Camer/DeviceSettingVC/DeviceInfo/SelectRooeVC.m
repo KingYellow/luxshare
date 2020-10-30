@@ -12,7 +12,7 @@
 
 @interface SelectRooeVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic)UITableView *qzTableView;
-@property (copy, nonatomic)NSMutableArray *listArr;
+@property (strong, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)NSMutableArray *memberArr;
 @property (strong, nonatomic)TuyaSmartHome *home;
 @property (assign, nonatomic)NSInteger selectIndex;
@@ -35,7 +35,7 @@
 }
 - (void)exp_rightAction{
     if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
-        [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"deviceOfflineNoOperate") afterDelay:1.0];
         return;
     }
     self.selectBlack(self.listArr[self.selectIndex]);
@@ -103,7 +103,6 @@
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     if (row == self.selectIndex) {
         

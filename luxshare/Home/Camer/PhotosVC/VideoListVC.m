@@ -98,7 +98,7 @@
    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectAction:)];
    [cell.IMGView addGestureRecognizer:tap];
 
-    cell.nameLab.text = [model.creationDate jk_stringWithFormat:@"yyyy年MM月dd日"];
+    cell.nameLab.text = [model.creationDate jk_stringWithFormat:@"yyyy-MM-dd"];
     cell.describeLab.text = [model.creationDate jk_stringWithFormat:@"hh:mm"];
     cell.logoIMG.image = QZHLoadIcon(@"ic_all_video");
 

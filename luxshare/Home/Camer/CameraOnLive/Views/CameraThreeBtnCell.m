@@ -62,8 +62,8 @@
 -(UIButton *)leftBtn{
     if (!_leftBtn) {
         _leftBtn = [[UIButton alloc] init];
-        [_leftBtn setTitle:@"录像" forState:UIControlStateNormal];
-        [_leftBtn setTitle:@"停止" forState:UIControlStateSelected];
+        [_leftBtn setTitle:QZHLoaclString(@"record") forState:UIControlStateNormal];
+        [_leftBtn setTitle:QZHLoaclString(@"stop") forState:UIControlStateSelected];
 
         _leftBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_BIG_TITLE;
         [_leftBtn setTitleColor:QZHKIT_COLOR_SKIN forState:UIControlStateNormal];
@@ -78,8 +78,8 @@
 -(UIButton *)midBtn{
     if (!_midBtn) {
         _midBtn = [[UIButton alloc] init];
-        [_midBtn setTitle:@"通话" forState:UIControlStateNormal];
-        [_midBtn setTitle:@"挂断" forState:UIControlStateSelected];
+        [_midBtn setTitle:QZHLoaclString(@"talk") forState:UIControlStateNormal];
+        [_midBtn setTitle:QZHLoaclString(@"stopTalk") forState:UIControlStateSelected];
 
         _midBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_BIG_TITLE;
         [_midBtn setTitleColor:QZHKIT_COLOR_SKIN forState:UIControlStateNormal];
@@ -89,10 +89,11 @@
     }
     return _midBtn;
 }
+
 -(UIButton *)rightBtn{
     if (!_rightBtn) {
         _rightBtn = [[UIButton alloc] init];
-        [_rightBtn setTitle:@"截屏" forState:UIControlStateNormal];
+        [_rightBtn setTitle:QZHLoaclString(@"shot") forState:UIControlStateNormal];
         _rightBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_BIG_TITLE;
         [_rightBtn setTitleColor:QZHKIT_COLOR_SKIN forState:UIControlStateNormal];
         [_rightBtn setImage:QZHLoadIcon(@"") forState:UIControlStateNormal];
@@ -102,6 +103,7 @@
     }
     return _rightBtn;
 }
+
 - (void)btnAction:(UIButton *)sender{
     self.btnBlock(sender, sender.selected);
 }

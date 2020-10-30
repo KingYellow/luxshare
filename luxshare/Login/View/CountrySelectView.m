@@ -51,7 +51,7 @@
         _nameLab = [[UILabel alloc] init];
         _nameLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
         _nameLab.textColor = QZHKIT_Color_BLACK_87;
-        _nameLab.text = @"国家/地区";
+        _nameLab.text = QZHLoaclString(@"member_country");
     }
     return  _nameLab;
 }
@@ -60,7 +60,7 @@
         _describeLab = [[UILabel alloc] init];
         _describeLab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
         _describeLab.textColor = QZHKIT_Color_BLACK_87;
-        _describeLab.text = @"中国 +86";
+        _describeLab.text = [QZHCommons languageOfTheDeviceSystem] == LanguageChinese?@"中国 +86":@"China +86";
         _describeLab.textAlignment = NSTextAlignmentRight;
     }
     return  _describeLab;

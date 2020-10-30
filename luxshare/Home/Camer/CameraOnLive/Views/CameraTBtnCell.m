@@ -42,7 +42,8 @@
 -(UIButton *)leftBtn{
     if (!_leftBtn) {
         _leftBtn = [[UIButton alloc] init];
-        [_leftBtn setTitle:@"唤醒" forState:UIControlStateNormal];
+        [_leftBtn setTitle:QZHLoaclString(@"awake") forState:UIControlStateNormal];
+        _leftBtn.showsTouchWhenHighlighted=YES;
         _leftBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_BIG_TITLE;
         [_leftBtn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
         [_leftBtn setImage:QZHLoadIcon(@"ic_awake_n") forState:UIControlStateNormal];
@@ -55,7 +56,7 @@
 -(UIButton *)rightBtn{
     if (!_rightBtn) {
         _rightBtn = [[UIButton alloc] init];
-        [_rightBtn setTitle:@"休眠" forState:UIControlStateNormal];
+        [_rightBtn setTitle:QZHLoaclString(@"sleep") forState:UIControlStateNormal];
         _rightBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_BIG_TITLE;
         [_rightBtn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
         [_rightBtn setImage:QZHLoadIcon(@"ic_sleep_n") forState:UIControlStateNormal];

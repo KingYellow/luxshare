@@ -447,6 +447,8 @@
     NSString *dateStr;
     if (date.length == 14) {
        dateStr = [date stringByReplacingCharactersInRange:NSMakeRange(8, 6) withString:@"235959"];
+    }else{
+        dateStr = @"235959";
     }
     NSTimeInterval lastTimeInterval = [self intervalWithTime:dateStr];
     return lastTimeInterval;

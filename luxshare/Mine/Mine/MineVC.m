@@ -19,8 +19,8 @@
 @interface MineVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic)UITableView *qzTableView;
 
-@property (copy, nonatomic)NSMutableArray *listArr;
-@property (copy, nonatomic)NSMutableArray *logoArr;
+@property (strong, nonatomic)NSMutableArray *listArr;
+@property (strong, nonatomic)NSMutableArray *logoArr;
 
 @end
 
@@ -109,7 +109,7 @@
         return cell;
     }else{
         MineDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
-        cell.nameLab.text = @"设置";
+        cell.nameLab.text = QZHLoaclString(@"setting_setting");
         cell.IMGView.image = QZHLoadIcon(@"shezhi");
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -125,7 +125,7 @@
             return 1;
             break;
         case 1:
-            return self.listArr.count;
+            return self.listArr.count - 1;
             break;
         case 2:
             return 1;

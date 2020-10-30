@@ -5,7 +5,7 @@
 //  Created by XuChengcheng on 2019/10/2.
 //
 
-#import "TuyaSmartGroup.h"
+#import <TuyaSmartDeviceCoreKit/TuyaSmartGroup.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

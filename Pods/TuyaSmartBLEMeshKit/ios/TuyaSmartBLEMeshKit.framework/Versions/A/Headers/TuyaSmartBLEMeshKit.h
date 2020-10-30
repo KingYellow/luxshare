@@ -14,7 +14,6 @@
 #import "TuyaSmartHome+BleMesh.h"
 #import "TuyaSmartActivator+BleMesh.h"
 
-#import <TuyaSmartDeviceKit/TuyaSmartBleMeshModel.h>
 #import "TuyaSmartBleMesh.h"
 #import "TuyaSmartBleMeshGroup.h"
 

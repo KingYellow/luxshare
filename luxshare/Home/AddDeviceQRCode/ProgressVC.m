@@ -136,7 +136,7 @@
 -(UIButton *)stepOneBtn{
     if (!_stepOneBtn) {
         _stepOneBtn = [[UIButton alloc] init];
-        [_stepOneBtn setTitle:@"找到设备" forState:UIControlStateNormal];
+        [_stepOneBtn setTitle:QZHLoaclString(@"findDevice") forState:UIControlStateNormal];
         [_stepOneBtn setImage:QZHLoadIcon(@"") forState:UIControlStateNormal];
         [_stepOneBtn setImage:QZHLoadIcon(@"") forState:UIControlStateSelected];
         [_stepOneBtn setTitleColor:QZHKIT_Color_BLACK_54 forState:UIControlStateNormal];
@@ -148,7 +148,7 @@
 -(UIButton *)stepsecondBtn{
     if (!_stepsecondBtn) {
         _stepsecondBtn = [[UIButton alloc] init];
-        [_stepsecondBtn setTitle:@"设备注册到智能云" forState:UIControlStateNormal];
+        [_stepsecondBtn setTitle:QZHLoaclString(@"deviceRegistClode") forState:UIControlStateNormal];
         [_stepsecondBtn setImage:QZHLoadIcon(@"") forState:UIControlStateNormal];
         [_stepsecondBtn setImage:QZHLoadIcon(@"") forState:UIControlStateSelected];
         [_stepsecondBtn setTitleColor:QZHKIT_Color_BLACK_54 forState:UIControlStateNormal];
@@ -161,7 +161,7 @@
 -(UIButton *)stepthirdBtn{
     if (!_stepthirdBtn) {
         _stepthirdBtn = [[UIButton alloc] init];
-        [_stepthirdBtn setTitle:@"设备初始化" forState:UIControlStateNormal];
+        [_stepthirdBtn setTitle:QZHLoaclString(@"deviceFormat") forState:UIControlStateNormal];
         [_stepthirdBtn setImage:QZHLoadIcon(@"") forState:UIControlStateNormal];
         [_stepthirdBtn setImage:QZHLoadIcon(@"") forState:UIControlStateSelected];
         [_stepthirdBtn setTitleColor:QZHKIT_Color_BLACK_54 forState:UIControlStateNormal];

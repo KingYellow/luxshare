@@ -91,16 +91,22 @@
              int state = [[self.dpManager valueForDP:TuyaSmartCameraMotionSensitivityDPName] intValue];
 
              if (state == 0) {
-                 cell.describeLab.text = @"低灵敏度";
+                 cell.describeLab.text = QZHLoaclString(@"lowSensitivity");
              }
              if (state == 1) {
-                 cell.describeLab.text = @"中灵敏度";
+                 cell.describeLab.text = QZHLoaclString(@"midSensitivity");
              }
              if (state == 2) {
-                 cell.describeLab.text = @"高灵敏度";
+                 cell.describeLab.text = QZHLoaclString(@"highSensitivity");
              }
+            if ([self.deviceModel.dps[@"134"] boolValue]) {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }else{
+                cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.describeLab.text = @"";
+                cell.nameLab.text = @"";
+            }
              cell.selectionStyle = UITableViewCellSelectionStyleNone;
-             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
             return cell;
         }else{
@@ -144,6 +150,7 @@
             PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
             cell.nameLab.text = QZHLoaclString(@"setting_alarmArea");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.describeLab.text = @"";
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }
@@ -167,10 +174,10 @@
              cell.nameLab.text = QZHLoaclString(@"setting_decetecVoiceSensitivity");
             int state = [[self.dpManager valueForDP:TuyaSmartCameraDecibelSensitivityDPName] intValue];
             if (state == 0) {
-                cell.describeLab.text = @"低灵敏度";
+                cell.describeLab.text = QZHLoaclString(@"lowSensitivity");
             }
             if (state == 1) {
-                cell.describeLab.text = @"高灵敏度";
+                cell.describeLab.text = QZHLoaclString(@"highSensitivity");
             }
              cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -192,16 +199,28 @@
             [cell.switchBtn addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
              return cell;
-        }else{
+        }else if (row == 2) {
+            SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
+           cell.nameLab.text = QZHLoaclString(@"playLullabyAuto");
+           [cell.nameLab mas_updateConstraints:^(MASConstraintMaker *make) {
+               make.left.mas_equalTo(15);
+           }];
+           cell.switchBtn.on = [self.deviceModel.dps[@"234"] boolValue];
+           cell.switchBtn.tag = 41;
+           cell.contentView.backgroundColor = QZHColorWhite;
+           [cell.switchBtn addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
+           cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+       }else{
             PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
              cell.nameLab.text = QZHLoaclString(@"setting_decetecCrySensitivity");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             int state = [self.deviceModel.dps[@"232"] intValue];
             if (state == 0) {
-                cell.describeLab.text = @"低灵敏度";
+                cell.describeLab.text = QZHLoaclString(@"lowSensitivity");
             }
             if (state == 1) {
-                cell.describeLab.text = @"高灵敏度";
+                cell.describeLab.text = QZHLoaclString(@"highSensitivity");
             }
              cell.selectionStyle = UITableViewCellSelectionStyleNone;
              return cell;
@@ -214,30 +233,34 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         int state = [self.deviceModel.dps[@"233"] intValue];
         if (state == 0) {
-            cell.describeLab.text = @"关闭";
+            cell.describeLab.text = QZHLoaclString(@"closeAlarmMusic");
         }
         if (state == 1) {
-            cell.describeLab.text = @"欢迎光临";
+            cell.describeLab.text = QZHLoaclString(@"welcome");
         }
         if (state == 2) {
-            cell.describeLab.text = @"危险区域请勿靠近";
+            cell.describeLab.text = QZHLoaclString(@"dangerGoAway");
         }
         if (state == 3) {
-            cell.describeLab.text = @"私人住宅请离开";
+            cell.describeLab.text = QZHLoaclString(@"homeGoAway");
         }
          cell.selectionStyle = UITableViewCellSelectionStyleNone;
          return cell;
     }else{
         PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
         if (row == 0) {
-            cell.nameLab.text = @"定时";
-        }else{
-            cell.nameLab.text = @"报警间隔";
-            int time = [self.deviceModel.dps[@"133"] intValue];
-             cell.describeLab.text  = [NSString stringWithFormat:@"%d分钟",time];
-        }
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            cell.nameLab.text = QZHLoaclString(@"timer");
+            cell.describeLab.text  = @"";
 
+        }else{
+            
+            cell.nameLab.text = QZHLoaclString(@"alarminterval");
+            int time = [self.deviceModel.dps[@"133"] intValue];
+            cell.describeLab.text  = [NSString stringWithFormat:@"%dmin",time];
+        }
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
@@ -282,11 +305,20 @@
     if (section == 0 ) {
         return 3;
     }else if(section == 1){
-       
-        return 2;
+        if ([self.deviceModel.dps[@"168"] boolValue]) {
+            return 2;
+        }else{
+            return 1;
+        }
     }else if(section == 2){
        
         return 0;
+    }else if(section == 3){
+        if ([self.deviceModel.dps[@"167"] boolValue]) {
+            return 3;
+        }else{
+            return 1;
+        }
     }else if(section == 4){
        
         return 1;
@@ -300,6 +332,13 @@
     NSInteger row = indexPath.row;
     if (section == 0 && row == 0) {
         return 0;
+    }
+    if (section == 0 && row == 2) {
+        if ([self.deviceModel.dps[@"134"] boolValue]) {
+            return 50;
+        }else{
+            return 0;
+        }
     }
     if (section == 2) {
         return 0;
@@ -323,7 +362,7 @@
     NSInteger section = indexPath.section;
     if (section == 0) {
         if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
-            [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"deviceOfflineNoOperate") afterDelay:1.0];
             return;
         }
         if (row == 2) {
@@ -332,14 +371,14 @@
     }
     if (section == 1) {
         if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
-            [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"deviceOfflineNoOperate") afterDelay:1.0];
             return;
         }
         if (row == 1) {
            BOOL private =  [[self.dpManager valueForDP:TuyaSmartCameraBasicPrivateDPName] boolValue];
 
             if (private) {
-                [[QZHHUD HUD] textHUDWithMessage:@"隐私模式下不能设置报警区域" afterDelay:1.0];
+                [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"privateNoSetAlarmArea") afterDelay:1.0];
             }else{
                 AlarmAreaVC *vc = [[AlarmAreaVC alloc] init];
                 vc.deviceModel = self.deviceModel;
@@ -351,7 +390,7 @@
     }
     if (section == 2) {
         if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
-            [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"deviceOfflineNoOperate") afterDelay:1.0];
             return;
         }
         if (row == 1) {
@@ -360,7 +399,7 @@
     }
     if (section == 3) {
         if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
-            [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"deviceOfflineNoOperate") afterDelay:1.0];
             return;
         }
         if (row == 1) {
@@ -369,7 +408,7 @@
     }
     if (section == 4) {
         if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
-            [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"deviceOfflineNoOperate") afterDelay:1.0];
             return;
         }
         [self creatDeceteMusicSheet];
@@ -383,7 +422,7 @@
         }
         if (row == 1) {
             QZHWS(weakSelf)
-           [BRStringPickerView showPickerWithTitle:@"时间间隔" dataSourceArr:self.timeArr selectIndex:0 resultBlock:^(BRResultModel * _Nullable resultModel) {
+           [BRStringPickerView showPickerWithTitle:QZHLoaclString(@"alarminterval") dataSourceArr:self.timeArr selectIndex:0 resultBlock:^(BRResultModel * _Nullable resultModel) {
                NSString *time = @"0";
                if (resultModel.index == 0) {
                    time = @"1";
@@ -411,7 +450,7 @@
 #pragma mark -- lazy
 -(NSMutableArray *)timeArr{
     if (!_timeArr) {
-        _timeArr = [NSMutableArray arrayWithArray:@[@"1分钟",@"3分钟",@"5分钟"]];
+        _timeArr = [NSMutableArray arrayWithArray:@[@"1min",@"3min",@"5min"]];
         
     }
     return _timeArr;
@@ -421,7 +460,7 @@
     
     if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
         sender.on = !sender.on;
-        [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"deviceOfflineNoOperate") afterDelay:1.0];
         return;
     }
     QZHWS(weakSelf)
@@ -483,6 +522,15 @@
               [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
           }];
     }
+    if (sender.tag == 41) {
+        NSDictionary  *dps = @{@"234": @(sender.on)};
+          [self.device publishDps:dps success:^{
+
+          } failure:^(NSError *error) {
+              sender.on = !sender.on;
+              [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+          }];
+    }
     //隐私
 }
 
@@ -490,10 +538,10 @@
 
 -(void)creatPIRActionSheet{
 
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"移动侦测灵敏度" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"setting_decetecSensitivity") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     QZHWS(weakSelf)
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"低灵敏度" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:QZHLoaclString(@"lowSensitivity") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self.dpManager isSupportDP:TuyaSmartCameraMotionSensitivityDPName]) {
             
             [self.dpManager setValue:@"0" forDP:TuyaSmartCameraMotionSensitivityDPName success:^(id result) {
@@ -503,7 +551,7 @@
             }];
         }
     }];
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"中灵敏度" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:QZHLoaclString(@"midSensitivity") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
           if ([self.dpManager isSupportDP:TuyaSmartCameraMotionSensitivityDPName]) {
               
               [self.dpManager setValue:@"1" forDP:TuyaSmartCameraMotionSensitivityDPName success:^(id result) {
@@ -513,7 +561,7 @@
               }];
           }
     }];
-    UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"高灵敏度" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:QZHLoaclString(@"highSensitivity") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self.dpManager isSupportDP:TuyaSmartCameraMotionSensitivityDPName]) {
             
             [self.dpManager setValue:@"2" forDP:TuyaSmartCameraMotionSensitivityDPName success:^(id result) {
@@ -524,7 +572,7 @@
         }
     }];
     
-    UIAlertAction *action5 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action5 = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"取消");
     }];
     
@@ -542,9 +590,9 @@
 
 -(void)creatDecibelActionSheet{
     QZHWS(weakSelf)
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"声音检测灵敏度" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"voiceSensitivity") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"低灵敏度" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:QZHLoaclString(@"lowSensitivity") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
           if ([self.dpManager isSupportDP:TuyaSmartCameraDecibelSensitivityDPName]) {
               
               [self.dpManager setValue:@"0" forDP:TuyaSmartCameraDecibelSensitivityDPName success:^(id result) {
@@ -555,7 +603,7 @@
           }
     }];
 
-    UIAlertAction *action4 = [UIAlertAction actionWithTitle:@"高灵敏度" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action4 = [UIAlertAction actionWithTitle:QZHLoaclString(@"highSensitivity") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self.dpManager isSupportDP:TuyaSmartCameraDecibelSensitivityDPName]) {
             
             [self.dpManager setValue:@"1" forDP:TuyaSmartCameraDecibelSensitivityDPName success:^(id result) {
@@ -565,7 +613,7 @@
             }];
         }
     }];
-    UIAlertAction *action5 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action5 = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"取消");
     }];
     
@@ -580,9 +628,9 @@
 }
 -(void)creatCryActionSheet{
     QZHWS(weakSelf)
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"哭声检测灵敏度" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"crySensitivity") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"低灵敏度" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:QZHLoaclString(@"lowSensitivity") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSDictionary  *dps = @{@"232": @"0"};
 
         [self.device publishDps:dps success:^{
@@ -595,7 +643,7 @@
 
     }];
 
-    UIAlertAction *action4 = [UIAlertAction actionWithTitle:@"高灵敏度" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action4 = [UIAlertAction actionWithTitle:QZHLoaclString(@"highSensitivity") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSDictionary  *dps = @{@"232": @"1"};
 
         [self.device publishDps:dps success:^{
@@ -606,7 +654,7 @@
 
           }];
     }];
-    UIAlertAction *action5 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action5 = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"取消");
     }];
     
@@ -622,8 +670,8 @@
 //报警声音
 -(void)creatDeceteMusicSheet{
     QZHWS(weakSelf)
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"报警提示音" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"关闭提示音" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"alarmMusic") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:QZHLoaclString(@"closeAlarmMusic") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSDictionary  *dps = @{@"233": @"0"};
 
         [self.device publishDps:dps success:^{
@@ -636,7 +684,7 @@
 
     }];
 
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"欢迎光临" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:QZHLoaclString(@"welcome") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSDictionary  *dps = @{@"233": @"1"};
 
         [self.device publishDps:dps success:^{
@@ -647,7 +695,7 @@
 
           }];
     }];
-    UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"危险区域请勿靠近" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:QZHLoaclString(@"dangerGoAway") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSDictionary  *dps = @{@"233": @"2"};
 
         [self.device publishDps:dps success:^{
@@ -660,7 +708,7 @@
 
     }];
 
-    UIAlertAction *action4 = [UIAlertAction actionWithTitle:@"私人住宅请离开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action4 = [UIAlertAction actionWithTitle:QZHLoaclString(@"homeGoAway") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSDictionary  *dps = @{@"233": @"3"};
 
         [self.device publishDps:dps success:^{
@@ -671,7 +719,7 @@
 
           }];
     }];
-    UIAlertAction *action5 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action5 = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"取消");
     }];
     

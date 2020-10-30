@@ -37,7 +37,7 @@
 @implementation zyyy_DateListView
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
     if ([object isEqual:dateViewCurrent]&&[keyPath isEqualToString:@"selectedMonth"]) {
-        visibleDateLabel.changeStr = [NSString stringWithFormat:@"%ld年%ld月",dateViewCurrent.selectedYear,dateViewCurrent.selectedMonth];
+        visibleDateLabel.changeStr = [NSString stringWithFormat:@"%ld-%ld",dateViewCurrent.selectedYear,dateViewCurrent.selectedMonth];
     }
 }
 - (instancetype)initWithFrame:(CGRect)frame
@@ -117,7 +117,7 @@
      CGFloat Topheight = IPHONEHIGHT(80);
      CGFloat visibleDateLabelWidth = IPHONEWIDTH(200);
      //年月月份
-     visibleDateLabel = [[animationLabel alloc]initWithFrame:CGRectMake(0, 0, visibleDateLabelWidth, Topheight) labelStr:[NSString stringWithFormat:@"%ld年%ld月",[DateModel shareDateModel].year,[DateModel shareDateModel].month]];
+     visibleDateLabel = [[animationLabel alloc]initWithFrame:CGRectMake(0, 0, visibleDateLabelWidth, Topheight) labelStr:[NSString stringWithFormat:@"%ld-%ld",[DateModel shareDateModel].year,[DateModel shareDateModel].month]];
      
      visibleDateLabel.center = CGPointMake(contentWidth/2, Topheight/2);
      
@@ -125,10 +125,11 @@
      //按钮
      
      CGFloat weekBtnBorderInset = IPHONEWIDTH(12);
-     CGFloat weekBtnHorizentalInset = IPHONEWIDTH(24);
-     CGFloat weekBtnSize = IPHONEWIDTH(55);
+     CGFloat weekBtnHorizentalInset = IPHONEWIDTH(18);
+     CGFloat weekBtnSize = IPHONEWIDTH(60);
      //星期
-     NSArray *weekArray = @[@"日",@"一",@"二",@"三",@"四",@"五",@"六"];
+
+     NSArray *weekArray = @[QZHLoaclString(@"Sun"),QZHLoaclString(@"Mon"),QZHLoaclString(@"Tues"),QZHLoaclString(@"Wed"),QZHLoaclString(@"Thur"),QZHLoaclString(@"Fri"),QZHLoaclString(@"Sat")];
      for (int index = 0; index<7; index++) {
          UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(weekBtnBorderInset+index*(weekBtnHorizentalInset+weekBtnSize), Topheight, weekBtnSize, weekBtnSize)];
          btn.adjustsImageWhenHighlighted = NO;

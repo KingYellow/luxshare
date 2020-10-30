@@ -6,7 +6,7 @@
 //
 
 #import <TuyaSmartBaseKit/TuyaSmartUser.h>
-#import <TuyaSmartDeviceKit/TuyaSmartBleMeshModel.h>
+#import <TuyaSmartDeviceKit/TuyaSmartDeviceKit.h>
 #import "TuyaSmartBleMesh.h"
 
 @interface TuyaSmartUser (BleMesh)

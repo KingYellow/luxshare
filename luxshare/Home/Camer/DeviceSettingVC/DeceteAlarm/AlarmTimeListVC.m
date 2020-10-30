@@ -15,7 +15,7 @@
 
 @interface AlarmTimeListVC ()<UITableViewDelegate,UITableViewDataSource,TuyaSmartCameraDPObserver>
 @property (strong, nonatomic)UITableView *qzTableView;
-@property (copy, nonatomic)NSMutableArray *listArr;
+@property (strong, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)NSMutableArray *memberArr;
 @property (strong, nonatomic)TuyaSmartCameraDPManager *dpManager;
 @property (strong, nonatomic)TuyaSmartDevice *device;
@@ -35,7 +35,7 @@
     self.navigationItem.title = QZHLoaclString(@"setting_setting");
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
-    [self exp_addRightItemTitle:@"添加定时" itemIcon:@""];
+    [self exp_addRightItemTitle:QZHLoaclString(@"addTimer") itemIcon:@""];
     [self UIConfig];
     self.dpManager = [[TuyaSmartCameraDPManager alloc] initWithDeviceId:self.deviceModel.devId];
     [self.dpManager addObserver:self];
@@ -88,7 +88,7 @@
     cell.statusSwitch.on = model.status;
     cell.statusSwitch.tag = row;
     [cell.statusSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
-    cell.itemLab.text = [NSString stringWithFormat:@"移动侦测:%@ 声音侦测:%@",[model.dps[@"134"] boolValue]?@"开启":@"关闭",[model.dps[@"139"] boolValue]?@"开启":@"关闭"];
+    cell.itemLab.text = [NSString stringWithFormat:@"%@:%@ %@:%@",QZHLoaclString(@"decrteAlarm"),[model.dps[@"134"] boolValue]?QZHLoaclString(@"open"):QZHLoaclString(@"close"),QZHLoaclString(@"voiceAlarm"),[model.dps[@"139"] boolValue]?QZHLoaclString(@"open"):QZHLoaclString(@"close")];
     if (model.status) {
         cell.contentView.alpha = 1.0;
     }else{
@@ -103,7 +103,7 @@
     if (section == 0) {
         UIView *view = [[UIView alloc] init];
         UILabel *lab = [[UILabel alloc] init];
-        lab.text = @"定时可能会存在30S左右的误差";
+        lab.text = QZHLoaclString(@"timerHas30S");
         lab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
         lab.textColor = QZHKIT_Color_BLACK_54;
         lab.frame = CGRectMake(15, 15, QZHScreenWidth, 20);
@@ -165,7 +165,7 @@
 - (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath {
     TYTimerModel *model = self.listArr[indexPath.row];
     [self.timer removeTimerWithTask:QZHTUYATIMERALARM devId:self.deviceModel.devId  timerId:model.timerId success:^{
-        [[QZHHUD HUD] textHUDWithMessage:@"删除成功" afterDelay:1.0];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"deleteSuccesee") afterDelay:1.0];
         [self getTimerList];
     } failure:^(NSError *error) {
         [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
@@ -210,7 +210,7 @@
         [week addObject:subStr];
     }
     if (week.count > 6) {
-        NSMutableArray *weekArrM = [NSMutableArray arrayWithObjects:@{@"week":@"星期日",@"select":@"0",},@{@"week":@"星期一",@"select":@"0",},@{@"week":@"星期二",@"select":@"0",},@{@"week":@"星期三",@"select":@"0",},@{@"week":@"星期四",@"select":@"0",},@{@"week":@"星期五",@"select":@"0",},@{@"week":@"星期六",@"select":@"0",}, nil];
+        NSMutableArray *weekArrM = [NSMutableArray arrayWithObjects:@{@"week":QZHLoaclString(@"Sunday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Monday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Tuesday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Wednesday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Thursday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Friday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Saturday"),@"select":@"0",}, nil];
         for (int i = 0; i < weekArrM.count; i++) {
             NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:weekArrM[i]];
              if ([week[i] boolValue]) {
@@ -235,11 +235,11 @@
          }
      }
      if (weekArr.count == 7) {
-         weekDay = @"每天";
-     }else if(weekArr.count == 5 && ![weekArr containsObject:@"星期六"] && ![weekArr containsObject:@"星期日"]){
-            weekDay = @"工作日";
+         weekDay = QZHLoaclString(@"EveryDay");
+     }else if(weekArr.count == 5 && ![weekArr containsObject:QZHLoaclString(@"Saturday")] && ![weekArr containsObject:QZHLoaclString(@"Sunday")]){
+            weekDay = QZHLoaclString(@"WorkDay");
      }else if(weekArr.count == 0){
-         weekDay = @"仅限一次";
+         weekDay = QZHLoaclString(@"onlyOnce");
      }else{
          weekDay = [weekArr componentsJoinedByString:@","];
      }

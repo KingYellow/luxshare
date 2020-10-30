@@ -38,8 +38,6 @@
 @property (nonatomic, assign) BOOL scrolTotop;
 //到达底部
 @property (nonatomic, assign) BOOL scrolToBottom;
-
-@property (nonatomic, strong) UIView *naviBarBackGround;
 //headHeight
 @property (nonatomic, assign) CGFloat headHeight;
 @end
@@ -110,10 +108,6 @@
 }
 
 - (void)setParam{
-    if (self.param.wInsertHeadAndMenuBg) {
-        self.head_MenuView = [UIView new];
-        self.param.wInsertHeadAndMenuBg(self.head_MenuView);
-    }
     if (self.param.wMenuAnimal == PageTitleMenuAiQY) {
         if (!self.param.wMenuIndicatorWidth) {
             self.param.wMenuIndicatorWidth = 20;
@@ -123,19 +117,16 @@
     if (self.param.wMenuAnimal == PageTitleMenuNone||
         self.param.wMenuAnimal == PageTitleMenuCircle||
         self.param.wMenuAnimal == PageTitleMenuPDD) {
-        self.param.wMenuAnimalTitleBig = NO;
         self.param.wMenuAnimalTitleGradient = NO;
         if (self.param.wMenuAnimal == PageTitleMenuPDD) {
             if (!self.param.wMenuIndicatorWidth) {
                 self.param.wMenuIndicatorWidth = 25;
             }
+        }else{
+            self.param.wMenuAnimalTitleBig = NO;
         }
     }
     
-    if (self.param.wMenuAnimal == PageTitleMenuYouKu) {
-        self.param.wMenuIndicatorWidth = 6;
-        self.param.wMenuIndicatorHeight = 3;
-    }
     if (self.param.wMenuAnimal == PageTitleMenuCircle) {
         if (CGColorEqualToColor(self.param.wMenuIndicatorColor.CGColor, PageColor(0xE5193E).CGColor)) {
             self.param.wMenuIndicatorColor = PageColor(0xe1f9fe);
@@ -143,11 +134,24 @@
         if (CGColorEqualToColor(self.param.wMenuTitleSelectColor.CGColor, PageColor(0xE5193E).CGColor)) {
             self.param.wMenuTitleSelectColor = PageColor(0x00baf9);
         }
+        if (self.param.wMenuIndicatorHeight <= 15.0f) {
+            self.param.wMenuIndicatorHeight = 0;
+        }
+        
     }
     
     if (self.param.wMenuPosition == PageMenuPositionNavi) {
         if (CGColorEqualToColor(self.param.wMenuBgColor.CGColor, PageColor(0xffffff).CGColor)) {
             self.param.wMenuBgColor = [UIColor clearColor];
+        }
+        if (self.param.wMenuHeight == 55.0f) {
+            self.param.wMenuHeight = 40.0f;
+        }
+    }
+    
+    if (self.param.wMenuSpecifial == PageSpecialTypeOne) {
+        if (self.param.wMenuHeight == 55.0f) {
+            self.param.wMenuHeight = 75.0f;
         }
     }
     
@@ -162,25 +166,21 @@
     CGFloat tabbarHeight = 0;
     CGFloat statusBarHeight = 0;
     if (self.presentingViewController) {
-        
         if (!self.navigationController) {
             statusBarHeight = PageVCStatusBarHeight;
         }
     } else if (self.tabBarController) {
-        
         if (!self.tabBarController.tabBar.translucent) {
             tabbarHeight = 0;
         }else{
             tabbarHeight = PageVCTabBarHeight;
         }
     } else if (self.navigationController){
-        
         headY = (!self.param.wFromNavi&&
                   self.param.wMenuPosition != PageMenuPositionBottom)?0:
        (!self.navigationController.navigationBar.translucent?0:PageVCNavBarHeight);
     }
     if (self.parentViewController) {
-        
         if ([self.parentViewController isKindOfClass:[UINavigationController class]]) {
             UINavigationController *naPar = (UINavigationController*)self.parentViewController;
             headY = (!self.param.wFromNavi&&
@@ -213,44 +213,38 @@
         }
     }
     
-    
     if (self.hidesBottomBarWhenPushed&&tabbarHeight>=PageVCTabBarHeight) {
         tabbarHeight -= PageVCTabBarHeight;
     }
-    //全屏
-      if (self.navigationController) {
-          for (UIGestureRecognizer *gestureRecognizer in self.downSc.gestureRecognizers) {
-              [gestureRecognizer requireGestureRecognizerToFail:self.navigationController.interactivePopGestureRecognizer];
-          }
-      }
     
-      if (@available(iOS 11.0, *)) {
-          self.downSc.estimatedSectionFooterHeight = 0.01;
-          self.downSc.estimatedSectionHeaderHeight = 0.01;
-          self.downSc.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-      }
-      self.downSc.estimatedRowHeight = 100;
-      self.downSc.sectionHeaderHeight = 0.01;
-      self.downSc.sectionFooterHeight = 0.01;
-      self.downSc.delegate = self;
-      self.downSc.bounces = self.param.wBounces;
-      self.downSc.frame = CGRectMake(0, headY, self.view.frame.size.width, self.view.frame.size.height-headY-tabbarHeight);
-      self.downSc.canScroll = [self canTopSuspension];
-      self.downSc.scrollEnabled = [self canTopSuspension];
-      self.downSc.wFromNavi = self.param.wFromNavi;
-      [self.view addSubview:self.downSc];
+    if (self.param.wCustomNaviBarY) {
+        headY = self.param.wCustomNaviBarY(headY);
+    }
+    if (self.param.wCustomTabbarY) {
+        tabbarHeight = self.param.wCustomTabbarY(tabbarHeight);
+    }
+
+    //全屏
+    if (self.navigationController) {
+        for (UIGestureRecognizer *gestureRecognizer in self.downSc.gestureRecognizers) {
+             [gestureRecognizer requireGestureRecognizerToFail:self.navigationController.interactivePopGestureRecognizer];
+        }
+    }
     
 
+    self.downSc.delegate = self;
+    self.downSc.bounces = self.param.wBounces;
+    self.downSc.frame = CGRectMake(0, headY, self.view.frame.size.width, self.view.frame.size.height-headY-tabbarHeight);
+    self.downSc.canScroll = [self canTopSuspension];
+    self.downSc.scrollEnabled = [self canTopSuspension];
+    self.downSc.wFromNavi = self.param.wFromNavi;
+    [self.view addSubview:self.downSc];
+    
    //滚动和菜单视图
     self.upSc = [[WMZPageLoopView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) param:self.param];
     self.upSc.loopDelegate = self;
     self.downSc.tableFooterView = self.upSc;
     
-    if (self.navigationController) {
-        for (UIGestureRecognizer *gestureRecognizer in self.upSc.gestureRecognizers) {
-            [gestureRecognizer requireGestureRecognizerToFail:self.navigationController.interactivePopGestureRecognizer];
-        }
-    }
     //底部
     [self setUpMenuAndDataViewFrame];
     
@@ -262,7 +256,7 @@
    
     [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (idx == self.param.wMenuDefaultIndex && obj.tag!=10086) {
-            self.upSc.first = YES;
+            self.upSc.mainView.first = YES;
             [obj sendActionsForControlEvents:UIControlEventTouchUpInside];
             *stop = YES;
         }
@@ -270,10 +264,9 @@
     self.canScroll = YES;
     self.scrolToBottom = YES;
     
-}
-
-- (void)updateMenuData{
-     [self UI];
+    [self.downSc reloadData];
+    [self.downSc layoutIfNeeded];
+    
 }
 
 - (void)setUpMenuAndDataViewFrame{
@@ -294,17 +287,15 @@
         sonChildVCY = 0;
         sonChildVCHeight = self.downSc.frame.size.height - titleMenuhHeight;
     }
-    if (self.param.wTopOffset) {
-        sonChildVCHeight -= self.param.wTopOffset;
-    }
-    
+
     CGFloat height = [self canTopSuspension]?sonChildVCHeight :(sonChildVCHeight-self.headHeight);
+    
     if ([self canTopSuspension]) {
         if (!self.parentViewController) {
             height -=PageVCStatusBarHeight;
         }else{
             if (![self.parentViewController isKindOfClass:[WMZPageController class]]) {
-                if (self.navigationController) {
+                if (self.navigationController&&![self.navigationController isNavigationBarHidden]) {
                     if (!self.param.wFromNavi) {
                         height -= (self.navigationController.navigationBar.translucent?PageVCNavBarHeight:0);
                         
@@ -314,10 +305,18 @@
                 }
             }
         }
+    }else{
+        if ([self.parentViewController isKindOfClass:[WMZPageController class]]) {
+            height -= PageVCNavBarHeight;
+        }
     }
+
     sonChildVCHeight = height;
     
-    
+    if (self.param.wCustomDataViewHeight) {
+        sonChildVCHeight = self.param.wCustomDataViewHeight(sonChildVCHeight);
+    }
+
     if (self.param.wMenuPosition == PageMenuPositionBottom){
         if (self.param.wMenuSpecifial == PageSpecialTypeOne) {
             [self.upSc.dataView page_y:0];
@@ -359,6 +358,10 @@
     }else{
         self.downSc.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake( 0, 0,self.view.frame.size.width, 0.01)];
     }
+    if (self.param.wInsertHeadAndMenuBg) {
+        self.head_MenuView = [UIView new];
+        self.param.wInsertHeadAndMenuBg(self.head_MenuView);
+    }
     //全景
     if (self.head_MenuView) {
         self.head_MenuView.frame = CGRectMake(0, self.headView?CGRectGetMinX(self.headView.frame):CGRectGetMinX(self.upSc.frame), self.upSc.frame.size.width, CGRectGetMaxY(self.upSc.frame)-self.upSc.dataView.frame.size.height);
@@ -376,20 +379,15 @@
 
 //底部滚动
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
     if (scrollView!=self.downSc) return;
     if (![self canTopSuspension]) return;
     //偏移量
     float yOffset  = scrollView.contentOffset.y;
     //顶点
     int topOffset = scrollView.contentSize.height - scrollView.frame.size.height;
-    
-    //外部传入 修改此属性即可
-    if (self.param.wTopOffset) {
-        topOffset += self.param.wTopOffset;
-    }
     if (yOffset<=0) {
         self.scrolToBottom = YES;
-        
     }else{
         if (yOffset >= topOffset) {
             scrollView.contentOffset = CGPointMake(self.downSc.contentOffset.x, topOffset);
@@ -412,9 +410,7 @@
         }else {
              self.sonCanScroll = NO;
         }
-
     }
-    
     CGFloat delta = scrollView.contentOffset.y/topOffset;
     if (delta>1) {
         delta = 1;
@@ -462,8 +458,13 @@
             self.param.wEventMenuChangeHeight(self.upSc.btnArr,self.currentScroll.contentOffset.y);
         }
     }
-    //设置下划线
-    [self.upSc endAninamal];
+     if (self.param.wMenuAnimal == PageTitleMenuAiQY||self.param.wMenuAnimal == PageTitleMenuPDD){
+        CGRect rect = self.upSc.lineView.frame;
+        if (rect.origin.y != ([self.upSc.mainView getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2)) {
+            rect.origin.y = [self.upSc.mainView getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2;
+        }
+        self.upSc.lineView.frame = rect;
+    }
 }
 //设置悬浮
 - (void)setUpSuspension:(UIViewController*)newVC index:(NSInteger)index end:(BOOL)end{
@@ -516,7 +517,9 @@
 - (void)topSuspensionView:(UIScrollView*)view index:(NSInteger)index{
     if (view&&[view isKindOfClass:[UIScrollView class]]) {
         self.currentScroll = view;
-        [self.sonChildScrollerViewDic setObject:view forKey:@(index)];
+        if (view) {
+            [self.sonChildScrollerViewDic setObject:view forKey:@(index)];
+        }
         if (self.scrolToBottom) {
             [view setContentOffset:CGPointMake(view.contentOffset.x,0) animated:NO];
         }
@@ -598,13 +601,17 @@
     }
 }
 
-- (BOOL)canTopSuspension{
-    if (!self.param.wTopSuspension
-       ||self.param.wMenuPosition == PageMenuPositionBottom
-       ||self.param.wMenuPosition == PageMenuPositionNavi){
-          return NO;
+
+- (void)updateMenuData{
+    footerViewIndex = -1;
+    for (UIViewController *VC in self.childViewControllers) {
+        [VC willMoveToParentViewController:nil];
+        [VC.view removeFromSuperview];
+        [VC removeFromParentViewController];
     }
-    return YES;
+    [self.sonChildScrollerViewDic removeAllObjects];
+    [self.sonChildFooterViewDic removeAllObjects];
+    [self UI];
 }
 
 /*
@@ -621,6 +628,7 @@
 
 //更新
 - (void)updatePageController{
+    [self removeKVO];
     [self.upSc removeFromSuperview];
     [self.downSc removeFromSuperview];
     self.downSc = [[WMZPageScroller alloc]initWithFrame:CGRectMake(0, 0, PageVCWidth, PageVCHeight) style:UITableViewStyleGrouped];
@@ -641,6 +649,20 @@
     [self setUpHead];
 }
 
+//标题数量内容不变情况下只更新内容 (高度需要提前布置好 这里不更新标题的高度)
+- (void)updateTitle{
+    [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj&&[obj isKindOfClass:[WMZPageNaviBtn class]]) {
+            NSString *string = [obj titleForState:UIControlStateNormal];
+            if (self.param.wTitleArr&&self.param.wTitleArr.count>idx) {
+                string = self.param.wTitleArr[idx];
+            }
+            [obj setTitle:string forState:UIControlStateNormal];
+        }
+    }];
+}
+
+
 /*
 *底部手动滚动  传入CGPointZero则为吸顶临界点
 */
@@ -649,7 +671,7 @@
         //顶点
         int topOffset = self.downSc.contentSize.height - self.downSc.frame.size.height;
         point = CGPointMake(self.downSc.contentOffset.x, topOffset);
-    }
+    }  
     [self.downSc setContentOffset:point animated:animat];
 }
 
@@ -657,9 +679,15 @@
 - (void)showData{
     [self setParam];
     [self UI];
-    if (self.naviBarBackGround&&self.param.wNaviColor) {
-        self.naviBarBackGround.backgroundColor = self.param.wNaviColor;
+}
+
+- (BOOL)canTopSuspension{
+    if (!self.param.wTopSuspension
+       ||self.param.wMenuPosition == PageMenuPositionBottom
+       ||self.param.wMenuPosition == PageMenuPositionNavi){
+          return NO;
     }
+    return YES;
 }
 
 - (NSMutableDictionary *)sonChildScrollerViewDic{
@@ -679,6 +707,16 @@
 - (WMZPageScroller *)downSc{
     if (!_downSc) {
         _downSc = [[WMZPageScroller alloc]initWithFrame:CGRectMake(0, 0, PageVCWidth, PageVCHeight) style:UITableViewStyleGrouped];
+       _downSc.estimatedRowHeight = 100;
+       _downSc.sectionHeaderHeight = 0.01;
+       _downSc.sectionFooterHeight = 0.01;
+        if (@available(iOS 11.0, *)) {
+            _downSc.estimatedSectionFooterHeight = 0.01;
+            _downSc.estimatedSectionHeaderHeight = 0.01;
+            _downSc.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }else{
+            self.automaticallyAdjustsScrollViewInsets = NO;
+        }
     }
     return _downSc;
 }
@@ -704,7 +742,8 @@
 
 - (void)setParam:(WMZPageParam *)param{
     _param = param;
-    [self performSelector:@selector(showData) withObject:nil afterDelay:CGFLOAT_MIN];
+    [self viewDidLayoutSubviews];
+    [self showData];
 }
 
 - (void)didReceiveMemoryWarning{
@@ -713,10 +752,13 @@
     [self.sonChildScrollerViewDic removeAllObjects];
 }
 
-
-- (void)dealloc{
+- (void)removeKVO{
     [self.sonChildScrollerViewDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         [obj removeAllObserverdKeyPath:self withKey:@"contentOffset"];
     }];
+}
+
+- (void)dealloc{
+    [self removeKVO];
 }
 @end

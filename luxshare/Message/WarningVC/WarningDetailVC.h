@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 typedef void (^btnblock)(BOOL isselected);
 @interface WarningDetailVC : UIViewController
 @property (strong, nonatomic)NSString *msgSrcId;
+@property (strong, nonatomic)NSString *deviceId;
+
 @property (copy, nonatomic)btnblock btnAction;
 @end
 

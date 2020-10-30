@@ -22,6 +22,7 @@
 
 @implementation MessageSettingVC
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self getMessagePushStatus];
     [self getWeekDays];
 }
@@ -67,7 +68,7 @@
     if (section == 1) {
         if (row == 1) {
             SettingDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
-            cell.nameLab.text = @"按时段免打扰";
+            cell.nameLab.text = QZHLoaclString(@"dontDisturbBytime");
             cell.radioPosition = 0;
             cell.tagLab.text = self.weekDays;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -76,19 +77,19 @@
         }else{
             SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
             if (row == 0) {
-                cell.nameLab.text = @"告警";
+                cell.nameLab.text = QZHLoaclString(@"warning");
                 cell.switchBtn.tag = 1;
                 cell.switchBtn.on = self.warningStatus;
                 cell.radioPosition = -1;
             }else if(row == 2){
-                cell.nameLab.text = @"家庭";
+                cell.nameLab.text = QZHLoaclString(@"family");
                 cell.switchBtn.tag = 2;
                 cell.radioPosition = 0;
                 cell.switchBtn.on = self.homeStatus;
 
 
             }else{
-                cell.nameLab.text = @"通知";
+                cell.nameLab.text = QZHLoaclString(@"notication");
                 cell.switchBtn.tag = 3;
                 cell.radioPosition = 1;
                 cell.switchBtn.on = self.notificeStatus;
@@ -101,9 +102,10 @@
         
     }else{
         SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
-        cell.nameLab.text = @"启用消息推送";
+        cell.nameLab.text = QZHLoaclString(@"startMessageNotice");
         cell.radioPosition = 2;
         cell.switchBtn.on = self.MessageStatus;
+
         cell.switchBtn.tag = 0;
         [cell.switchBtn addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -132,11 +134,16 @@
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (!self.warningStatus) {
-        if (indexPath.section == 1 && indexPath.row == 1) {
-            return 0;
-        }
+    //暂时关闭免打扰
+    if (indexPath.section == 1 && indexPath.row == 1) {
+        return 0;
     }
+    //免打扰开关
+//    if (!self.warningStatus) {
+//        if (indexPath.section == 1 && indexPath.row == 1) {
+//            return 0;
+//        }
+//    }
     return 50;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -283,12 +290,13 @@
             [weekArr addObject:dic[@"week"]];
         }
     }
+
     if (weekArr.count == 7) {
-        self.weekDays = @"每天";
-    }else if(weekArr.count == 5 && ![weekArr containsObject:@"星期六"] && ![weekArr containsObject:@"星期日"]){
-        self.weekDays = @"工作日";
+        self.weekDays = QZHLoaclString(@"EveryDay");
+    }else if(weekArr.count == 5 && ![weekArr containsObject:QZHLoaclString(@"Saturday")] && ![weekArr containsObject:QZHLoaclString(@"Sunday")]){
+        self.weekDays = QZHLoaclString(@"WorkDay");
     }else if(weekArr.count == 0){
-        self.weekDays = @"永不";
+        self.weekDays = QZHLoaclString(@"never");
     }else{
         self.weekDays = [weekArr componentsJoinedByString:@","];
     }

@@ -12,7 +12,6 @@
 #import "PerInfoPicCell.h"
 #import "AddMemberVC.h"
 #import "YFMPaymentView.h"
-#import <STPopup/STPopup.h>
 
 
 @interface MemberDetailVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -72,7 +71,7 @@
             PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
             cell.nameLab.text = QZHLoaclString(@"member_name");
             cell.describeLab.text = self.memberModel.name;
-            if ([self isAdminOrOwner]) {
+            if ([QZHCommons isAdminOrOwner:self.homeModel]) {
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -99,7 +98,7 @@
         }else{
             cell.nameLab.text = QZHLoaclString(@"member_homeRole");
             cell.describeLab.text = [self getRole:self.memberModel.role];
-            if (self.memberModel.role != TYHomeRoleType_Owner && [self isAdminOrOwner]) {
+            if (self.memberModel.role != TYHomeRoleType_Owner && [self isAdmin]) {
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }
         }
@@ -116,7 +115,7 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    if ([self isAdminOrOwner]) {
+    if ([QZHCommons isAdminOrOwner:self.homeModel]) {
         //拥有者
         if (self.homeModel.role == TYHomeRoleType_Owner) {
             return 3;
@@ -157,7 +156,7 @@
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (![self isAdminOrOwner]) {
+    if (![QZHCommons isAdminOrOwner:self.homeModel]) {
         return;
     }
     NSInteger section = indexPath.section;
@@ -172,7 +171,7 @@
     }
 
     if (section == 1 && row == 1) {
-        if (self.memberModel.role == TYHomeRoleType_Owner) {
+        if (self.memberModel.role == TYHomeRoleType_Owner || self.homeModel.role == TYHomeRoleType_Admin) {
             return;
         }
 
@@ -180,10 +179,15 @@
         NSArray *payTypeArr = @[@{@"tip":QZHLoaclString(@"role_normalTip"),
                                    @"title":QZHLoaclString(@"role_normal")},@{@"tip":QZHLoaclString(@"role_adminTip"),@"title":QZHLoaclString(@"role_admin")}];
          
-         YFMPaymentView *pop = [[YFMPaymentView alloc]initTotalPay:@"39.99" vc:self dataSource:payTypeArr];
-         STPopupController *popVericodeController = [[STPopupController alloc] initWithRootViewController:pop];
-         popVericodeController.style = STPopupStyleBottomSheet;
-         [popVericodeController presentInViewController:self];
+        YFMPaymentView *pop = [[YFMPaymentView alloc]initTotalPay:@"39.99" vc:self dataSource:payTypeArr];
+        if (self.memberModel.role == TYHomeRoleType_Member) {
+            pop.currentIndex = 0;
+        }else if(self.memberModel.role == TYHomeRoleType_Admin){
+            pop.currentIndex = 1;
+        }
+
+        pop.modalPresentationStyle = UIModalPresentationOverFullScreen;
+        [self presentViewController:pop animated:YES completion:nil];
          
          pop.payType = ^(NSInteger index) {
              if (index == 0) {
@@ -199,8 +203,19 @@
     }
 
     if (section == 2) {
-        [self removeMember:self.memberModel];
+        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"tip") message:QZHLoaclString(@"deletedWillNaverRevover") preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        UIAlertAction *action1 = [UIAlertAction actionWithTitle:QZHLoaclString(@"delete") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            [self removeMember:self.memberModel];
+            
+        }];
+        [alertC addAction:action];
+        [alertC addAction:action1];
+        [self presentViewController:alertC animated:NO completion:nil];
     }
+ 
 }
 
 #pragma mark  -- Action
@@ -230,8 +245,8 @@
 
 #pragma mark -- 判断是否是 管理员或者所有者
 
-- (BOOL)isAdminOrOwner{
-    if (self.homeModel.role == TYHomeRoleType_Admin ||self.homeModel.role == TYHomeRoleType_Owner) {
+- (BOOL)isAdmin{
+    if (self.homeModel.role == TYHomeRoleType_Owner) {
         return YES;
     }
     return NO;

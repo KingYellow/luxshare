@@ -14,15 +14,15 @@
 #import "SCIndexViewConfiguration.h"
 
 
-@interface AddressBookTVC ()<UISearchControllerDelegate,UISearchResultsUpdating,SCIndexViewDelegate,UISearchBarDelegate>
+@interface AddressBookTVC ()<UISearchControllerDelegate,SCIndexViewDelegate,UISearchResultsUpdating,UISearchBarDelegate>
 @property (strong, nonatomic)UISearchController *searchController;
 @property (nonatomic, assign)SCIndexViewStyle indexViewStyle;
 @property (copy, nonatomic)SCIndexView *indexView;
-@property (copy, nonatomic)NSMutableArray *rowArr;
+@property (strong, nonatomic)NSMutableArray *rowArr;
 @property (copy, nonatomic)NSArray *sectionArr;
 @property (copy, nonatomic)NSArray *serverDataArr;
-@property (copy, nonatomic)NSMutableArray *dataArr;
-@property (copy, nonatomic)NSMutableArray *searchResultArr;
+@property (strong, nonatomic)NSMutableArray *dataArr;
+@property (strong, nonatomic)NSMutableArray *searchResultArr;
 @property (assign, nonatomic)BOOL isSearch;
 @end
 
@@ -35,7 +35,7 @@
     self.tableView.bounces = NO;
     [self initConfig];
     [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTintColor:[UIColor whiteColor]];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTitle:@"取消"];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTitle:QZHLoaclString(@"cancel")];
     
 }
 -(void)viewWillDisappear:(BOOL)animated{
@@ -68,10 +68,13 @@
     self.searchController.delegate = self;
     self.searchController.searchResultsUpdater = self;
     self.searchController.searchBar.delegate = self;
-
     // 设置为NO的时候 列表的单元格可以点击 默认为YES无法点击无效
 
-    self.searchController.obscuresBackgroundDuringPresentation = NO;
+    if (@available(iOS 9.1, *)) {
+        self.searchController.obscuresBackgroundDuringPresentation = NO;
+    } else {
+        // Fallback on earlier versions
+    }
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     // 保证搜索导航栏中可见
     [self.searchController.searchBar sizeToFit];
@@ -107,7 +110,14 @@
     }else{
 
         ContactModel *model=_rowArr[indexPath.section][indexPath.row];
-        [cell.nameLabel setText: model.chinese];
+        NSArray *languages = [NSLocale preferredLanguages];
+        NSString *currentLanguage = [languages objectAtIndex:0];
+        if ([currentLanguage isEqualToString:@"zh-Hans-CN"]){
+            [cell.nameLabel setText: model.chinese];
+        }else{
+            [cell.nameLabel setText: model.english];
+        }
+            
 
         return cell;
     }
@@ -194,7 +204,7 @@
     for(UIView*view in searchBarContainerView) {
         if ([view isKindOfClass:[NSClassFromString(@"UINavigationButton") class]]) {
             UIButton *cancelButton = (UIButton*)view;
-            [cancelButton setTitle:@"取消"forState:UIControlStateNormal];
+            [cancelButton setTitle:QZHLoaclString(@"cancel") forState:UIControlStateNormal];
             [cancelButton setTitleColor:QZHKIT_COLOR_SKIN forState:UIControlStateNormal];
       }
     }
@@ -206,8 +216,16 @@
     NSUInteger searchOptions = NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch;
     
     for (int i = 0; i < self.dataArr.count; i++) {
-        NSString *storeString = [(ContactModel *)self.dataArr[i] chinese];
-        NSString *storeStringeng = [(ContactModel *)self.dataArr[i] spell];
+        NSString *storeString ;
+        NSString *storeStringeng ;
+        if ([QZHCommons languageOfTheDeviceSystem] == LanguageChinese){
+            storeString = [(ContactModel *)self.dataArr[i] chinese];
+            storeStringeng = [(ContactModel *)self.dataArr[i] spell];
+        }else{
+            storeString = [(ContactModel *)self.dataArr[i] english];
+            storeStringeng = [(ContactModel *)self.dataArr[i] english];
+            
+        }
 
         NSRange storeRange = NSMakeRange(0, storeString.length);
         NSRange storeRangeeng = NSMakeRange(0, storeStringeng.length);

@@ -48,7 +48,7 @@
     if (!_nameLab) {
         _nameLab = [[UILabel alloc] init];
         _nameLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
-        _nameLab.text = @"正在格式化...";
+        _nameLab.text = QZHLoaclString(@"formating");
         _nameLab.textColor = QZHKIT_Color_BLACK_87;
     }
     return _nameLab;

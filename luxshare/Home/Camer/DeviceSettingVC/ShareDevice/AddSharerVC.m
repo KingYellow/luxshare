@@ -27,12 +27,12 @@
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
    [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
    [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
-    self.navigationItem.title = @"添加分享";
+    self.navigationItem.title = QZHLoaclString(@"addShare");
     [self setUI];
     self.countryModel = [ContactModel new];
     self.countryModel.code = @"86";
     self.countryModel.chinese = @"中国";
-    
+    self.countryModel.english = @"China";
 }
 
 - (void)setUI{
@@ -134,12 +134,9 @@
 }
 - (void)submitAction{
     if ([self.phoneText.text exp_isPureInt]) {
-        if (self.phoneText.text.length != 11) {
-            [[QZHHUD HUD] textHUDWithMessage:@"手机号不正确" afterDelay:0.5];
-            return;
-        }
+
     }else if(!QZHEMAILRIGHT(self.phoneText.text)){
-        [[QZHHUD HUD] textHUDWithMessage:@"邮箱不正确" afterDelay:0.5];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"emailError") afterDelay:0.5];
         return;
     }
     [self addDeviceShare];
@@ -150,7 +147,7 @@
     QZHWS(weakSelf)
     vc.countryBlock = ^(ContactModel * _Nonnull countryCode) {
         weakSelf.countryModel = countryCode;
-        weakSelf.countryView.describeLab.text = [NSString stringWithFormat:@"%@ +%@",self.countryModel.chinese,self.countryModel.code];
+        weakSelf.countryView.describeLab.text = [NSString stringWithFormat:@"%@ +%@",[QZHCommons languageOfTheDeviceSystem] == LanguageChinese?self.countryModel.chinese:self.countryModel.english,self.countryModel.code];
     };
 
     [self.navigationController pushViewController:vc animated:YES];

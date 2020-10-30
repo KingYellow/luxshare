@@ -37,7 +37,7 @@
     self.dpManager = [[TuyaSmartCameraDPManager alloc] initWithDeviceId:self.deviceModel.devId];
     [self.dpManager addObserver:self];
     [self UIConfig];
-    self.titleLab.text = [NSString stringWithFormat:@"发现可更新版本%@",self.upModel.version];
+    self.titleLab.text = [NSString stringWithFormat:@"%@:%@",QZHLoaclString(@"findNewVersion"),self.upModel.version];
     float size = [self.upModel.fileSize integerValue]/1024.0;
     if (size > 102.4) {
         size = size/1024.0;
@@ -126,7 +126,6 @@
         _titleLab = [[UILabel alloc] init];
         _titleLab.textColor = QZHKIT_Color_BLACK_87;
         _titleLab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
-        _titleLab.text = @"发现可更新版本--";
     }
     return _titleLab;
 }
@@ -145,7 +144,7 @@
         _progressLab = [[UILabel alloc] init];
         _progressLab.textColor = QZHKIT_Color_BLACK_87;
         _progressLab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
-        _progressLab.text = @"固件升级";
+        _progressLab.text = QZHLoaclString(@"deviceUpdate");
 
     }
     return _progressLab;
@@ -156,7 +155,7 @@
         _tipLab = [[UILabel alloc] init];
         _tipLab.textColor = QZHKIT_Color_BLACK_54;
         _tipLab.font = QZHKIT_FONT_LISTCELL_DESCRIBE_TITLE;
-        _tipLab.text = @"更新新版本";
+        _tipLab.text = QZHLoaclString(@"upDateNewVersion");
 
     }
     return _tipLab;
@@ -184,7 +183,7 @@
 -(UIButton *)updateBtn{
     if (!_updateBtn) {
         _updateBtn = [[UIButton alloc] init];
-        [_updateBtn setTitle:@"更新" forState:UIControlStateNormal];
+        [_updateBtn setTitle:QZHLoaclString(@"update") forState:UIControlStateNormal];
         [_updateBtn setTitleColor:QZHKIT_COLOR_SKIN forState:UIControlStateNormal];
         _updateBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_DESCRIBE_TITLE;
         [_updateBtn addTarget:self action:@selector(updateAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -203,15 +202,15 @@
 - (void)updateAction:(UIButton *)sender{
     
     if ([[self.dpManager valueForDP:TuyaSmartCameraSDCardStatusDPName] intValue] == 5) {
-        [[QZHHUD HUD] textHUDWithMessage:@"该设备无SD卡不支持更新" afterDelay:1.0];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"noSDCardCantUpdate") afterDelay:1.0];
 
     }else{
-        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"更新注意事项" message:@"升级可能持续较长时间,请确保设备处于电量充足状态.更新时设备不可使用" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancelaction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"updateNote") message:QZHLoaclString(@"updateNoteDetail") preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelaction = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             
         }];
-        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            self.titleLab.text = [NSString stringWithFormat:@"%@%@",@"正在更新至",self.upModel.version];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:QZHLoaclString(@"submit") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            self.titleLab.text = [NSString stringWithFormat:@"%@%@",QZHLoaclString(@"updatingTo"),self.upModel.version];
             [self.sizeLab mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.height.mas_equalTo(0);
             }];
@@ -262,7 +261,7 @@
 - (void)device:(TuyaSmartDevice *)device firmwareUpgradeStatusModel:(TuyaSmartFirmwareUpgradeStatusModel *)upgradeStatusModel{
     if (upgradeStatusModel.upgradeStatus == TuyaSmartDeviceUpgradeStatusSuccess) {
         QZHWS(weakSelf)
-        [[QZHHUD HUD] textHUDWithMessage:@"更新成功" afterDelay:0.5];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"updateSuccess") afterDelay:0.5];
         self.refresh();
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [weakSelf.navigationController popViewControllerAnimated:YES];
@@ -270,7 +269,7 @@
         });
     }
     if (upgradeStatusModel.upgradeStatus == TuyaSmartDeviceUpgradeStatusTimeout || upgradeStatusModel.upgradeStatus == TuyaSmartDeviceUpgradeStatusFailure) {
-        [[QZHHUD HUD] textHUDWithMessage:@"升级失败,请再次尝试更新" afterDelay:1.0];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"updateFailedTryAgain") afterDelay:1.0];
         [self viewDidLoad];
 
     }

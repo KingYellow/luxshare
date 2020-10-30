@@ -1,8 +1,451 @@
 "home" = "Home";
 "mine" = "Mine";
 "message" = "Message";
-//我的s
-"mine_shareDevices" = "ShareDevices";
-"mine_commonQuestions" = "CommonQuestions";
-"mine_familyManagement" = "FamilyManagement";
-"mine_currentVersion" = "CurrentVersion";
+"language" = "english";
+"nextstep" = "Next";
+"submit" = "Confirm";
+"save" = "Preserve";
+"suggest" = "Suggest";
+"handleSuccess" = "Operation Succeeded";
+"handleFailure" = "Operation Failed";
+"edit" = "Edit";
+"finish" = "Finish";
+"delete" = "Delete";
+"warning" = "Alarm";
+"family" = "Family";
+"notication" = "Notice";
+//星期
+"Sunday" = "Sunday";
+"Monday" = "Monday";
+"Tuesday" = "Tuesday";
+"Wednesday" = "Wednesday";
+"Thursday" = "Thursday";
+"Friday" = "Friday";
+"Saturday" = "Saturday";
+"EveryDay" = "EveryDay";
+"WorkDay" = "WorkDay";
+"onlyOnce" = "OnlyOnce";
+
+//星期 简写
+"Sun" = "Sun";
+"Mon" = "Mon";
+"Tues" = "Tues";
+"Wed" = "Wed";
+"Thur" = "Thur";
+"Fri" = "Fri";
+"Sat" = "Sat";
+
+//角色
+"role_normal" = "Member";
+"role_normalTip" = "Use devices/intelligence";
+"role_admin" = "Admin";
+"role_owner" = "Owner";
+"role_adminTip" = "Manage equipment/rooms/intelligence/people";
+"home_role" = "FamilyRole";
+"role_addMemberTip" = "Only after the associated account accepts the invitation can you become a family member and use the relevant functions";
+
+//登录
+"login" = "Login";
+"register" = "Register";
+"logout" = "Logout";
+
+"login_countryCode" = "CountryCode";
+"login_account" = "Mobile Number/Email";
+"login_phone" = "Mobile Number";
+"login_password" = "Password";
+"login_verifyCode" = "Verification Code";
+"login_sendCode" = "Send";
+"login_loginPassword" = "Password Login";
+"reset_password" = "Reset Password";
+"reset_newPassword" = "New Password";
+"login_success" = "Login Successful";
+"login_fail" = "Login Failed";
+
+"login_getCode" = "Get";
+"login_loginWithMessage" = "SMS Verification";
+"login_messageLogin" = "SMS Verification";
+"login_forgetPassword" = "Forget Password";
+"login_getPassword" = "Retrieve Password";
+"login_resetPassword" = "Reset Password";
+"login_inputRightPhone" = "Please enter the correct mobile phone number";
+
+"regist_success" = "Register Successfully";
+"verify_code_success" = "Verification code sent successfully";
+"verify_code_fail" = "Verification code sending failed";
+"verify_code_invalid" = "Invalid verification code";
+
+"resetPasswordByPhonesuccess" = "Password reset successful";
+"resetPasswordByPhonefialure" = "Password reset failed";
+//我的
+"mine_shareDevices" = "Shared Devices";
+"mine_commonQuestions" = "FAQ";
+"mine_familyManagement" = "Family Management";
+"mine_currentVersion" = "Current Version";
+"mine_email" = "Mailbox";
+
+//个人信息
+"personInfo_headPic" = "Header";
+"personInfo_name" = "Name";
+"personInfo_nickName" = "Nickname";
+"personInfo_phoneNum" = "Phone Numbe";
+"personInfo_editLoginPW" = "Change Login Password";
+"personInfo_info" = "Personal Information";
+"editNickname" = "Change Nickname";
+"nicknameCantSpace" = "Nickname cannot be empty";
+
+
+//家庭管理
+"home_manage" = "Family Management";
+"home_addHome" = "Add Family";
+"home_detail" = "Family Information";
+"home_name" = "Family Name";
+"home_location" = "Family Location";
+"home_removeHome" = "Remove Family";
+"home_homeMember" = "Family Members";
+"home_editHomeName" = "Modify Family Name";
+"home_editHomeLocation" = "Modify Family Location";
+"home_addHomeMember" = "Add Family Members";
+"home_noManager" = "You are not an administrator and cannot edit";
+"home_addMember" = "Add Members";
+"home_room" = "Room";
+
+"home_memberstatus_pending" = "Inviting";
+"home_memberstatus_accept" = "Joined";
+"home_memberstatus_reject" = "Rejected";
+"home_pendrecive" = "Invitation Confirmation";
+"home_pendTextfirst" = "You have a pending invitation to join your family:";
+"home_pendTextsecond" = "Enjoy the convenience of smart life together. Are you sure you want to join?";
+"home_rejectJoin" = "Refuse";
+"home_acceptPend" = "Accept";
+
+
+"home_selectOneRoom" = "Select at least one room";
+"member_name" = "Name";
+"member_inputName" = "Please enter family member name";
+"member_max25" = "Input up to 25 words";
+"home_editMemberName" = "Modify member name";
+
+"member_account" = "Account";
+"member_inputAccount" = "Please enter the account number";
+"member_headpic" = "Header";
+
+"member_country" = "Country/Region";
+
+"member_memberAccount" = "Associated Account";
+"member_homeRole" = "Family Role";
+"member_removeMember" = "Remove Member";
+//房间管理
+"room_manage" = "Room Management";
+"room_roomDetail" = "Room Information";
+"room_addOtherRoom" = "Add Another Room";
+"room_name" = "Room Name";
+"room_noDevices" = "Equipment not in this room";
+"room_editRoomName" = "Change Room Name";
+"roon_namelenngthMin1" = "Room name cannot be empty";
+//全选
+"message_all" = "Select all";
+//设备device
+"device_addDevice" = "Add Device";
+"device_addNewDevice" = "Add Device";
+"device_resetDevice" = "Reset Device";
+"device_resetTip" = "Long press the power key for 5 seconds to reset the device";
+"device_doneTip1" = "Green indicator light is slowly flashing";
+"device_doneTip2" = "Or hear [wait to connect]";
+
+//wifi
+"wifi_setWifi" = "Set Up WiFi";
+"wifi_setWifiTip" = "Connect the device to an existing network";
+"wifi_name" = "WiFi Name";
+"wifi_password" = "Wifi Password";
+
+//二维码
+"qrcode_title" = "Scan QR code";
+"qrcode_subtitle" = "Please face the QR code to the camera about 15 ~ 20cm, so that the camera can scan";
+"qrcode_submit" = "Scan QR code successfully";
+
+//设备
+"device_connecting" = "Device connection in progress";
+"device_connectTip" = "Routers, mobile phones and devices as close as possible";
+"device_addSuccess" = "Added Successfully";
+
+//
+"device_lightNormal" = "The indicator light is flashing";
+"device_lightUnnormal" = "The indicator light is in other states";
+"device_lightTip" = "Turn on the power and make sure the indicator is flashing";
+"device_addFailer" = "Add Failed";
+
+"device_deviceWifiTip" = "Turn on the phone's settings WLAN and connect to the WiFi network shown in the figure above";
+"device_connectHelp" = "Can't connect? See help";
+"device_goToConnect" = "To Connect";
+"device_deviceName" = "Device Name";
+"device_deviceNamePlace" = "Smart Camera";
+
+"device_deviceLocation" = "Equipment Location";
+"device_deviceInfo" = "Device Information";
+
+//设置
+"setting_setting" = "Settings";
+"setting_deceteAlarm" = "Detection alarm settings";
+"setting_moveAlarm" = "Mobile alarm";
+"setting_decetecCry" = "Crying detection";
+"setting_decetecCrySensitivity" = "Cry Detection Sensitivity";
+
+"setting_timerAlarm" = "Alarm Function Timing Settings";
+"setting_alarmArea" = "Alarm Area";
+"setting_alarmAreaSwitch" = "Alarm Area Switch";
+"setting_decetecVoice" = "Sound Detection";
+"setting_decetecVoiceSensitivity" = "Sound Detection Sensitivity";
+
+"setting_decrteAlarmSwitch" = "Movement Detection Alarm Switch";
+"setting_personFilter" = "Human Shape Detection";
+"setting_alarmSensitivity" = "Alarm Sensitivity";
+"setting_deceteMusic" = "Alarm Tone";
+
+"setting_storage" = "Storage Settings";
+"setting_basicFun" = "Basic Function";
+"setting_electricManage" = "Power Management Settings";
+
+"setting_moreSetting" = "Advanced Settings";
+
+"device_playBack" = "Playback";
+
+"share_addShareMember" = "Add Share";
+"share_shareMember" = "Device Share";
+
+//消息
+"message_warningDetail" = "Alarm Message Details";
+"message_selectWeek" = "Select Week";
+"message_center_detail" = "View Detail";
+
+//回放
+"backplayDate" = "Date";
+"record" = "Record";
+"stop" = "Stop";
+"shot" = "Capture";
+"talk" = "Talk";
+"stopTalk" = "HangUp";
+"todayNoVideos" = "There was no video that day";
+"videoPlayFinish" = "Video playback complete";
+"noPhotoPrivate" = "You don't have permission to allow album yet";
+"recordOnlyWhenPlaying" = "Video can only be recorded during normal playback";
+"failedIfRecordTimeLessOneS" = "Recording time less than 1s may cause storage failure";
+"shopSuccessAndStored" = "The screenshot is successful and stored in the album";
+"shotOnlyWhenPlaying" = "Screen capture can only be recorded during normal playback";
+"gotoSetting" = "Set it up";
+"connectFailed" = "Connection Failed";
+"playbackPreviewFailed" = "PlayBack preview failed";
+
+"cancel" = "Cancel";
+"setting" = "Set Up";
+//直播
+"recordingPleaseStop" = "Recording, please stop recording first";
+"talkingPleaseStop" = "Talking, please stop talking first";
+"privateModelStart" = "Privacy Mode On";
+"unableOpeateWhenPrivate" = "Cannot operate in privacy mode";
+"canOperateWhenPlaying" = "It can only be operated after normal playing";
+"photoManage" = "    Album Management";
+"playBack" = "    Recorded Videos";
+"connectOnceAgain" = "Connection failed, Reconnecting";
+"preViewFialed" = "Preview playback failed";
+"awakeSuccess" = "Awake Successful";
+"sleepSuccess" = "Sleep Successful";
+"noMicroPrivate" = "You don't have microphone rights yet";
+"creatingTalkSession" = "Setting up a call channel";
+"recordingCantOperate" = "Unable to operate when recording screen";
+"stopRecordOrTalk" = "Please turn off recording or calling first";
+"talkWhenPressing" = "Press and hold the speech";
+"HD" = "HD";
+"SD" = "SD";
+
+"recordVideos" = "Videos";
+"photos" = "Photos";
+
+//设置
+"setAlarmArea" = "Set alarm area";
+"setSuccess" = "Setup Succeeded";
+"addShare" = "Add Share";
+"emailError" = "The mailbox is not correct";
+"electricHas" = "Remaining Electricity";
+"powerType" = "Power Supply Mode";
+"batteryPower" = "Battery powered";
+"linePower" = "Power cord (battery charging)";
+"setlowPowerNumber" = "Set low power alarm threshold";
+"setlowPowerRange" = "Set low power alarm limit";
+"allStorge" = "Total Capacity";
+"storgeUsed" = "Used";
+"storgeLeft" = "Remaining Capacity";
+"recordStitch" = "Video Swith";
+"recordModel" = "Video Mode";
+"recordModelHappend" = "Event Recording";
+"recordModelLine" = "Continuous Recording";
+"format" = "Format";
+"storgeLength" = "Storage Capacity";
+"storgeSetting" = "Storage Setting";
+
+"noSDCard"= "The device does not have a memory card installed";
+"isOrNoFormar" = "Are you sure you want to format";
+"formatedCantBack" = "Can't restore after formatting, operate carefully!";
+"formatSuccess" = "Format Successful";
+"formatFailed" = "Format Failure";
+"formating" = "Formatting...";
+"PIRSwitch" = "PIR Switch";
+"close" = "Close";
+"lowSensitivity" = "Low Sensitivity";
+"midSensitivity" = "Medium Sensitivity";
+"highSensitivity" = "High Sensitivity";
+"crySensitivity" = "Cry Detection Sensitivity";
+"timer" = "Timing";
+"alarminterval" = "Alarm Interval";
+
+"welcome" = "Welcome";
+"dangerGoAway" = "Keep away from dangerous areas";
+"homeGoAway" = "Private residence, please leave";
+"deviceOfflineNoOperate" = "The device has been offline. Please set it after it is online";
+"privateNoSetAlarmArea" = "Alarm area cannot be set in privacy mode";
+"setting_decetecSensitivity" = "Motion Detection Sensitivity";
+"voiceSensitivity" = "Sound Detection Sensitivity";
+"alarmMusic" = "Alarm Tone";
+"closeAlarmMusic" = "Turn off the tone";
+"addTimer" = "Add Timing";
+"decrteAlarm" = "Movement Detection";
+"voiceAlarm" = "Sound Detection";
+"open" = "Open";
+"auto" = "Auto";
+"timerHas30S" = "The timing error may be about 30s";
+"deleteSuccesee" = "Deletion Succeeded";
+
+//定时
+"beginNotice" = "Enforcement Notice";
+"repeat" = "Repeat";
+"note" = "Note";
+"selectDate" = "Select Time";
+"findNewVersion" = "Updated version found";
+"deviceUpdate" = "Firmware Update";
+"upDateNewVersion" = "Update new version";
+"update" = "Update";
+"noSDCardCantUpdate" = "The device has no SD card and does not support updating";
+"updateNote" = "Update Notes";
+"updateNoteDetail" = "The upgrade may take a long time. Please make sure that the device is fully charged. The device is not available during the update";
+"updatingTo" = "Updating to";
+"updateSuccess" = "Update succeeded";
+"updateFailedTryAgain" = "Upgrade failed, please try to update again";
+"deviceID" = "Device ID";
+"deviceIDcopySuccess" = "Device ID copied successfully";
+"stateLed" = "Status Indicator";
+"timeShow" = "Watermark Time";
+"pictureUpside" = "Image Flip";
+"talkType" = "Intercom Mode";
+"talkOne" = "One Way Intercom";
+"talkTwo" = "Two Way Intercom";
+"talkOneTip" =  "Talk like a walkie talkie";
+"talkTwoTip" =  "You and your family can talk at the same time, you can also hear each other while speaking";
+"talkTip" = "As the intercom may be affected by environmental factors, resulting in poor communication effect, it is recommended that you choose one-way or two-way intercom according to the actual use";
+"privateModel" = "Privacy Model";
+
+//setting
+"offlineNotice" = "Offline Reminder";
+"firmWareInfo" = "Firmware Information";
+"deviceInfo" = "Device Information";
+"noSDCardCantStorge" = "The device has no memory card and does not support storage function";
+"lastVersion" = "Is the latest version";
+"currentVersion" = "Current Version Number";
+"versionInfo" = "Version Information";
+"infraredNight" = "Infrared Night Vision";
+
+"faceRecognition" = "Face Recognition";
+"selectedCount" = "Selected";
+"video" = "Videos";
+"photo" = "Photos";
+"allSelect" = "Select All";
+"noSelect" = "Unselect all";
+"tip" = "Tips";
+"okDeleteDevice" = "Are you sure you want to delete the device?";
+"noData" = "No Data";
+"addDevice" = "Add Device";
+"noLocalPrivateNoWifiInfo" = "You have not opened the location permission, unable to obtain WiFi information";
+
+//配网
+"findDevice" = "Find the device";
+"deviceRegistClode" = "Device registration to smart cloud";
+"deviceFormat" = "Device initialization";
+
+"deviceHadBeBinded" = "The device has been bound by other users and cannot be bound repeatedly. Please remove the device from the original account or contact customer service to submit the unbinding application";
+"unBind" = "Apply for unbundling";
+"feedBack" = "Write Feedback";
+"leftWords" = "The rest can be input";
+"word" = "words";
+"pleaseInputWord" = "Please input feedback";
+"moreThan300Words" = "Input 300 words at most";
+"feedBacktip" = "Please describe your problem or dissatisfaction in detail, such as what you have encountered when you have done something, what functions do you want us to have, etc";
+"feedBackDescribe" = "Problem Description";
+"contactType" = "Contact Information";
+"phoneOrAcconut" = "Optional, mobile phone number or email";
+"submitApplication" = "Submit";
+//home
+"firstAddHome" = "Please add family first";
+"allDevices" = "All devices";
+"twoCodeIntnet" = "QR code distribution network";
+"hotIntnet" = "Hot spot distribution network";
+//message
+"deviceIsUnconnect" = "Device Disconnected";
+"dontDisturbBytime" = "Do not disturb on time";
+"startMessageNotice" = "Enable message push";
+"never" = "Never";
+"today" = "Today";
+"tomorrow" = "Tomorrow";
+//login
+"reGet" = "Again";
+"left" = "surplus";
+"iphoneCantSpace" = "Please enter your mobile phone number";
+"codeCantSpace" = "Please enter the verification code";
+"codeToYourIphone" = "Verification Code Sent to mobile phone:";
+"codeToYourEmail" = "Verification Code Sent to Mailbox:";
+
+"getCode" = "Get Captcha";
+"addOtherRoom" = "Add Another Room";
+
+"LivingRoom" = "Living Room";
+"MasterBedroom" = "MasterBedroom";
+"GuestBedroom" = "GuestBedroom";
+"DiningRoom" = "DiningRoom";
+"Kitchen" = "KitchenKitchen";
+"Study" = "StudyRoom";
+
+"Porch" = "Porch";
+"Balcony" = "Balcony";
+"ChildrenRoom" = "ChildrenRoom";
+"CloakRoom" = "CloakRoom";
+
+
+"TYHomeRoleType_Custom" = "Custom";
+"TYHomeRoleType_Member" = "Member";
+"TYHomeRoleType_Admin" = "Admin";
+"TYHomeRoleType_Owner" = "Owner";
+"roleSetting" = "Role Setting";
+
+"selectHeadPic" = "Choose a picture";
+"selectFromPictures" = "Select from the album";
+"openCamer" = "Open Camera";
+//
+"awake" = "Awake";
+"sleep" = "Sleep";
+"pleaseInput" = "Please enter";
+"versionUpdate" = "Version Upgrade";
+"newAppVersion" = "A new version has been updated";
+"update" = "Update";
+"helpForBindDevice" = "HelpDetail";
+"deletedeviceWhenDeleteFamily" = "When deleting a home, the corresponding devices under the home will be deleted";
+"deletedWillNaverRevover" = "You can't reply after deleting. Are you sure you want to delete?";
+"recording" = "Recording";
+"talking" = "Talking";
+"playLullaby" = "Play Cradle Song";
+"stopPlayLullaby" = "Stop Play Cradle Song";
+
+"notAdminCantShare" = "You are not an administrator and cannot share devices";
+"noAllPhotoPrivate" = "Please allow access to all the contents of the album first";
+"playLullabyAuto" = "Auto Play Cradle Song";
+"cannotTalkWhenPlayLullaby" = "Can't talk while playing cradle song";
+//门铃
+"doorbellRefuse" = "Refuse";
+"doorbellAnswer" = "Answer";
+"waitingAnswerDoorbell" = "Waiting for doorbell call";

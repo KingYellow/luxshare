@@ -151,6 +151,7 @@
 // --------------------------margin-------------------------------
 static NSString * const BATTERY_PRODUCT_ID = @"b4hq7aoy4m4ciabx";
 static NSString * const AC_PRODUCT_ID= @"u3ctgwxzrovkuamh";
+static NSString * const DOORbell_PRODUCT_ID = @"pqumrmnjs5bscfvl";
 
 
 //第一次安装app记录时使用

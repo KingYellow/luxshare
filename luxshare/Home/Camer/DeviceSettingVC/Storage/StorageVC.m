@@ -74,18 +74,18 @@
     if (section == 0) {
 
             PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
-            int state = [[self.dpManager valueForDP:TuyaSmartCameraSDCardStatusDPName] intValue];
+//            int state = [[self.dpManager valueForDP:TuyaSmartCameraSDCardStatusDPName] intValue];
             if (row == 0) {
-                cell.nameLab.text = @"总容量";
+                cell.nameLab.text = QZHLoaclString(@"allStorge");
                 cell.describeLab.text = self.deviceArr.firstObject;
             }
             if (row == 1) {
-                cell.nameLab.text = @"已使用";
+                cell.nameLab.text = QZHLoaclString(@"storgeUsed");
                 cell.describeLab.text = self.deviceArr[1];
 
             }
             if (row == 2) {
-                cell.nameLab.text = @"剩余容量";
+                cell.nameLab.text =QZHLoaclString(@"storgeLeft");
                 cell.describeLab.text = self.deviceArr[2];
             }
 
@@ -97,7 +97,7 @@
         
         if (row == 0) {
              SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
-            cell.nameLab.text = @"录像开关";
+            cell.nameLab.text = QZHLoaclString(@"recordStitch");
             [cell.nameLab mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.left.mas_equalTo(15);
             }];
@@ -108,13 +108,13 @@
              return cell;
         }else{
             PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
-             cell.nameLab.text = @"录像模式";
+             cell.nameLab.text = QZHLoaclString(@"recordModel");
             
             int type = [[self.dpManager valueForDP:TuyaSmartCameraRecordModeDPName] intValue];
             if (type == 1) {
-                cell.describeLab.text = @"事件录像";
+                cell.describeLab.text = QZHLoaclString(@"recordModelHappend");
             }else{
-                cell.describeLab.text = @"连续录像";
+                cell.describeLab.text = QZHLoaclString(@"recordModelLine");
             }
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
              cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -123,7 +123,7 @@
          
     }else{
         QZHDefaultButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_DEFAULT];
-        cell.nameLab.text = @"格式化";
+        cell.nameLab.text = QZHLoaclString(@"format");
         cell.nameLab.textColor = QZHKIT_Color_BLACK_54;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -135,10 +135,10 @@
         UILabel *lab = [[UILabel alloc] init];
 
         if (section == 0) {
-            lab.text = @"存储容量";
+            lab.text = QZHLoaclString(@"storgeLength");
 
         }else if(section == 1){
-            lab.text = @"存储设置";
+            lab.text = QZHLoaclString(@"storgeSetting");
         }
         lab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
         lab.textColor = QZHKIT_Color_BLACK_54;
@@ -189,14 +189,14 @@
         int status = [[self.dpManager valueForDP:TuyaSmartCameraSDCardStatusDPName] intValue];
         
         if (status == 5) {
-            [[QZHHUD HUD] textHUDWithMessage:@"该设备没安装存储卡" afterDelay:1.0];
+            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"noSDCard") afterDelay:1.0];
             return;
         }
-        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"是否确认格式化" message:@"格式化后不能恢复,勤谨慎操作!" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"isOrNoFormar") message:QZHLoaclString(@"formatedCantBack") preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             
         }];
-        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *action1 = [UIAlertAction actionWithTitle:QZHLoaclString(@"submit") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             self.progessView.numberLab.text = @"0%";
             [self formatAction];
         }];
@@ -235,7 +235,7 @@
         //                [arr addObject: [NSString stringWithFormat:@"%.2lfM",lon/1024.0]];
         //
         //            }else{
-                        [arr addObject: [NSString stringWithFormat:@"%.2lfG",lon/(1024.0 * 1024)]];
+                [arr addObject: [NSString stringWithFormat:@"%.2lfG",lon/(1024.0 * 1024)]];
         //            }
             }
             if(arr.count != 3) {
@@ -265,10 +265,10 @@
 #pragma mark -- 录像模式
 -(void)creatActionSheet {
 
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"存储卡录像模式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"recordModel") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 
     QZHWS(weakSelf)
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"事件录像" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:QZHLoaclString(@"recordModelHappend") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self.dpManager isSupportDP:TuyaSmartCameraRecordModeDPName]) {
             
             [self.dpManager setValue:@"1" forDP:TuyaSmartCameraRecordModeDPName success:^(id result) {
@@ -278,7 +278,7 @@
             }];
         }
     }];
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"连续录像" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:QZHLoaclString(@"recordModelLine") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
           if ([self.dpManager isSupportDP:TuyaSmartCameraRecordModeDPName]) {
               
               [self.dpManager setValue:@"2" forDP:TuyaSmartCameraRecordModeDPName success:^(id result) {
@@ -289,7 +289,7 @@
           }
     }];
 
-    UIAlertAction *action4 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action4 = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"取消");
     }];
     
@@ -331,14 +331,14 @@
         } else if (status == 100) {
             self.progessView.numberLab.text = [[NSString stringWithFormat:@"%d",status] stringByAppendingString:@"%"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [[QZHHUD HUD] textHUDWithMessage:@"格式化成功" afterDelay:1.0];
+                [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"formatSuccess") afterDelay:1.0];
                  [self dismiss];
                    // 格式化成功后，主动获取设备的容量信息
                  [self getStorageInfo];
             });
 
         } else{
-            [[QZHHUD HUD] textHUDWithMessage:@"格式化失败" afterDelay:1.0];
+            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"formatFailed") afterDelay:1.0];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf dismiss];
             });

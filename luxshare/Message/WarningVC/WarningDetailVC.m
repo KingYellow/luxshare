@@ -17,7 +17,7 @@
 @property (strong, nonatomic)MessageTopView *topView;
 @property (strong, nonatomic)NSMutableArray *memberArr;
 @property (strong, nonatomic)TuyaSmartHome *home;
-@property (copy, nonatomic)NSMutableArray *listArr;
+@property (strong, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)NSMutableArray *timeArr;
 @property (strong, nonatomic)UIButton *rightBtn;
 @property (assign, nonatomic)NSInteger page;
@@ -29,6 +29,7 @@
     [super viewDidAppear:animated];
     [self.qzTableView reloadData];
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initConfig];
@@ -72,9 +73,11 @@
     self.topView.normalBtn.hidden = NO;
     self.topView.selectBtn.hidden = YES;
     self.deleteBtn.hidden = YES;
+    [self allunselected];
     [self.qzTableView reloadData];
 
 }
+
 #pragma mark -tableView
 -(UITableView *)qzTableView{
     QZHWS(weakSelf)
@@ -129,6 +132,15 @@
             make.width.height.mas_equalTo(20);
         }];
     }
+    if (model.msgType == -2) {
+        [cell.checkBtn mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.width.mas_equalTo(0);
+        }];
+    }else{
+        [cell.checkBtn mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.width.mas_equalTo(73);
+        }];
+    }
     [cell.selectBtn addTarget:self action:@selector(selectBtn:) forControlEvents:UIControlEventTouchUpInside];
     cell.tagLab.text = model.dateTime;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -155,7 +167,7 @@
         UILabel *lab = [[UILabel alloc] init];
         NSArray *dateArr = [dateStr componentsSeparatedByString:@"-"];
         NSString *month = dateArr[1];
-        lab.text = [month stringByAppendingString:@"月"];
+        lab.text = [month stringByAppendingString:@"M"];
         lab.font = QZHKIT_FONT_LISTCELL_DESCRIBE_TITLE;
         lab.textColor = QZHKIT_Color_BLACK_54;
         lab.frame = CGRectMake(15, 20, 37, 20);
@@ -167,7 +179,6 @@
         lab2.frame = CGRectMake(52, 20, 80, 20);
         [view addSubview:lab2];
     }
-
     return view;
 
 }
@@ -182,7 +193,6 @@
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
 
 }
 #pragma mark --lazy
@@ -314,7 +324,7 @@
     self.rightBtn.hidden = NO;
     self.deleteBtn.hidden = ![self ishasselexted];
     self.topView.selectBtn.hidden = NO;
-    self.btnAction(YES);
+//    self.btnAction(YES);
     [self.qzTableView reloadData];
 
 }
@@ -472,10 +482,10 @@
     WarningListCell *cell = (WarningListCell*)sender.superview.superview;
     NSIndexPath *index = [self.qzTableView indexPathForCell:cell];
     TuyaSmartMessageListModel *model = self.listArr[index.section][index.row];
-    TuyaSmartDevice *device = [TuyaSmartDevice deviceWithDeviceId:model.msgSrcId];
+    TuyaSmartDevice *device = [TuyaSmartDevice deviceWithDeviceId:self.msgSrcId];
     TuyaSmartHome *home = [TuyaSmartHome homeWithHomeId:model.homeID];
     if (!device.deviceModel.isOnline) {
-        [[QZHHUD HUD] textHUDWithMessage:@"设备已断开连接" afterDelay:1.0];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"deviceIsUnconnect") afterDelay:1.0];
         return;
     }
     CameraOnLiveVC *vc = [[CameraOnLiveVC alloc] init];

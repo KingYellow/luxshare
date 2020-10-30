@@ -7,14 +7,14 @@ source 'https://github.com/CocoaPods/Specs.git'    # 官方库地址
 platform :ios, '9.0'
 
 target 'luxshare' do
-  # Comment the next line if you don't want to use dynamic frameworks
+
   use_frameworks!
   pod "TuyaSmartHomeKit"
   pod "TuyaSmartActivatorKit"
-  pod 'TuyaSmartCameraKit', '~> 4.17.1'
+  pod 'TuyaSmartCameraKit'
 #  pod "TuyaSmartCameraT"
   pod 'TuyaSmartHelpCenterBizBundle'
-  pod 'TYCameraCloudServicePanelSDK'
+#  pod 'TYCameraCloudServicePanelSDK'
 
   pod 'MJRefresh', '3.1.15.3'
   pod 'JKCategories', '1.7'
@@ -25,7 +25,7 @@ target 'luxshare' do
   pod 'UMCCommon'
   pod 'UMCSecurityPlugins'
   pod 'UMCPush'
-  pod 'STPopup'
+#  pod 'STPopup'
   pod 'SGQRCode', '~> 3.0.1'
   pod 'IQKeyboardManager'
   pod 'WMPlayer',  :git => 'https://github.com/zhengwenming/WMPlayer.git'

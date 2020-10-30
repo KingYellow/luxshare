@@ -43,10 +43,11 @@
     [super viewDidLoad];
     [self initConfig];
     self.isEditing = NO;
+    [self isOpenPhotoPtivate];
 }
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
-    self.navigationItem.title = @"相册管理";
+    self.navigationItem.title = QZHLoaclString(@"photos");
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     [self creatSubViews];
@@ -79,7 +80,7 @@ QZHWS(weakSelf)
             weakSelf.isEditing = YES;
 
             weakSelf.deleteArr = selectArr;
-            weakSelf.topNumLab.text = [NSString stringWithFormat:@"%lu个已选定",(unsigned long)selectArr.count];
+            weakSelf.topNumLab.text = [NSString stringWithFormat:@"%lu%@",(unsigned long)selectArr.count,QZHLoaclString(@"selectedCount")];
             weakSelf.btn.selected = isall;
             if (weakSelf.currentIndex == 1) {
               
@@ -103,7 +104,7 @@ QZHWS(weakSelf)
             weakSelf.scrollView.scrollEnabled = NO;
             weakSelf.isEditing = YES;
             weakSelf.deleteArr = selectArr;
-            weakSelf.topNumLab.text = [NSString stringWithFormat:@"%ld个已选定",selectArr.count];
+            weakSelf.topNumLab.text = [NSString stringWithFormat:@"%ld%@",selectArr.count,QZHLoaclString(@"selectedCount")];
             weakSelf.btn.selected = isall;
 
             if (weakSelf.currentIndex == 1) {
@@ -137,11 +138,9 @@ QZHWS(weakSelf)
             if ([obj isKindOfClass:[UIScrollView class]]) self.scrollView = (UIScrollView *)obj;
     
         }];
-        if(self.scrollView)
-        {
+        if(self.scrollView){
         //新添加的手势，起手势锁的作用
             self.scrollView.scrollEnabled = YES;
-
         }
 }
 //点击按钮事件
@@ -259,7 +258,7 @@ QZHWS(weakSelf)
 -(UIButton *)leftBtn{
     if (!_leftBtn) {
         _leftBtn = [[UIButton alloc] init];
-        [_leftBtn setTitle:@"视频" forState:UIControlStateNormal];
+        [_leftBtn setTitle:QZHLoaclString(@"video") forState:UIControlStateNormal];
         _leftBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_BIG_TITLE;
         [_leftBtn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
         [_leftBtn setImage:QZHLoadIcon(@"ic_all_video") forState:UIControlStateNormal];
@@ -272,7 +271,7 @@ QZHWS(weakSelf)
 -(UIButton *)rightBtn{
     if (!_rightBtn) {
         _rightBtn = [[UIButton alloc] init];
-        [_rightBtn setTitle:@"图片" forState:UIControlStateNormal];
+        [_rightBtn setTitle:QZHLoaclString(@"photo") forState:UIControlStateNormal];
         _rightBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_BIG_TITLE;
         [_rightBtn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
         [_rightBtn setImage:QZHLoadIcon(@"ic_all_photo_n") forState:UIControlStateNormal];
@@ -296,8 +295,8 @@ QZHWS(weakSelf)
         }];
         
         self.btn  = [[UIButton alloc] init];
-        [self.btn  setTitle:@"全部选中" forState:UIControlStateNormal];
-        [self.btn  setTitle:@"取消全选" forState:UIControlStateSelected];
+        [self.btn  setTitle:QZHLoaclString(@"allSelect") forState:UIControlStateNormal];
+        [self.btn  setTitle:QZHLoaclString(@"noSelect") forState:UIControlStateSelected];
 
         self.btn.titleLabel.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
         [self.btn  setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
@@ -319,7 +318,7 @@ QZHWS(weakSelf)
         _bottomHandleView.backgroundColor = UIColor.whiteColor;
         _bottomHandleView.hidden = YES;
         UIButton *btn = [[UIButton alloc] init];
-        [btn setTitle:@"取消" forState:UIControlStateNormal];
+        [btn setTitle:QZHLoaclString(@"cancel") forState:UIControlStateNormal];
         btn.titleLabel.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
         [btn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
         [self.bottomHandleView addSubview:btn];
@@ -333,7 +332,7 @@ QZHWS(weakSelf)
         }];
         UIButton *deleteBtn = [[UIButton alloc] init];
 
-         [deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
+         [deleteBtn setTitle:QZHLoaclString(@"delete") forState:UIControlStateNormal];
           deleteBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
           [deleteBtn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
           [self.bottomHandleView addSubview:deleteBtn];
@@ -400,10 +399,53 @@ QZHWS(weakSelf)
                }
                
             });
-
         }
     }];
-    
+}
 
+- (void)isOpenPhotoPtivate{
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    if (status == PHAuthorizationStatusRestricted || status == PHAuthorizationStatusDenied)
+    {
+        [self goMicroPhoneSetTitle:QZHLoaclString(@"noPhotoPrivate")];
+
+    }else if(status == AVAuthorizationStatusNotDetermined){
+      [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+          if(status == PHAuthorizationStatusAuthorized) {
+
+          } else {
+
+          }
+      }];
+        
+    }else if(status == AVAuthorizationStatusNotDetermined){
+        [self goMicroPhoneSetTitle:QZHLoaclString(@"noAllPhotoPrivate")];
+        
+    }else{
+
+        
+    }
+    
+}
+-(void) goMicroPhoneSetTitle:(NSString *)title
+{
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:title message:QZHLoaclString(@"gotoSetting") preferredStyle:UIAlertControllerStyleAlert];
+
+    UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+
+    }];
+    UIAlertAction * setAction = [UIAlertAction actionWithTitle:QZHLoaclString(@"setting") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSURL * url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+            [UIApplication.sharedApplication openURL:url options:nil completionHandler:^(BOOL success) {
+
+            }];
+        });
+    }];
+
+    [alert addAction:cancelAction];
+    [alert addAction:setAction];
+
+    [self presentViewController:alert animated:YES completion:nil];
 }
 @end

@@ -65,9 +65,25 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = indexPath.row;
+    
+    if (self.deviceModel.isShare) {
+        SettingDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
+        cell.nameLab.text = QZHLoaclString(@"talkType");
+        
+        int type = [[QZHDataHelper readValueForKey:@"talkType"] intValue];
+        if (type) {
+            cell.tagLab.text = QZHLoaclString(@"talkOne");
+        }else{
+            cell.tagLab.text = QZHLoaclString(@"talkTwo");
+        }
+        cell.radioPosition = 2;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+        
+    }
         if (row == 0) {
             SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
-            cell.nameLab.text = @"状态指示灯";
+            cell.nameLab.text = QZHLoaclString(@"stateLed");
             cell.radioPosition = -1;
             cell.switchBtn.tag = 0;
 
@@ -78,7 +94,7 @@
             return cell;
         }else if (row == 1) {
                   SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
-                  cell.nameLab.text = @"时间水印";
+                  cell.nameLab.text = QZHLoaclString(@"timeShow");
                   cell.radioPosition = 0;
                   cell.switchBtn.tag = 1;
                   cell.switchBtn.on =  [[self.dpManager valueForDP:TuyaSmartCameraBasicOSDDPName] boolValue];
@@ -88,7 +104,7 @@
                   return cell;
         }else if (row == 2) {
                   SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
-                  cell.nameLab.text = @"图像翻转";
+                  cell.nameLab.text = QZHLoaclString(@"pictureUpside");
                   cell.radioPosition = 0;
                   cell.switchBtn.tag = 2;
                   cell.switchBtn.on =              cell.switchBtn.on = [self.deviceModel.dps[@"103"] boolValue];;
@@ -99,13 +115,13 @@
         }else{
             
             SettingDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
-            cell.nameLab.text = @"对讲方式";
+            cell.nameLab.text = QZHLoaclString(@"talkType");
             
             int type = [[QZHDataHelper readValueForKey:@"talkType"] intValue];
             if (type) {
-                cell.tagLab.text = @"单向对讲";
+                cell.tagLab.text = QZHLoaclString(@"talkOne");
             }else{
-                cell.tagLab.text = @"双向对讲";
+                cell.tagLab.text = QZHLoaclString(@"talkTwo");
             }
             cell.radioPosition = 1;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -115,6 +131,9 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (self.deviceModel.isShare) {
+        return 1;
+    }
     return 4;
     
 }
@@ -133,7 +152,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = indexPath.row;
 
-    if (row == 3) {
+    if (row == 3 ||(self.deviceModel.isShare && row == 0)) {
         QZHWS(weakSelf)
         TalkTypeVC *vc = [[TalkTypeVC alloc] init];
         vc.deviceModel = self.deviceModel;
@@ -149,7 +168,7 @@
 - (void)valueChange:(UISwitch *) sender{
     if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
         sender.on = !sender.on;
-        [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"deviceOfflineNoOperate") afterDelay:1.0];
         return;
     }
     QZHWS(weakSelf)
@@ -194,9 +213,9 @@
 #pragma mark - TuyaSmartCameraDPObserver
 - (void)cameraDPDidUpdate:(TuyaSmartCameraDPManager *)manager dps:(NSDictionary *)dpsData {
     // 如果变化的功能点中包含时间水印开关的功能点
-    if ([dpsData objectForKey:TuyaSmartCameraBasicOSDDPName]) {
-        BOOL res = [[dpsData objectForKey:TuyaSmartCameraBasicOSDDPName] boolValue];
-    }
+//    if ([dpsData objectForKey:TuyaSmartCameraBasicOSDDPName]) {
+//        BOOL res = [[dpsData objectForKey:TuyaSmartCameraBasicOSDDPName] boolValue];
+//    }
 }
 
 @end

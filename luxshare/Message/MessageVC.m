@@ -45,7 +45,7 @@
     [self.rightBtn setImage:[UIImage new] forState:UIControlStateSelected];
     [self.rightBtn setTitle:@"" forState:UIControlStateNormal];
     [self.rightBtn setTitle:QZHLoaclString(@"finish") forState:UIControlStateSelected];
-    self.navigationItem.title = @"编辑";
+    self.navigationItem.title = QZHLoaclString(@"edit");
     [self loadVcs];
 }
 

@@ -36,7 +36,7 @@
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     [self UIConfig];
-    self.navigationItem.title = @"撰写反馈";
+    self.navigationItem.title = QZHLoaclString(@"feedBack");
 
 }
 - (void)UIConfig{
@@ -102,7 +102,7 @@
     if ([textView.text length] > 300) {
         textView.text = [textView.text substringToIndex:300];
         [self.view endEditing:YES];
-        [[QZHHUD HUD] textHUDWithMessage:@"剩余可输入0字" afterDelay:1.0];
+        [[QZHHUD HUD] textHUDWithMessage:[NSString stringWithFormat:@"%@0%@",QZHLoaclString(@"leftWords"),QZHLoaclString(@"word")] afterDelay:1.0];
         [self.submitBtn exp_buttonState:QZHButtonStateEnable];
         self.righButton.userInteractionEnabled = YES;
         self.tipsLabel.hidden = YES;
@@ -132,11 +132,11 @@
 - (void)rightAction {
     [self.view endEditing:YES];
     if ([self.diyTextView.text length] == 0) {
-        [[QZHHUD HUD] textHUDWithMessage:@"请输入输入反馈内容" afterDelay:1.0];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"pleaseInputWord") afterDelay:1.0];
         return;
     }
     if ([self.diyTextView.text length] > 300) {
-        [[QZHHUD HUD] textHUDWithMessage:@"最多输入300字" afterDelay:1.0];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"moreThan300Words") afterDelay:1.0];
         return;
     }
 }
@@ -176,7 +176,7 @@
 -(UILabel *)tipsLabel{
     if (!_tipsLabel) {
         _tipsLabel = [[UILabel alloc] init];
-        _tipsLabel.text = @"请详细描述您的问题或不满,例如您在做了什么时遇到了问题、希望我们有什么功能等";
+        _tipsLabel.text = QZHLoaclString(@"feedBacktip");
         _tipsLabel.textColor = QZHKIT_Color_BLACK_26;
         _tipsLabel.font = QZHKIT_FONT_LISTCELL_DESCRIBE_TITLE;
         _tipsLabel.numberOfLines = 0;
@@ -186,7 +186,7 @@
 -(UILabel *)titleLabel{
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.text = @"问题描述";
+        _titleLabel.text = QZHLoaclString(@"feedBackDescribe");
         _titleLabel.textColor = QZHKIT_Color_BLACK_54;
         _titleLabel.font = QZHKIT_FONT_LISTCELL_DESCRIBE_TITLE;
     }
@@ -195,7 +195,7 @@
 -(UILabel *)subTitleLabel{
     if (!_subTitleLabel) {
         _subTitleLabel = [[UILabel alloc] init];
-        _subTitleLabel.text = @"联系方式";
+        _subTitleLabel.text = QZHLoaclString(@"contactType");
         _subTitleLabel.textColor = QZHKIT_Color_BLACK_54;
         _subTitleLabel.font = QZHKIT_FONT_LISTCELL_DESCRIBE_TITLE;
     }
@@ -204,7 +204,7 @@
 -(UITextField *)accountText{
     if (!_accountText) {
         _accountText = [[UITextField alloc] init];
-        _accountText.placeholder = @"选填,手机号或者邮箱";
+        _accountText.placeholder = QZHLoaclString(@"phoneOrAcconut");
         _accountText.textColor = QZHKIT_Color_BLACK_87;
         _accountText.font = QZHKIT_FONT_LISTCELL_DESCRIBE_TITLE;
         [_accountText setJk_left:10];
@@ -214,7 +214,7 @@
 -(UIButton *)submitBtn{
     if (!_submitBtn) {
         _submitBtn = [[UIButton alloc] init];
-        [_submitBtn setTitle:@"提交申请" forState:UIControlStateNormal];
+        [_submitBtn setTitle:QZHLoaclString(@"submitApplication") forState:UIControlStateNormal];
         [_submitBtn addTarget:self action:@selector(submitAction:) forControlEvents:UIControlEventTouchUpInside];
         [_submitBtn exp_buttonState:QZHButtonStateDisEnable];
     }

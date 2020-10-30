@@ -45,7 +45,7 @@
         self.voiceON = YES;
         NSDateFormatter *form = [NSDateFormatter jk_dateFormatterWithFormat:@"HH:mm"];
         self.selectTime = [form stringFromDate:[NSDate date]];
-        self.weekDays = @"仅限一次";
+        self.weekDays = QZHLoaclString(@"onlyOnce");
     }
 
     [self initConfig];
@@ -73,7 +73,7 @@
 - (void)exp_rightAction{
     QZHWS(weakSelf)
     NSString *loop = @"";
-    if ([self.weekDays isEqualToString:@"仅限一次"]) {
+    if ([self.weekDays isEqualToString:QZHLoaclString(@"onlyOnce")]) {
         loop = @"0000000";
     }else{
         for (NSDictionary *dic in self.listArr) {
@@ -145,7 +145,7 @@
         
         if (row == 2) {
              SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
-             cell.nameLab.text = @"执行通知";
+             cell.nameLab.text = QZHLoaclString(@"beginNotice");
             cell.radioPosition = 1;
             cell.switchBtn.on = YES;
             cell.switchBtn.tag = 2;
@@ -157,11 +157,11 @@
 
             SettingDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
              if (row == 0) {
-                 cell.nameLab.text = @"重复";
+                 cell.nameLab.text = QZHLoaclString(@"repeat");
                  cell.tagLab.text = self.weekDays;
                  cell.radioPosition = -1;
              }else{
-                 cell.nameLab.text = @"备注";
+                 cell.nameLab.text = QZHLoaclString(@"note");
                  cell.radioPosition = 0;
                  cell.tagLab.text = self.remarkText;
 
@@ -176,16 +176,16 @@
          if (row == 0) {
              cell.radioPosition = -1;
              if (self.motionON) {
-                 cell.tagLab.text = @"开启";
+                 cell.tagLab.text = QZHLoaclString(@"open");
              }else{
-                 cell.tagLab.text = @"关闭";
+                 cell.tagLab.text = QZHLoaclString(@"close");
              }
          }else{
              cell.radioPosition = 1;
              if (self.voiceON) {
-                 cell.tagLab.text = @"开启";
+                 cell.tagLab.text = QZHLoaclString(@"open");
              }else{
-                 cell.tagLab.text = @"关闭";
+                 cell.tagLab.text = QZHLoaclString(@"close");
              }
          }
          cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -254,7 +254,7 @@
     QZHWS(weakSelf)
     if (section == 0) {
         if (row == 0) {
-            [BRDatePickerView showDatePickerWithMode:BRDatePickerModeHM title:@"选择时间" selectValue:nil minDate:nil maxDate:nil isAutoSelect:NO resultBlock:^(NSDate * _Nullable selectDate, NSString * _Nullable selectValue) {
+            [BRDatePickerView showDatePickerWithMode:BRDatePickerModeHM title:QZHLoaclString(@"selectDate") selectValue:nil minDate:nil maxDate:nil isAutoSelect:NO resultBlock:^(NSDate * _Nullable selectDate, NSString * _Nullable selectValue) {
                 weakSelf.selectTime = selectValue;
                 [weakSelf.qzTableView exp_refreshAtIndexSection:0];
             }];
@@ -267,7 +267,7 @@
         }
         if (row == 1) {
             QZHWS(weakSelf)
-          UIAlertController *alert = [UIAlertController alertWithTextfieldTitle:@"备注" originaltext:self.remarkText textblock:^(NSString * _Nonnull fieldtext) {
+          UIAlertController *alert = [UIAlertController alertWithTextfieldTitle:QZHLoaclString(@"note") originaltext:self.remarkText textblock:^(NSString * _Nonnull fieldtext) {
                 weakSelf.remarkText = fieldtext;
                 [weakSelf.qzTableView exp_refreshAtIndexSection:1];
             }];
@@ -296,7 +296,7 @@
 }
 - (NSMutableArray *)memberArr{
     if (!_memberArr) {
-        _memberArr = [NSMutableArray arrayWithArray:@[@"移动侦测",@"声音检测"]];
+        _memberArr = [NSMutableArray arrayWithArray:@[QZHLoaclString(@"decrteAlarm"),QZHLoaclString(@"voiceAlarm")]];
  
     }
     return _memberArr;
@@ -322,19 +322,19 @@
 #pragma mark -- 移动侦测开关
 -(void)creatMotionONActionSheet {
     QZHWS(weakSelf)
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"移动侦测" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"开启" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"decrteAlarm") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:QZHLoaclString(@"open") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         weakSelf.motionON = YES;
         [weakSelf.qzTableView exp_refreshAtIndexSection:2];
 
     }];
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:QZHLoaclString(@"close") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         weakSelf.motionON = NO;
         [weakSelf.qzTableView exp_refreshAtIndexSection:2];
 
     }];
 
-    UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"取消");
     }];
     [actionSheet addAction:action1];
@@ -346,18 +346,18 @@
 #pragma mark -- 声音侦测开关
 -(void)creatVoiceONActionSheet {
     QZHWS(weakSelf)
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"声音侦测" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"开启" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"voiceAlarm") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:QZHLoaclString(@"open") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         weakSelf.voiceON = YES;
         [weakSelf.qzTableView exp_refreshAtIndexSection:2];
 
     }];
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:QZHLoaclString(@"close") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         weakSelf.voiceON = NO;
         [weakSelf.qzTableView exp_refreshAtIndexSection:2];
     }];
 
-    UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"取消");
     }];
     [actionSheet addAction:action1];
@@ -382,7 +382,7 @@
         [week addObject:subStr];
     }
     if (week.count > 6) {
-        NSMutableArray *weekArrM = [NSMutableArray arrayWithObjects:@{@"week":@"星期日",@"select":@"0",},@{@"week":@"星期一",@"select":@"0",},@{@"week":@"星期二",@"select":@"0",},@{@"week":@"星期三",@"select":@"0",},@{@"week":@"星期四",@"select":@"0",},@{@"week":@"星期五",@"select":@"0",},@{@"week":@"星期六",@"select":@"0",}, nil];
+        NSMutableArray *weekArrM = [NSMutableArray arrayWithObjects:@{@"week":QZHLoaclString(@"Sunday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Monday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Tuesday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Wednesday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Thursday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Friday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Saturday"),@"select":@"0",}, nil];
         for (int i = 0; i < weekArrM.count; i++) {
             NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:weekArrM[i]];
              if ([week[i] boolValue]) {
@@ -406,15 +406,15 @@
              [weekArr addObject:dic[@"week"]];
          }
      }
-     if (weekArr.count == 7) {
-         weekDay = @"每天";
-     }else if(weekArr.count == 5 && ![weekArr containsObject:@"星期六"] && ![weekArr containsObject:@"星期日"]){
-            weekDay = @"工作日";
-     }else if(weekArr.count == 0){
-         weekDay = @"仅限一次";
-     }else{
-         weekDay = [weekArr componentsJoinedByString:@","];
-     }
+    if (weekArr.count == 7) {
+        weekDay = QZHLoaclString(@"EveryDay");
+    }else if(weekArr.count == 5 && ![weekArr containsObject:QZHLoaclString(@"Saturday")] && ![weekArr containsObject:QZHLoaclString(@"Sunday")]){
+           weekDay = QZHLoaclString(@"WorkDay");
+    }else if(weekArr.count == 0){
+        weekDay = QZHLoaclString(@"onlyOnce");
+    }else{
+        weekDay = [weekArr componentsJoinedByString:@","];
+    }
     return weekDay;
 }
 @end

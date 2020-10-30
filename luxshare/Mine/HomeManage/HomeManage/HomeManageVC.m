@@ -14,7 +14,7 @@
 
 @interface HomeManageVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic)UITableView *qzTableView;
-@property (copy, nonatomic)NSMutableArray *listArr;
+@property (strong, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)TuyaSmartHomeManager *magager;
 
 @end

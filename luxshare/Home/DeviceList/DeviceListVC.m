@@ -10,7 +10,7 @@
 #import "DeviceListCell.h"
 #import "QZHDefaultButtonCell.h"
 #import "CameraOnLiveVC.h"
-
+#import "DoorbellVC.h"
 
 @interface DeviceListVC ()<UITableViewDelegate,UITableViewDataSource,TuyaSmartDeviceDelegate>
 
@@ -106,8 +106,9 @@
 
     }
     cell.selectBtn.selected = model.isOnline;
-
-    if ([model.productId isEqualToString:BATTERY_PRODUCT_ID]) {
+    if ([QZHDeviceStatus deviceType:model] == DoorbellDevice) {
+        cell.poloIMG.image = QZHLoadIcon(@"ic_ipc_battery");
+    }else if ([model.productId isEqualToString:BATTERY_PRODUCT_ID]) {
         cell.poloIMG.image = QZHLoadIcon(@"ic_ipc_battery");
     }else{
         cell.poloIMG.image = QZHLoadIcon(@"ic_ipc_ac");
@@ -139,25 +140,33 @@
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSInteger section = indexPath.section;
+    
     NSInteger row = indexPath.row;
     TuyaSmartDeviceModel *model = self.listArr[row];
-    if (![model.category isEqualToString:@"sp"]) {
-        return;
-    };
-    self.naviPushBlock(model, self.homeModel);
+    
+//    if ([QZHDeviceStatus deviceType:model] == DoorbellDevice) {
+//        DoorbellVC *vc = [[DoorbellVC alloc] init];
+//        vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
+//        [self presentViewController:vc animated:YES completion:^{
+//
+//        }];
+//
+//    }else{
+        if (![model.category isEqualToString:@"sp"]) {
+            return;
+        };
+        self.naviPushBlock(model, self.homeModel);
+        
+//    }
 
-
-//    TuyaSmartDevice *device = [TuyaSmartDevice deviceWithDeviceId:model.devId];
-////    device.delegate = self;
 }
 
 - (void)longPressAction:(UILongPressGestureRecognizer *)gesture{
-    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"提示" message:@"确认要删除设备吗?" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"tip") message:QZHLoaclString(@"okDeleteDevice") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         
     }];
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:QZHLoaclString(@"submit") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         DeviceListCell *cell = (DeviceListCell *)gesture.view;
         NSIndexPath *path = [self.qzTableView indexPathForCell:cell];
         TuyaSmartDeviceModel *model = self.listArr[path.row];
@@ -197,7 +206,7 @@
 -(UILabel *)tipLab{
     if (!_tipLab) {
         _tipLab = [[UILabel alloc] init];
-        _tipLab.text = @"暂无数据";
+        _tipLab.text = QZHLoaclString(@"noData");
         _tipLab.textColor = QZHKIT_Color_BLACK_54;
     }
     return _tipLab;
@@ -206,7 +215,7 @@
     if (!_addBtn) {
         _addBtn = [[UIButton alloc] init];
         _addBtn.backgroundColor = QZH_KIT_Color_WHITE_100;
-        [_addBtn setTitle:@"添加设备" forState:UIControlStateNormal];
+        [_addBtn setTitle:QZHLoaclString(@"addDevice") forState:UIControlStateNormal];
         [_addBtn setTitleColor:QZHKIT_Color_BLACK_54 forState:UIControlStateNormal];
         [_addBtn addTarget:self action:@selector(addDeviceAction:) forControlEvents:UIControlEventTouchUpInside];
         QZHViewRadius(_addBtn, 5);

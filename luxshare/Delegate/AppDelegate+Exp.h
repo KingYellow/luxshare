@@ -8,11 +8,12 @@
 
 
 #import "AppDelegate.h"
+#import <UserNotifications/UserNotifications.h>
 
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AppDelegate (Exp)<UITabBarControllerDelegate>
+@interface AppDelegate (Exp)<UITabBarControllerDelegate,UNUserNotificationCenterDelegate>
 
 
 ///设置根视图

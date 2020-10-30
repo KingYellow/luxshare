@@ -16,7 +16,7 @@
 
 @interface RoomManageVC ()<UITableViewDelegate,UITableViewDataSource,TuyaSmartHomeDelegate>
 @property (strong, nonatomic)UITableView *qzTableView;
-@property (copy, nonatomic)NSMutableArray *listArr;
+@property (strong, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)TuyaSmartHome *home;
 @end
 
@@ -151,7 +151,7 @@
 //修改按钮文字
 - (NSString*)tableView:(UITableView*)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath*)indexPath {
 
-    return @"删除";
+    return QZHLoaclString(@"delete");
 
 }
 //删除相应方法

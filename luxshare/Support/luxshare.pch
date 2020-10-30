@@ -40,7 +40,6 @@
 #import "Categories.h"
 #import "HXPhotoManager.h"
 
-#import "AddressBookTVC.h"
 #import "CountrySelectView.h"
 #import "ContactModel.h"
 #import "MessageTopView.h"
@@ -51,4 +50,5 @@
 #import "WMZPageController.h"
 #import "MBProgressHUD.h"
 #import "QZHDeviceStatus.h"
+#import "QZHCommons.h"
 #endif /* luxshare_pch */

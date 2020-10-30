@@ -70,19 +70,19 @@
     if (section == 0) {
 
             PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
-            cell.nameLab.text = @"PIR开关";
+            cell.nameLab.text = QZHLoaclString(@"PIRSwitch");
             int state = [[self.dpManager valueForDP:TuyaSmartCameraBasicPIRDPName] intValue];
             if (state == 0) {
-                cell.describeLab.text = @"关闭";
+                cell.describeLab.text = QZHLoaclString(@"close");
             }
             if (state == 1) {
-                cell.describeLab.text = @"低灵敏度";
+                cell.describeLab.text = QZHLoaclString(@"lowSensitivity");
             }
             if (state == 2) {
-                cell.describeLab.text = @"中灵敏度";
+                cell.describeLab.text = QZHLoaclString(@"midSensitivity");
             }
             if (state == 3) {
-                cell.describeLab.text = @"高灵敏度";
+                cell.describeLab.text = QZHLoaclString(@"highSensitivity");
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -105,14 +105,14 @@
              return cell;
         }else{
             PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
-             cell.nameLab.text = @"哭声检测灵敏度";
+             cell.nameLab.text = QZHLoaclString(@"crySensitivity");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             int state = [[self.dpManager valueForDP:TuyaSmartCameraDecibelSensitivityDPName] intValue];
             if (state == 0) {
-                cell.describeLab.text = @"低灵敏度";
+                cell.describeLab.text = QZHLoaclString(@"lowSensitivity");
             }
             if (state == 1) {
-                cell.describeLab.text = @"高灵敏度";
+                cell.describeLab.text = QZHLoaclString(@"highSensitivity");
             }
              cell.selectionStyle = UITableViewCellSelectionStyleNone;
              return cell;
@@ -121,9 +121,9 @@
     }else{
         PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
         if (row == 0) {
-            cell.nameLab.text = @"定时";
+            cell.nameLab.text = QZHLoaclString(@"timer");
         }else{
-            cell.nameLab.text = @"报警间隔";
+            cell.nameLab.text = QZHLoaclString(@"alarminterval");
         }
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
@@ -222,7 +222,7 @@
 
 -(void)creatPIRActionSheet{
 
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"PIR开关" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"PIRSwitch") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     /*
      typedef NS_ENUM(NSInteger, UIAlertActionStyle) {
@@ -234,7 +234,7 @@
      */
     // 创建action，这里action1只是方便编写，以后再编程的过程中还是以命名规范为主
     QZHWS(weakSelf)
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:QZHLoaclString(@"close") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self.dpManager isSupportDP:TuyaSmartCameraBasicPIRDPName]) {
             
             [self.dpManager setValue:@"0" forDP:TuyaSmartCameraBasicPIRDPName success:^(id result) {
@@ -244,7 +244,7 @@
             }];
         }
     }];
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"低灵敏度" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:QZHLoaclString(@"lowSensitivity") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
           if ([self.dpManager isSupportDP:TuyaSmartCameraBasicPIRDPName]) {
               
               [self.dpManager setValue:@"1" forDP:TuyaSmartCameraBasicPIRDPName success:^(id result) {
@@ -254,7 +254,7 @@
               }];
           }
     }];
-    UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"中灵敏度" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:QZHLoaclString(@"midSensitivity") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self.dpManager isSupportDP:TuyaSmartCameraBasicPIRDPName]) {
             
             [self.dpManager setValue:@"2" forDP:TuyaSmartCameraBasicPIRDPName success:^(id result) {
@@ -264,7 +264,7 @@
             }];
         }
     }];
-    UIAlertAction *action4 = [UIAlertAction actionWithTitle:@"高灵敏度" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action4 = [UIAlertAction actionWithTitle:QZHLoaclString(@"highSensitivity") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self.dpManager isSupportDP:TuyaSmartCameraBasicPIRDPName]) {
             
             [self.dpManager setValue:@"3" forDP:TuyaSmartCameraBasicPIRDPName success:^(id result) {
@@ -274,7 +274,7 @@
             }];
         }
     }];
-    UIAlertAction *action5 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action5 = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"取消");
     }];
     
@@ -285,7 +285,6 @@
     [actionSheet addAction:action4];
     [actionSheet addAction:action5];
 
-
     //相当于之前的[actionSheet show];
     [self presentViewController:actionSheet animated:YES completion:nil];
 }
@@ -294,7 +293,7 @@
 
 -(void)creatDecibelActionSheet{
 
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"哭声检测灵敏度" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"crySensitivity") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     /*
      typedef NS_ENUM(NSInteger, UIAlertActionStyle) {
@@ -307,7 +306,7 @@
     // 创建action，这里action1只是方便编写，以后再编程的过程中还是以命名规范为主
     QZHWS(weakSelf)
 
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"低灵敏度" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:QZHLoaclString(@"lowSensitivity") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
           if ([self.dpManager isSupportDP:TuyaSmartCameraDecibelSensitivityDPName]) {
               
               [self.dpManager setValue:@"0" forDP:TuyaSmartCameraDecibelSensitivityDPName success:^(id result) {
@@ -318,7 +317,7 @@
           }
     }];
 
-    UIAlertAction *action4 = [UIAlertAction actionWithTitle:@"高灵敏度" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action4 = [UIAlertAction actionWithTitle:QZHLoaclString(@"highSensitivity") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self.dpManager isSupportDP:TuyaSmartCameraDecibelSensitivityDPName]) {
             
             [self.dpManager setValue:@"1" forDP:TuyaSmartCameraDecibelSensitivityDPName success:^(id result) {
@@ -328,7 +327,7 @@
             }];
         }
     }];
-    UIAlertAction *action5 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action5 = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"取消");
     }];
     

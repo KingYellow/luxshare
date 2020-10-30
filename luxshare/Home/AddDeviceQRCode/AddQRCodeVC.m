@@ -55,6 +55,9 @@
     [self.subLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.view);
         make.top.mas_equalTo(self.titleLab.mas_bottom).offset(10);
+        
+            make.left.mas_equalTo(20);
+            make.right.mas_equalTo(-20);
     }];
   
     [self.submitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -101,6 +104,7 @@
         _subLab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
         _subLab.textColor = QZHKIT_Color_BLACK_87;
         _subLab.textAlignment = NSTextAlignmentCenter;
+        _subLab.numberOfLines = 0;
         _subLab.text = QZHLoaclString(@"device_resetTip");
     }
     return _subLab;

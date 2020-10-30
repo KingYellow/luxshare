@@ -148,7 +148,7 @@
 //修改按钮文字
 - (NSString*)tableView:(UITableView*)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath*)indexPath {
 
-    return @"删除";
+    return QZHLoaclString(@"delete");
 
 }
 //删除相应方法

@@ -11,7 +11,7 @@
 @implementation CameraPlayView
 
 -(instancetype)init{
-    if (self == [super init]) {
+    if (self = [super init]) {
         [self creatSubViews];
         self.backgroundColor = UIColor.blackColor;
     }
@@ -152,7 +152,7 @@
 -(UIButton *)definitionBtn{
     if (!_definitionBtn) {
         _definitionBtn = [[UIButton alloc] init];
-        [_definitionBtn setTitle:@"高清" forState:UIControlStateNormal];
+        [_definitionBtn setTitle:QZHLoaclString(@"HD") forState:UIControlStateNormal];
         [_definitionBtn setTitleColor:QZH_KIT_Color_WHITE_70 forState:UIControlStateNormal];
         _definitionBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
         _definitionBtn.tag = 2;
@@ -177,8 +177,8 @@
 -(UIButton *)videoTalkBtn{
     if (!_videoTalkBtn) {
         _videoTalkBtn = [[UIButton alloc] init];
-        [_videoTalkBtn setTitle:@"通话" forState:UIControlStateNormal];
-        [_videoTalkBtn setTitle:@"挂断" forState:UIControlStateSelected];
+        [_videoTalkBtn setTitle:QZHLoaclString(@"talk") forState:UIControlStateNormal];
+        [_videoTalkBtn setTitle:QZHLoaclString(@"stopTalk") forState:UIControlStateSelected];
         [_videoTalkBtn setTitleColor:QZH_KIT_Color_WHITE_70 forState:UIControlStateNormal];
         _videoTalkBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
         _videoTalkBtn.tag = 102;
@@ -191,7 +191,7 @@
 -(UIButton *)videoPhotoBtn{
     if (!_videoPhotoBtn) {
         _videoPhotoBtn = [[UIButton alloc] init];
-        [_videoPhotoBtn setTitle:@"截屏" forState:UIControlStateNormal];
+        [_videoPhotoBtn setTitle:QZHLoaclString(@"shot") forState:UIControlStateNormal];
         [_videoPhotoBtn setTitleColor:QZH_KIT_Color_WHITE_70 forState:UIControlStateNormal];
         _videoPhotoBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
         _videoPhotoBtn.tag = 103;
@@ -204,8 +204,8 @@
 -(UIButton *)videoRecordBtn{
     if (!_videoRecordBtn) {
         _videoRecordBtn = [[UIButton alloc] init];
-        [_videoRecordBtn setTitle:@"录像" forState:UIControlStateNormal];
-        [_videoRecordBtn setTitle:@"停止" forState:UIControlStateSelected];
+        [_videoRecordBtn setTitle:QZHLoaclString(@"record") forState:UIControlStateNormal];
+        [_videoRecordBtn setTitle:QZHLoaclString(@"stop") forState:UIControlStateSelected];
         [_videoRecordBtn setTitleColor:QZH_KIT_Color_WHITE_70 forState:UIControlStateNormal];
         _videoRecordBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
         _videoRecordBtn.tag = 101;
@@ -238,7 +238,7 @@
 -(RecordProgressView *)recordProgressView{
     if (!_recordProgressView) {
         _recordProgressView = [[RecordProgressView alloc] init];
-        _recordProgressView.typeLab.text = @"录制中";
+        _recordProgressView.typeLab.text = QZHLoaclString(@"recording");
         _recordProgressView.tipIMG.image = QZHLoadIcon(@"ic_all_record_ing");
         _recordProgressView.backgroundColor = QZHKIT_COLOR_SKIN_AlPHA;
         _recordProgressView.hidden = YES;
@@ -248,7 +248,7 @@
 -(RecordProgressView *)talkProgressView{
     if (!_talkProgressView) {
         _talkProgressView = [[RecordProgressView alloc] init];
-        _talkProgressView.typeLab.text = @"通话中";
+        _talkProgressView.typeLab.text = QZHLoaclString(@"talking");
         _talkProgressView.tipIMG.image = QZHLoadIcon(@"ic_calling");
         _talkProgressView.backgroundColor = QZHKIT_COLOR_SKIN_AlPHA;
         _talkProgressView.hidden = YES;

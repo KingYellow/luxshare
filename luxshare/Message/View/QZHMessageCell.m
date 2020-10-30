@@ -21,8 +21,8 @@
 - (void)creatSubViews {
     [self.contentView addSubview:self.bigView];
     [self addSubview:self.selectBtn];
-    [self.contentView addSubview:self.nameLab];
     [self.contentView addSubview:self.tagLab];
+    [self.contentView addSubview:self.nameLab];
     [self.contentView addSubview:self.contentLab];
      
      [self.selectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -32,18 +32,20 @@
 
      }];
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.contentView).offset(20);
+        make.top.mas_equalTo(self.contentView).offset(10);
+        make.right.mas_equalTo(self.tagLab.mas_left);
+        make.height.mas_equalTo(48);
         make.left.mas_equalTo(25);
      }];
     [self.contentLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.nameLab.mas_bottom).offset(10);
+        make.top.mas_equalTo(self.nameLab.mas_bottom).offset(0);
         make.left.mas_equalTo(25);
         make.bottom.mas_equalTo(self.contentView).offset(-25);
         make.right.mas_equalTo(-20);
     }];
     [self.tagLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.nameLab.mas_right);
         make.top.mas_equalTo(self.contentView.mas_top).offset(20);
+        make.width.mas_equalTo(118);
         make.right.mas_equalTo(self.selectBtn.mas_left).offset(-5);
 
     }];
@@ -58,6 +60,7 @@
         _nameLab = [[UILabel alloc] init];
         _nameLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
         _nameLab.textColor = QZHKIT_Color_BLACK_87;
+        _nameLab.numberOfLines = 0;
     }
     return  _nameLab;
 }
@@ -97,6 +100,5 @@
     }
     return _bigView;
 }
-
 
 @end

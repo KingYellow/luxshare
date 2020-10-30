@@ -47,10 +47,10 @@
     [self.view addSubview:label2];
     
     if ([self.account exp_isPureInt]){
-        label1.text = @"验证码将发到你手机:";
+        label1.text = QZHLoaclString(@"codeToYourIphone");
         
     }else {
-        label1.text = @"验证码将发到你邮箱:";
+        label1.text = QZHLoaclString(@"codeToYourEmail");
     }
     label2.text = self.account;
     
@@ -192,7 +192,7 @@
 #pragma mark - action
 
 - (void)valueChanged:(UITextField *)textField{
-    if (self.codeText.text.length == 6 && self.passwordText.text.length > 0) {
+    if (self.codeText.text.length > 0 && self.passwordText.text.length > 0) {
         [self.submitBtn exp_buttonState:QZHButtonStateEnable];
     }else{
         [self.submitBtn exp_buttonState:QZHButtonStateDisEnable];
@@ -323,7 +323,7 @@
     jcBtn.enabled = NO;
     [jcBtn startWithSecond:60];
     [jcBtn didChangBlock:^NSString *(CodeButton *countDownButton,int second) {
-        NSString *title = [NSString stringWithFormat:@"剩余%d秒",second];
+        NSString *title = [NSString stringWithFormat:@"%@%dS",QZHLoaclString(@"left"),second];
         
         return title;
         
@@ -332,7 +332,7 @@
     [jcBtn didFinshBlock:^NSString *(CodeButton *countDownBtn, int second) {
         countDownBtn.enabled = YES;
         // 获取验证码
-        return @"重新获取";
+        return QZHLoaclString(@"reGet");
     }];
 }
 -(void)checkVertifyCode{

@@ -17,7 +17,7 @@
 
 @interface HomeDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic)UITableView *qzTableView;
-@property (copy, nonatomic)NSMutableArray *listArr;
+@property (strong, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)NSMutableArray *memberArr;
 @property (strong, nonatomic)TuyaSmartHome *home;
 @end
@@ -97,14 +97,14 @@
             cell.nameLab.text = model.name;
             [cell.IMGView exp_loadImageUrlString:model.headPic placeholder:QZHICON_HEAD_PLACEHOLDER];
             if (model.role == TYHomeRoleType_Custom) {
-                cell.tagLab.text = @"自定义";
+                cell.tagLab.text = QZHLoaclString(@"TYHomeRoleType_Custom");
 
             }else if(model.role == TYHomeRoleType_Member){
-                cell.tagLab.text = @"普通成员";
+                cell.tagLab.text = QZHLoaclString(@"TYHomeRoleType_Member");
             }else if(model.role == TYHomeRoleType_Admin){
-                cell.tagLab.text = @"家庭管理员";
+                cell.tagLab.text = QZHLoaclString(@"TYHomeRoleType_Admin");
             }else if(model.role == TYHomeRoleType_Owner){
-                cell.tagLab.text = @"家庭所有者";
+                cell.tagLab.text = QZHLoaclString(@"TYHomeRoleType_Owner");
             }else{
                 cell.tagLab.text = @"无效";
             }
@@ -235,7 +235,18 @@
 
     }
     if (section == 2) {
-        [self dismissHome];
+        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"tip") message:QZHLoaclString(@"deletedeviceWhenDeleteFamily") preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        UIAlertAction *action1 = [UIAlertAction actionWithTitle:QZHLoaclString(@"delete") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            [self dismissHome];
+
+            
+        }];
+        [alertC addAction:action];
+        [alertC addAction:action1];
+        [self presentViewController:alertC animated:NO completion:nil];
     }
 }
 

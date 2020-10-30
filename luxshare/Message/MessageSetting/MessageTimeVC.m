@@ -20,8 +20,8 @@
 @property (strong, nonatomic)UILabel *todayLab;
 
 
-@property (copy, nonatomic)NSMutableArray *hourArr;
-@property (copy, nonatomic)NSMutableArray *minArr;
+@property (strong, nonatomic)NSMutableArray *hourArr;
+@property (strong, nonatomic)NSMutableArray *minArr;
 @property (strong, nonatomic)NSString *leftHour;
 @property (strong, nonatomic)NSString *leftMin;
 @property (strong, nonatomic)NSString *rightHour;
@@ -60,15 +60,16 @@
                  [weekArr addObject:dic[@"week"]];
              }
          }
-         if (weekArr.count == 7) {
-             self.weekDays = @"每天";
-         }else if(weekArr.count == 5 && ![weekArr containsObject:@"星期六"] && ![weekArr containsObject:@"星期日"]){
-                self.weekDays = @"工作日";
-         }else if(weekArr.count == 0){
-             self.weekDays = @"永不";
-         }else{
-             self.weekDays = [weekArr componentsJoinedByString:@","];
-         }
+        if (weekArr.count == 7) {
+            self.weekDays = QZHLoaclString(@"EveryDay");
+        }else if(weekArr.count == 5 && ![weekArr containsObject:QZHLoaclString(@"Saturday")] && ![weekArr containsObject:QZHLoaclString(@"Sunday")]){
+            self.weekDays = QZHLoaclString(@"WorkDay");
+        }else if(weekArr.count == 0){
+            self.weekDays = QZHLoaclString(@"never");
+        }else{
+            self.weekDays = [weekArr componentsJoinedByString:@","];
+        }
+
          self.cell.tagLab.text = self.weekDays;
          
          [QZHDataHelper saveValue:self.listArr forKey:@"weekDays"];
@@ -85,7 +86,7 @@
 
     self.cell = [[SettingDefaultCell alloc] init];
     self.cell.backgroundColor = QZH_KIT_Color_WHITE_70;
-    self.cell.nameLab.text = @"重复";
+    self.cell.nameLab.text = QZHLoaclString(@"repeat");
     self.cell.tagLab.text = self.weekDays;
     self.cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectDateAction)];
@@ -105,13 +106,13 @@
         make.height.mas_equalTo(20);
     }];
     [self.leftPicker mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(20);
+        make.left.mas_equalTo(10);
         make.top.mas_equalTo(self.leftTimeLab.mas_bottom).offset(50);
         make.width.mas_equalTo(QZHScreenWidth/2 - 20);
         make.height.mas_equalTo(240);
     }];
     [self.rightTimeLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(-20);
+        make.right.mas_equalTo(-10);
         make.top.mas_equalTo(100);
         make.width.mas_equalTo(QZHScreenWidth/2 - 20);
         make.height.mas_equalTo(20);
@@ -175,7 +176,7 @@
         _yesterdayLab.textColor = QZHKIT_Color_BLACK_87;
         _yesterdayLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
         _yesterdayLab.textAlignment = NSTextAlignmentCenter;
-        _yesterdayLab.text = @"当日";
+        _yesterdayLab.text = QZHLoaclString(@"today");
         
     }
     return _yesterdayLab;
@@ -220,9 +221,9 @@
     }
 }
 
-- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component{
-    return 100;
-}
+//- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component{
+//    return 100;
+//}
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component{
     return 40;
 }
@@ -272,15 +273,15 @@
                  [weekArr addObject:dic[@"week"]];
              }
          }
-         if (weekArr.count == 7) {
-             self.weekDays = @"每天";
-         }else if(weekArr.count == 5 && ![weekArr containsObject:@"星期六"] && ![weekArr containsObject:@"星期日"]){
-                self.weekDays = @"工作日";
-         }else if(weekArr.count == 0){
-             self.weekDays = @"仅限一次";
-         }else{
-             self.weekDays = [weekArr componentsJoinedByString:@","];
-         }
+        if (weekArr.count == 7) {
+            self.weekDays = QZHLoaclString(@"EveryDay");
+        }else if(weekArr.count == 5 && ![weekArr containsObject:QZHLoaclString(@"Saturday")] && ![weekArr containsObject:QZHLoaclString(@"Sunday")]){
+            self.weekDays = QZHLoaclString(@"WorkDay");
+        }else if(weekArr.count == 0){
+            self.weekDays = QZHLoaclString(@"onlyOnce");
+        }else{
+            self.weekDays = [weekArr componentsJoinedByString:@","];
+        }
          self.cell.tagLab.text = self.weekDays;
     };
     [self.navigationController pushViewController:VC animated:YES];
@@ -294,25 +295,25 @@
         }
     }
     if (weekArr.count == 7) {
-        self.weekDays = @"每天";
-    }else if(weekArr.count == 5 && ![weekArr containsObject:@"星期六"] && ![weekArr containsObject:@"星期日"]){
-           self.weekDays = @"工作日";
+        self.weekDays = QZHLoaclString(@"EveryDay");
+    }else if(weekArr.count == 5 && ![weekArr containsObject:QZHLoaclString(@"Saturday")] && ![weekArr containsObject:QZHLoaclString(@"Sunday")]){
+        self.weekDays = QZHLoaclString(@"WorkDay");
     }else if(weekArr.count == 0){
-        self.weekDays = @"仅限一次";
+        self.weekDays = QZHLoaclString(@"onlyOnce");
     }else{
         self.weekDays = [weekArr componentsJoinedByString:@","];
     }
 }
 - (void)compareRightTime{
     if ([self.leftHour intValue] < [self.rightHour intValue]) {
-        self.yesterdayLab.text = @"当日";
+        self.yesterdayLab.text = QZHLoaclString(@"today");
     }else if([self.leftHour intValue] > [self.rightHour intValue]){
-        self.yesterdayLab.text = @"次日";
+        self.yesterdayLab.text = QZHLoaclString(@"tomorrow");
     }else{
-        if ([self.leftMin intValue] <= [self.rightMin intValue]) {
-            self.yesterdayLab.text = @"当日";
+        if ([self.leftMin intValue] < [self.rightMin intValue]) {
+            self.yesterdayLab.text = QZHLoaclString(@"today");
         }else{
-            self.yesterdayLab.text = @"次日";
+            self.yesterdayLab.text = QZHLoaclString(@"tomorrow");
         }
     }
 }

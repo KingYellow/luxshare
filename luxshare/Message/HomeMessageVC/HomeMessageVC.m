@@ -15,7 +15,7 @@
 @property (strong, nonatomic)MessageTopView *topView;
 @property (strong, nonatomic)NSMutableArray *memberArr;
 @property (strong, nonatomic)TuyaSmartHome *home;
-@property (copy, nonatomic)NSMutableArray *listArr;
+@property (strong, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)NSMutableArray *timeArr;
 @property (strong, nonatomic)UIButton *rightBtn;
 @property (assign, nonatomic)NSInteger page;
@@ -42,7 +42,7 @@
     [self UIConfig];
 }
 - (void)UIConfig{
-    self.topView = [MessageTopView initmessagetopViewName:QZHLoaclString(@"home")];
+    self.topView = [MessageTopView initmessagetopViewName:QZHLoaclString(@"family")];
     [self.topView.normalBtn addTarget:self action:@selector(setEditAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.topView.selectBtn addTarget:self action:@selector(setSelectAction:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -67,6 +67,7 @@
     self.topView.normalBtn.hidden = NO;
     self.topView.selectBtn.hidden = YES;
     self.deleteBtn.hidden = YES;
+    [self allunselected];
     [self.qzTableView reloadData];
 
 }
@@ -102,19 +103,28 @@
     QZHMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
     cell.nameLab.text = model.msgTypeContent;
     cell.contentLab.text = model.msgContent;
-
+    [cell.selectBtn addTarget:self action:@selector(selectBtn:) forControlEvents:UIControlEventTouchUpInside];
+    cell.tagLab.text = model.dateTime;
     cell.selectBtn.selected = [model.select boolValue];
     if (self.topView.selectBtn.hidden) {
+//        cell.selectBtn.hidden = YES;
         [cell.selectBtn mas_updateConstraints:^(MASConstraintMaker *make) {
             make.width.height.mas_equalTo(0);
         }];
+        [cell.contentLab mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.right.mas_equalTo(-20);
+        }];
+
     }else{
+//        cell.selectBtn.hidden = NO;
         [cell.selectBtn mas_updateConstraints:^(MASConstraintMaker *make) {
             make.width.height.mas_equalTo(20);
         }];
+        [cell.contentLab mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.right.mas_equalTo(-40);
+        }];
     }
-    [cell.selectBtn addTarget:self action:@selector(selectBtn:) forControlEvents:UIControlEventTouchUpInside];
-    cell.tagLab.text = model.dateTime;
+
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
  
@@ -139,7 +149,7 @@
         UILabel *lab = [[UILabel alloc] init];
         NSArray *dateArr = [dateStr componentsSeparatedByString:@"-"];
         NSString *month = dateArr[1];
-        lab.text = [month stringByAppendingString:@"月"];
+        lab.text = [month stringByAppendingString:@"M"];
         lab.font = QZHKIT_FONT_LISTCELL_DESCRIBE_TITLE;
         lab.textColor = QZHKIT_Color_BLACK_54;
         lab.frame = CGRectMake(15, 20, 37, 20);
@@ -322,7 +332,7 @@
     }else{
         model.select = @"0";
     }
-    TuyaSmartMessageListModel *modellll = self.listArr[index.section][index.row];
+//    TuyaSmartMessageListModel *modellll = self.listArr[index.section][index.row];
 
     self.deleteBtn.hidden = ![self ishasselexted];
     self.topView.selectBtn.selected = [self isallselexted];

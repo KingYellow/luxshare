@@ -82,16 +82,13 @@
             [self setTitle:self.didChangBlock(self,_second) forState:UIControlStateNormal];
             [self setTitle:self.didChangBlock(self,_second) forState:UIControlStateDisabled];
         } else {
-            NSString *title = [NSString stringWithFormat:@"%d秒",_second];
+            NSString *title = [NSString stringWithFormat:@"%dS",_second];
             [self setTitle:title forState:UIControlStateNormal];
             [self setTitle:title forState:UIControlStateDisabled];
         }
     }
     
 }
-
-
-
 
 
 /**
@@ -109,8 +106,8 @@
                     [self setTitle:self.didFinshBlock(self,_totalSecond) forState:UIControlStateNormal];
                     [self setTitle:self.didFinshBlock(self,_totalSecond) forState:UIControlStateDisabled];
                 } else {
-                    [self setTitle:@"获取验证码" forState:UIControlStateNormal];
-                    [self setTitle:@"获取验证码" forState:UIControlStateDisabled];
+                    [self setTitle:QZHLoaclString(@"getCode") forState:UIControlStateNormal];
+                    [self setTitle:QZHLoaclString(@"getCode") forState:UIControlStateDisabled];
                 }
             }
         }

@@ -82,8 +82,8 @@
 -(void)setDic:(NSDictionary *)dic{
     
     
-    self.priceLab.text = [NSString stringWithFormat:@"价格 %@ 元",dic[@"price"]];
-    self.weightLab.text = [NSString stringWithFormat:@"重量 %@ Kg",dic[@"weight"]];
+//    self.priceLab.text = [NSString stringWithFormat:@"价格 %@ 元",dic[@"price"]];
+//    self.weightLab.text = [NSString stringWithFormat:@"重量 %@ Kg",dic[@"weight"]];
 
 }
 - (void)setFrame:(CGRect)frame {

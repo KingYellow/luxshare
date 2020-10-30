@@ -143,7 +143,7 @@
  */
 - (UIButton *)exp_addLeftItemTitle:(NSString *)title itemIcon:(NSString *)icon {
     
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 20, 164, 44)];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(20, 20, 44, 44)];
     button.titleLabel.font = QZHKIT_FONT_NAVIBAR_ITEM_TITLE;
     
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -156,7 +156,7 @@
         [button setImage:QZHLoadIcon(icon) forState:UIControlStateNormal];
     }
     button.imageView.contentMode = UIViewContentModeScaleAspectFill;
-    button.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
+    button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = item;

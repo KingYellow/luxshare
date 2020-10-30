@@ -18,7 +18,7 @@
 
 @property (strong, nonatomic)TuyaSmartCameraDPManager *dpManager;
 @property (strong, nonatomic)TuyaSmartDevice *device;
-@property (copy, nonatomic)NSMutableArray *numbrArr;
+@property (strong, nonatomic)NSMutableArray *numbrArr;
 @property (strong, nonatomic)NSString *stateStr;
 @end
 
@@ -70,17 +70,17 @@
 
         PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
         if (row == 0) {
-            cell.nameLab.text = @"剩余电量";
+            cell.nameLab.text = QZHLoaclString(@"electricHas");
             int state = [[self.dpManager valueForDP:TuyaSmartCameraWirelessElectricityDPName] intValue];
             cell.describeLab.text = [[NSString stringWithFormat:@"%d",state] stringByAppendingString:@"%"];
 
         }else{
-            cell.nameLab.text = @"供电方式";
+            cell.nameLab.text = QZHLoaclString(@"powerType");
             int state = [[self.dpManager valueForDP:TuyaSmartCameraWirelessPowerModeDPName] intValue];
             if (!state) {
-                cell.describeLab.text = @"电池供电";
+                cell.describeLab.text = QZHLoaclString(@"batteryPower");
             }else{
-                cell.describeLab.text = @"电源线(电池充电中)";
+                cell.describeLab.text = QZHLoaclString(@"linePower");
             }
 
         }
@@ -90,8 +90,8 @@
         
     }else{
         ElectricManageCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
-        cell.nameLab.text = @"请设置低电量报警阀值";
-        cell.describeLab.text = @"设置低电量报警界限";
+        cell.nameLab.text = QZHLoaclString(@"setlowPowerNumber");
+        cell.describeLab.text = QZHLoaclString(@"setlowPowerRange");
         int state = [[self.dpManager valueForDP:TuyaSmartCameraWirelessLowpowerDPName] intValue];
         self.stateStr = [NSString stringWithFormat:@"%d",state];
         cell.statusLab.text = [[NSString stringWithFormat:@"%d",state] stringByAppendingString:@"%"];
@@ -141,7 +141,7 @@
         QZHWS(weakSelf)
         BRStringPickerView *pick = [[BRStringPickerView alloc] initWithPickerMode:BRStringPickerComponentSingle];
         pick.dataSourceArr = self.numbrArr;
-        pick.title = @"设置低电量报警界限";
+        pick.title = QZHLoaclString(@"setlowPowerRange");
         pick.selectValue = self.stateStr;
         pick.resultModelBlock = ^(BRResultModel * _Nullable resultModel) {
             if ([self.dpManager isSupportDP:TuyaSmartCameraWirelessLowpowerDPName]) {

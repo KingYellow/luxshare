@@ -16,8 +16,17 @@
     
     NSArray *serializeArray = [(NSArray *)array sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {//排序
         int i;
-        NSString *strA = ((ContactModel *)obj1).spell;
-        NSString *strB = ((ContactModel *)obj2).spell;
+        NSString *strA;
+        NSString *strB;
+        if ([QZHCommons languageOfTheDeviceSystem] == LanguageChinese){
+            strA = ((ContactModel *)obj1).spell;
+            strB = ((ContactModel *)obj2).spell;
+            
+        }else{
+            strA = ((ContactModel *)obj1).english;
+            strB = ((ContactModel *)obj2).english;
+        }
+        
         for (i = 0; i < strA.length && i < strB.length; i ++) {
             char a = [strA characterAtIndex:i];
             char b = [strB characterAtIndex:i];
@@ -42,7 +51,12 @@
     NSMutableArray *data;
     NSMutableArray *oth = [[NSMutableArray alloc] init];
     for (ContactModel *user in serializeArray) {
-        char c = [user.spell characterAtIndex:0];
+        char c;
+        if ([QZHCommons languageOfTheDeviceSystem] == LanguageChinese){
+            c = [user.spell characterAtIndex:0];
+        }else{
+            c = [user.english characterAtIndex:0];
+        }
         if (!isalpha(c)) {
             [oth addObject:user];
         }
@@ -73,7 +87,12 @@
 //    [section addObject:UITableViewIndexSearch];
     for (NSArray *item in array) {
         ContactModel *user = [item objectAtIndex:0];
-        char c = [user.spell characterAtIndex:0];
+        char c;
+        if ([QZHCommons languageOfTheDeviceSystem] == LanguageChinese){
+            c = [user.spell characterAtIndex:0];
+        }else{
+            c = [user.english characterAtIndex:0];
+        }
         if (!isalpha(c)) {
             c = '#';
         }

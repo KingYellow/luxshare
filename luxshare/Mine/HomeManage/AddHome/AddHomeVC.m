@@ -14,7 +14,7 @@
 
 @interface AddHomeVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic)UITableView *qzTableView;
-@property (copy, nonatomic)NSMutableArray *listArr;
+@property (strong, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)NSString *name;
 @property (strong, nonatomic)NSString *location;
 @property (strong, nonatomic)TuyaSmartHome *home;
@@ -77,9 +77,9 @@
     if (section == 0) {
         
         QZHFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
-        [cell.nameLab mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(100);
-        }];
+//        [cell.nameLab mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.width.mas_equalTo(100);
+//        }];
         if (row == 0) {
              cell.nameLab.text = QZHLoaclString(@"home_name");
              cell.textfield.placeholder = QZHLoaclString(@"member_max25");
@@ -112,7 +112,7 @@
         }];
         cell.nameLab.textColor = QZHKIT_COLOR_SKIN;
         
-        cell.nameLab.text = @"添加其他房间";
+        cell.nameLab.text = QZHLoaclString(@"addOtherRoom");
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
        return cell;
     }
@@ -183,7 +183,7 @@
 #pragma mark --lazy
 - (NSMutableArray *)listArr{
     if (!_listArr) {
-        _listArr = [NSMutableArray arrayWithArray:@[@{@"name":@"客厅",@"selected":@"1"},@{@"name":@"主卧",@"selected":@"1"},@{@"name":@"次卧",@"selected":@"1"},@{@"name":@"餐厅",@"selected":@"1"},@{@"name":@"厨房",@"selected":@"1"},@{@"name":@"书房",@"selected":@"1"}]];
+        _listArr = [NSMutableArray arrayWithArray:@[@{@"name":QZHLoaclString(@"LivingRoom"),@"selected":@"1"},@{@"name":QZHLoaclString(@"MasterBedroom"),@"selected":@"1"},@{@"name":QZHLoaclString(@"GuestBedroom"),@"selected":@"1"},@{@"name":QZHLoaclString(@"DiningRoom"),@"selected":@"1"},@{@"name":QZHLoaclString(@"Kitchen"),@"selected":@"1"},@{@"name":QZHLoaclString(@"Study"),@"selected":@"1"}]];
     }
     return _listArr;
 }

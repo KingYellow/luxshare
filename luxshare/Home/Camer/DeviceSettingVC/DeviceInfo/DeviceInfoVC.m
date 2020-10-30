@@ -35,8 +35,6 @@
 
 }
 - (void)UIConfig{
-    TuyaSmartDeviceModel *mode = self.deviceModel;
-    
     [self.view addSubview:self.qzTableView];
          [self.qzTableView mas_makeConstraints:^(MASConstraintMaker *make) {
          make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0 ));
@@ -84,7 +82,13 @@
             }else{
                 cell.describeLab.text = QZHLoaclString(@"device_deviceNamePlace");
             }
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            if (self.deviceModel.isShare) {
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }else{
+
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
+
 
         }else if(row == 1){
             if (self.deviceModel.roomId) {
@@ -95,10 +99,14 @@
                 cell.describeLab.text = @"";
             }
             cell.nameLab.text = QZHLoaclString(@"device_deviceLocation");
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            if ([QZHCommons isAdminOrOwner:self.homeModel] && !self.deviceModel.isShare) {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }else{
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
 
         }else{
-            cell.nameLab.text = @"设备ID";
+            cell.nameLab.text = QZHLoaclString(@"deviceID");
             cell.describeLab.text = self.deviceModel.devId;
             UILongPressGestureRecognizer *tap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longpressCopyAction:)];
             [cell addGestureRecognizer:tap];
@@ -140,6 +148,9 @@
    NSInteger section = indexPath.section;
    NSInteger row = indexPath.row;
    if (section == 1 & row == 0) {
+       if (self.deviceModel.isShare) {
+           return;;
+       }
        QZHWS(weakSelf)
        UIAlertController *alert =   [UIAlertController alertWithTextfieldTitle:QZHLoaclString(@"device_deviceName") originaltext:self.deviceModel.name textblock:^(NSString * _Nonnull fieldtext) {
            [weakSelf modifyDeviceName:fieldtext];
@@ -149,6 +160,9 @@
        
    }
    if (section == 1 & row == 1) {
+       if (self.deviceModel.isShare || ![QZHCommons isAdminOrOwner:self.homeModel]) {
+           return;;
+       }
        SelectRooeVC *vc = [[SelectRooeVC alloc] init];
        vc.homeModel = self.homeModel;
        vc.deviceModel = self.deviceModel;
@@ -156,6 +170,7 @@
        vc.selectBlack = ^(TuyaSmartRoomModel * _Nonnull model) {
            [weakSelf addDevice:model];
        };
+       
        [self.navigationController pushViewController:vc animated:YES];
       }
 }
@@ -209,6 +224,6 @@
 - (void)longpressCopyAction:(UILongPressGestureRecognizer *)press{
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     pasteboard.string = self.deviceModel.devId;
-    [[QZHHUD HUD] textHUDWithMessage:@"设备ID复制成功" afterDelay:1.0];
+    [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"deviceIDcopySuccess") afterDelay:1.0];
 }
 @end

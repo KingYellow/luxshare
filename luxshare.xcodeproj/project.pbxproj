@@ -29,6 +29,7 @@
 		893EFD4724ECDB4200F56742 /* LUXProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 893EFD4624ECDB4200F56742 /* LUXProgressHUD.m */; };
 		894045D925076AAB003CBA1F /* MBProgressHUD+NJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 894045D825076AAB003CBA1F /* MBProgressHUD+NJ.m */; };
 		89408A4124AC1F3400AF20F8 /* QZHSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89408A4024AC1F3400AF20F8 /* QZHSelectCell.m */; };
+		894A98FE253EC6BB0065ADA0 /* DoorbellVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 894A98FD253EC6BB0065ADA0 /* DoorbellVC.m */; };
 		894B54F624CE606600D5C0D2 /* MessageSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 894B54F524CE606600D5C0D2 /* MessageSettingVC.m */; };
 		894B54F924CE625C00D5C0D2 /* MessageTimeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 894B54F824CE625C00D5C0D2 /* MessageTimeVC.m */; };
 		894F07D9250F021800ACA0FB /* QZHDeviceStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 894F07D8250F021800ACA0FB /* QZHDeviceStatus.m */; };
@@ -53,6 +54,7 @@
 		8962F22524BEFC3600D85A65 /* SelectRooeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8962F22424BEFC3600D85A65 /* SelectRooeVC.m */; };
 		8969133C24DCFC7100D74DDE /* FirstRegistAddHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8969133B24DCFC7100D74DDE /* FirstRegistAddHomeVC.m */; };
 		896C04D424D01086007BC01C /* WeekSelectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 896C04D324D01086007BC01C /* WeekSelectVC.m */; };
+		896CC40C2535833C00F58C48 /* QZHCommons.m in Sources */ = {isa = PBXBuildFile; fileRef = 896CC40B2535833C00F58C48 /* QZHCommons.m */; };
 		8970BE7024B97C1E008C5D76 /* CameraPlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8970BE6F24B97C1E008C5D76 /* CameraPlayView.m */; };
 		8970BE7424B99D3B008C5D76 /* PhotosVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8970BE7324B99D3B008C5D76 /* PhotosVC.m */; };
 		8970BE7624B9A11C008C5D76 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8970BE7524B9A11C008C5D76 /* Photos.framework */; };
@@ -72,7 +74,6 @@
 		898C4EA124A1D6B800A574E0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 898C4EA324A1D6B800A574E0 /* InfoPlist.strings */; };
 		898C4EA724A1D88700A574E0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 898C4EA924A1D88700A574E0 /* Localizable.strings */; };
 		898C4EB124A1F0CC00A574E0 /* UIAlertController+Textfield.m in Sources */ = {isa = PBXBuildFile; fileRef = 898C4EB024A1F0CC00A574E0 /* UIAlertController+Textfield.m */; };
-		898C4EB424A1F97A00A574E0 /* UMengEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 898C4EB324A1F97A00A574E0 /* UMengEngine.m */; };
 		898C4EB624A1FD4300A574E0 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898C4EB524A1FD4300A574E0 /* UserNotifications.framework */; };
 		898CF6C024D3A146009B7232 /* RecordProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 898CF6BF24D3A146009B7232 /* RecordProgressView.m */; };
 		898D60A124DB8DF10093E8F9 /* QZHTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 898D60A024DB8DF10093E8F9 /* QZHTimeCell.m */; };
@@ -248,6 +249,8 @@
 		894045D825076AAB003CBA1F /* MBProgressHUD+NJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+NJ.m"; sourceTree = "<group>"; };
 		89408A3F24AC1F3400AF20F8 /* QZHSelectCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QZHSelectCell.h; sourceTree = "<group>"; };
 		89408A4024AC1F3400AF20F8 /* QZHSelectCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QZHSelectCell.m; sourceTree = "<group>"; };
+		894A98FC253EC6BB0065ADA0 /* DoorbellVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DoorbellVC.h; sourceTree = "<group>"; };
+		894A98FD253EC6BB0065ADA0 /* DoorbellVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DoorbellVC.m; sourceTree = "<group>"; };
 		894B54F424CE606600D5C0D2 /* MessageSettingVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageSettingVC.h; sourceTree = "<group>"; };
 		894B54F524CE606600D5C0D2 /* MessageSettingVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageSettingVC.m; sourceTree = "<group>"; };
 		894B54F724CE625C00D5C0D2 /* MessageTimeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageTimeVC.h; sourceTree = "<group>"; };
@@ -295,6 +298,8 @@
 		8969133B24DCFC7100D74DDE /* FirstRegistAddHomeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstRegistAddHomeVC.m; sourceTree = "<group>"; };
 		896C04D224D01086007BC01C /* WeekSelectVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeekSelectVC.h; sourceTree = "<group>"; };
 		896C04D324D01086007BC01C /* WeekSelectVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeekSelectVC.m; sourceTree = "<group>"; };
+		896CC40A2535833C00F58C48 /* QZHCommons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QZHCommons.h; sourceTree = "<group>"; };
+		896CC40B2535833C00F58C48 /* QZHCommons.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QZHCommons.m; sourceTree = "<group>"; };
 		8970BE6E24B97C1E008C5D76 /* CameraPlayView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraPlayView.h; sourceTree = "<group>"; };
 		8970BE6F24B97C1E008C5D76 /* CameraPlayView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraPlayView.m; sourceTree = "<group>"; };
 		8970BE7224B99D3B008C5D76 /* PhotosVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotosVC.h; sourceTree = "<group>"; };
@@ -333,8 +338,6 @@
 		898C4EAA24A1D88B00A574E0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		898C4EAF24A1F0CC00A574E0 /* UIAlertController+Textfield.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+Textfield.h"; sourceTree = "<group>"; };
 		898C4EB024A1F0CC00A574E0 /* UIAlertController+Textfield.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+Textfield.m"; sourceTree = "<group>"; };
-		898C4EB224A1F97A00A574E0 /* UMengEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UMengEngine.h; sourceTree = "<group>"; };
-		898C4EB324A1F97A00A574E0 /* UMengEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UMengEngine.m; sourceTree = "<group>"; };
 		898C4EB524A1FD4300A574E0 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		898CF6BE24D3A146009B7232 /* RecordProgressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordProgressView.h; sourceTree = "<group>"; };
 		898CF6BF24D3A146009B7232 /* RecordProgressView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecordProgressView.m; sourceTree = "<group>"; };
@@ -761,6 +764,15 @@
 			path = LUXProgressHUD;
 			sourceTree = "<group>";
 		};
+		894A98FB253EC6930065ADA0 /* Doorbell */ = {
+			isa = PBXGroup;
+			children = (
+				894A98FC253EC6BB0065ADA0 /* DoorbellVC.h */,
+				894A98FD253EC6BB0065ADA0 /* DoorbellVC.m */,
+			);
+			path = Doorbell;
+			sourceTree = "<group>";
+		};
 		894B54F324CE5F1B00D5C0D2 /* MessageSetting */ = {
 			isa = PBXGroup;
 			children = (
@@ -779,6 +791,8 @@
 			children = (
 				894F07D7250F021800ACA0FB /* QZHDeviceStatus.h */,
 				894F07D8250F021800ACA0FB /* QZHDeviceStatus.m */,
+				896CC40A2535833C00F58C48 /* QZHCommons.h */,
+				896CC40B2535833C00F58C48 /* QZHCommons.m */,
 			);
 			path = DeviceStatus;
 			sourceTree = "<group>";
@@ -835,22 +849,12 @@
 			path = AddHome;
 			sourceTree = "<group>";
 		};
-		8960491624AC1BE70031C2F0 /* AddRoom */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = AddRoom;
-			sourceTree = "<group>";
-		};
 		8960491724AC1BF90031C2F0 /* HomeManage */ = {
 			isa = PBXGroup;
 			children = (
-				89F7D01224A57D8C007B5A32 /* Model */,
 				89F7D01324A57D8C007B5A32 /* View */,
 				89F7D01424A57DA8007B5A32 /* HomeManageVC.h */,
 				89F7D01524A57DA8007B5A32 /* HomeManageVC.m */,
-				8920D488251C29980097FDE4 /* HomeManageListCell.h */,
-				8920D489251C29980097FDE4 /* HomeManageListCell.m */,
 			);
 			path = HomeManage;
 			sourceTree = "<group>";
@@ -1161,8 +1165,6 @@
 				89DB09D124A0591000324E36 /* AppDelegate.m */,
 				89DB09E924A059DA00324E36 /* AppDelegate+Exp.h */,
 				89DB09EA24A059DA00324E36 /* AppDelegate+Exp.m */,
-				898C4EB224A1F97A00A574E0 /* UMengEngine.h */,
-				898C4EB324A1F97A00A574E0 /* UMengEngine.m */,
 				89DB09EF24A05A3800324E36 /* LeadPage */,
 			);
 			path = Delegate;
@@ -1195,6 +1197,7 @@
 		89DB0A0B24A05A3800324E36 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				894A98FB253EC6930065ADA0 /* Doorbell */,
 				8990114124B413120097A401 /* Camer */,
 				897399B024B31D1800DFF4EB /* DeviceList */,
 				895DFE1C24B0561D004F986D /* AddDeviceQRCode */,
@@ -1210,17 +1213,9 @@
 				89160D6E24A981AB00511F84 /* BWTopMenuView */,
 				89DB0A1224A05A3800324E36 /* HomeVC.h */,
 				89DB0A0D24A05A3800324E36 /* HomeVC.m */,
-				89DB0A0E24A05A3800324E36 /* Model */,
 				89DB0A0F24A05A3800324E36 /* View */,
 			);
 			path = Home;
-			sourceTree = "<group>";
-		};
-		89DB0A0E24A05A3800324E36 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		89DB0A0F24A05A3800324E36 /* View */ = {
@@ -1566,12 +1561,12 @@
 		89E591B624A3360C00EEB26A /* SCIndexView */ = {
 			isa = PBXGroup;
 			children = (
-				89E591B724A3360C00EEB26A /* SCIndexViewConfiguration.m */,
-				89E591B824A3360C00EEB26A /* UITableView+SCIndexView.h */,
+				89E591BC24A3360C00EEB26A /* SCIndexView.h */,
 				89E591B924A3360C00EEB26A /* SCIndexView.m */,
 				89E591BA24A3360C00EEB26A /* SCIndexViewConfiguration.h */,
+				89E591B724A3360C00EEB26A /* SCIndexViewConfiguration.m */,
+				89E591B824A3360C00EEB26A /* UITableView+SCIndexView.h */,
 				89E591BB24A3360C00EEB26A /* UITableView+SCIndexView.m */,
-				89E591BC24A3360C00EEB26A /* SCIndexView.h */,
 			);
 			path = SCIndexView;
 			sourceTree = "<group>";
@@ -1592,7 +1587,6 @@
 			children = (
 				8960491724AC1BF90031C2F0 /* HomeManage */,
 				8960491524AC1BE70031C2F0 /* AddHome */,
-				8960491624AC1BE70031C2F0 /* AddRoom */,
 				89160D7824A9879200511F84 /* HomeDetailVC */,
 				89160D7924A9AF6F00511F84 /* RoomManage */,
 				89160D8024A9E72C00511F84 /* AddMember */,
@@ -1601,16 +1595,11 @@
 			path = HomeManage;
 			sourceTree = "<group>";
 		};
-		89F7D01224A57D8C007B5A32 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		89F7D01324A57D8C007B5A32 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8920D488251C29980097FDE4 /* HomeManageListCell.h */,
+				8920D489251C29980097FDE4 /* HomeManageListCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2101,6 +2090,7 @@
 				897399B324B31D2D00DFF4EB /* DeviceListVC.m in Sources */,
 				89160D7424A981AB00511F84 /* BWTopMenuView.m in Sources */,
 				89F7D09624A5D70B007B5A32 /* RegisterSecondVC.m in Sources */,
+				896CC40C2535833C00F58C48 /* QZHCommons.m in Sources */,
 				89F7D07A24A5C3FA007B5A32 /* QZHReachability.m in Sources */,
 				8962F21024BEE21E00D85A65 /* UIColor+Hex.m in Sources */,
 				89160D6D24A6FDD100511F84 /* MessageVC.m in Sources */,
@@ -2126,6 +2116,7 @@
 				896C04D424D01086007BC01C /* WeekSelectVC.m in Sources */,
 				89F124EA24BD3D660061D4C1 /* VideoPlayVC.m in Sources */,
 				89F5FDED24B7090300CD0980 /* AddDeviceWifiVC.m in Sources */,
+				894A98FE253EC6BB0065ADA0 /* DoorbellVC.m in Sources */,
 				8987856524C51B680012B71B /* ElectricManageCell.m in Sources */,
 				89F7D08324A5C3FB007B5A32 /* NSString+Exp.m in Sources */,
 				8962F1FB24BEC74900D85A65 /* PhotPreViewVC.m in Sources */,
@@ -2205,7 +2196,6 @@
 				89160D8924A9E7DE00511F84 /* YFMPaymentView.m in Sources */,
 				89DB0AB224A05A3900324E36 /* MineDefaultCell.m in Sources */,
 				89F7D08124A5C3FB007B5A32 /* UIView+Exp.m in Sources */,
-				898C4EB424A1F97A00A574E0 /* UMengEngine.m in Sources */,
 				89F7D08E24A5C3FB007B5A32 /* EasyEmptyGlobalConfig.m in Sources */,
 				897399AF24B2F8CC00DFF4EB /* CircleView.m in Sources */,
 				8960491A24AC1C1E0031C2F0 /* AddHomeVC.m in Sources */,
@@ -2303,6 +2293,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2362,6 +2353,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2384,12 +2376,14 @@
 			baseConfigurationReference = 3726949E51E03266BE0169B4 /* Pods-luxshare.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = NO;
 				CODE_SIGN_ENTITLEMENTS = luxshare/luxshare.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_TEAM = V46XVDX494;
+				DEVELOPMENT_TEAM = N3B52BZX68;
 				ENABLE_BITCODE = NO;
+				EXCLUDED_ARCHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/luxshare/Support/luxshare.pch";
 				INFOPLIST_FILE = luxshare/Info.plist;
@@ -2523,8 +2517,6 @@
 					"-framework",
 					"\"SGQRCode\"",
 					"-framework",
-					"\"STPopup\"",
-					"-framework",
 					"\"Security\"",
 					"-framework",
 					"\"SecurityEnvSDK\"",
@@ -2595,7 +2587,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.luxshare.ipcam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = BU23_KS_com.luxshare.ipcam;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2605,12 +2597,14 @@
 			baseConfigurationReference = A7347066D27901DF8DC873DE /* Pods-luxshare.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = NO;
 				CODE_SIGN_ENTITLEMENTS = luxshare/luxshare.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_TEAM = V46XVDX494;
+				DEVELOPMENT_TEAM = N3B52BZX68;
 				ENABLE_BITCODE = NO;
+				EXCLUDED_ARCHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/luxshare/Support/luxshare.pch";
 				INFOPLIST_FILE = luxshare/Info.plist;
@@ -2744,8 +2738,6 @@
 					"-framework",
 					"\"SGQRCode\"",
 					"-framework",
-					"\"STPopup\"",
-					"-framework",
 					"\"Security\"",
 					"-framework",
 					"\"SecurityEnvSDK\"",
@@ -2816,7 +2808,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.luxshare.ipcam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = BU23_KS_com.luxshare.ipcam;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

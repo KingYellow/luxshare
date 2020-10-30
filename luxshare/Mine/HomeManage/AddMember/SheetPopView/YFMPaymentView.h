@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "STPopup.h"
+//#import "STPopup.h"
 
 @interface YFMPaymentView : UIViewController
+
+@property (nonatomic ,assign) NSInteger currentIndex;
+
 - (instancetype)initTotalPay:(NSString *)totalBalance vc:(UIViewController *)vc dataSource:(NSArray *)dataSource;
 //支付方式
 @property (nonatomic, copy) void(^payType)(NSInteger index);

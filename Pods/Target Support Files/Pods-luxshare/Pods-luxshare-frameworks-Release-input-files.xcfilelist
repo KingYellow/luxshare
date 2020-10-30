@@ -14,8 +14,9 @@ ${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework
 ${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework
 ${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
 ${BUILT_PRODUCTS_DIR}/SGQRCode/SGQRCode.framework
-${BUILT_PRODUCTS_DIR}/STPopup/STPopup.framework
 ${PODS_ROOT}/TuyaCameraSDK/ios/TuyaCameraSDK.framework
+${PODS_ROOT}/TuyaSmartQUIC/Carthage/Build/iOS/TuyaSmartQUIC.framework
+${PODS_ROOT}/TuyaSmartQUIC/Carthage/Build/iOS/TuyaSmartQUIC.framework.dSYM
 ${BUILT_PRODUCTS_DIR}/UICKeyChainStore/UICKeyChainStore.framework
 ${BUILT_PRODUCTS_DIR}/WMPlayer/WMPlayer.framework
 ${BUILT_PRODUCTS_DIR}/WMZPageController/WMZPageController.framework

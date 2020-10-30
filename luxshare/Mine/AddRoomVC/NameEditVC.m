@@ -44,7 +44,21 @@
     [self.view addSubview:lab];
     self.nameField.text = self.titleName;
     [self.view addSubview:self.mineCollection];
-    _infoArr = @[@"客厅",@"主卧",@"次卧",@"餐厅",@"厨房",@"书房",@"玄关",@"阳台",@"儿童房",@"衣帽间"];
+    /**
+     "LivingRoom" = "客厅";
+    "MasterBedroom" = "主卧";
+    "GuestBedroom" = "次卧";
+    "DiningRoom" = "餐厅";
+    "Kitchen" = "厨房";
+    "Study" = "书房";
+
+    "Porch" = "玄关";
+    "Balcony" = "阳台";
+    "ChildrenRoom" = "儿童房";
+    "CloakRoom" = "衣帽间";
+     */
+
+    _infoArr = @[QZHLoaclString(@"LivingRoom"),QZHLoaclString(@"MasterBedroom"),QZHLoaclString(@"GuestBedroom"),QZHLoaclString(@"DiningRoom"),QZHLoaclString(@"Kitchen"),QZHLoaclString(@"Study"),QZHLoaclString(@"Porch"),QZHLoaclString(@"Balcony"),QZHLoaclString(@"ChildrenRoom"),QZHLoaclString(@"CloakRoom")];
     [self.nameField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.mas_equalTo(0);
         make.top.mas_equalTo(20);

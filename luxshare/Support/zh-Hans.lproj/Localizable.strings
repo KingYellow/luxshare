@@ -12,8 +12,27 @@
 "finish" = "完成";
 "delete" = "删除";
 "warning" = "告警";
-"home" = "家庭";
+"family" = "家庭";
 "notication" = "通知";
+//星期
+"Sunday" = "星期日";
+"Monday" = "星期一";
+"Tuesday" = "星期二";
+"Wednesday" = "星期三";
+"Thursday" = "星期四";
+"Friday" = "星期五";
+"Saturday" = "星期六";
+"EveryDay" = "每天";
+"WorkDay" = "工作日";
+"onlyOnce" = "仅限一次";
+//星期 简写
+"Sun" = "日";
+"Mon" = "一";
+"Tues" = "二";
+"Wed" = "三";
+"Thur" = "四";
+"Fri" = "五";
+"Sat" = "六";
 
 //角色
 "role_normal" = "普通成员";
@@ -65,12 +84,14 @@
 
 //个人信息
 "personInfo_headPic" = "头像";
+"personInfo_name" = "姓名";
 "personInfo_nickName" = "昵称";
 "personInfo_phoneNum" = "手机号码";
 "personInfo_headPic" = "头像";
 "personInfo_editLoginPW" = "修改登录密码";
-
-
+"personInfo_info" = "个人信息";
+"editNickname" = "修改昵称";
+"nicknameCantSpace" = "昵称不能为空";
 
 
 //家庭管理
@@ -194,3 +215,238 @@
 //消息
 "message_warningDetail" = "告警消息详情";
 "message_selectWeek" = "选择星期";
+"message_center_detail" = "点击查看";
+
+//回放
+"backplayDate" = "日期";
+"record" = "录像";
+"stop" = "停止";
+"shot" = "截屏";
+"talk" = "通话";
+"stopTalk" =  "挂断";
+"todayNoVideos" = "当天没有视频";
+"videoPlayFinish" = "视频播放完成";
+"noPhotoPrivate" = "您还没有允许相册权限";
+"recordOnlyWhenPlaying" = "正常播放时才能录制视频";
+"failedIfRecordTimeLessOneS" = "录制时间少于1S可能导致存储失败";
+"shopSuccessAndStored" = "截图成功并存储到相册";
+"shotOnlyWhenPlaying" = "正常播放时才能录制截屏";
+"gotoSetting" = "去设置一下吧";
+"connectFailed" = "连接失败";
+"playbackPreviewFailed" = "回放预览失败";
+
+"cancel" = "取消";
+"setting" = "设置";
+//直播
+"recordingPleaseStop" = "录制中,请先停止录制";
+"talkingPleaseStop" = "通话中,请先停止通话";
+"privateModelStart" = "隐私模式开启";
+"unableOpeateWhenPrivate" = "隐私模式下不能操作";
+"canOperateWhenPlaying" = "正常播放才能进行操作";
+"photoManage" = "    相册管理";
+"playBack" = "    历史回看";
+"connectOnceAgain" = "连接失败,正在重连";
+"preViewFialed" = "预览播放失败";
+"awakeSuccess" = "唤醒成功";
+"sleepSuccess" = "休眠成功";
+"noMicroPrivate" = "您还没有麦克风权限";
+"creatingTalkSession" = "建立通话通道中";
+"recordingCantOperate" = "录屏时不能操作";
+"stopRecordOrTalk" = "请先关闭录制或通话";
+"talkWhenPressing" = "按住讲话";
+"HD" = "高清";
+"SD" = "标清";
+
+"recordVideos" = "录像视频";
+"photos" = "相册图片";
+
+//设置
+"setAlarmArea" = "设置报警区域";
+"setSuccess" = "设置成功";
+"addShare" = "添加分享";
+"emailError" = "邮箱不正确";
+"electricHas" = "剩余电量";
+"powerType" = "供电方式";
+"batteryPower" = "电池供电";
+"linePower" = "电源线(电池充电中)";
+"setlowPowerNumber" = "请设置低电量报警阀值";
+"setlowPowerRange" = "设置低电量报警界限";
+"allStorge" = "总容量";
+"storgeUsed" = "已使用";
+"storgeLeft" = "剩余容量";
+"recordStitch" = "录像开关";
+"recordModel" = "录像模式";
+"recordModelHappend" = "事件录像";
+"recordModelLine" = "连续录像";
+"format" = "格式化";
+"storgeLength" = "存储容量";
+"storgeSetting" = "存储设置";
+
+"noSDCard"= "该设备没安装存储卡";
+"isOrNoFormar" = "是否确认格式化";
+"formatedCantBack" = "格式化后不能恢复,勤谨慎操作!";
+"formatSuccess" = "格式化成功";
+"formatFailed" = "格式化失败";
+"formating" = "正在格式化...";
+"PIRSwitch" = "PIR开关";
+"close" = "关闭";
+"lowSensitivity" = "低灵敏度";
+"midSensitivity" = "中灵敏度";
+"highSensitivity" = "高灵敏度";
+"crySensitivity" = "哭声检测灵敏度";
+"timer" = "定时";
+"alarminterval" = "报警间隔";
+
+"welcome" = "欢迎光临";
+"dangerGoAway" = "危险区域请勿靠近";
+"homeGoAway" = "私人住宅请离开";
+"deviceOfflineNoOperate" = "设备已经离线,请设备上线后再设置";
+"privateNoSetAlarmArea" = "隐私模式下不能设置报警区域";
+"setting_decetecSensitivity" = "移动侦测灵敏度";
+"voiceSensitivity" = "声音侦测灵敏度";
+"alarmMusic" = "报警提示音";
+"closeAlarmMusic" = "关闭提示音";
+"addTimer" = "添加定时";
+"decrteAlarm" = "移动侦测";
+"voiceAlarm" = "声音侦测";
+"open" = "开启";
+"auto" = "自动";
+"timerHas30S" = "定时可能会存在30S左右的误差";
+"deleteSuccesee" = "删除成功";
+
+//定时
+"beginNotice" = "执行通知";
+"repeat" = "重复";
+"note" = "备注";
+"selectDate" = "选择时间";
+"findNewVersion" = "发现可更新版本";
+"deviceUpdate" = "固件升级";
+"upDateNewVersion" = "更新新版本";
+"update" = "更新";
+"noSDCardCantUpdate" = "该设备无SD卡不支持更新";
+"updateNote" = "更新注意事项";
+"updateNoteDetail" = "升级可能持续较长时间,请确保设备处于电量充足状态.更新时设备不可使用";
+"updatingTo" = "正在更新至";
+"updateSuccess" = "更新成功";
+"updateFailedTryAgain" = "升级失败,请再次尝试更新";
+"deviceID" = "设备ID";
+"deviceIDcopySuccess" = "设备ID复制成功";
+"stateLed" = "状态指示灯";
+"timeShow" = "时间水印";
+"pictureUpside" = "图像翻转";
+"talkType" = "对讲方式";
+"talkOne" = "单向对讲";
+"talkTwo" = "双向对讲";
+"talkOneTip" =  "像对讲机一样讲话";
+"talkTwoTip" =  "您和家人可以同时通话,您可以在说话的同时也听到对方说话";
+"talkTip" = "因对讲可能受环境因素的影响,导致通话效果欠佳,建议您根据实际使用情况选择单向或双向对讲";
+"privateModel" = "隐私模式";
+
+//setting
+"offlineNotice" = "离线提醒";
+"firmWareInfo" = "固件信息";
+"deviceInfo" = "设备信息";
+"noSDCardCantStorge" = "该设备无存储卡不支持存储功能";
+"lastVersion" = "已是最新版本";
+"currentVersion" = "当前版本号";
+"versionInfo" = "版本信息";
+"infraredNight" = "红外夜视";
+
+"faceRecognition" = "人脸识别";
+"selectedCount" = "个已选定";
+"video" = "视频";
+"photo" = "图片";
+"allSelect" = "全部选中";
+"noSelect" = "取消全部";
+"tip" = "提示";
+"okDeleteDevice" = "确认要删除设备吗?";
+"noData" = "暂无数据";
+"addDevice" = "添加设备";
+"noLocalPrivateNoWifiInfo" = "您未开启定位权限,无法获取Wifi信息";
+
+//配网
+"findDevice" = "找到设备";
+"deviceRegistClode" = "设备注册到智能云";
+"deviceFormat" = "设备初始化";
+
+"deviceHadBeBinded" = "设备已被其他用户绑定,不能重复绑定请到原账号先进行移除,或联系客服提交解绑申请";
+"unBind" = "申请解绑";
+"feedBack" = "撰写反馈";
+"leftWords" = "剩余可输入";
+"word" = "字";
+"pleaseInputWord" = "请输入输入反馈内容";
+"moreThan300Words" = "最多输入300个字";
+"feedBacktip" = "请详细描述您的问题或不满,例如您在做了什么时遇到了问题、希望我们有什么功能等";
+"feedBackDescribe" = "问题描述";
+"contactType" = "联系方式";
+"phoneOrAcconut" = "选填,手机号或者邮箱";
+"submitApplication" = "提交申请";
+//home
+"firstAddHome" = "请先添加家庭";
+"allDevices" = "所有设备";
+"twoCodeIntnet" = "二维码配网";
+"hotIntnet" = "热点配网";
+//message
+"deviceIsUnconnect" = "设备已断开连接";
+"dontDisturbBytime" = "按时段免打扰";
+"startMessageNotice" = "启用消息推送";
+"never" = "永不";
+"today" = "当日";
+"tomorrow" = "次日";
+//login
+"reGet" = "重新获取";
+"left" = "剩余";
+"iphoneCantSpace" = "请输入手机号";
+"codeCantSpace" = "请输入验证码";
+"codeToYourIphone" = "验证码将发到你手机:";
+"codeToYourEmail" = "验证码将发到你邮箱:";
+
+"getCode" = "获取验证码";
+"addOtherRoom" = "添加其他房间";
+
+"LivingRoom" = "客厅";
+"MasterBedroom" = "主卧";
+"GuestBedroom" = "次卧";
+"DiningRoom" = "餐厅";
+"Kitchen" = "厨房";
+"Study" = "书房";
+
+"Porch" = "玄关";
+"Balcony" = "阳台";
+"ChildrenRoom" = "儿童房";
+"CloakRoom" = "衣帽间";
+
+
+"TYHomeRoleType_Custom" = "自定义";
+"TYHomeRoleType_Member" = "普通成员";
+"TYHomeRoleType_Admin" = "家庭管理员";
+"TYHomeRoleType_Owner" = "家庭所有者";
+"roleSetting" = "角色设定";
+
+"selectHeadPic" = "选择头像";
+"selectFromPictures" = "从相册选择";
+"openCamer" = "打开相机";
+//
+"awake" = "唤醒";
+"sleep" = "休眠";
+"pleaseInput" = "请输入";
+"versionUpdate" = "版本升级";
+"newAppVersion" = "有新版本更新了";
+"update" = "升级";
+"helpForBindDevice" = "帮助详情";
+"deletedeviceWhenDeleteFamily" = "删除家庭时同时会删除家庭下相应设备";
+"deletedWillNaverRevover" = "删除后将不能回复,确定要删除?";
+"recording" = "录制中";
+"talking" = "通话中";
+"playLullaby" = "播放摇篮曲";
+"stopPlayLullaby" = "关闭摇篮曲";
+
+"notAdminCantShare" = "您不是管理员,不能分享设备";
+"noAllPhotoPrivate" = "请您先允许访问相册内容";
+"playLullabyAuto" = "自动播放摇篮曲";
+"cannotTalkWhenPlayLullaby" = "播放摇篮曲时不能通话";
+//门铃
+"doorbellRefuse" = "拒绝";
+"doorbellAnswer" = "接受";
+"waitingAnswerDoorbell" = "等待接听门铃呼叫";
+

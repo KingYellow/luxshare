@@ -27,7 +27,7 @@
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
          make.centerY.mas_equalTo(self.contentView);
         make.left.mas_equalTo(15);
-        make.width.mas_equalTo(60);
+//        make.width.mas_equalTo(60);
         
      }];
     [self.textfield mas_makeConstraints:^(MASConstraintMaker *make) {

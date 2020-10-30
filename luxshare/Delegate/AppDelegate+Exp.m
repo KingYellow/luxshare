@@ -10,12 +10,15 @@
 #import "QZHFramework.h"
 #import "IQKeyboardManager.h"
 #import <Bugly/Bugly.h>
+#import "DoorbellVC.h"
 
 #define APP_TUYA_KEY @"etfsf3cknjdufuxj5ed3"
 #define APP_TUYA_SECRET_KEY @"qqupn84qgsawka95tnhgrhkcvndnfkua"
 #define APP_BUGLY_ID @"ef3aec3356"
 #define APP_BUGLY_KEY @"618cd2a8-e7d6-4316-bbb3-3aea50d4472d"
 #define QZHAcAppStoreID @""
+
+#define kTuyaDoorbellNotification @"kNotificationMQTTMessageNotification"
 
 @implementation AppDelegate (Exp)
 //- 启动配置
@@ -25,9 +28,31 @@
     [Bugly startWithAppId:APP_BUGLY_ID];
 
     [[TuyaSmartSDK sharedInstance] startWithAppKey:APP_TUYA_KEY secretKey:APP_TUYA_SECRET_KEY];
+    
+    [application registerForRemoteNotifications];
+    [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
+
+
+    if (@available(iOS 10.0, *)) {
+        //iOS10需要加下面这段代码。
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+
+        center.delegate = self;
+        UNAuthorizationOptions types10 = UNAuthorizationOptionBadge|UNAuthorizationOptionAlert|UNAuthorizationOptionSound;
+        [center requestAuthorizationWithOptions:types10 completionHandler:^(BOOL granted, NSError * _Nullable error) {
+            if (granted) {
+                //点击允许
+            } else {
+                //点击不允许
+            }
+        }];
+    }
 //    [TYCameraCloudServicePanelSDK setupWithAppScheme:@"your_scheme"];
 
     [self loadNotification];
+    [self observeDoorbellCall:^(NSString *devId, NSString *type) {
+            
+    }];
     
     if (@available(iOS 11.0, *)) {
         [[UIScrollView appearance] setContentInsetAdjustmentBehavior:UIApplicationBackgroundFetchIntervalNever];
@@ -143,6 +168,8 @@
     NSLog(@"%@",error);
 }
 
+
+
 #pragma mark - rootvc
 
 - (void)setVC {
@@ -236,9 +263,31 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionInvalid) name:TuyaSmartUserNotificationUserSessionInvalid object:nil];
 }
 
+
+- (void)observeDoorbellCall:(void(^)(NSString *devId, NSString *type))callback {
+    if (!callback) {
+        return;
+    }
+      // 监听门铃呼叫的通知
+    [[NSNotificationCenter defaultCenter] addObserverForName:kTuyaDoorbellNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        NSDictionary *eventInfo = note.object;
+        NSString *devId = eventInfo[@"devId"];
+        NSString *eType = [eventInfo objectForKey:@"etype"];
+        if ([eType isEqualToString:@"doorbell"]) {
+            callback(devId, eType);
+            DoorbellVC *vc = [[DoorbellVC alloc] init];
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+            vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
+            vc.eventInfo = eventInfo;
+            [self.window.rootViewController presentViewController:nav animated:YES completion:nil];
+        }
+    }];
+}
+
 - (void)sessionInvalid {
         //跳转至登录页面
     [self showLoginVC];
+    
 }
 
 @end

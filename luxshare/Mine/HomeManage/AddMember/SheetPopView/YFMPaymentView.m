@@ -28,9 +28,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 @interface YFMPaymentView ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic ,strong) NSArray *dataArr;
 @property (nonatomic ,strong) UITableView *tableView;
-@property (nonatomic ,assign) NSInteger currentIndex;
 @property (nonatomic ,strong) UIViewController *vc;
-
+@property (strong, nonatomic)UIView *backView;
 @property (nonatomic ,copy) NSString *totalBalance;
 
 @end
@@ -46,25 +45,46 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.currentIndex = 0;
+
     [self initPop];
-    [self setUpUI];
 }
 
 - (void)initPop {
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = QZHKIT_Color_BLACK_54;
     CGFloat height = 120;
     height += self.dataArr.count * 60;
-    self.contentSizeInPopup = CGSizeMake(self.view.frame.size.width-60, height);
-    
-    QZHViewRadius(self.popupController.containerView, 12);
+    UIView *v = [[UIView alloc] init];
+    [self.view addSubview:v];
+    [self.view addSubview:self.backView];
+    [self.backView addSubview:self.tableView];
+    [v mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(0);
+        make.right.mas_equalTo(0);
+        make.top.mas_equalTo(0);
+        make.bottom.mas_equalTo(self.backView.mas_top);
+    }];
 
-    self.popupController.navigationBarHidden = YES;
-    [self.popupController.backgroundView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTap)]];
+    [self.backView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(20);
+        make.right.mas_equalTo(-20);
+        make.height.mas_equalTo(height);
+        make.bottom.mas_equalTo(-QZHHeightBottom + 12);
+    }];
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
+    }];
+
+//
+    QZHViewRadius(self.tableView, 12);
+//
+//    self.popupController.navigationBarHidden = YES;
+    [v addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTap)]];
 }
-
-- (void)setUpUI {
-    [self.view addSubview:self.tableView];
+-(UIView *)backView{
+    if (!_backView) {
+        _backView = [[UIView alloc] init];
+    }
+    return _backView;
 }
 
 -(void)closeBlockView {
@@ -72,7 +92,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (void)backgroundTap  {
-    [self.popupController dismiss];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(UITableView *)tableView {
@@ -80,7 +100,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         _tableView = [[UITableView alloc]initWithFrame:self.view.frame style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.backgroundColor = [UIColor clearColor];
+        _tableView.backgroundColor = QZHColorWhite;
         _tableView.tableFooterView = [UIView new];
         
         UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 50)];
@@ -88,7 +108,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, KScreenWidth-90, 50)];
         label.textAlignment = NSTextAlignmentCenter;
-        label.text = [NSString stringWithFormat:@"角色设定"];
+        label.text = [NSString stringWithFormat:QZHLoaclString(@"roleSetting")];
         label.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
         label.textColor = QZHKIT_Color_BLACK_87;
         label.numberOfLines = 1;

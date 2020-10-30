@@ -10,7 +10,6 @@
 
 @implementation PhotoListCell
 
-
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.backgroundColor = QZH_KIT_Color_WHITE_100;
@@ -25,12 +24,12 @@
     [self.contentView addSubview:self.nameLab];
     [self.contentView addSubview:self.describeLab];
     [self.IMGView addSubview:self.selectBtn];
-     [self.IMGView mas_makeConstraints:^(MASConstraintMaker *make) {
-         make.left.top.mas_equalTo(10);
-         make.width.mas_equalTo(QZHScreenWidth/2-20);
-         make.height.mas_equalTo((QZHScreenWidth/2-20 )* 1080/1920);
+    [self.IMGView mas_makeConstraints:^(MASConstraintMaker *make) {
+     make.left.top.mas_equalTo(10);
+     make.width.mas_equalTo(QZHScreenWidth/2-20);
+     make.height.mas_equalTo((QZHScreenWidth/2-20 )* 1080/1920);
 
-     }];
+    }];
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
          make.centerY.mas_equalTo(self.IMGView);
         make.left.mas_equalTo(self.IMGView.mas_right).offset(20);

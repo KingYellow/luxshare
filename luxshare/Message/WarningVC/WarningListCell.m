@@ -59,7 +59,7 @@
     [self.checkBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.tagLab.mas_bottom).offset(10);
         make.right.mas_equalTo(self.selectBtn.mas_left).offset(-5);
-        make.width.mas_equalTo(65);
+        make.width.mas_equalTo(73);
     }];
 //    [self.checkBtn mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.bottom.mas_equalTo(self.contentLab.mas_bottom).offset(-1);
@@ -120,7 +120,7 @@
 -(UIButton *)checkBtn{
     if (!_checkBtn) {
         _checkBtn = [[UIButton alloc] init];
-        [_checkBtn setTitle:@"点击查看" forState:UIControlStateNormal];
+        [_checkBtn setTitle:QZHLoaclString(@"message_center_detail") forState:UIControlStateNormal];
         _checkBtn.titleLabel.font =QZHTEXT_FONT(14);
         [_checkBtn setTitleColor:QZHKIT_COLOR_SKIN forState:UIControlStateNormal];
         

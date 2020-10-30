@@ -43,6 +43,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)didDiscoveryDeviceWithDeviceInfo:(TYBLEAdvModel *)deviceInfo;
 
+/**
+ 收到设备上报的透传数据
+ 
+ @param data 透传数据
+ @param devId 设备Id
+ */
+- (void)bleReceiveTransparentData:(NSData *)data devId:(NSString *)devId;
+
 @end
 
 @interface TuyaSmartBLEManager : NSObject
@@ -139,6 +147,18 @@ NS_ASSUME_NONNULL_BEGIN
           success:(void(^)(TuyaSmartDeviceModel *deviceModel))success
           failure:(TYFailureHandler)failure;
 
+/**
+ 下发透传数据
+
+ @param devId   设备Id
+ @param data    透传数据
+ @param success 成功回调
+ @param failure 失败回调
+*/
+- (void)publishBleTransparentData:(NSString *)devId
+                             data:(NSData *)data
+                          success:(TYSuccessData)success
+                          failure:(TYFailureError)failure;
 
 /**
  发送OTA包，升级固件。升级前请务必保证设备已通过蓝牙连接

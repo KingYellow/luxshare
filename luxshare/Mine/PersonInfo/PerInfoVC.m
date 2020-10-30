@@ -17,8 +17,8 @@
 
 @interface PerInfoVC ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate,HXPhotoViewControllerDelegate,HXAlbumListViewControllerDelegate>
 @property (strong, nonatomic)UITableView *qzTableView;
-@property (copy, nonatomic)NSMutableArray *listArr;
-@property (copy, nonatomic)NSMutableArray *logoArr;
+@property (strong, nonatomic)NSMutableArray *listArr;
+@property (strong, nonatomic)NSMutableArray *logoArr;
 @property (copy, nonatomic)UIImage *image;
 @property (strong, nonatomic) CLLocation *location;
 @property (strong, nonatomic) HXPhotoManager *manager;
@@ -35,7 +35,7 @@
 }
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
-    self.navigationItem.title = @"个人信息";
+    self.navigationItem.title = QZHLoaclString(@"personInfo_info");
 //    [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
 //    [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     [self UIConfig];
@@ -89,7 +89,7 @@
                 }
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }else{
-                NSString *phone = [TuyaSmartUser sharedInstance].phoneNumber;
+//                NSString *phone = [TuyaSmartUser sharedInstance].phoneNumber;
                 if ([[TuyaSmartUser sharedInstance].phoneNumber exp_Length] > 0) {
                     cell.nameLab.text = QZHLoaclString(@"personInfo_phoneNum");
                     cell.describeLab.text = [TuyaSmartUser sharedInstance].phoneNumber;
@@ -145,11 +145,11 @@
          if (indexPath.row == 0) {
                [self camerAction];
            }else if (indexPath.row == 1){
-               UIAlertController *alert = [UIAlertController alertWithTextfieldTitle:@"修改昵称" originaltext:[[TuyaSmartUser sharedInstance].nickname exp_Length] > 0 ? [TuyaSmartUser sharedInstance].nickname:[TuyaSmartUser sharedInstance].userName textblock:^(NSString * _Nonnull fieldtext) {
+               UIAlertController *alert = [UIAlertController alertWithTextfieldTitle:QZHLoaclString(@"editNickname") originaltext:[[TuyaSmartUser sharedInstance].nickname exp_Length] > 0 ? [TuyaSmartUser sharedInstance].nickname:[TuyaSmartUser sharedInstance].userName textblock:^(NSString * _Nonnull fieldtext) {
                    if (fieldtext.length > 0) {
                        [self uploadNickname:fieldtext];
                    }else{
-                       [[QZHHUD HUD]textHUDWithMessage:@"昵称不能为空" afterDelay:1.0];
+                       [[QZHHUD HUD]textHUDWithMessage:QZHLoaclString(@"nicknameCantSpace") afterDelay:1.0];
                    }
                }];
                [self presentViewController:alert animated:YES completion:^{
@@ -186,7 +186,7 @@
 #pragma mark --lazy
 - (NSMutableArray *)listArr{
     if (!_listArr) {
-        _listArr = [NSMutableArray arrayWithArray:@[@"头像",@"姓名"]];
+        _listArr = [NSMutableArray arrayWithArray:@[QZHLoaclString(@"personInfo_headPic"),QZHLoaclString(@"personInfo_name")]];
  
     }
     return _listArr;
@@ -202,8 +202,8 @@
 // 打开相机相册
 - (void)camerAction{
   
-    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"" message:@"选择头像" preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"" message:QZHLoaclString(@"selectHeadPic") preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:QZHLoaclString(@"selectFromPictures") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]){
             UIImagePickerController *picker = [[UIImagePickerController alloc]init];
             // 打开相册
@@ -216,7 +216,7 @@
         }
         
     }];
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"打开相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:QZHLoaclString(@"openCamer") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             
             UIImagePickerController * picker = [[UIImagePickerController alloc]init];
@@ -231,7 +231,7 @@
             [[QZHHUD HUD] textHUDWithMessage:@"当前相机不可用" afterDelay:1.0];
         }
     }];
-    UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
 
     }];
     [alertC addAction:action1];

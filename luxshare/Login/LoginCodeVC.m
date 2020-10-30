@@ -35,7 +35,8 @@
     self.countryModel = [ContactModel new];
     self.countryModel.code = @"86";
     self.countryModel.chinese = @"中国";
-    
+    self.countryModel.english = @"China";
+
 }
 
 - (void)setUI{
@@ -185,14 +186,14 @@
 
 - (void)valueChanged:(UITextField *)textField{
     if (textField.tag == 1) {
-        if (self.phoneText.text.length == 11) {
+        if (self.phoneText.text.length > 0) {
             [self.sendBtn exp_buttonState:QZHButtonStateEnable];
         }else{
             [self.sendBtn exp_buttonState:QZHButtonStateDisEnable];
         }
     }
     
-    if (self.phoneText.text.length == 11 && self.passwordText.text.length == 6) {
+    if (self.phoneText.text.length > 0 && self.passwordText.text.length > 0) {
         [self.submitBtn exp_buttonState:QZHButtonStateEnable];
     }else{
         [self.submitBtn exp_buttonState:QZHButtonStateDisEnable];
@@ -229,7 +230,7 @@
     QZHWS(weakSelf)
     vc.countryBlock = ^(ContactModel * _Nonnull countryCode) {
         weakSelf.countryModel = countryCode;
-        weakSelf.countryView.describeLab.text = [NSString stringWithFormat:@"%@ +%@",self.countryModel.chinese,self.countryModel.code];
+        weakSelf.countryView.describeLab.text = [NSString stringWithFormat:@"%@ +%@",[QZHCommons languageOfTheDeviceSystem] == LanguageChinese?self.countryModel.chinese:self.countryModel.english,self.countryModel.code];
     };
 
     [self.navigationController pushViewController:vc animated:YES];
@@ -240,20 +241,20 @@
 }
 - (void)getCodeWord:(CodeButton *)jcBtn{
     if (self.phoneText.text.length == 0) {
-        [[QZHHUD HUD] textHUDWithMessage:@"请输入手机号" afterDelay:1.0];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"iphoneCantSpace") afterDelay:1.0];
         return;
     }
-    if ([self.phoneText.text length] != 11) {
-        [[QZHHUD HUD] textHUDWithMessage:@"请输入格式正确的手机号" afterDelay:1.0];
-        return;
-    }
+//    if ([self.phoneText.text length] != 11) {
+//        [[QZHHUD HUD] textHUDWithMessage:@"请输入格式正确的手机号" afterDelay:1.0];
+//        return;
+//    }
     // 获取验证码
     [self loadCodeData:0];
     
     jcBtn.enabled = NO;
     [jcBtn startWithSecond:60];
     [jcBtn didChangBlock:^NSString *(CodeButton *countDownButton,int second) {
-        NSString *title = [NSString stringWithFormat:@"剩余%d秒",second];
+        NSString *title = [NSString stringWithFormat:@"%@%dS",QZHLoaclString(@"left"),second];
         
         return title;
         
@@ -262,7 +263,7 @@
     [jcBtn didFinshBlock:^NSString *(CodeButton *countDownBtn, int second) {
         countDownBtn.enabled = YES;
         // 获取验证码
-        return @"重新获取";
+        return QZHLoaclString(@"reGet");
     }];
 }
 

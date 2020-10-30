@@ -1199,7 +1199,7 @@
 "login_change_email" = "邮箱";
 "login_change_phone" = "手机";
 "login_China" = "中国";
-"login_choose_country" = "国家 / 地区";
+"login_choose_country" = "国家/地区";
 "login_dialog_changeregion_content" = "基于数据隐私安全规范的要求，各个地区的服务器彼此独立，切换地区后当前账户下绑定的设备不会迁移到新地区的服务器，并且之前的服务器的数据只会保留7天，7天后会将会设备数据注销，请您谨慎操作！";
 "login_dialog_changeregion_title" = "切换地区说明";
 "login_dialog_notmatch_content" = "请确认您要切换的地区是否和您所在国家匹配，地区不匹配可能会影响到您的使用体验。基于数据隐私安全规范的要求，各个地区的服务器彼此独立，请知晓。";

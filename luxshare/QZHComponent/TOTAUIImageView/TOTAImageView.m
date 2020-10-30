@@ -11,7 +11,7 @@
 @implementation TOTAImageView
 
 -(instancetype)init{
-    if (self == [super init]) {
+    if (self = [super init]) {
         [self addSubview:self.placeLab];
         self.frame = CGRectMake(0, 0, 36, 36);
         [self.placeLab mas_makeConstraints:^(MASConstraintMaker *make) {

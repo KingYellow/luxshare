@@ -20,7 +20,7 @@
 
 @interface DeviceSettingVC ()<UITableViewDelegate,UITableViewDataSource,TuyaSmartCameraDPObserver>
 @property (strong, nonatomic)UITableView *qzTableView;
-@property (copy, nonatomic)NSMutableArray *listArr;
+@property (strong, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)NSMutableArray *memberArr;
 @property (strong, nonatomic)TuyaSmartCameraDPManager *dpManager;
 @property (strong, nonatomic)TuyaSmartDevice *device;
@@ -74,10 +74,19 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
+    if (self.deviceModel.isShare) {
+        SettingDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
+        cell.nameLab.text = QZHLoaclString(@"setting_basicFun");
+        cell.radioPosition = 2;
+        cell.tagLab.text = @"";
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+        
+    }
     if (section == 0) {
         if (row == 1) {
             SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
-            cell.nameLab.text = @"隐私模式";
+            cell.nameLab.text = QZHLoaclString(@"privateModel");
             cell.radioPosition = 0;
             cell.switchBtn.tag = 1;
             cell.switchBtn.on =  [[self.dpManager valueForDP:TuyaSmartCameraBasicPrivateDPName] boolValue];
@@ -95,13 +104,13 @@
                 cell.radioPosition = 1;
                 int state = [[self.dpManager valueForDP:TuyaSmartCameraBasicNightvisionDPName] intValue];
                 if (state == 1) {
-                    cell.tagLab.text = @"关闭";
+                    cell.tagLab.text = QZHLoaclString(@"close");
                 }
                 if (state == 0) {
-                    cell.tagLab.text = @"自动";
+                    cell.tagLab.text = QZHLoaclString(@"auto");
                 }
                 if (state == 2) {
-                    cell.tagLab.text = @"开启";
+                    cell.tagLab.text = QZHLoaclString(@"open");
                 }
 
             }else{
@@ -116,7 +125,7 @@
         
         if (row == 5) {
             SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
-            cell.nameLab.text = @"离线提醒";
+            cell.nameLab.text = QZHLoaclString(@"offlineNotice");
             cell.radioPosition = 1;
             cell.switchBtn.on = YES;
             cell.switchBtn.tag = 2;
@@ -152,7 +161,7 @@
          
     }else{
         SettingDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
-        cell.nameLab.text = @"固件信息";
+        cell.nameLab.text = QZHLoaclString(@"firmWareInfo");
         cell.radioPosition = 2;
         cell.tagLab.textColor = QZHColorWhite;
         cell.tagLab.textAlignment = NSTextAlignmentCenter;
@@ -195,12 +204,21 @@
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 //    if ([self isAdminOrOwner]) {
-        return 3;
+    if (self.deviceModel.isShare) {
+        return 1;
+        
+    }
+    return 3;
 //    }
    
 //    return 2;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    if (self.deviceModel.isShare) {
+        return 1;
+        
+    }
     if (section == 0 ) {
         return 4;
     }else if(section == 1){
@@ -241,6 +259,14 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = indexPath.row;
     NSInteger section = indexPath.section;
+    
+    if (self.deviceModel.isShare) {
+        BasicFunVC *vc = [[BasicFunVC alloc] init];
+        vc.deviceModel = self.deviceModel;
+        vc.homeModel = self.homeModel;
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }
     if (section == 0) {
         if (row == 0) {
             DeviceInfoVC *vc = [[DeviceInfoVC alloc] init];
@@ -256,7 +282,7 @@
         }
         if (row == 3) {
             if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
-                [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+                [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"deviceOfflineNoOperate") afterDelay:1.0];
                 return;
             }
             [self creatActionSheet];
@@ -281,7 +307,7 @@
         if (row == 1) {
 
             if ([[self.dpManager valueForDP:TuyaSmartCameraSDCardStatusDPName] intValue] == 5) {
-                [[QZHHUD HUD] textHUDWithMessage:@"该设备无存储卡不支持存储功能" afterDelay:1.0];
+                [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"noSDCardCantStorge") afterDelay:1.0];
 
             }else{
                 
@@ -299,6 +325,10 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
         if (row == 2) {
+            if (![QZHCommons isAdminOrOwner:self.homeModel]) {
+                [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"notAdminCantShare") afterDelay:1.0];
+                return;;
+            }
             ShareDeviceVC *vc = [[ShareDeviceVC alloc] init];
             vc.deviceModel = self.deviceModel;
             vc.homeModel = self.homeModel;
@@ -309,8 +339,8 @@
         if ([self isAdminOrOwner]) {
             TuyaSmartFirmwareUpgradeModel *model = self.deviceUpdateArr.firstObject;
             if (model.upgradeStatus == 0) {
-                UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"已是最新版本" message:[NSString stringWithFormat:@"当前版本号: %@",model.currentVersion] preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                UIAlertController *alertC = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"lastVersion") message:[NSString stringWithFormat:@"%@: %@",QZHLoaclString(@"currentVersion"),model.currentVersion] preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *action = [UIAlertAction actionWithTitle:QZHLoaclString(@"submit") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                     
                 }];
                 [alertC addAction:action];
@@ -329,8 +359,8 @@
             }
             
         }else{
-            UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"版本信息" message:[NSString stringWithFormat:@"当前版本号: %@",self.deviceModel.verSw] preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertController *alertC = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"versionInfo") message:[NSString stringWithFormat:@"%@: %@",QZHLoaclString(@"currentVersion"),self.deviceModel.verSw] preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:QZHLoaclString(@"submit") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                 
             }];
             [alertC addAction:action];
@@ -344,14 +374,14 @@
 #pragma mark --lazy
 - (NSMutableArray *)listArr{
     if (!_listArr) {
-        _listArr = [NSMutableArray arrayWithArray:@[@"设备信息",@"隐私模式",@"基本功能",@"红外夜视"]];
+        _listArr = [NSMutableArray arrayWithArray:@[QZHLoaclString(@"deviceInfo"),QZHLoaclString(@"privateModel"),QZHLoaclString(@"setting_basicFun"),QZHLoaclString(@"infraredNight")]];
  
     }
     return _listArr;
 }
 - (NSMutableArray *)memberArr{
     if (!_memberArr) {
-        _memberArr = [NSMutableArray arrayWithArray:@[@"侦测报警设置",@"存储设置",@"共享设备",@"电源管理设置",@"人脸识别",@"离线提醒"]];
+        _memberArr = [NSMutableArray arrayWithArray:@[QZHLoaclString(@"setting_deceteAlarm"),QZHLoaclString(@"setting_storage"),QZHLoaclString(@"mine_shareDevices"),QZHLoaclString(@"setting_electricManage"),QZHLoaclString(@"faceRecognition"),QZHLoaclString(@"offlineNotice")]];
  
     }
     return _memberArr;
@@ -360,7 +390,7 @@
 - (void)valueChange:(UISwitch *) sender{
     if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
         sender.on = !sender.on;
-        [[QZHHUD HUD] textHUDWithMessage:@"设备已经离线,请设备上线后再设置" afterDelay:1.0];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"deviceOfflineNoOperate") afterDelay:1.0];
         return;
     }
     QZHWS(weakSelf)
@@ -384,10 +414,10 @@
 #pragma mark -- 红外夜视
 -(void)creatActionSheet {
 //"0"：关闭；"1"：自动；"2"：打开
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"红外夜视" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"infraredNight") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 
     QZHWS(weakSelf)
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"自动" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:QZHLoaclString(@"auto") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self.dpManager isSupportDP:TuyaSmartCameraBasicNightvisionDPName]) {
             
             [self.dpManager setValue:@"0" forDP:TuyaSmartCameraBasicNightvisionDPName success:^(id result) {
@@ -397,7 +427,7 @@
             }];
         }
     }];
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:QZHLoaclString(@"close") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
           if ([self.dpManager isSupportDP:TuyaSmartCameraBasicNightvisionDPName]) {
               
               [self.dpManager setValue:@"1" forDP:TuyaSmartCameraBasicNightvisionDPName success:^(id result) {
@@ -407,7 +437,7 @@
               }];
           }
     }];
-    UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"开启" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:QZHLoaclString(@"open") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self.dpManager isSupportDP:TuyaSmartCameraBasicNightvisionDPName]) {
             
             [self.dpManager setValue:@"2" forDP:TuyaSmartCameraBasicNightvisionDPName success:^(id result) {
@@ -417,7 +447,7 @@
             }];
         }
     }];
-    UIAlertAction *action4 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action4 = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
     }];
     
     //把action添加到actionSheet里

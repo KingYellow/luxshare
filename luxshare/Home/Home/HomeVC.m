@@ -24,7 +24,7 @@
 
 @interface HomeVC ()<UITableViewDelegate,UITableViewDataSource,TuyaSmartHomeManagerDelegate,UIPageViewControllerDelegate,UIPageViewControllerDataSource,TuyaSmartHomeDelegate,UIGestureRecognizerDelegate>
 @property (strong, nonatomic)UITableView *qzTableView;
-@property (copy, nonatomic)NSMutableArray *listArr;
+@property (strong, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)TuyaSmartHomeManager *magager;
 @property (strong, nonatomic)BWTopMenuView *topBtnsView;
 @property (strong, nonatomic)UIButton *leftBtn;
@@ -89,7 +89,7 @@
  -(void)exp_rightAction{
      
      if (self.listArr.count == 0) {
-         [[QZHHUD HUD]textHUDWithMessage:@"请先添加家庭" afterDelay:1.0];
+         [[QZHHUD HUD]textHUDWithMessage:QZHLoaclString(@"firstAddHome") afterDelay:1.0];
          return;
      }
      
@@ -115,12 +115,12 @@
              }];
          }
      }else{
-         UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"提示" message:@"需要开启手机wifi网络连接,才能添加设备" preferredStyle:UIAlertControllerStyleAlert];
-                     UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                         
-                     }];
-                     [alertC addAction:action];
-                     [self presentViewController:alertC animated:NO completion:nil];
+         UIAlertController *alertC = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"tip") message:QZHLoaclString(@"noLocalPrivateNoWifiInfo") preferredStyle:UIAlertControllerStyleAlert];
+         UIAlertAction *action = [UIAlertAction actionWithTitle:QZHLoaclString(@"submit") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+             
+         }];
+        [alertC addAction:action];
+        [self presentViewController:alertC animated:NO completion:nil];
      }
 
 }
@@ -377,7 +377,7 @@
         }else{
             [self.currentHome getHomeDetailWithSuccess:^(TuyaSmartHomeModel *homeModel) {
                  NSMutableArray  *arrm = [NSMutableArray array];
-                 [arrm addObject:@"所有设备"];
+                 [arrm addObject:QZHLoaclString(@"allDevices")];
                  for (TuyaSmartRoomModel *room in self.currentHome.roomList) {
                      [arrm addObject:room.name];
                  }
@@ -414,11 +414,11 @@
     
         //set item
         _items = [@[
-                    [YCXMenuItem menuItem:@"二维码配网"
+                    [YCXMenuItem menuItem:QZHLoaclString(@"twoCodeIntnet")
                                     image:nil
                                       tag:100
                                  userInfo:@{@"title":@"Menu"}],
-                    [YCXMenuItem menuItem:@"热点配网"
+                    [YCXMenuItem menuItem:QZHLoaclString(@"hotIntnet")
                                     image:nil
                                       tag:101
                                  userInfo:@{@"title":@"Menu"}]
@@ -489,7 +489,7 @@
         [self.currentHome getHomeDetailWithSuccess:^(TuyaSmartHomeModel *homeModel) {
              
               NSMutableArray  *arrm = [NSMutableArray array];
-             [arrm addObject:@"所有设备"];
+             [arrm addObject:QZHLoaclString(@"allDevices")];
               for (TuyaSmartRoomModel *room in self.currentHome.roomList) {
                   [arrm addObject:room.name];
               }

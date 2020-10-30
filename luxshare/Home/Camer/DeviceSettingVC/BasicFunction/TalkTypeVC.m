@@ -12,7 +12,7 @@
 
 @interface TalkTypeVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic)UITableView *qzTableView;
-@property (copy, nonatomic)NSMutableArray *listArr;
+@property (strong, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)NSMutableArray *memberArr;
 @property (strong, nonatomic)TuyaSmartHome *home;
 @property (assign, nonatomic)NSInteger selectIndex;
@@ -27,7 +27,7 @@
 }
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
-    self.navigationItem.title = @"对讲方式";
+    self.navigationItem.title = QZHLoaclString(@"talkType");
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     [self exp_addRightItemTitle:QZHLoaclString(@"save") itemIcon:@""];
@@ -72,11 +72,11 @@
     NSInteger row = indexPath.row;
     TalkTypeCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
     if (row == 0) {
-        cell.nameLab.text = @"单向对讲";
-        cell.tipLab.text = @"像对讲机一样讲话";
+        cell.nameLab.text = QZHLoaclString(@"talkOne");
+        cell.tipLab.text = QZHLoaclString(@"talkOneTip");
     }else{
-        cell.nameLab.text = @"双向对讲";
-        cell.tipLab.text = @"您和家人可以同时通话,您可以在说话的同时也听到对方说话";
+        cell.nameLab.text = QZHLoaclString(@"talkTwo");
+        cell.tipLab.text = QZHLoaclString(@"talkTwoTip");
     }
     cell.selectBtn.tag = row;
     [cell.selectBtn addTarget:self action:@selector(selectAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -140,7 +140,7 @@
         _tipLab.font = QZHKIT_FONT_LISTCELL_DESCRIBE_TITLE;
         _tipLab.textColor = QZHKIT_Color_BLACK_26;
         _tipLab.numberOfLines = 0;
-        _tipLab.text = @"因对讲可能受环境因素的影响,导致通话效果欠佳,建议您根据实际使用情况选择单向或双向对讲";
+        _tipLab.text = QZHLoaclString(@"talkTip");
     }
     return  _tipLab;
 }

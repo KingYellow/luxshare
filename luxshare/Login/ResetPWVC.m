@@ -237,13 +237,13 @@
 #pragma mark - action
 - (void)getCodeWord:(CodeButton *)jcBtn{
     if (self.phoneText.text.length == 0) {
-        [[QZHHUD HUD] textHUDWithMessage:@"请输入手机号" afterDelay:1.0];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"iphoneCantSpace") afterDelay:1.0];
         return;
     }
-    if ([self.phoneText.text length] != 11) {
-        [[QZHHUD HUD] textHUDWithMessage:@"请输入格式正确的手机号" afterDelay:1.0];
-        return;
-    }
+//    if ([self.phoneText.text length] != 11) {
+//        [[QZHHUD HUD] textHUDWithMessage:@"请输入格式正确的手机号" afterDelay:1.0];
+//        return;
+//    }
     // 获取验证码
     [self loadCodeData:1];
     
@@ -264,28 +264,28 @@
 }
 - (void)valueChanged:(UITextField *)textField{
     if (textField.tag == 0) {
-        if (textField.text.length > 11) {
-            textField.text = [textField.text substringToIndex:11];
-        }
+//        if (textField.text.length > 11) {
+//            textField.text = [textField.text substringToIndex:11];
+//        }
     }
     if (textField.tag == 1) {
-        if (textField.text.length > 11) {
-            textField.text = [textField.text substringToIndex:6];
-        }
+//        if (textField.text.length > 11) {
+//            textField.text = [textField.text substringToIndex:6];
+//        }
     }
 }
 - (void)submitAction{
     
     if ([self.phoneText.text length] == 0) {
-        [[QZHHUD HUD] textHUDWithMessage:@"请输入手机号" afterDelay:1.0];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"iphoneCantSpace") afterDelay:1.0];
         return;
     }
-    if ([self.phoneText.text length] != 11) {
-        [[QZHHUD HUD] textHUDWithMessage:@"请输入正确手机号" afterDelay:1.0];
-        return;
-    }
+//    if ([self.phoneText.text length] != 11) {
+//        [[QZHHUD HUD] textHUDWithMessage:@"请输入正确手机号" afterDelay:1.0];
+//        return;
+//    }
     if ([self.codeText.text length] == 0) {
-        [[QZHHUD HUD] textHUDWithMessage:@"请输入验证码" afterDelay:1.0];
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"codeCantSpace") afterDelay:1.0];
         return;
     }
     [self checkCode];

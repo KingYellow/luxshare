@@ -38,6 +38,8 @@
     self.countryModel = [ContactModel new];
     self.countryModel.code = @"86";
     self.countryModel.chinese = @"中国";
+    self.countryModel.english = @"China";
+
     [self.navigationItem.titleView sizeThatFits:CGSizeMake(100, 44)];
 }
 -(void)exp_rightAction{
@@ -209,7 +211,7 @@
 
 - (void)valueChanged:(UITextField *)textField{
     
-    if ([self.phoneText.text length] == 11 && [self.phoneText.text exp_isPureInt] && self.passwordText.text.length > 0) {
+    if ([self.phoneText.text length] > 0 && [self.phoneText.text exp_isPureInt] && self.passwordText.text.length > 0) {
        [self.submitBtn exp_buttonState:QZHButtonStateEnable];
 
     }else if (QZHEMAILRIGHT(self.phoneText.text) && self.passwordText.text.length > 0){
@@ -270,7 +272,7 @@
     QZHWS(weakSelf)
     vc.countryBlock = ^(ContactModel * _Nonnull countryCode) {
         weakSelf.countryModel = countryCode;
-        weakSelf.countryView.describeLab.text = [NSString stringWithFormat:@"%@ +%@",self.countryModel.chinese,self.countryModel.code];
+        weakSelf.countryView.describeLab.text = [NSString stringWithFormat:@"%@ +%@",[QZHCommons languageOfTheDeviceSystem] == LanguageChinese?self.countryModel.chinese:self.countryModel.english,self.countryModel.code];
     };
 
     [self.navigationController pushViewController:vc animated:YES];

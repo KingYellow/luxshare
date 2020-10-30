@@ -46,4 +46,15 @@
     [self exp_applicationWillTerminate:application];
 }
 
+#pragma mark -- 推送
+//注册 PushId
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    [TuyaSmartSDK sharedInstance].deviceToken = deviceToken;
+}
+//接收到远程通知
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void(^)(UIBackgroundFetchResult))completionHandler {
+
+
+}
+
 @end

@@ -40,7 +40,7 @@
     }else{
         if (self.isBind) {
             self.feedBook.hidden = NO;
-            self.titleLab.text = @"设备已被其他用户绑定,不能重复绑定请到原账号先进行移除,或联系客服提交解绑申请";
+            self.titleLab.text = QZHLoaclString(@"deviceHadBeBinded");
         }else{
             self.feedBook.hidden = YES;
             self.titleLab.text = QZHLoaclString(@"device_addFailer");
@@ -112,7 +112,7 @@
 -(UIButton *)feedBook{
     if (!_feedBook) {
         _feedBook = [[UIButton alloc] init];
-        [_feedBook setTitle:@"申请解绑" forState:UIControlStateNormal];
+        [_feedBook setTitle:QZHLoaclString(@"unBind") forState:UIControlStateNormal];
         [_feedBook addTarget:self action:@selector(feedBackAction:) forControlEvents:UIControlEventTouchUpInside];
         [_feedBook exp_buttonState:QZHButtonStateEnable];
     }

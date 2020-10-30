@@ -11,8 +11,6 @@
 #import "PerInfoDefaultCell.h"
 #import "AddressBookTVC.h"
 #import "YFMPaymentView.h"
-#import <STPopup/STPopup.h>
-
 
 @interface AddMemberVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic)UITableView *qzTableView;
@@ -46,6 +44,7 @@
     self.countryModel = [ContactModel new];
     self.countryModel.code = @"86";
     self.countryModel.chinese = @"中国";
+    self.countryModel.english = @"China";
 
 }
 - (void)exp_rightAction{
@@ -96,9 +95,9 @@
             PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_DEFAULT];
             cell.nameLab.text = QZHLoaclString(@"member_country");
             if (self.countryModel) {
-                cell.describeLab.text = [NSString stringWithFormat:@"%@ +%@",self.countryModel.chinese,self.countryModel.code];
+                cell.describeLab.text = [NSString stringWithFormat:@"%@ +%@",[QZHCommons languageOfTheDeviceSystem] == LanguageChinese?self.countryModel.chinese:self.countryModel.english,self.countryModel.code];
             }else{
-                cell.describeLab.text = [NSString stringWithFormat:@"%@ +%@",self.countryModel.chinese,self.countryModel.code];
+                cell.describeLab.text = [NSString stringWithFormat:@"%@ +%@",[QZHCommons languageOfTheDeviceSystem] == LanguageChinese?self.countryModel.chinese:self.countryModel.english,self.countryModel.code];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -127,7 +126,7 @@
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 2) {
-            UIView *view = [[UIView alloc] init];
+        UIView *view = [[UIView alloc] init];
         UILabel *lab = [[UILabel alloc] init];
         lab.text = QZHLoaclString(@"role_addMemberTip");
         lab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
@@ -163,7 +162,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
    
     if (section == 2) {
-        return 50;
+        return 70;
     }
      return 20;
 }
@@ -195,9 +194,14 @@
                                   @"title":QZHLoaclString(@"role_normal")},@{@"tip":QZHLoaclString(@"role_adminTip"),@"title":QZHLoaclString(@"role_admin")}];
         
         YFMPaymentView *pop = [[YFMPaymentView alloc]initTotalPay:@"39.99" vc:self dataSource:payTypeArr];
-        STPopupController *popVericodeController = [[STPopupController alloc] initWithRootViewController:pop];
-        popVericodeController.style = STPopupStyleBottomSheet;
-        [popVericodeController presentInViewController:self];
+        if ([self.role isEqualToString:QZHLoaclString(@"role_normal")]) {
+            pop.currentIndex = 0;
+        }else if([self.role isEqualToString:QZHLoaclString(@"role_admin")]){
+            pop.currentIndex = 1;
+        }
+
+        pop.modalPresentationStyle = UIModalPresentationOverFullScreen;
+        [self presentViewController:pop animated:YES completion:nil];
         
         pop.payType = ^(NSInteger index) {
             if (index == 0) {

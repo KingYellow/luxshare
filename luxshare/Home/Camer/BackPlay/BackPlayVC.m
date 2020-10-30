@@ -74,7 +74,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     if (_backCamera) {
         [self.backCamera stopPlayback];
-        NSLog(@"跳转后");
     }
     _backCamera.delegate = nil;
 }
@@ -437,13 +436,13 @@
 - (void)camera:(id<TuyaSmartCameraType>)camera didOccurredErrorAtStep:(TYCameraErrorCode)errStepCode specificErrorCode:(NSInteger)errorCode {
         if (errStepCode == TY_ERROR_CONNECT_FAILED) {
           // p2p 连接失败
-            [[QZHHUD HUD] textHUDWithMessage:@"连接失败" afterDelay:0.5];
+            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"connectFailed") afterDelay:0.5];
 
             self.connected = NO;
             [self connectCamera];
         }else if (errStepCode == TY_ERROR_START_PLAYBACK_FAILED) {
           // 存储卡录像播放失败
-            [[QZHHUD HUD] textHUDWithMessage:@"回放预览失败" afterDelay:0.5];
+            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"playbackPreviewFailed") afterDelay:0.5];
             self.playbacking = NO;
             self.playbackPaused = NO;
             [self connectCamera];
@@ -487,7 +486,7 @@
 -(UIButton *)selectDateBtn{
     if (!_selectDateBtn) {
         _selectDateBtn = [[UIButton alloc] init];
-        [_selectDateBtn setTitle:@"日期" forState:UIControlStateNormal];
+        [_selectDateBtn setTitle:QZHLoaclString(@"backplayDate") forState:UIControlStateNormal];
         [_selectDateBtn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
         _selectDateBtn.backgroundColor = UIColor.whiteColor;
         [_selectDateBtn addTarget:self action:@selector(selectaction:) forControlEvents:UIControlEventTouchUpInside];
@@ -498,8 +497,8 @@
 -(UIButton *)recordBtn{
     if (!_recordBtn) {
         _recordBtn = [[UIButton alloc] init];
-        [_recordBtn setTitle:@"录像" forState:UIControlStateNormal];
-        [_recordBtn setTitle:@"停止" forState:UIControlStateSelected];
+        [_recordBtn setTitle:QZHLoaclString(@"record") forState:UIControlStateNormal];
+        [_recordBtn setTitle:QZHLoaclString(@"stop") forState:UIControlStateSelected];
         _recordBtn.backgroundColor = UIColor.whiteColor;
         [_recordBtn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
 
@@ -510,7 +509,7 @@
 -(UIButton *)shotBtn{
     if (!_shotBtn) {
         _shotBtn = [[UIButton alloc] init];
-        [_shotBtn setTitle:@"截屏" forState:UIControlStateNormal];
+        [_shotBtn setTitle:QZHLoaclString(@"shot") forState:UIControlStateNormal];
         _shotBtn.backgroundColor = UIColor.whiteColor;
         [_shotBtn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
         [_shotBtn addTarget:self action:@selector(shotaction:) forControlEvents:UIControlEventTouchUpInside];
@@ -520,7 +519,7 @@
 - (UILabel *)tipLab{
     if (!_tipLab) {
         _tipLab = [[UILabel alloc] init];
-        _tipLab.text = @"当天没有视频";
+        _tipLab.text = QZHLoaclString(@"todayNoVideos");
         _tipLab.textColor = QZH_KIT_Color_WHITE_70;
         _tipLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
         _tipLab.textAlignment = NSTextAlignmentCenter;
@@ -531,7 +530,7 @@
 - (UILabel *)tipFinishLab{
     if (!_tipFinishLab) {
         _tipFinishLab = [[UILabel alloc] init];
-        _tipFinishLab.text = @"视频播放完成";
+        _tipFinishLab.text = QZHLoaclString(@"videoPlayFinish");
         _tipFinishLab.textColor = QZH_KIT_Color_WHITE_70;
         _tipFinishLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
         _tipFinishLab.textAlignment = NSTextAlignmentCenter;
@@ -567,7 +566,7 @@
         PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
            if (status == PHAuthorizationStatusRestricted || status == PHAuthorizationStatusDenied)
            {
-               [self goMicroPhoneSetTitle:@"您还没有允许相册权限"];
+               [self goMicroPhoneSetTitle:QZHLoaclString(@"noPhotoPrivate")];
 
            }else if(status == AVAuthorizationStatusNotDetermined){
              [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
@@ -584,7 +583,7 @@
                    [self.backCamera startRecord];
                    self.recording = YES;
                }else{
-                   [[QZHHUD HUD]textHUDWithMessage:@"正常播放时才能录制视频" afterDelay:1.0];
+                   [[QZHHUD HUD]textHUDWithMessage:QZHLoaclString(@"recordOnlyWhenPlaying") afterDelay:1.0];
                }
 
            }
@@ -597,7 +596,7 @@
             self.playView.voiceBtn.userInteractionEnabled = YES;
             self.recordTime = [[NSDate date] timeIntervalSince1970] - self.recordTime;
             if (self.recordTime < 1) {
-                [[QZHHUD HUD] textHUDWithMessage:@"录制时间短于1S可能导致存储失败" afterDelay:1.0];
+                [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"failedIfRecordTimeLessOneS") afterDelay:1.0];
             }
            [self stopTimer];
 
@@ -608,7 +607,7 @@
     PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
      if (status == PHAuthorizationStatusRestricted || status == PHAuthorizationStatusDenied)
      {
-         [self goMicroPhoneSetTitle:@"您还没有允许相册权限"];
+         [self goMicroPhoneSetTitle:QZHLoaclString(@"noPhotoPrivate")];
 
      }else if(status == AVAuthorizationStatusNotDetermined){
        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
@@ -625,10 +624,10 @@
              if ([self.backCamera snapShoot]) {
                  sender.selected = !sender.selected;
                  // 截图已成功保存到手机相册
-                 [[QZHHUD HUD] textHUDWithMessage:@"截图成功并保存到相册" afterDelay:1.0];
+                 [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"shopSuccessAndStored") afterDelay:1.0];
              }
          }else{
-             [[QZHHUD HUD]textHUDWithMessage:@"正常播放时才能录截屏" afterDelay:1.0];
+             [[QZHHUD HUD]textHUDWithMessage:QZHLoaclString(@"shotOnlyWhenPlaying") afterDelay:1.0];
          }
      }
 
@@ -643,11 +642,7 @@
         
     }else if(tag == 1){
         //sender.tag == 1){
-            //声音
-        if (self.recording) {
-            [[QZHHUD HUD] textHUDWithMessage:@"录屏时不能操作" afterDelay:1.0];
-            return;
-        }
+    
         [self.backCamera enableMute:select forPlayMode:TuyaSmartCameraPlayModePlayback];
         
     }
@@ -704,12 +699,12 @@
 }
 -(void) goMicroPhoneSetTitle:(NSString *)title
 {
-    UIAlertController * alert = [UIAlertController alertControllerWithTitle:title message:@"去设置一下吧" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:title message:QZHLoaclString(@"gotoSetting") preferredStyle:UIAlertControllerStyleAlert];
 
-    UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 
     }];
-    UIAlertAction * setAction = [UIAlertAction actionWithTitle:@"去设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction * setAction = [UIAlertAction actionWithTitle:QZHLoaclString(@"setting") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSURL * url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
             [UIApplication.sharedApplication openURL:url options:nil completionHandler:^(BOOL success) {
@@ -773,5 +768,8 @@
 #pragma mark -- 隐藏/显示状态栏
 - (BOOL)prefersStatusBarHidden{
     return self.statusHidden;
+}
+-(void)dealloc{
+    
 }
 @end

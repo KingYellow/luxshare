@@ -42,4 +42,17 @@ typedef NS_ENUM(NSUInteger, TYAccountType){
     TYAccountPhone = 0,         ///手机注册
     TYAccountEmail,        ///邮箱注册
 };
+
+///系统语言类型
+typedef NS_ENUM(NSUInteger, SystemLanguageType){
+    LanguageChinese = 0,         ///手机注册
+    LanguageEnglish,        ///邮箱注册
+};
+
+///设备类型
+typedef NS_ENUM(NSUInteger, DeviceType){
+    IPCamBatteryDevice = 0,         ///摄像头电池版
+    IPCamACDevice,        ///摄像头常电版
+    DoorbellDevice,        ///门铃
+};
 #endif /* QZHEnum_h */

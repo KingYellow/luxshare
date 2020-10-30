@@ -26,10 +26,10 @@
                 NSArray *array = response[@"results"];
                 NSString *version = [array firstObject][@"version"];
                 if ([currentVersion compare:version] == NSOrderedAscending) {
-                    UIAlertController *vc = [UIAlertController alertControllerWithTitle:@"版本升级" message:@"有新版本更新了" preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertController *vc = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"versionUpdate") message:QZHLoaclString(@"newAppVersion") preferredStyle:UIAlertControllerStyleAlert];
                     
-                    [vc addAction:[UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil]];
-                    [vc addAction:[UIAlertAction actionWithTitle:@"升级" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                    [vc addAction:[UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:(UIAlertActionStyleCancel) handler:nil]];
+                    [vc addAction:[UIAlertAction actionWithTitle:QZHLoaclString(@"update") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
                         NSString *url = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@?mt=8", appstoreID];
                         if (@available(iOS 10.0, *)) {
                             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:nil];

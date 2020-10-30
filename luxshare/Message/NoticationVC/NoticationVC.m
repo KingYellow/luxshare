@@ -15,7 +15,7 @@
 @property (strong, nonatomic)MessageTopView *topView;
 @property (strong, nonatomic)NSMutableArray *memberArr;
 @property (strong, nonatomic)TuyaSmartHome *home;
-@property (copy, nonatomic)NSMutableArray *listArr;
+@property (strong, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)NSMutableArray *timeArr;
 @property (strong, nonatomic)UIButton *rightBtn;
 @property (assign, nonatomic)NSInteger page;
@@ -67,6 +67,8 @@
     self.topView.normalBtn.hidden = NO;
     self.topView.selectBtn.hidden = YES;
     self.deleteBtn.hidden = YES;
+    [self allunselected];
+
     [self.qzTableView reloadData];
 
 }
@@ -109,11 +111,17 @@
             make.right.mas_equalTo(-20);
             
         }];
+        [cell.selectBtn mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.width.height.mas_equalTo(0);
+        }];
         cell.selectBtn.hidden = YES;
 
     }else{
         [cell.contentLab mas_updateConstraints:^(MASConstraintMaker *make) {
             make.right.mas_equalTo(-40);
+        }];
+        [cell.selectBtn mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.width.height.mas_equalTo(20);
         }];
         cell.selectBtn.hidden = NO;
     }
@@ -143,7 +151,7 @@
         UILabel *lab = [[UILabel alloc] init];
         NSArray *dateArr = [dateStr componentsSeparatedByString:@"-"];
         NSString *month = dateArr[1];
-        lab.text = [month stringByAppendingString:@"月"];
+        lab.text = [month stringByAppendingString:@"M"];
         lab.font = QZHKIT_FONT_LISTCELL_DESCRIBE_TITLE;
         lab.textColor = QZHKIT_Color_BLACK_54;
         lab.frame = CGRectMake(15, 20, 37, 20);

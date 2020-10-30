@@ -30,29 +30,39 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign)CGFloat footViewSizeWidth;
 //子控制器固定底部y值 default 最底部-height
 @property(nonatomic,assign)CGFloat footViewOrginY;
-
-/*
- *全部更新（会全部重新渲染）
- */
+//透明视图
+@property (nonatomic, strong) UIView *naviBarBackGround;
+/*!
+*
+* @brief 更新全部(会全部重新渲染)
+*/
 - (void)updatePageController;
 
-/*
-*更新头部
+/*!
+* @brief 更新头部
 */
 - (void)updateHeadView;
 
-/*
-*更新菜单栏
+/*!
+* @brief 更新菜单栏
 */
 - (void)updateMenuData;
 
-/*
-*底部手动滚动  传入CGPointZero则为吸顶临界点
+/*!
+* @brief 标题数量内容不变情况下只更新内容
+*/
+- (void)updateTitle;
+
+/*!
+* @brief 底部手动滚动 传入CGPointZero则为吸顶临界点
+* @param point 滚动的坐标
+* @param animat 滚动动画
 */
 - (void)downScrollViewSetOffset:(CGPoint)point animated:(BOOL)animat;
 
-/*
-*手动调用菜单到第index个
+/*!
+* @brief 手动调用菜单到第index个
+* @param index 对应下标
 */
 - (void)selectMenuWithIndex:(NSInteger)index;
 

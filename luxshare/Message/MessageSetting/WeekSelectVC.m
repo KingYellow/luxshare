@@ -26,7 +26,7 @@
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
     self.navigationItem.title = QZHLoaclString(@"message_selectWeek");
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
-    [self exp_addLeftItemTitle:@"" itemIcon:nil];
+    [self exp_addLeftItemTitle:@"" itemIcon:QZHICON_BACK_ITEM];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     [self UIConfig];
     self.selectIndex = 0;
@@ -97,7 +97,7 @@
 #pragma mark --lazy
 - (NSMutableArray *)listArr{
     if (!_listArr) {
-        _listArr = [NSMutableArray arrayWithObjects:@{@"week":@"星期日",@"select":@"0",},@{@"week":@"星期一",@"select":@"0",},@{@"week":@"星期二",@"select":@"0",},@{@"week":@"星期三",@"select":@"0",},@{@"week":@"星期四",@"select":@"0",},@{@"week":@"星期五",@"select":@"0",},@{@"week":@"星期六",@"select":@"0",}, nil];
+        _listArr = [NSMutableArray arrayWithObjects:@{@"week":QZHLoaclString(@"Sunday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Monday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Tuesday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Wednesday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Thursday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Friday"),@"select":@"0",},@{@"week":QZHLoaclString(@"Saturday"),@"select":@"0",}, nil];
     }
     return _listArr;
 }

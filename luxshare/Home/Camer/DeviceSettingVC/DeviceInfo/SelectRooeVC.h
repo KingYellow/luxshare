@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
-typedef void(^select)(TuyaSmartRoomModel *model);
+typedef void(^selectroom)(TuyaSmartRoomModel *model);
+
 @interface SelectRooeVC : UIViewController
 @property (strong, nonatomic)TuyaSmartHomeModel *homeModel;
 @property (strong, nonatomic)TuyaSmartDeviceModel *deviceModel;
-@property (copy, nonatomic)select selectBlack;
+@property (copy, nonatomic)selectroom selectBlack;
 @end
 
 NS_ASSUME_NONNULL_END
