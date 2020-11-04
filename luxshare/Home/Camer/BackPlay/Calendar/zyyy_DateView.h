@@ -11,7 +11,7 @@
 @protocol zyyy_DateViewDelegate <NSObject>
 
 
--(void)selectedDic:(NSDictionary *)dic;
+- (void)selectedDic:(NSDictionary *)dic;
 
 @end
 @interface zyyy_DateView : UIView
@@ -21,5 +21,5 @@
 @property(nonatomic,assign)NSInteger selectedMonth;//选中月
 @property(nonatomic,assign)NSInteger selectedYear;//选中年
 @property(nonatomic,assign)BOOL isSelected;
--(void)setUIchange;
+- (void)setUIchange;
 @end

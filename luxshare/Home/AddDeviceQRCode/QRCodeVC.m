@@ -72,7 +72,7 @@
 
 }
 
--(UILabel *)titleLab{
+- (UILabel *)titleLab{
     if (!_titleLab) {
         _titleLab = [[UILabel alloc] init];
         _titleLab.font = QZHKIT_FONT_LISTCELL_BIG_TITLE;
@@ -84,7 +84,7 @@
     return _titleLab;
 }
 
--(UILabel *)subLab{
+- (UILabel *)subLab{
     if (!_subLab) {
         _subLab = [[UILabel alloc] init];
         _subLab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
@@ -96,7 +96,7 @@
     return _subLab;
 }
 
--(UIButton *)submitBtn{
+- (UIButton *)submitBtn{
     if (!_submitBtn) {
         _submitBtn = [[UIButton alloc] init];
         [_submitBtn setTitle:QZHLoaclString(@"qrcode_submit") forState:UIControlStateNormal];

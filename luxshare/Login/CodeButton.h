@@ -57,7 +57,7 @@ typedef void(^TouchDownBlock)(CodeButton *countDownBtn,NSInteger tag);
  *  开始
  */
 
--(void)startWithSecond:(int)totalSecond;
+- (void)startWithSecond:(int)totalSecond;
 
 /**
  *  停止

@@ -30,5 +30,5 @@ typedef enum{
 
 @property (nonatomic,weak)moveCellBlock block;
 
--(void)setDataWithArray:(NSMutableArray *)array withBlock:(moveCellBlock)block;
+- (void)setDataWithArray:(NSMutableArray *)array withBlock:(moveCellBlock)block;
 @end

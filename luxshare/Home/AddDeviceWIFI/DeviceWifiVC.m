@@ -102,7 +102,7 @@
     }
     return _indicatorIMG;
 }
--(UILabel *)titleLab{
+- (UILabel *)titleLab{
     if (!_titleLab) {
         _titleLab = [[UILabel alloc] init];
         _titleLab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
@@ -115,7 +115,7 @@
     return _titleLab;
 }
 
--(UIButton *)selectBtn{
+- (UIButton *)selectBtn{
     if (!_selectBtn) {
         _selectBtn = [[UIButton alloc] init];
         [_selectBtn setTitle:QZHLoaclString(@"device_connectHelp") forState:UIControlStateNormal];
@@ -127,7 +127,7 @@
 }
 
 
--(UIButton *)submitBtn{
+- (UIButton *)submitBtn{
     if (!_submitBtn) {
         _submitBtn = [[UIButton alloc] init];
         [_submitBtn setTitle:QZHLoaclString(@"device_goToConnect") forState:UIControlStateNormal];
@@ -173,7 +173,7 @@
 }
 
 #pragma mark -- wifi
--(NSDictionary *)getWifiInfo{
+- (NSDictionary *)getWifiInfo{
 
     NSArray *ifs = (__bridge_transfer id)(CNCopySupportedInterfaces());
 

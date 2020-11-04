@@ -46,10 +46,10 @@
     [self.rightBtn setTitle:@"" forState:UIControlStateNormal];
     [self.rightBtn setTitle:QZHLoaclString(@"finish") forState:UIControlStateSelected];
     self.navigationItem.title = QZHLoaclString(@"edit");
-    [self loadVcs];
+    [self loadSubControllers];
 }
 
--(void)exp_rightAction{
+- (void)exp_rightAction{
     if (!self.rightBtn.selected) {
         MessageSettingVC *vc = [[MessageSettingVC alloc] init];
         [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
@@ -71,7 +71,7 @@
 
 //初始化
 //添加控制器
--(void)loadVcs{
+- (void)loadSubControllers{
     QZHWS(weakSelf)
 
     self.navigationItem.titleView = self.titleView;
@@ -104,7 +104,7 @@
 }
 //点击按钮事件
 #pragma mark ----按钮点击事件
--(void)btnAction:(UIButton *)sender{
+- (void)btnAction:(UIButton *)sender{
     sender.selected = YES;
     NSInteger newSelectIndex = sender.tag - 888;
     if (self.oldSelectIndex == newSelectIndex) {
@@ -128,7 +128,7 @@
 }
 //DataSource方法
 #pragma mark 返回上一个ViewController对象
--(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
     
     NSInteger nowIndex = [self.arrVcs indexOfObject:viewController];
     if (nowIndex == 0) {
@@ -139,7 +139,7 @@
 }
 
 #pragma mark 返回下一个ViewController对象
--(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
     NSInteger nowIndex = [self.arrVcs indexOfObject:viewController];
     if (nowIndex == self.arrVcs.count - 1) {
         return nil;
@@ -148,7 +148,7 @@
     }
 }
 //代理方法
--(void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray<UIViewController *> *)previousViewControllers transitionCompleted:(BOOL)completed{
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray<UIViewController *> *)previousViewControllers transitionCompleted:(BOOL)completed{
     //previousViewControllers:上一个控制器
     if (!completed) {
         return;
@@ -172,7 +172,7 @@
     }
 }
 
--(void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers{
+- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers{
     //pendingViewControllers:下一个控制器
     NSLog(@"pendingViewControllers === %@", pendingViewControllers);
     self.currentIndex = [self.arrVcs indexOfObject:pendingViewControllers.firstObject];
@@ -192,7 +192,7 @@ offset    已请求到的消息总数
     }
     return _titleLab;
 }
--(UIView *)titleView{
+- (UIView *)titleView{
     if (!_titleView) {
 
         self.titleView = [[UIView alloc] init];
@@ -218,7 +218,7 @@ offset    已请求到的消息总数
     }
     return _titleView;
 }
--(UIButton *)setBtn{
+- (UIButton *)setBtn{
     if (!_setBtn) {
         _setBtn = [[UIButton alloc] init];
         [_setBtn setImage:QZHLoadIcon(@"pay_normal") forState:UIControlStateNormal];

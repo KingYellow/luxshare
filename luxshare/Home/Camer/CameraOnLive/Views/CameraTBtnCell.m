@@ -39,7 +39,7 @@
 }
 #pragma mark -lazy
 
--(UIButton *)leftBtn{
+- (UIButton *)leftBtn{
     if (!_leftBtn) {
         _leftBtn = [[UIButton alloc] init];
         [_leftBtn setTitle:QZHLoaclString(@"awake") forState:UIControlStateNormal];
@@ -53,7 +53,7 @@
     }
     return _leftBtn;
 }
--(UIButton *)rightBtn{
+- (UIButton *)rightBtn{
     if (!_rightBtn) {
         _rightBtn = [[UIButton alloc] init];
         [_rightBtn setTitle:QZHLoaclString(@"sleep") forState:UIControlStateNormal];

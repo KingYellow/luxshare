@@ -27,14 +27,14 @@
     [self.view addSubview:totaview];
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     TOTAMulltiCCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:QZHIdentifierImage forIndexPath:indexPath];
     cell.backgroundColor = QZHKIT_COLOR_LEADBACK;
     cell.section = indexPath.row;
     return cell;
 }
 
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return 3;
 }
 @end

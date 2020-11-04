@@ -44,7 +44,7 @@
     
 }
 #pragma mark -lazy
--(UILabel *)nameLab{
+- (UILabel *)nameLab{
     if (!_nameLab) {
         _nameLab = [[UILabel alloc] init];
         _nameLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
@@ -52,13 +52,13 @@
     }
     return  _nameLab;
 }
--(UIImageView *)poloIMG{
+- (UIImageView *)poloIMG{
     if (!_poloIMG) {
         _poloIMG = [[UIImageView alloc] init];
     }
     return _poloIMG;
 }
--(UIButton *)selectBtn{
+- (UIButton *)selectBtn{
     if (!_selectBtn) {
         _selectBtn = [[UIButton alloc] init];
         [_selectBtn setImage:QZHLoadIcon(@"ty_devicelist_dot_green") forState:UIControlStateNormal];

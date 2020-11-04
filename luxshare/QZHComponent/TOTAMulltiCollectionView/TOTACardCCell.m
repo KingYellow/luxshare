@@ -9,7 +9,7 @@
 #import "TOTACardCCell.h"
 
 @implementation TOTACardCCell
--(instancetype)initWithFrame:(CGRect)frame{
+- (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = QZH_KIT_Color_WHITE_100;
         [self creatSubviews];
@@ -24,7 +24,7 @@
     }];
 }
 
--(UILabel *)titleLab{
+- (UILabel *)titleLab{
     if (!_titleLab) {
         _titleLab = [[UILabel alloc] init];
         _titleLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;

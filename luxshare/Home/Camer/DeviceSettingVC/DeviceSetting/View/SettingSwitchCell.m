@@ -42,7 +42,7 @@
     
 }
 #pragma mark -lazy
--(UILabel *)nameLab{
+- (UILabel *)nameLab{
     if (!_nameLab) {
         _nameLab = [[UILabel alloc] init];
         _nameLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
@@ -51,7 +51,7 @@
     return  _nameLab;
 }
 
--(UISwitch *)switchBtn{
+- (UISwitch *)switchBtn{
     if (!_switchBtn) {
         _switchBtn = [[UISwitch alloc] init];
         _switchBtn.selected = NO;
@@ -59,14 +59,14 @@
     return _switchBtn;
 }
 
--(UIView *)bigView{
+- (UIView *)bigView{
     if (!_bigView) {
         _bigView = [[UIView alloc] init];
         _bigView.backgroundColor = QZH_KIT_Color_WHITE_100;
     }
     return _bigView;
 }
--(void)setRadioPosition:(NSInteger)radioPosition{
+- (void)setRadioPosition:(NSInteger)radioPosition{
     if (radioPosition == -1) {
         UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, QZHScreenWidth - 20, 50)
          byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(10, 10)];

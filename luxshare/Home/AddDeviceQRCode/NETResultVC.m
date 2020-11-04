@@ -87,7 +87,7 @@
     
 }
 
--(UILabel *)titleLab{
+- (UILabel *)titleLab{
     if (!_titleLab) {
         _titleLab = [[UILabel alloc] init];
         _titleLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
@@ -100,7 +100,7 @@
 }
 
 
--(UIButton *)submitBtn{
+- (UIButton *)submitBtn{
     if (!_submitBtn) {
         _submitBtn = [[UIButton alloc] init];
         [_submitBtn setTitle:QZHLoaclString(@"finish") forState:UIControlStateNormal];
@@ -109,7 +109,7 @@
     }
     return _submitBtn;
 }
--(UIButton *)feedBook{
+- (UIButton *)feedBook{
     if (!_feedBook) {
         _feedBook = [[UIButton alloc] init];
         [_feedBook setTitle:QZHLoaclString(@"unBind") forState:UIControlStateNormal];

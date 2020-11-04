@@ -25,7 +25,7 @@
 @end
 
 @implementation WarningDetailVC
--(void)viewDidAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self.qzTableView reloadData];
 }
@@ -68,7 +68,7 @@
         make.height.mas_equalTo(50);
     }];
 }
--(void)exp_rightAction{
+- (void)exp_rightAction{
     self.rightBtn.hidden = YES;
     self.topView.normalBtn.hidden = NO;
     self.topView.selectBtn.hidden = YES;
@@ -79,7 +79,7 @@
 }
 
 #pragma mark -tableView
--(UITableView *)qzTableView{
+- (UITableView *)qzTableView{
     QZHWS(weakSelf)
     if (!_qzTableView) {
         _qzTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
@@ -102,7 +102,7 @@
     return _qzTableView;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     TuyaSmartMessageListModel *model = self.listArr[section][row];
@@ -148,7 +148,7 @@
  
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return self.listArr.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -160,7 +160,7 @@
     }
     
 }
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     NSString *dateStr = self.timeArr[section];
     UIView *view = [[UIView alloc] init];
     if ([dateStr containsString:@"-"]) {
@@ -182,17 +182,17 @@
     return view;
 
 }
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
 
      return 50;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
     view.tintColor = QZHKIT_COLOR_LEADBACK;
 }
 
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
 }
 #pragma mark --lazy
@@ -214,7 +214,7 @@
     }
     return _timeArr;
 }
--(UIButton *)deleteBtn{
+- (UIButton *)deleteBtn{
     if (!_deleteBtn) {
         _deleteBtn = [[UIButton alloc] init];
         [_deleteBtn setTitle:QZHLoaclString(@"delete") forState:UIControlStateNormal];
@@ -378,7 +378,7 @@
 
 }
     ///消息类型（1 - 告警，2 - 家庭，3 - 通知）
--(void)deleteMessage{
+- (void)deleteMessage{
     QZHWS(weakSelf)
     TuyaSmartMessageListDeleteRequestModel *model = [[TuyaSmartMessageListDeleteRequestModel alloc] init];
     model.msgType = 1;
@@ -449,7 +449,7 @@
     return messagearr;
 }
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     UIButton *button = (UIButton *)object;
     if (self.deleteBtn == button && [@"hidden" isEqualToString:keyPath]) {
         if (self.deleteBtn.hidden == YES) {

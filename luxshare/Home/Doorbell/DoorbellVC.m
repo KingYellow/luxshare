@@ -23,7 +23,7 @@
     [self exp_navigationBarTrans];
 
 }
--(void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
@@ -105,14 +105,14 @@
 
 #pragma mark -- lazy
 
--(UIImageView *)shotIMG{
+- (UIImageView *)shotIMG{
     if (!_shotIMG) {
         _shotIMG = [[UIImageView alloc] init];
         _shotIMG.image = QZHLoadIcon(@"sub");
     }
     return _shotIMG;
 }
--(UILabel *)nameLab{
+- (UILabel *)nameLab{
     if (!_nameLab) {
         _nameLab = [[UILabel alloc] init];
         _nameLab.textAlignment = NSTextAlignmentCenter;
@@ -122,7 +122,7 @@
     }
     return _nameLab;
 }
--(UILabel *)tipLab{
+- (UILabel *)tipLab{
     if (!_tipLab) {
         _tipLab = [[UILabel alloc] init];
         _tipLab.textAlignment = NSTextAlignmentCenter;
@@ -133,7 +133,7 @@
     }
     return _tipLab;
 }
--(UIButton *)refuseBtn{
+- (UIButton *)refuseBtn{
     if (!_refuseBtn) {
         _refuseBtn = [[UIButton alloc] init];
         [_refuseBtn setImage:QZHLoadIcon(@"ic_doc_unread") forState:UIControlStateNormal];
@@ -144,7 +144,7 @@
     return _refuseBtn;;
 }
 
--(UIButton *)answerBtn{
+- (UIButton *)answerBtn{
     if (!_answerBtn) {
         _answerBtn = [[UIButton alloc] init];
         [_answerBtn setImage:QZHLoadIcon(@"ic_doc_already_read") forState:UIControlStateNormal];
@@ -157,7 +157,9 @@
 }
 #pragma mark -- action
 - (void)refuseToAnswerTheCall{
+    
     [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
 - (void)answerTheCall{
 
@@ -166,5 +168,6 @@
     vc.deviceModel = device.deviceModel;
     vc.isDoorbellCall = YES;
     [self.navigationController pushViewController:vc animated:NO];
+    
 }
 @end

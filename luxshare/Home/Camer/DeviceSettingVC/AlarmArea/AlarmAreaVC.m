@@ -55,7 +55,7 @@
     self.statusHiden = YES;
     [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
 }
--(void)viewDidDisappear:(BOOL)animated{
+- (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     if([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = YES;
@@ -71,7 +71,7 @@
         [self.camera stopPreview];
     }
 }
--(void)viewDidLoad {
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
     [self setUIConfigs];
@@ -135,13 +135,13 @@
 
 #pragma mark -- camerDelegate
 
--(void)cameraDidConnected:(id<TuyaSmartCameraType>)camera{
+- (void)cameraDidConnected:(id<TuyaSmartCameraType>)camera{
     [self scrollHor];
     self.connected = YES;
     [self.camera startPreview];
 
 }
--(void)cameraDisconnected:(id<TuyaSmartCameraType>)camera{
+- (void)cameraDisconnected:(id<TuyaSmartCameraType>)camera{
       // p2p 连接被动断开，一般为网络波动导致
     self.connected = NO;
     self.previewing = NO;
@@ -149,19 +149,19 @@
     [self.playView.playPreGif stopGif];
 }
 
--(void)cameraDidBeginPreview:(id<TuyaSmartCameraType>)camera{
+- (void)cameraDidBeginPreview:(id<TuyaSmartCameraType>)camera{
     
     self.previewing = YES;
     [self.playView.playPreGif stopGif];
 
 }
--(void)cameraDidStopPreview:(id<TuyaSmartCameraType>)camera{
+- (void)cameraDidStopPreview:(id<TuyaSmartCameraType>)camera{
   
     self.previewing = NO;
 
 }
 
--(void)camera:(id<TuyaSmartCameraType>)camera didOccurredErrorAtStep:(TYCameraErrorCode)errStepCode specificErrorCode:(NSInteger)errorCode{
+- (void)camera:(id<TuyaSmartCameraType>)camera didOccurredErrorAtStep:(TYCameraErrorCode)errStepCode specificErrorCode:(NSInteger)errorCode{
      if (errStepCode == TY_ERROR_CONNECT_FAILED) {
           // p2p 连接失败
         self.connected = NO;
@@ -214,7 +214,7 @@
     }];
 }
 
--(CameraPlayView *)playView{
+- (CameraPlayView *)playView{
     if (!_playView) {
         _playView = [[CameraPlayView alloc] init];
         _playView.voiceBtn.hidden = YES;
@@ -226,7 +226,7 @@
     }
     return _playView;
 }
--(UIButton *)submitBtn{
+- (UIButton *)submitBtn{
     if (!_submitBtn) {
         _submitBtn = [[UIButton alloc] init];
         [_submitBtn setTitle:QZHLoaclString(@"setAlarmArea") forState:UIControlStateNormal];
@@ -238,7 +238,7 @@
     return _submitBtn;
 }
 
--(MaskView *)maskView{
+- (MaskView *)maskView{
     if (!_maskView) {
         QZHWS(weakSelf)
         _maskView = [[MaskView alloc] initWithFrame:self.navigationController.view.bounds];

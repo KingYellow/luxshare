@@ -10,7 +10,7 @@
 
 @implementation FormatProgressView
 
--(instancetype)init{
+- (instancetype)init{
     if (self = [super init]) {
         [self creatViews];
 
@@ -37,14 +37,14 @@
     }];
     QZHViewRadius(self.bigView, 5.0);
 }
--(UIView *)bigView{
+- (UIView *)bigView{
     if (!_bigView) {
         _bigView = [[UIView alloc] init];
         _bigView.backgroundColor = QZH_KIT_Color_WHITE_100;
     }
     return _bigView;
 }
--(UILabel *)nameLab{
+- (UILabel *)nameLab{
     if (!_nameLab) {
         _nameLab = [[UILabel alloc] init];
         _nameLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
@@ -53,7 +53,7 @@
     }
     return _nameLab;
 }
--(UILabel *)numberLab{
+- (UILabel *)numberLab{
     if (!_numberLab) {
         _numberLab = [[UILabel alloc] init];
         _numberLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;

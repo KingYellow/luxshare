@@ -10,7 +10,7 @@
 
 @implementation QZHTimeCell
 
--(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.backgroundColor = QZH_KIT_Color_WHITE_100;
         [self creatSubViews];
@@ -24,7 +24,7 @@
     }];
 }
 
--(UILabel *)timeLab{
+- (UILabel *)timeLab{
     if (!_timeLab) {
         _timeLab = [[UILabel alloc] init];
         _timeLab.textColor = UIColor.blackColor;

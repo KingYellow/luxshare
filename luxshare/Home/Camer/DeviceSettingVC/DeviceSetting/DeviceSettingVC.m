@@ -57,7 +57,7 @@
 }
 
 #pragma mark -tableView
--(UITableView *)qzTableView{
+- (UITableView *)qzTableView{
     if (!_qzTableView) {
         _qzTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         [_qzTableView exp_tableViewDefault];
@@ -71,7 +71,7 @@
     return _qzTableView;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     if (self.deviceModel.isShare) {
@@ -187,7 +187,7 @@
     }
  
 }
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 1) {
             UIView *view = [[UIView alloc] init];
         UILabel *lab = [[UILabel alloc] init];
@@ -202,7 +202,7 @@
     }
 
 }
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 //    if ([self isAdminOrOwner]) {
     if (self.deviceModel.isShare) {
         return 1;
@@ -229,7 +229,7 @@
     }
     
 }
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
    
     if ([self.deviceModel.productId isEqualToString:AC_PRODUCT_ID]) {
         if (indexPath.section == 1 && indexPath.row == 3) {
@@ -242,7 +242,7 @@
     
     return 50;
 }
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
    
     if (section == 1) {
         return 60;
@@ -251,12 +251,12 @@
      return 30;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
     view.tintColor = QZHKIT_COLOR_LEADBACK;
 }
 
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = indexPath.row;
     NSInteger section = indexPath.section;
     
@@ -412,7 +412,7 @@
     }
 }
 #pragma mark -- 红外夜视
--(void)creatActionSheet {
+- (void)creatActionSheet {
 //"0"：关闭；"1"：自动；"2"：打开
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"infraredNight") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 

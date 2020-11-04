@@ -50,7 +50,7 @@
          make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0 ));
      }];
 }
--(void)exp_rightAction{
+- (void)exp_rightAction{
     QZHWS(weakSelf)
     AlarmTimerVC *vc = [[AlarmTimerVC alloc] init];
     vc.deviceModel = self.deviceModel;
@@ -61,7 +61,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark -tableView
--(UITableView *)qzTableView{
+- (UITableView *)qzTableView{
     if (!_qzTableView) {
         _qzTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         [_qzTableView exp_tableViewDefault];
@@ -78,7 +78,7 @@
     return _qzTableView;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = indexPath.row;
     TYTimerModel *model = self.listArr[row];
     AlarmTimeListCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
@@ -99,7 +99,7 @@
     return cell;
  
 }
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         UIView *view = [[UIView alloc] init];
         UILabel *lab = [[UILabel alloc] init];
@@ -114,7 +114,7 @@
     }
 
 }
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 
     return 1;
 }
@@ -123,17 +123,17 @@
     
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
      return 50;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
     view.tintColor = QZHKIT_COLOR_LEADBACK;
 }
 
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = indexPath.row;
     TYTimerModel *model = self.listArr[row];
     QZHWS(weakSelf)

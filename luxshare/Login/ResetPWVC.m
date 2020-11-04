@@ -151,7 +151,7 @@
 }
 
 #pragma mark  -- getter
--(UITextField *)phoneText{
+- (UITextField *)phoneText{
     if (!_phoneText) {
         UITextField *text= [[UITextField alloc] init];
         text.placeholder = QZHLoaclString(@"login_account");
@@ -166,7 +166,7 @@
     }
     return _phoneText;
 }
--(UITextField *)passwordText{
+- (UITextField *)passwordText{
     if (!_passwordText) {
         UITextField *text= [[UITextField alloc] init];
         text.placeholder = QZHLoaclString(@"reset_newPassword");
@@ -180,7 +180,7 @@
     }
     return _passwordText;
 }
--(UIButton *)sendBtn{
+- (UIButton *)sendBtn{
     if (!_sendBtn) {
         _sendBtn = [[CodeButton alloc] init];
         
@@ -193,7 +193,7 @@
     }
     return _sendBtn;
 }
--(UIButton *)submitBtn{
+- (UIButton *)submitBtn{
     if (!_submitBtn) {
         _submitBtn = [[UIButton alloc] init];
         [_submitBtn setTitle:QZHLoaclString(@"reset_password") forState:UIControlStateNormal];
@@ -205,7 +205,7 @@
     }
     return _submitBtn;
 }
--(UITextField *)codeText{
+- (UITextField *)codeText{
     if (!_codeText) {
         UITextField *text= [[UITextField alloc] init];
         text.placeholder = QZHLoaclString(@"login_verifyCode");
@@ -219,7 +219,7 @@
     }
     return _codeText;
 }
--(UITextField *)countryCodeText{
+- (UITextField *)countryCodeText{
     if (!_countryCodeText) {
         UITextField *text= [[UITextField alloc] init];
         text.placeholder = QZHLoaclString(@"login_countryCode");

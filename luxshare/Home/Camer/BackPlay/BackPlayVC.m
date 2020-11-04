@@ -69,7 +69,7 @@
     }
 
 }
--(void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     if (_backCamera) {
@@ -90,7 +90,7 @@
     [self exp_addLeftItemTitle:@"" itemIcon:QZHICON_BACK_ITEM];
     [self UIConfig];
 }
--(void)exp_leftAction{
+- (void)exp_leftAction{
     if (self.recording) {
         [self.backCamera stopRecord];
     }
@@ -151,7 +151,7 @@
     }];
 }
 #pragma mark -- ZFTimeLineDelegate
--(void)timeLine:(ZFTimeLine *)timeLine moveToDate:(NSString *)date{
+- (void)timeLine:(ZFTimeLine *)timeLine moveToDate:(NSString *)date{
     
     NSDictionary *playInfo;
     NSTimeInterval nowT = 0;
@@ -272,7 +272,7 @@
 }
 
 #pragma mark - TuyaSmartCameraDelegate
--(void)cameraDidConnected:(id<TuyaSmartCameraType>)camera{
+- (void)cameraDidConnected:(id<TuyaSmartCameraType>)camera{
     [self startPlayGif];
     self.connected = YES;
          // 需要 p2p 连接成功后查询某天的视频录像片段
@@ -408,19 +408,19 @@
     self.playbackPaused = NO;
 }
 
--(void)cameraPlaybackDidFinished:(id<TuyaSmartCameraType>)camera {
+- (void)cameraPlaybackDidFinished:(id<TuyaSmartCameraType>)camera {
       // 视频录像已结束播放
     self.playbacking = NO;
     self.playbackPaused = NO;
     self.tipFinishLab.hidden = NO;
 }
--(void)cameraDidBeginPreview:(id<TuyaSmartCameraType>)camera{
+- (void)cameraDidBeginPreview:(id<TuyaSmartCameraType>)camera{
     
 }
 - (void)cameraDidStopPreview:(id<TuyaSmartCameraType>)camera{
     
 }
--(void)cameraDidStartRecord:(id<TuyaSmartCameraType>)camera{
+- (void)cameraDidStartRecord:(id<TuyaSmartCameraType>)camera{
     [self startTimer];
     self.recording = YES;
     self.playView.voiceBtn.alpha = 0.5;
@@ -463,7 +463,7 @@
 }
 
 #pragma mark -- lazy
--(CameraPlayView *)playView{
+- (CameraPlayView *)playView{
     if (!_playView) {
         _playView = [[CameraPlayView alloc] init];
         id traget = self.navigationController.interactivePopGestureRecognizer.delegate;
@@ -473,7 +473,7 @@
     }
     return _playView;
 }
--(UIButton *)leftBackBtn{
+- (UIButton *)leftBackBtn{
     if (!_leftBackBtn) {
         _leftBackBtn = [[UIButton alloc] init];
         [_leftBackBtn setImage:QZHLoadIcon(@"nav_btn_back") forState:UIControlStateNormal];
@@ -483,7 +483,7 @@
     }
     return _leftBackBtn;
 }
--(UIButton *)selectDateBtn{
+- (UIButton *)selectDateBtn{
     if (!_selectDateBtn) {
         _selectDateBtn = [[UIButton alloc] init];
         [_selectDateBtn setTitle:QZHLoaclString(@"backplayDate") forState:UIControlStateNormal];
@@ -494,7 +494,7 @@
     return _selectDateBtn;
 }
 
--(UIButton *)recordBtn{
+- (UIButton *)recordBtn{
     if (!_recordBtn) {
         _recordBtn = [[UIButton alloc] init];
         [_recordBtn setTitle:QZHLoaclString(@"record") forState:UIControlStateNormal];
@@ -506,7 +506,7 @@
     }
     return _recordBtn;
 }
--(UIButton *)shotBtn{
+- (UIButton *)shotBtn{
     if (!_shotBtn) {
         _shotBtn = [[UIButton alloc] init];
         [_shotBtn setTitle:QZHLoaclString(@"shot") forState:UIControlStateNormal];
@@ -691,13 +691,13 @@
     [self.backCamera stopPlayback];
 }
 
--(void) requestMicroPhoneAuth
+- (void) requestMicroPhoneAuth
 {
     [AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL granted) {
 
     }];
 }
--(void) goMicroPhoneSetTitle:(NSString *)title
+- (void) goMicroPhoneSetTitle:(NSString *)title
 {
     UIAlertController * alert = [UIAlertController alertControllerWithTitle:title message:QZHLoaclString(@"gotoSetting") preferredStyle:UIAlertControllerStyleAlert];
 
@@ -769,7 +769,7 @@
 - (BOOL)prefersStatusBarHidden{
     return self.statusHidden;
 }
--(void)dealloc{
+- (void)dealloc{
     
 }
 @end

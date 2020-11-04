@@ -80,14 +80,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 //    self.popupController.navigationBarHidden = YES;
     [v addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTap)]];
 }
--(UIView *)backView{
+- (UIView *)backView{
     if (!_backView) {
         _backView = [[UIView alloc] init];
     }
     return _backView;
 }
 
--(void)closeBlockView {
+- (void)closeBlockView {
     [self backgroundTap];
 }
 
@@ -95,7 +95,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(UITableView *)tableView {
+- (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc]initWithFrame:self.view.frame style:UITableViewStyleGrouped];
         _tableView.delegate = self;
@@ -135,22 +135,22 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     return cell;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 60;
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     return nil;
 }
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 0.001;
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     return nil;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.001;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

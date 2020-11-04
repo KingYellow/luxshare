@@ -64,7 +64,7 @@
 }
 
 #pragma mark -tableView
--(UITableView *)qzTableView{
+- (UITableView *)qzTableView{
     if (!_qzTableView) {
         _qzTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         [_qzTableView exp_tableViewDefault];
@@ -80,7 +80,7 @@
     return _qzTableView;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     if (section == 0) {
@@ -266,7 +266,7 @@
     }
  
 }
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
         UIView *view = [[UIView alloc] init];
         UILabel *lab = [[UILabel alloc] init];
 
@@ -297,7 +297,7 @@
 
 
 }
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
    
     return 6;
 }
@@ -327,7 +327,7 @@
     }
     
 }
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     if (section == 0 && row == 0) {
@@ -345,19 +345,19 @@
     }
     return 50;
 }
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 2) {
         return 0;
     }
      return 50;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
     view.tintColor = QZHKIT_COLOR_LEADBACK;
 }
 
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = indexPath.row;
     NSInteger section = indexPath.section;
     if (section == 0) {
@@ -448,7 +448,7 @@
     }
 }
 #pragma mark -- lazy
--(NSMutableArray *)timeArr{
+- (NSMutableArray *)timeArr{
     if (!_timeArr) {
         _timeArr = [NSMutableArray arrayWithArray:@[@"1min",@"3min",@"5min"]];
         
@@ -536,7 +536,7 @@
 
 #pragma mark -- PIR
 
--(void)creatPIRActionSheet{
+- (void)creatPIRActionSheet{
 
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"setting_decetecSensitivity") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
@@ -588,7 +588,7 @@
 
 #pragma mark -- decibel
 
--(void)creatDecibelActionSheet{
+- (void)creatDecibelActionSheet{
     QZHWS(weakSelf)
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"voiceSensitivity") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 
@@ -626,7 +626,7 @@
     //相当于之前的[actionSheet show];
     [self presentViewController:actionSheet animated:YES completion:nil];
 }
--(void)creatCryActionSheet{
+- (void)creatCryActionSheet{
     QZHWS(weakSelf)
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"crySensitivity") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 
@@ -668,7 +668,7 @@
     [self presentViewController:actionSheet animated:YES completion:nil];
 }
 //报警声音
--(void)creatDeceteMusicSheet{
+- (void)creatDeceteMusicSheet{
     QZHWS(weakSelf)
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"alarmMusic") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:QZHLoaclString(@"closeAlarmMusic") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

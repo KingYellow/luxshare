@@ -53,7 +53,7 @@
     
 }
 #pragma mark -lazy
--(UILabel *)nameLab{
+- (UILabel *)nameLab{
     if (!_nameLab) {
         _nameLab = [[UILabel alloc] init];
         _nameLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
@@ -62,7 +62,7 @@
     }
     return  _nameLab;
 }
--(UILabel *)describeLab{
+- (UILabel *)describeLab{
     if (!_describeLab) {
         _describeLab = [[UILabel alloc] init];
         _describeLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
@@ -72,20 +72,20 @@
     return  _describeLab;
 }
 
--(UIImageView *)IMGView{
+- (UIImageView *)IMGView{
     if (!_IMGView) {
         _IMGView = [[UIImageView alloc] init];
         _IMGView.contentMode = UIViewContentModeScaleToFill;
     }
     return _IMGView;
 }
--(UIImageView *)logoIMG{
+- (UIImageView *)logoIMG{
     if (!_logoIMG) {
         _logoIMG = [[UIImageView alloc] init];
     }
     return _logoIMG;
 }
--(UIButton *)selectBtn{
+- (UIButton *)selectBtn{
     if (!_selectBtn) {
         _selectBtn = [[UIButton alloc] init];
         [_selectBtn setImage:[UIImage new] forState:UIControlStateNormal];

@@ -48,7 +48,7 @@ static BOOL YYCGImageLastPixelFilled(CGImageRef image) {
     if (width == 0 || height == 0) return NO;
     CGContextRef ctx = CGBitmapContextCreate(NULL, 1, 1, 8, 0, YYCGColorSpaceGetDeviceRGB(), kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrderDefault);
     if (!ctx) return NO;
-    CGContextDrawImage(ctx, CGRectMake( -(int)width + 1, 0, width, height), image);
+    CGContextDrawImage(ctx, CGRectMake( - (int)width + 1, 0, width, height), image);
     uint8_t *bytes = CGBitmapContextGetData(ctx);
     BOOL isAlpha = bytes && bytes[0] == 0;
     CFRelease(ctx);

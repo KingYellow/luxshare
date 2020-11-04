@@ -284,7 +284,7 @@
 
 }
 #pragma mark -tableView
--(UITableView *)qzTableView{
+- (UITableView *)qzTableView{
     if (!_qzTableView) {
         _qzTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         [_qzTableView exp_tableViewDefault];
@@ -300,7 +300,7 @@
     }
     return _qzTableView;
 }
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = indexPath.row;
     QZHWS(weakSelf)
     if (row == 0) {
@@ -396,7 +396,7 @@
     }
  
 }
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -405,15 +405,15 @@
     }
     return 6;
 }
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 10;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
     view.tintColor = QZHKIT_COLOR_LEADBACK;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = indexPath.row;
     if (row == 1) {
         return QZHScreenWidth *1080/1920.0;
@@ -428,7 +428,7 @@
     }
     return 70;
 }
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.row == 0 || indexPath.row == 1|| indexPath.row == 2) {
         return;
@@ -488,7 +488,7 @@
     return _listArr;
 }
 
--(NSMutableArray *)logoArr{
+- (NSMutableArray *)logoArr{
     if (!_logoArr) {
         _logoArr = [NSMutableArray arrayWithArray:@[@"about",@"lianxi",@"shezhi",@"shezhi"]];
     }
@@ -498,7 +498,7 @@
 
 #pragma mark -- 摄像机代理camerDelegate
 
--(void)cameraDidConnected:(id<TuyaSmartCameraType>)camera{
+- (void)cameraDidConnected:(id<TuyaSmartCameraType>)camera{
     
     self.connected = YES;
     if ([self.deviceModel.productId isEqualToString:BATTERY_PRODUCT_ID]) {
@@ -508,7 +508,7 @@
     [self cameraStartPreview];
 
 }
--(void)cameraDisconnected:(id<TuyaSmartCameraType>)camera{
+- (void)cameraDisconnected:(id<TuyaSmartCameraType>)camera{
       // p2p 连接被动断开，一般为网络波动导致
     self.connected = NO;
     self.previewing = NO;
@@ -522,20 +522,20 @@
     [self connectCamera];
     
 }
--(void)cameraDidStartRecord:(id<TuyaSmartCameraType>)camera{
+- (void)cameraDidStartRecord:(id<TuyaSmartCameraType>)camera{
     [self startRecordTimer];
     self.recording = YES;
     self.playView.voiceBtn.alpha = 0.5;
     self.playView.voiceBtn.userInteractionEnabled = NO;
     self.recordTime = [[NSDate date] timeIntervalSince1970];
 }
--(void)cameraDidStopRecord:(id<TuyaSmartCameraType>)camera{
+- (void)cameraDidStopRecord:(id<TuyaSmartCameraType>)camera{
     self.recording = NO;
     self.playView.voiceBtn.alpha = 1.0;
     self.playView.voiceBtn.userInteractionEnabled = YES;
 }
 
--(void)cameraDidBeginPreview:(id<TuyaSmartCameraType>)camera{
+- (void)cameraDidBeginPreview:(id<TuyaSmartCameraType>)camera{
     
     self.previewing = YES;
     self.playView.playBtn.hidden = YES;
@@ -560,7 +560,7 @@
     }
 
 }
--(void)cameraDidStopPreview:(id<TuyaSmartCameraType>)camera{
+- (void)cameraDidStopPreview:(id<TuyaSmartCameraType>)camera{
     self.previewing = NO;
     if (self.talking) {
         [self stopTalk];
@@ -569,10 +569,10 @@
         [self.camera stopRecord];
     }
 }
--(void)cameraDidStopPlayback:(id<TuyaSmartCameraType>)camera{
+- (void)cameraDidStopPlayback:(id<TuyaSmartCameraType>)camera{
     NSLog(@"onlivecamer -------   stop playback  ");
 }
--(void)cameraDidBeginPlayback:(id<TuyaSmartCameraType>)camera{
+- (void)cameraDidBeginPlayback:(id<TuyaSmartCameraType>)camera{
     NSLog(@"onlivecamer --------------   begain playback  ");
 }
 - (void)camera:(id<TuyaSmartCameraType>)camera didReceiveTimeSliceQueryData:(NSArray<NSDictionary *> *)timeSlices {
@@ -582,7 +582,7 @@
 - (void)camera:(id<TuyaSmartCameraType>)camera ty_didReceiveVideoFrame:(CMSampleBufferRef)sampleBuffer frameInfo:(TuyaSmartVideoFrameInfo)frameInfo {
 
 }
--(void)camera:(id<TuyaSmartCameraType>)camera didOccurredErrorAtStep:(TYCameraErrorCode)errStepCode specificErrorCode:(NSInteger)errorCode{
+- (void)camera:(id<TuyaSmartCameraType>)camera didOccurredErrorAtStep:(TYCameraErrorCode)errStepCode specificErrorCode:(NSInteger)errorCode{
     [self.talkHud hide:YES];
      if (errStepCode == TY_ERROR_CONNECT_FAILED) {
          [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"connectOnceAgain") afterDelay:1.0];
@@ -685,7 +685,7 @@
 }
 #pragma mark - TuyaSmartDeviceDelegate
 
--(void)device:(TuyaSmartDevice *)device dpsUpdate:(NSDictionary *)dps{
+- (void)device:(TuyaSmartDevice *)device dpsUpdate:(NSDictionary *)dps{
     if ([dps jk_hasKey:@"235"]) {
         CameraListCell *cell = [self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:5 inSection:0]];
         
@@ -1093,7 +1093,7 @@
     }
 }
 
--(CameraPlayView *)playView{
+- (CameraPlayView *)playView{
     if (!_playView) {
 
         QZHWS(weakSelf)
@@ -1207,7 +1207,7 @@
     self.playView.talkProgressView.timeLab.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)min,(long)sec];
 }
 #pragma mark -- lazy
--(UIView *)privateView{
+- (UIView *)privateView{
     if (!_privateView) {
         QZHWS(weakSelf)
         _privateView = [[UIView alloc] init];
@@ -1224,7 +1224,7 @@
     return _privateView;
 }
 
--(UIView *)talkBigView{
+- (UIView *)talkBigView{
     if (!_talkBigView) {
         _talkBigView = [[UIView alloc] init];
         _talkBigView.backgroundColor = UIColor.whiteColor;
@@ -1247,7 +1247,7 @@
     }
     return _talkBtn;
 }
--(id<TuyaSmartCameraType>)camera{
+- (id<TuyaSmartCameraType>)camera{
     if (!_camera) {
 
     }
@@ -1309,13 +1309,13 @@
     return self.statusHiden;
 }
 
--(void) requestMicroPhoneAuth
+- (void) requestMicroPhoneAuth
 {
     [AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL granted) {
 
     }];
 }
--(void) goMicroPhoneSetTitle:(NSString *)title
+- (void) goMicroPhoneSetTitle:(NSString *)title
 {
     UIAlertController * alert = [UIAlertController alertControllerWithTitle:title message:QZHLoaclString(@"gotoSetting") preferredStyle:UIAlertControllerStyleAlert];
 
@@ -1337,7 +1337,7 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
--(void)dealloc{
+- (void)dealloc{
     
     
 }

@@ -48,11 +48,11 @@
     //CGContextDrawPath(ctx, kCGPathFillStroke);
     UIRectFill(holeiInterSection);
 }
--(void)setCenterRect:(CGRect)centerRect{
+- (void)setCenterRect:(CGRect)centerRect{
     _selectView.frame = centerRect;
     [self drawRect:self.frame];
 }
--(UIView *)selectView{
+- (UIView *)selectView{
     if (!_selectView) {
         _selectView = [[UIView alloc] init];
         _selectView.backgroundColor = QZHColorClear;
@@ -61,7 +61,7 @@
     }
     return _selectView;
 }
--(UIButton *)leftBackBtn{
+- (UIButton *)leftBackBtn{
     if (!_leftBackBtn) {
         _leftBackBtn = [[UIButton alloc] init];
         [_leftBackBtn setImage:QZHLoadIcon(@"nav_btn_back") forState:UIControlStateNormal];

@@ -37,7 +37,7 @@
     
 }
 #pragma mark -lazy
--(UILabel *)nameLab{
+- (UILabel *)nameLab{
     if (!_nameLab) {
         _nameLab = [[UILabel alloc] init];
         _nameLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
@@ -47,7 +47,7 @@
 }
 
 
--(UITextField *)textfield{
+- (UITextField *)textfield{
     if (!_textfield) {
         _textfield = [[UITextField alloc] init];
         _textfield.textColor = QZHKIT_Color_BLACK_87;

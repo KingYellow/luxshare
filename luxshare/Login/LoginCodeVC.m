@@ -112,7 +112,7 @@
 }
 
 #pragma mark  -- getter
--(UITextField *)phoneText{
+- (UITextField *)phoneText{
     if (!_phoneText) {
         UITextField *text= [[UITextField alloc] init];
         text.placeholder = QZHLoaclString(@"login_phone");
@@ -127,7 +127,7 @@
     }
     return _phoneText;
 }
--(UITextField *)passwordText{
+- (UITextField *)passwordText{
     if (!_passwordText) {
         UITextField *text= [[UITextField alloc] init];
         text.placeholder = QZHLoaclString(@"login_verifyCode");
@@ -141,7 +141,7 @@
     }
     return _passwordText;
 }
--(CodeButton *)sendBtn{
+- (CodeButton *)sendBtn{
     if (!_sendBtn) {
         _sendBtn = [[CodeButton alloc] init];
         
@@ -155,7 +155,7 @@
     }
     return _sendBtn;
 }
--(UIButton *)submitBtn{
+- (UIButton *)submitBtn{
     if (!_submitBtn) {
         _submitBtn = [[UIButton alloc] init];
         [_submitBtn setTitle:QZHLoaclString(@"login") forState:UIControlStateNormal];
@@ -170,7 +170,7 @@
     return _submitBtn;
 }
 //显示密码
--(UIButton *)openBtn{
+- (UIButton *)openBtn{
     if (!_openBtn) {
         UIButton *button = [[UIButton alloc] init];
         button.frame = CGRectMake(0, 0, 24, 24);
@@ -267,7 +267,7 @@
     }];
 }
 
--(void)checkVertifyCode{
+- (void)checkVertifyCode{
     [[TuyaSmartUser sharedInstance] checkCodeWithUserName:self.phoneText.text region:nil countryCode:self.countryModel.code code:self.passwordText.text type:2 success:^(BOOL result) {
             if (result) {
                   [[TuyaSmartUser sharedInstance] loginWithMobile:self.phoneText.text countryCode:self.countryModel.code code:self.passwordText.text success:^{

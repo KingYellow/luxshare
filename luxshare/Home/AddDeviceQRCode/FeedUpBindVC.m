@@ -141,21 +141,21 @@
     }
 }
 #pragma mark lazy
--(UIView *)backView{
+- (UIView *)backView{
     if (!_backView) {
         _backView = [[UIView alloc] init];
         _backView.backgroundColor = QZH_KIT_Color_WHITE_100;
     }
     return _backView;
 }
--(UIView *)subBackView{
+- (UIView *)subBackView{
     if (!_subBackView) {
         _subBackView = [[UIView alloc] init];
         _subBackView.backgroundColor = QZH_KIT_Color_WHITE_100;
     }
     return _subBackView;
 }
--(UITextView *)diyTextView{
+- (UITextView *)diyTextView{
     if (!_diyTextView) {
         _diyTextView = [[UITextView alloc] init];
         _diyTextView.font = QZHKIT_FONT_LISTCELL_DESCRIBE_TITLE;
@@ -164,7 +164,7 @@
     }
     return _diyTextView;
 }
--(UILabel *)descLabel{
+- (UILabel *)descLabel{
     if (!_descLabel) {
         _descLabel = [[UILabel alloc] init];
         _descLabel.textColor = QZHKIT_Color_BLACK_54;
@@ -173,7 +173,7 @@
     }
     return _descLabel;
 }
--(UILabel *)tipsLabel{
+- (UILabel *)tipsLabel{
     if (!_tipsLabel) {
         _tipsLabel = [[UILabel alloc] init];
         _tipsLabel.text = QZHLoaclString(@"feedBacktip");
@@ -183,7 +183,7 @@
     }
     return _tipsLabel;
 }
--(UILabel *)titleLabel{
+- (UILabel *)titleLabel{
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.text = QZHLoaclString(@"feedBackDescribe");
@@ -192,7 +192,7 @@
     }
     return _titleLabel;
 }
--(UILabel *)subTitleLabel{
+- (UILabel *)subTitleLabel{
     if (!_subTitleLabel) {
         _subTitleLabel = [[UILabel alloc] init];
         _subTitleLabel.text = QZHLoaclString(@"contactType");
@@ -201,7 +201,7 @@
     }
     return _subTitleLabel;
 }
--(UITextField *)accountText{
+- (UITextField *)accountText{
     if (!_accountText) {
         _accountText = [[UITextField alloc] init];
         _accountText.placeholder = QZHLoaclString(@"phoneOrAcconut");
@@ -211,7 +211,7 @@
     }
     return _accountText;
 }
--(UIButton *)submitBtn{
+- (UIButton *)submitBtn{
     if (!_submitBtn) {
         _submitBtn = [[UIButton alloc] init];
         [_submitBtn setTitle:QZHLoaclString(@"submitApplication") forState:UIControlStateNormal];

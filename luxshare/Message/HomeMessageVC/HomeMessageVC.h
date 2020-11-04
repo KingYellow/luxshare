@@ -14,7 +14,7 @@ typedef void (^btnblock)(BOOL isselected);
 @interface HomeMessageVC : UIViewController
 
 @property (copy, nonatomic)btnblock btnAction;
--(void)rightAction;
+- (void)rightAction;
 @end
 
 NS_ASSUME_NONNULL_END

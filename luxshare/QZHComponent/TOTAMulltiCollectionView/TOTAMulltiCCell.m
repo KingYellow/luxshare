@@ -15,7 +15,7 @@
 
 
 @implementation TOTAMulltiCCell
--(instancetype)initWithFrame:(CGRect)frame{
+- (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         [self creatSubview];
         
@@ -30,7 +30,7 @@
         make.edges.mas_equalTo(UIEdgeInsetsZero);
     }];
 }
--(UICollectionView *)totaView{
+- (UICollectionView *)totaView{
     if (!_totaView) {
 
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -43,19 +43,19 @@
     }
     return _totaView;
 }
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     TOTACardCCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:QZHIdentifierImage forIndexPath:indexPath];
     cell.backgroundColor = [UIColor jk_randomColor];
     cell.titleLab.text = QZHObjStringFormat(@"第%ld个",self.section * 12 + indexPath.row);
     return cell;
 }
 
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return 12;
 }
 
 
--(void)setSection:(NSInteger)section{
+- (void)setSection:(NSInteger)section{
     _section = section;
     
 }

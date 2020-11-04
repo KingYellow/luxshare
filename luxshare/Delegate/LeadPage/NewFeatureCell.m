@@ -42,7 +42,7 @@
     }
     return _IMGView;
 }
--(UIButton *)enterBtn{
+- (UIButton *)enterBtn{
     if (!_enterBtn) {
         _enterBtn = [[UIButton alloc] init];
         [_enterBtn setTitle:@"开启" forState:UIControlStateNormal];

@@ -113,7 +113,7 @@
     }];
 
 }
--(UIView *)bigView{
+- (UIView *)bigView{
     if (!_bigView) {
         _bigView = [[UIView alloc] init];
         _bigView.backgroundColor = QZH_KIT_Color_WHITE_70;
@@ -121,7 +121,7 @@
     }
     return _bigView;
 }
--(UILabel *)titleLab{
+- (UILabel *)titleLab{
     if (!_titleLab) {
         _titleLab = [[UILabel alloc] init];
         _titleLab.textColor = QZHKIT_Color_BLACK_87;
@@ -129,7 +129,7 @@
     }
     return _titleLab;
 }
--(UILabel *)sizeLab{
+- (UILabel *)sizeLab{
     if (!_sizeLab) {
         _sizeLab = [[UILabel alloc] init];
         _sizeLab.textColor = QZHKIT_Color_BLACK_87;
@@ -139,7 +139,7 @@
     }
     return _sizeLab;
 }
--(UILabel *)progressLab{
+- (UILabel *)progressLab{
     if (!_progressLab) {
         _progressLab = [[UILabel alloc] init];
         _progressLab.textColor = QZHKIT_Color_BLACK_87;
@@ -150,7 +150,7 @@
     return _progressLab;
 }
 
--(UILabel *)tipLab{
+- (UILabel *)tipLab{
     if (!_tipLab) {
         _tipLab = [[UILabel alloc] init];
         _tipLab.textColor = QZHKIT_Color_BLACK_54;
@@ -161,7 +161,7 @@
     return _tipLab;
 }
 
--(UILabel *)contentLab{
+- (UILabel *)contentLab{
     if (!_contentLab) {
         _contentLab = [[UILabel alloc] init];
         _contentLab.textColor = QZHKIT_Color_BLACK_54;
@@ -170,7 +170,7 @@
     }
     return _contentLab;
 }
--(UIProgressView *)progress{
+- (UIProgressView *)progress{
     if (!_progress) {
         _progress = [[UIProgressView alloc] init];
         _progress.progress = 0;
@@ -180,7 +180,7 @@
     }
     return _progress;
 }
--(UIButton *)updateBtn{
+- (UIButton *)updateBtn{
     if (!_updateBtn) {
         _updateBtn = [[UIButton alloc] init];
         [_updateBtn setTitle:QZHLoaclString(@"update") forState:UIControlStateNormal];
@@ -192,7 +192,7 @@
     }
     return _updateBtn;
 }
--(UIView *)line{
+- (UIView *)line{
     if (!_line) {
         _line = [[UIView alloc] init];
         _line.backgroundColor = QZHKIT_Color_BLACK_12;

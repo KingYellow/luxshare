@@ -118,7 +118,7 @@
 }
 
 //- 程序内存警告，可能要终止程序
--(void)exp_applicationDidReceiveMemoryWarning:(UIApplication *)application {
+- (void)exp_applicationDidReceiveMemoryWarning:(UIApplication *)application {
     ///保存用户书数据
     [QZHDataHelper saveValue:QZHUserModel.User forKey:QZHKEY_USER];
 }
@@ -131,7 +131,7 @@
 }
 
 ///Universal Links唤醒
--(BOOL)exp_application:(UIApplication*)application continueUserActivity:(NSUserActivity*)userActivity restorationHandler:(void(^)(NSArray* _Nullable))restorationHandler {
+- (BOOL)exp_application:(UIApplication*)application continueUserActivity:(NSUserActivity*)userActivity restorationHandler:(void(^)(NSArray* _Nullable))restorationHandler {
     
     return YES;
 }
@@ -149,12 +149,12 @@
     return YES;
 }
 
--(void)onConversionDataReceived:(NSDictionary*) installData {
+- (void)onConversionDataReceived:(NSDictionary*) installData {
     //Handle Conversion Data (Deferred Deep Link)
     NSLog(@"installData = %@", installData);
 }
 
--(void)onConversionDataRequestFailure:(NSError *) error {
+- (void)onConversionDataRequestFailure:(NSError *) error {
     NSLog(@"error = %@",error);
 }
 

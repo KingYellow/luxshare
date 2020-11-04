@@ -9,7 +9,7 @@
 #import "zyyy_DateListView.h"
 #import "zyyy_DateView.h"
 #import "DateModel.h"
-#import "animationLabel.h"
+#import "AnimationLabel.h"
 #import "UIColor+Hex.h"
 #import "UIView+Frame.h"
 #define IPHONEHIGHT(b) [UIScreen mainScreen].bounds.size.height*((b)/1334.0)
@@ -31,11 +31,11 @@
     zyyy_DateView *dateViewLast;
     zyyy_DateView *dateViewNext;
     
-    animationLabel *visibleDateLabel;
+    AnimationLabel *visibleDateLabel;
 }
 @end
 @implementation zyyy_DateListView
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
     if ([object isEqual:dateViewCurrent]&&[keyPath isEqualToString:@"selectedMonth"]) {
         visibleDateLabel.changeStr = [NSString stringWithFormat:@"%ld-%ld",dateViewCurrent.selectedYear,dateViewCurrent.selectedMonth];
     }
@@ -53,7 +53,7 @@
 
 
 #pragma mark -UIScroviewDelegate
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
     
     if (!scrollView.dragging) {
@@ -88,20 +88,20 @@
         }
   
 }
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     scrollView.scrollEnabled = YES;
 }
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     scrollView.scrollEnabled = YES;
 }
 #pragma mark -zyyy_DateViewDelegate
--(void)selectedDic:(NSDictionary *)dic{
+- (void)selectedDic:(NSDictionary *)dic{
     NSLog(@"%@",dic);
     self.selectDateBlock(dic);
     [self dismiss];
 }
 
--(void)initConfigs{
+- (void)initConfigs{
      width = self.frame.size.width;
      height = self.frame.size.height;
      self.backgroundColor = QZHKIT_Color_BLACK_54;
@@ -117,7 +117,7 @@
      CGFloat Topheight = IPHONEHIGHT(80);
      CGFloat visibleDateLabelWidth = IPHONEWIDTH(200);
      //年月月份
-     visibleDateLabel = [[animationLabel alloc]initWithFrame:CGRectMake(0, 0, visibleDateLabelWidth, Topheight) labelStr:[NSString stringWithFormat:@"%ld-%ld",[DateModel shareDateModel].year,[DateModel shareDateModel].month]];
+     visibleDateLabel = [[AnimationLabel alloc]initWithFrame:CGRectMake(0, 0, visibleDateLabelWidth, Topheight) labelStr:[NSString stringWithFormat:@"%ld-%ld",[DateModel shareDateModel].year,[DateModel shareDateModel].month]];
      
      visibleDateLabel.center = CGPointMake(contentWidth/2, Topheight/2);
      

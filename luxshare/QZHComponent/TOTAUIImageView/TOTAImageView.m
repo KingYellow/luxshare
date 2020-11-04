@@ -10,7 +10,7 @@
 
 @implementation TOTAImageView
 
--(instancetype)init{
+- (instancetype)init{
     if (self = [super init]) {
         [self addSubview:self.placeLab];
         self.frame = CGRectMake(0, 0, 36, 36);
@@ -80,7 +80,7 @@
     return;
 }
 #pragma lazy
--(UILabel *)placeLab{
+- (UILabel *)placeLab{
     if (!_placeLab) {
         _placeLab = [[UILabel alloc] init];
         _placeLab.textColor = QZHKIT_Color_BLACK_54;

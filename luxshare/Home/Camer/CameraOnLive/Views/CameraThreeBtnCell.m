@@ -50,7 +50,7 @@
     
 }
 #pragma mark -lazy
--(UIView *)bigView{
+- (UIView *)bigView{
     if (!_bigView) {
         _bigView = [[UIView alloc] init];
         _bigView.backgroundColor = QZHColorWhite;
@@ -59,7 +59,7 @@
     return _bigView;
 }
 
--(UIButton *)leftBtn{
+- (UIButton *)leftBtn{
     if (!_leftBtn) {
         _leftBtn = [[UIButton alloc] init];
         [_leftBtn setTitle:QZHLoaclString(@"record") forState:UIControlStateNormal];
@@ -75,7 +75,7 @@
 }
 
 
--(UIButton *)midBtn{
+- (UIButton *)midBtn{
     if (!_midBtn) {
         _midBtn = [[UIButton alloc] init];
         [_midBtn setTitle:QZHLoaclString(@"talk") forState:UIControlStateNormal];
@@ -90,7 +90,7 @@
     return _midBtn;
 }
 
--(UIButton *)rightBtn{
+- (UIButton *)rightBtn{
     if (!_rightBtn) {
         _rightBtn = [[UIButton alloc] init];
         [_rightBtn setTitle:QZHLoaclString(@"shot") forState:UIControlStateNormal];

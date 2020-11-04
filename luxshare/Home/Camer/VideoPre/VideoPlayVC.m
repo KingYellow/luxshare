@@ -17,7 +17,7 @@
 
 @implementation VideoPlayVC
 
--(void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.player pause];
 }
@@ -53,18 +53,18 @@
     [self.player play];
 }
 
--(void)wmplayerFinishedPlay:(WMPlayer *)wmplayer;{
+- (void)wmplayerFinishedPlay:(WMPlayer *)wmplayer;{
 //    self.state = WMPlayerStateFinished;
     [self.player pause];
     self.playBtn.hidden = NO;
     
 }
--(void)wmplayerReadyToPlay:(WMPlayer *)wmplayer WMPlayerStatus:(WMPlayerState)state{
+- (void)wmplayerReadyToPlay:(WMPlayer *)wmplayer WMPlayerStatus:(WMPlayerState)state{
     self.state = state;
     self.playBtn.hidden = YES;
 }
 
--(void)wmplayer:(WMPlayer *)wmplayer clickedPlayOrPauseButton:(UIButton *)playOrPauseBtn{
+- (void)wmplayer:(WMPlayer *)wmplayer clickedPlayOrPauseButton:(UIButton *)playOrPauseBtn{
 //    [self.player play];
     if (self.state == WMPlayerStateFinished) {
         [self.player play];
@@ -83,13 +83,13 @@
 
 }
 //点击关闭按钮代理方法
--(void)wmplayer:(WMPlayer *)wmplayer clickedCloseButton:(UIButton *)backBtn;{
+- (void)wmplayer:(WMPlayer *)wmplayer clickedCloseButton:(UIButton *)backBtn;{
     [self.player removeFromSuperview];
 
     [self.navigationController popViewControllerAnimated:YES];
 }
 //点击全屏按钮代理方法
--(void)wmplayer:(WMPlayer *)wmplayer clickedFullScreenButton:(UIButton *)fullScreenBtn;{
+- (void)wmplayer:(WMPlayer *)wmplayer clickedFullScreenButton:(UIButton *)fullScreenBtn;{
 
     
    //顺时针 旋转180度(有BUG)
@@ -119,7 +119,7 @@
     }
 }
 #pragma mark -- lazy
--(UIButton *)playBtn{
+- (UIButton *)playBtn{
     if (!_playBtn) {
         _playBtn = [[UIButton alloc] init];
         [_playBtn setImage:QZHLoadIcon(@"btn_doc_video_play_video") forState:UIControlStateNormal];

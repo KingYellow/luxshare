@@ -14,7 +14,7 @@ typedef void (^btnblock)(BOOL isselected);
 @interface WarningVC : UIViewController
 
 @property (copy, nonatomic)btnblock btnAction;
--(void)rightAction;
+- (void)rightAction;
 @end
 
 

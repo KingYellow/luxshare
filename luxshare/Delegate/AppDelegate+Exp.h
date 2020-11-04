@@ -40,10 +40,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)exp_applicationWillEnterForeground:(UIApplication *)application;
 
 ///Universal Links唤醒
--(BOOL)exp_application:(UIApplication*)application continueUserActivity:(NSUserActivity*)userActivity restorationHandler:(void(^)(NSArray* _Nullable))restorationHandler;
+- (BOOL)exp_application:(UIApplication*)application continueUserActivity:(NSUserActivity*)userActivity restorationHandler:(void(^)(NSArray* _Nullable))restorationHandler;
 
 ///- 程序内存警告，可能要终止程序
--(void)exp_applicationDidReceiveMemoryWarning:(UIApplication *)application;
+- (void)exp_applicationDidReceiveMemoryWarning:(UIApplication *)application;
 
 ///- 程序即将退出
 - (void)exp_applicationWillTerminate:(UIApplication *)application;

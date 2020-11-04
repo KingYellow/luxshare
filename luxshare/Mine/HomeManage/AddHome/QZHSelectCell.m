@@ -35,7 +35,7 @@
     
 }
 #pragma mark -lazy
--(UILabel *)nameLab{
+- (UILabel *)nameLab{
     if (!_nameLab) {
         _nameLab = [[UILabel alloc] init];
         _nameLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
@@ -43,7 +43,7 @@
     }
     return  _nameLab;
 }
--(UIButton *)selectBtn{
+- (UIButton *)selectBtn{
     if (!_selectBtn) {
         _selectBtn = [[UIButton alloc] init];
         [_selectBtn setImage:QZHLoadIcon(@"pay_normal") forState:UIControlStateNormal];

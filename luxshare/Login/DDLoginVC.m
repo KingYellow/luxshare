@@ -42,7 +42,7 @@
 
     [self.navigationItem.titleView sizeThatFits:CGSizeMake(100, 44)];
 }
--(void)exp_rightAction{
+- (void)exp_rightAction{
     RegisterVC *vc = [[RegisterVC alloc] init];
     vc.titleText = QZHLoaclString(@"register");
     [self.navigationController pushViewController:vc animated:YES];
@@ -127,7 +127,7 @@
 }
 
 #pragma mark  -- getter
--(UITextField *)phoneText{
+- (UITextField *)phoneText{
     if (!_phoneText) {
         UITextField *text= [[UITextField alloc] init];
         text.placeholder = QZHLoaclString(@"login_account");
@@ -140,7 +140,7 @@
     }
     return _phoneText;
 }
--(UITextField *)passwordText{
+- (UITextField *)passwordText{
     if (!_passwordText) {
         UITextField *text= [[UITextField alloc] init];
         text.placeholder = QZHLoaclString(@"login_password");
@@ -157,7 +157,7 @@
     return _passwordText;
 }
 
--(UIButton *)submitBtn{
+- (UIButton *)submitBtn{
     if (!_submitBtn) {
         _submitBtn = [[UIButton alloc] init];
         [_submitBtn setTitle:QZHLoaclString(@"login") forState:UIControlStateNormal];
@@ -172,7 +172,7 @@
     return _submitBtn;
 }
 
--(UIButton *)messageBtn{
+- (UIButton *)messageBtn{
     if (!_messageBtn) {
         _messageBtn = [[UIButton alloc] init];
         [_messageBtn setTitle:QZHLoaclString(@"login_loginWithMessage") forState:UIControlStateNormal];
@@ -184,7 +184,7 @@
     }
     return _messageBtn;
 }
--(UIButton *)forgetBtn{
+- (UIButton *)forgetBtn{
     if (!_forgetBtn) {
         _forgetBtn = [[UIButton alloc] init];
         [_forgetBtn setTitle:QZHLoaclString(@"login_forgetPassword") forState:UIControlStateNormal];
@@ -196,7 +196,7 @@
     return _forgetBtn;
 }
 //显示密码
--(UIButton *)openBtn{
+- (UIButton *)openBtn{
     if (!_openBtn) {
         UIButton *button = [[UIButton alloc] init];
         button.frame = CGRectMake(0, 0, 24, 24);

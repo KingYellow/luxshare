@@ -25,7 +25,6 @@ target 'luxshare' do
   pod 'UMCCommon'
   pod 'UMCSecurityPlugins'
   pod 'UMCPush'
-#  pod 'STPopup'
   pod 'SGQRCode', '~> 3.0.1'
   pod 'IQKeyboardManager'
   pod 'WMPlayer',  :git => 'https://github.com/zhengwenming/WMPlayer.git'

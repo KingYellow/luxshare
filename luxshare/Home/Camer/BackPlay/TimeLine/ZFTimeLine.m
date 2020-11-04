@@ -50,7 +50,7 @@
     }
     return self;
 }
--(void)layoutSubviews{
+- (void)layoutSubviews{
     [self setNeedsDisplay];
 }
 #pragma mark --- 触摸事件
@@ -64,7 +64,7 @@
     self.userInteractionEnabled = YES;
 }
 //刷新,但不改变时间
--(void)refresh{
+- (void)refresh{
     [self setNeedsDisplay];
 }
 #pragma mark --- 刷新到当到前时间
@@ -88,7 +88,7 @@
 //    }
 }
 #pragma mark --- 获取时间轴指向的时间
--(NSString *)currentTimeStr{
+- (NSString *)currentTimeStr{
     return [self projectTimeWithInterval:currentInterval];
 }
 //设置中心刻度为当前时间
@@ -105,7 +105,7 @@
         return 6.0/intervalValue;
     }
 }
--(void)drawRect:(CGRect)rect{
+- (void)drawRect:(CGRect)rect{
     NSTimeInterval centerLeftInterval;
     NSTimeInterval centerRightInterval;
     NSTimeInterval zeroInterval = [self getZeroInterval:currentInterval];
@@ -174,7 +174,7 @@
     [self drawCenterLine:rect.size.width/2 context:contex height:rect.size.height];
 }
 #pragma mark --- 画小刻度
--(void)drawSmallScale:(float)x context:(CGContextRef)ctx height:(float)height{
+- (void)drawSmallScale:(float)x context:(CGContextRef)ctx height:(float)height{
     // 创建一个新的空图形路径。
     CGContextBeginPath(ctx);
     
@@ -188,7 +188,7 @@
     CGContextStrokePath(ctx);
 }
 #pragma mark --- 画大刻度
--(void)drawBigScale:(float)x context:(CGContextRef)ctx height:(float)height{
+- (void)drawBigScale:(float)x context:(CGContextRef)ctx height:(float)height{
     // 创建一个新的空图形路径。
     CGContextBeginPath(ctx);
     
@@ -202,7 +202,7 @@
     CGContextStrokePath(ctx);
 }
 #pragma mark --- 画中间线
--(void)drawCenterLine:(float)x context:(CGContextRef)ctx height:(float)height{
+- (void)drawCenterLine:(float)x context:(CGContextRef)ctx height:(float)height{
     // 创建一个新的空图形路径。
     CGContextBeginPath(ctx);
     
@@ -216,7 +216,7 @@
     CGContextStrokePath(ctx);
 }
 #pragma mark --> 在刻度上标记文本
--(void)drawText:(float)x interval:(NSTimeInterval)interval context:(CGContextRef)ctx height:(float)height{
+- (void)drawText:(float)x interval:(NSTimeInterval)interval context:(CGContextRef)ctx height:(float)height{
     NSString *text = [self timeWithInterval:interval];
     CGContextSetRGBFillColor(ctx, 1, 0, 0, 1);
     UIFont *font = [UIFont systemFontOfSize:10];
@@ -225,22 +225,22 @@
     [text drawInRect:CGRectMake(x-15, height-21, 30, 10) withAttributes:@{NSFontAttributeName : font,NSForegroundColorAttributeName:[UIColor whiteColor],NSParagraphStyleAttributeName:paragraph}];
 }
 #pragma mark --- 时间戳转 显示的时刻文字
--(NSString *)timeWithInterval:(NSTimeInterval)interval{
+- (NSString *)timeWithInterval:(NSTimeInterval)interval{
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
     return [formatterScale stringFromDate:date];
 }
 #pragma mark --- 文字转时间戳
--(NSTimeInterval)intervalWithTime:(NSString *)time{
+- (NSTimeInterval)intervalWithTime:(NSString *)time{
     NSDate *date = [formatterProject dateFromString:time];
     return [date timeIntervalSince1970];
 }
 #pragma mark --- 时间戳转 当前的时间 格式举例: 20170814122034
--(NSString *)projectTimeWithInterval:(NSTimeInterval)interval{
+- (NSString *)projectTimeWithInterval:(NSTimeInterval)interval{
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
     return [formatterProject stringFromDate:date];
 }
 #pragma mark --- 绿色色块
--(void)drawGreenRect:(float)x Context:(CGContextRef)ctx length:(float)length{
+- (void)drawGreenRect:(float)x Context:(CGContextRef)ctx length:(float)length{
     // 创建一个新的空图形路径。
     CGContextBeginPath(ctx);
     CGContextMoveToPoint(ctx, x, 0.0);
@@ -256,7 +256,7 @@
     
 }
 #pragma mark --- 绿色色块
--(void)drawRedRect:(float)x Context:(CGContextRef)ctx length:(float)length{
+- (void)drawRedRect:(float)x Context:(CGContextRef)ctx length:(float)length{
     // 创建一个新的空图形路径。
     CGContextBeginPath(ctx);
     
@@ -275,7 +275,7 @@
     CGContextFillPath(ctx);
     
 }
--(void)setDateArr:(NSArray *)dateArr{
+- (void)setDateArr:(NSArray *)dateArr{
     _dateArr = dateArr;
     if (dateArr.count > 0) {
         NSDictionary *d = self.dateArr.firstObject;
@@ -453,7 +453,7 @@
     NSTimeInterval lastTimeInterval = [self intervalWithTime:dateStr];
     return lastTimeInterval;
 }
--(void)setIsHor:(BOOL)isHor{
+- (void)setIsHor:(BOOL)isHor{
     _isHor = isHor;
 }
 @end

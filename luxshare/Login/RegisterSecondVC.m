@@ -117,7 +117,7 @@
 
 #pragma mark  -- getter
 
--(UITextField *)passwordText{
+- (UITextField *)passwordText{
     if (!_passwordText) {
         UITextField *text= [[UITextField alloc] init];
         text.placeholder = QZHLoaclString(@"login_password");
@@ -134,7 +134,7 @@
     return _passwordText;
 }
 
--(UIButton *)submitBtn{
+- (UIButton *)submitBtn{
     if (!_submitBtn) {
         _submitBtn = [[UIButton alloc] init];
         [_submitBtn setTitle:QZHLoaclString(@"submit") forState:UIControlStateNormal];
@@ -151,7 +151,7 @@
 
 
 //显示密码
--(UIButton *)openBtn{
+- (UIButton *)openBtn{
     if (!_openBtn) {
         UIButton *button = [[UIButton alloc] init];
         button.frame = CGRectMake(0, 0, 24, 24);
@@ -162,7 +162,7 @@
     }
     return _openBtn;
 }
--(CodeButton *)sendBtn{
+- (CodeButton *)sendBtn{
     if (!_sendBtn) {
         _sendBtn = [[CodeButton alloc] init];
         
@@ -175,7 +175,7 @@
     }
     return _sendBtn;
 }
--(UITextField *)codeText{
+- (UITextField *)codeText{
     if (!_codeText) {
         UITextField *text= [[UITextField alloc] init];
         text.placeholder = QZHLoaclString(@"login_verifyCode");
@@ -335,7 +335,7 @@
         return QZHLoaclString(@"reGet");
     }];
 }
--(void)checkVertifyCode{
+- (void)checkVertifyCode{
     NSInteger type = 1;
     if ([self.titleText isEqualToString:QZHLoaclString(@"login_getPassword")]||[self.titleText isEqualToString:QZHLoaclString(@"login_resetPassword")]){
         //重置密码

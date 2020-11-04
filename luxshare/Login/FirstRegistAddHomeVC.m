@@ -53,14 +53,14 @@
     }];
     
 }
--(UIImageView *)logoIMG{
+- (UIImageView *)logoIMG{
     if (!_logoIMG) {
         _logoIMG = [[UIImageView alloc] init];
         _logoIMG.image = QZHLoadIcon(@"icon-83.5");
     }
     return _logoIMG;
 }
--(UIButton *)submitBtn{
+- (UIButton *)submitBtn{
     if (!_submitBtn) {
         _submitBtn = [[UIButton alloc] init];
         [_submitBtn setTitle:QZHLoaclString(@"home_addHome") forState:UIControlStateNormal];
@@ -72,7 +72,7 @@
     }
     return _submitBtn;
 }
--(UIButton *)logoutBtn{
+- (UIButton *)logoutBtn{
     if (!_logoutBtn) {
         _logoutBtn = [[UIButton alloc] init];
         [_logoutBtn setTitle:QZHLoaclString(@"logout") forState:UIControlStateNormal];

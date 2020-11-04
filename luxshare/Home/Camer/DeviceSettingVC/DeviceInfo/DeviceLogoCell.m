@@ -10,7 +10,7 @@
 
 @implementation DeviceLogoCell
 
--(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.backgroundColor = QZH_KIT_Color_WHITE_100;
         [self creatSubViews];
@@ -26,7 +26,7 @@
     }];
     
 }
--(UIImageView *)logoIMG{
+- (UIImageView *)logoIMG{
     if (!_logoIMG) {
         _logoIMG = [[UIImageView alloc] init];
         _logoIMG.contentMode = UIViewContentModeScaleAspectFit;

@@ -20,7 +20,7 @@
 @end
 
 @implementation DeviceListVC
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     if (self.listArr.count == 0) {
         self.qzTableView.hidden = YES;
@@ -70,7 +70,7 @@
 }
 
 #pragma mark -tableView
--(UITableView *)qzTableView{
+- (UITableView *)qzTableView{
     if (!_qzTableView) {
         _qzTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         [_qzTableView exp_tableViewDefault];
@@ -90,7 +90,7 @@
     }
     return _qzTableView;
 }
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = indexPath.row;
         
     DeviceListCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
@@ -120,7 +120,7 @@
         return cell;
 
 }
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -128,18 +128,18 @@
     return self.listArr.count;
     
 }
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 80;
 }
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.00001;
 }
--(void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
     view.tintColor = QZHKIT_COLOR_LEADBACK;
 }
 
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     NSInteger row = indexPath.row;
     TuyaSmartDeviceModel *model = self.listArr[row];
@@ -203,7 +203,7 @@
     [self presentViewController:alertC animated:NO completion:nil];
 }
 #pragma mark --lazy
--(UILabel *)tipLab{
+- (UILabel *)tipLab{
     if (!_tipLab) {
         _tipLab = [[UILabel alloc] init];
         _tipLab.text = QZHLoaclString(@"noData");
@@ -211,7 +211,7 @@
     }
     return _tipLab;
 }
--(UIButton *)addBtn{
+- (UIButton *)addBtn{
     if (!_addBtn) {
         _addBtn = [[UIButton alloc] init];
         _addBtn.backgroundColor = QZH_KIT_Color_WHITE_100;

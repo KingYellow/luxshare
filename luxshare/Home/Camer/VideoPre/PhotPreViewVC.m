@@ -51,14 +51,14 @@
     }];
     
 }
--(UIImageView *)photoIMG{
+- (UIImageView *)photoIMG{
     if (!_photoIMG) {
         _photoIMG = [[UIImageView alloc] init];
         _photoIMG.userInteractionEnabled = YES;
     }
     return _photoIMG;
 }
--(UIButton *)horizontalBtn{
+- (UIButton *)horizontalBtn{
     if (!_horizontalBtn) {
         _horizontalBtn = [[UIButton alloc] init];
         [_horizontalBtn setImage:QZHLoadIcon(@"ic_full_screen") forState:UIControlStateNormal];

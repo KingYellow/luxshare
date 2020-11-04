@@ -13,7 +13,7 @@
 //获得某年某月第一天周几
 +(NSInteger)GetTheWeekOfDayByYera:(NSInteger)year
                  andByMonth:(NSInteger)month{
-    int numWeek = ((year-1)+ (year-1)/4-(year-1)/100+(year-1)/400+1)%7;//numWeek为years年的第一天是星期几
+    int numWeek = ((year-1)+ (year-1)/4- (year-1)/100+(year-1)/400+1)%7;//numWeek为years年的第一天是星期几
     //NSLog(@"%d",numWeek);
     int ar[12] = {0,31,59,90,120,151,181,212,243,273,304,334};
     int numdays = (((year/4==0&&year/100!=0)||(year/400==0))&&(month>2))?(ar[month-1]+1):(ar[month-1]);//numdays为month月years年的第一天是这一年的第几天

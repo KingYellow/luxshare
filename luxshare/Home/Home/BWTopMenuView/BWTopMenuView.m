@@ -183,7 +183,7 @@ static CGFloat const lineH = 2.0;
     return _buttonArray;
 }
 
--(UIView *)indicatorView{
+- (UIView *)indicatorView{
     if (!_indicatorView) {
         _indicatorView = [[UIView alloc] init];
     }

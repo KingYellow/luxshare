@@ -48,14 +48,14 @@
          make.left.bottom.right.mas_equalTo(0);
      }];
 }
--(void)exp_rightAction{
+- (void)exp_rightAction{
     [QZHDataHelper saveValue:@(self.selectIndex) forKey:@"talkType"];
     self.refresh();
     [self.navigationController popViewControllerAnimated:YES];
 
 }
 #pragma mark -tableView
--(UITableView *)qzTableView{
+- (UITableView *)qzTableView{
     if (!_qzTableView) {
         _qzTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         [_qzTableView exp_tableViewDefault];
@@ -68,7 +68,7 @@
     return _qzTableView;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = indexPath.row;
     TalkTypeCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
     if (row == 0) {
@@ -91,14 +91,14 @@
  
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 2;
    
 }
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         return 80;
     }else{
@@ -106,19 +106,19 @@
     }
 }
 
--(void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
     view.tintColor = QZHKIT_COLOR_LEADBACK;
 }
 
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
 }
 
 
 #pragma mark --lazy
 
--(TuyaSmartHome *)home{
+- (TuyaSmartHome *)home{
     if (!_home) {
         self.home =[TuyaSmartHome homeWithHomeId:self.homeModel.homeId];
     }
@@ -134,7 +134,7 @@
     }
     [self.qzTableView reloadData];
 }
--(UILabel *)tipLab{
+- (UILabel *)tipLab{
     if (!_tipLab) {
         _tipLab = [[UILabel alloc] init];
         _tipLab.font = QZHKIT_FONT_LISTCELL_DESCRIBE_TITLE;

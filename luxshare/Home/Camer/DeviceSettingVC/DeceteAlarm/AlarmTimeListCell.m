@@ -10,7 +10,7 @@
 
 @implementation AlarmTimeListCell
 
--(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.backgroundColor = QZH_KIT_Color_WHITE_100;
         [self creatSubViews];
@@ -48,7 +48,7 @@
     }];
 }
 
--(UILabel *)timeLab{
+- (UILabel *)timeLab{
     if (!_timeLab) {
         _timeLab = [[UILabel alloc] init];
         _timeLab.textColor = QZHKIT_Color_BLACK_87;
@@ -58,7 +58,7 @@
     return _timeLab;
 }
 
--(UILabel *)weekLab{
+- (UILabel *)weekLab{
     if (!_weekLab) {
         _weekLab = [[UILabel alloc] init];
         _weekLab.textColor = QZHKIT_Color_BLACK_54;
@@ -67,7 +67,7 @@
     }
     return _weekLab;
 }
--(UILabel *)itemLab{
+- (UILabel *)itemLab{
     if (!_itemLab) {
         _itemLab = [[UILabel alloc] init];
         _itemLab.textColor = QZHKIT_Color_BLACK_54;
@@ -76,7 +76,7 @@
     }
     return _itemLab;
 }
--(UISwitch *)statusSwitch{
+- (UISwitch *)statusSwitch{
     if (!_statusSwitch) {
         _statusSwitch = [[UISwitch alloc] init];
     }

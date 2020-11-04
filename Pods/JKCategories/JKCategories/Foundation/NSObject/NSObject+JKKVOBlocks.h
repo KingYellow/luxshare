@@ -68,7 +68,7 @@ typedef void (^JKKVOBlock)(NSDictionary *change, void *context);
  @param observer 观察者,一般为其他对象(谁想监听)
  @param keyPath 监听的属性
  */
--(void)jk_removeBlockObserver:(NSObject *)observer
+- (void)jk_removeBlockObserver:(NSObject *)observer
                 forKeyPath:(NSString *)keyPath;
 
 /**
@@ -79,7 +79,7 @@ typedef void (^JKKVOBlock)(NSDictionary *change, void *context);
  @param context context
  @param block 监听回调
  */
--(void)jk_addObserverForKeyPath:(NSString *)keyPath
+- (void)jk_addObserverForKeyPath:(NSString *)keyPath
                      options:(NSKeyValueObservingOptions)options
                      context:(void *)context
                    withBlock:(JKKVOBlock)block;
@@ -89,6 +89,6 @@ typedef void (^JKKVOBlock)(NSDictionary *change, void *context);
 
  @param keyPath 监听的属性
  */
--(void)jk_removeBlockObserverForKeyPath:(NSString *)keyPath;
+- (void)jk_removeBlockObserverForKeyPath:(NSString *)keyPath;
 
 @end

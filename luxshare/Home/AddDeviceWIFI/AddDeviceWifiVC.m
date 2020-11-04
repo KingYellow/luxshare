@@ -78,7 +78,7 @@
     }
     return _indicatorIMG;
 }
--(UILabel *)titleLab{
+- (UILabel *)titleLab{
     if (!_titleLab) {
         _titleLab = [[UILabel alloc] init];
         _titleLab.font = QZHKIT_FONT_LISTCELL_DESCRIBE_TITLE;
@@ -92,7 +92,7 @@
 }
 
 
--(UIButton *)selectBtn{
+- (UIButton *)selectBtn{
     if (!_selectBtn) {
         _selectBtn = [[UIButton alloc] init];
         [_selectBtn setTitle:QZHLoaclString(@"device_lightUnnormal") forState:UIControlStateNormal];
@@ -103,7 +103,7 @@
     return _selectBtn;
 }
 
--(UIButton *)submitBtn{
+- (UIButton *)submitBtn{
     if (!_submitBtn) {
         _submitBtn = [[UIButton alloc] init];
         [_submitBtn setTitle:QZHLoaclString(@"device_lightNormal") forState:UIControlStateNormal];

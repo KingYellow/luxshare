@@ -43,7 +43,7 @@
     
 }
 #pragma mark -lazy
--(UILabel *)nameLab{
+- (UILabel *)nameLab{
     if (!_nameLab) {
         _nameLab = [[UILabel alloc] init];
         _nameLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
@@ -52,7 +52,7 @@
     return  _nameLab;
 }
 
--(UIImageView *)IMGView{
+- (UIImageView *)IMGView{
     if (!_IMGView) {
         _IMGView = [[UIImageView alloc] init];
         _IMGView.contentMode = UIViewContentModeScaleToFill;
@@ -60,7 +60,7 @@
     }
     return _IMGView;
 }
--(UILabel *)tagLab{
+- (UILabel *)tagLab{
     if (!_tagLab) {
         _tagLab = [[UILabel alloc] init];
         _tagLab.font = QZHKIT_FONT_LISTCELL_TIME_TITLE;
@@ -68,7 +68,7 @@
     }
     return  _tagLab;
 }
--(void)setDic:(NSDictionary *)dic{
+- (void)setDic:(NSDictionary *)dic{
     
     
     self.nameLab.text = [NSString stringWithFormat:@"道达信息"];

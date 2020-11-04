@@ -1,20 +1,20 @@
 //
-//  animationLabel.m
+//  AnimationLabel.m
 //  封装日历
 //
 //  Created by yurong on 2017/7/20.
 //  Copyright © 2017年 yurong. All rights reserved.
 //
 
-#import "animationLabel.h"
+#import "AnimationLabel.h"
 #import "UIColor+Hex.h"
 #import "UIView+Frame.h"
 
-@interface animationLabel ()
+@interface AnimationLabel ()
 
 
 @end
-@implementation animationLabel
+@implementation AnimationLabel
 
 - (instancetype)initWithFrame:(CGRect)frame labelStr:(NSString *)labelStr
 {
@@ -32,15 +32,16 @@
 }
 
 
--(void)setChangeStr:(NSString *)changeStr{
+- (void)setChangeStr:(NSString *)changeStr{
+    QZHWS(weakSelf)
     [UIView animateWithDuration:0.3f animations:^{
-        _changeLabel.x = self.size.width;
-        _changeLabel.alpha = 0;
+        weakSelf.changeLabel.x = self.size.width;
+        weakSelf.changeLabel.alpha = 0;
     }completion:^(BOOL finished) {
-        _changeLabel.alpha = 1;
-        _changeLabel.x = 0;
-        _changeLabel.text = changeStr;
-        _changeStr = changeStr;
+        weakSelf.changeLabel.alpha = 1;
+        weakSelf.changeLabel.x = 0;
+        weakSelf.changeLabel.text = changeStr;
+        weakSelf.changeStr = changeStr;
     }];
 }
 @end

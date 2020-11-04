@@ -86,7 +86,7 @@
     }
     return _indicatorIMG;
 }
--(UILabel *)titleLab{
+- (UILabel *)titleLab{
     if (!_titleLab) {
         _titleLab = [[UILabel alloc] init];
         _titleLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
@@ -98,7 +98,7 @@
     return _titleLab;
 }
 
--(UILabel *)subLab{
+- (UILabel *)subLab{
     if (!_subLab) {
         _subLab = [[UILabel alloc] init];
         _subLab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
@@ -109,7 +109,7 @@
     }
     return _subLab;
 }
--(UIButton *)selectBtn{
+- (UIButton *)selectBtn{
     if (!_selectBtn) {
         _selectBtn = [[UIButton alloc] init];
         [_selectBtn setImage:QZHLoadIcon(@"pay_normal") forState:UIControlStateNormal];
@@ -119,7 +119,7 @@
     return _selectBtn;
 }
 
--(UILabel *)tipLab{
+- (UILabel *)tipLab{
     if (!_tipLab) {
         _tipLab = [[UILabel alloc] init];
         _tipLab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
@@ -129,7 +129,7 @@
     }
     return _tipLab;
 }
--(UIButton *)submitBtn{
+- (UIButton *)submitBtn{
     if (!_submitBtn) {
         _submitBtn = [[UIButton alloc] init];
         [_submitBtn setTitle:QZHLoaclString(@"nextstep") forState:UIControlStateNormal];

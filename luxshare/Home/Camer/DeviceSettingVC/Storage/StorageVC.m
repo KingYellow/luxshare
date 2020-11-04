@@ -52,7 +52,7 @@
 }
 
 #pragma mark -tableView
--(UITableView *)qzTableView{
+- (UITableView *)qzTableView{
     if (!_qzTableView) {
         _qzTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         [_qzTableView exp_tableViewDefault];
@@ -68,7 +68,7 @@
     return _qzTableView;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     if (section == 0) {
@@ -130,7 +130,7 @@
     }
  
 }
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
         UIView *view = [[UIView alloc] init];
         UILabel *lab = [[UILabel alloc] init];
 
@@ -147,7 +147,7 @@
         return view;
 
 }
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
    
     return 3;
 }
@@ -162,22 +162,22 @@
     }
     
 }
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 60;
 }
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 2) {
         return 20;
     }
      return 50;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
     view.tintColor = QZHKIT_COLOR_LEADBACK;
 }
 
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = indexPath.row;
     NSInteger section = indexPath.section;
     
@@ -250,7 +250,7 @@
     }];
 }
 
--(FormatProgressView *)progessView{
+- (FormatProgressView *)progessView{
     if (!_progessView) {
         _progessView = [[FormatProgressView alloc] init];
         self.progessView.backgroundColor = QZHKIT_Color_BLACK_26;
@@ -263,7 +263,7 @@
 }
 
 #pragma mark -- 录像模式
--(void)creatActionSheet {
+- (void)creatActionSheet {
 
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"recordModel") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 

@@ -13,7 +13,7 @@ static NSString *nameKey = @"nameKey"; //name的key
 
 
 @implementation TuyaSmartMessageListModel (EXP)
--(void)setSelect:(NSString *)select{
+- (void)setSelect:(NSString *)select{
     objc_setAssociatedObject(self, &nameKey, select, OBJC_ASSOCIATION_COPY);
 
 }

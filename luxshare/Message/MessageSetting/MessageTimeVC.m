@@ -51,7 +51,7 @@
     self.rightMin = @"00";
     [self UIConfig];
 }
--(void)exp_rightAction{
+- (void)exp_rightAction{
     if (self.listArr.count) {
             
         NSMutableArray *weekArr = [NSMutableArray array];
@@ -133,7 +133,7 @@
 }
 #pragma mark -- lazy
 
--(UIPickerView *)leftPicker{
+- (UIPickerView *)leftPicker{
     if (!_leftPicker) {
         _leftPicker = [[UIPickerView alloc] init];
         _leftPicker.dataSource =self;
@@ -141,7 +141,7 @@
     }
     return _leftPicker;
 }
--(UIPickerView *)rightPicker{
+- (UIPickerView *)rightPicker{
     if (!_rightPicker) {
         _rightPicker = [[UIPickerView alloc] init];
         _rightPicker.dataSource =self;
@@ -149,7 +149,7 @@
     }
     return _rightPicker;
 }
--(UILabel *)leftTimeLab{
+- (UILabel *)leftTimeLab{
     if (!_leftTimeLab) {
         _leftTimeLab = [[UILabel alloc] init];
         _leftTimeLab.textColor = QZHKIT_Color_BLACK_87;
@@ -159,7 +159,7 @@
     }
     return _leftTimeLab;
 }
--(UILabel *)rightTimeLab{
+- (UILabel *)rightTimeLab{
     if (!_rightTimeLab) {
         _rightTimeLab = [[UILabel alloc] init];
         _rightTimeLab.textColor = QZHKIT_Color_BLACK_87;
@@ -170,7 +170,7 @@
     }
     return _rightTimeLab;
 }
--(UILabel *)yesterdayLab{
+- (UILabel *)yesterdayLab{
     if (!_yesterdayLab) {
         _yesterdayLab = [[UILabel alloc] init];
         _yesterdayLab.textColor = QZHKIT_Color_BLACK_87;
@@ -181,7 +181,7 @@
     }
     return _yesterdayLab;
 }
--(NSMutableArray *)hourArr{
+- (NSMutableArray *)hourArr{
     if (!_hourArr) {
         _hourArr = [NSMutableArray array];
         for (int i=0; i < 24; i++) {
@@ -190,7 +190,7 @@
     }
     return _hourArr;
 }
--(NSMutableArray *)minArr{
+- (NSMutableArray *)minArr{
     if (!_minArr) {
         _minArr = [NSMutableArray array];
         for (int i=0; i < 60; i++) {
@@ -199,7 +199,7 @@
     }
     return _minArr;
 }
--(NSArray *)listArr{
+- (NSArray *)listArr{
     if (!_listArr) {
         _listArr = [NSArray array];
     }

@@ -11,7 +11,7 @@
 
 @implementation UIImageView (Gif)
 //加载动画
--(void)startPlayGifWithImages:(NSArray *)imgArr{
+- (void)startPlayGifWithImages:(NSArray *)imgArr{
 
     __block NSString *str = imgArr.firstObject;
     self.image = [UIImage imageNamed:str];
@@ -49,7 +49,7 @@
     dispatch_resume(self.timer);
 }
 //停止动画
--(void)stopGif{
+- (void)stopGif{
     if (self.timer) {
         dispatch_source_cancel(self.timer);
     }
@@ -58,12 +58,12 @@
 }
 
 
--(void)setTimer:(dispatch_source_t)timer{
+- (void)setTimer:(dispatch_source_t)timer{
     objc_setAssociatedObject(self, @"timerkey", timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
 
 }
--(dispatch_source_t)timer{
+- (dispatch_source_t)timer{
     return objc_getAssociatedObject(self, @"timerkey");
 
 }

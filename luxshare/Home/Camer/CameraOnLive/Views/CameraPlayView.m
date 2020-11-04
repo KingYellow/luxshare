@@ -10,7 +10,7 @@
 
 @implementation CameraPlayView
 
--(instancetype)init{
+- (instancetype)init{
     if (self = [super init]) {
         [self creatSubViews];
         self.backgroundColor = UIColor.blackColor;
@@ -129,7 +129,7 @@
 }
 #pragma mark -lazy
 
--(UIButton *)playBtn{
+- (UIButton *)playBtn{
     if (!_playBtn) {
         _playBtn = [[UIButton alloc] init];
         [_playBtn setImage:QZHLoadIcon(@"btn_doc_video_play_video") forState:UIControlStateNormal];
@@ -138,7 +138,7 @@
     }
     return _playBtn;
 }
--(UIButton *)voiceBtn{
+- (UIButton *)voiceBtn{
     if (!_voiceBtn) {
         _voiceBtn = [[UIButton alloc] init];
         [_voiceBtn setImage:QZHLoadIcon(@"camera_preview_sound_btn_on") forState:UIControlStateNormal];
@@ -149,7 +149,7 @@
     }
     return _voiceBtn;
 }
--(UIButton *)definitionBtn{
+- (UIButton *)definitionBtn{
     if (!_definitionBtn) {
         _definitionBtn = [[UIButton alloc] init];
         [_definitionBtn setTitle:QZHLoaclString(@"HD") forState:UIControlStateNormal];
@@ -161,7 +161,7 @@
     }
     return _definitionBtn;
 }
--(UIButton *)horizontalBtn{
+- (UIButton *)horizontalBtn{
     if (!_horizontalBtn) {
         _horizontalBtn = [[UIButton alloc] init];
         [_horizontalBtn setImage:QZHLoadIcon(@"ic_full_screen") forState:UIControlStateNormal];
@@ -174,7 +174,7 @@
     return _horizontalBtn;
 }
 
--(UIButton *)videoTalkBtn{
+- (UIButton *)videoTalkBtn{
     if (!_videoTalkBtn) {
         _videoTalkBtn = [[UIButton alloc] init];
         [_videoTalkBtn setTitle:QZHLoaclString(@"talk") forState:UIControlStateNormal];
@@ -188,7 +188,7 @@
     }
     return _videoTalkBtn;
 }
--(UIButton *)videoPhotoBtn{
+- (UIButton *)videoPhotoBtn{
     if (!_videoPhotoBtn) {
         _videoPhotoBtn = [[UIButton alloc] init];
         [_videoPhotoBtn setTitle:QZHLoaclString(@"shot") forState:UIControlStateNormal];
@@ -201,7 +201,7 @@
     }
     return _videoPhotoBtn;
 }
--(UIButton *)videoRecordBtn{
+- (UIButton *)videoRecordBtn{
     if (!_videoRecordBtn) {
         _videoRecordBtn = [[UIButton alloc] init];
         [_videoRecordBtn setTitle:QZHLoaclString(@"record") forState:UIControlStateNormal];
@@ -235,7 +235,7 @@
     }
     return _batteryIMG;
 }
--(RecordProgressView *)recordProgressView{
+- (RecordProgressView *)recordProgressView{
     if (!_recordProgressView) {
         _recordProgressView = [[RecordProgressView alloc] init];
         _recordProgressView.typeLab.text = QZHLoaclString(@"recording");
@@ -245,7 +245,7 @@
     }
     return _recordProgressView;
 }
--(RecordProgressView *)talkProgressView{
+- (RecordProgressView *)talkProgressView{
     if (!_talkProgressView) {
         _talkProgressView = [[RecordProgressView alloc] init];
         _talkProgressView.typeLab.text = QZHLoaclString(@"talking");

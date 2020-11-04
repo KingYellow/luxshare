@@ -44,7 +44,7 @@
     
 }
 #pragma mark -lazy
--(UILabel *)priceLab{
+- (UILabel *)priceLab{
     if (!_priceLab) {
         _priceLab = [[UILabel alloc] init];
         _priceLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
@@ -52,7 +52,7 @@
     }
     return  _priceLab;
 }
--(UILabel *)weightLab{
+- (UILabel *)weightLab{
     if (!_weightLab) {
         _weightLab = [[UILabel alloc] init];
         _weightLab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
@@ -61,7 +61,7 @@
     }
     return  _weightLab;
 }
--(UILabel *)timeLab{
+- (UILabel *)timeLab{
     if (!_timeLab) {
         _timeLab = [[UILabel alloc] init];
         _timeLab.font = QZHKIT_FONT_LISTCELL_TIME_TITLE;
@@ -70,7 +70,7 @@
     }
     return  _timeLab;
 }
--(UIImageView *)IMGView{
+- (UIImageView *)IMGView{
     if (!_IMGView) {
         _IMGView = [[UIImageView alloc] init];
         _IMGView.contentMode = UIViewContentModeScaleToFill;
@@ -79,7 +79,7 @@
     return _IMGView;
 }
 
--(void)setDic:(NSDictionary *)dic{
+- (void)setDic:(NSDictionary *)dic{
     
     
 //    self.priceLab.text = [NSString stringWithFormat:@"价格 %@ 元",dic[@"price"]];

@@ -79,14 +79,14 @@
 //    }];
 
 }
--(void)exp_leftAction{
+- (void)exp_leftAction{
     [self getHomeList];
     self.qzTableView.backgroundColor = QZHKIT_Color_BLACK_26;
     [UIView animateWithDuration:0.3 animations:^{
         self.qzTableView.frame = self.navigationController.view.frame;
     }];
 }
- -(void)exp_rightAction{
+ - (void)exp_rightAction{
      
      if (self.listArr.count == 0) {
          [[QZHHUD HUD]textHUDWithMessage:QZHLoaclString(@"firstAddHome") afterDelay:1.0];
@@ -125,7 +125,7 @@
 
 }
 //添加控制器
--(void)loadVcs:(TuyaSmartHome *)home{
+- (void)loadVcs:(TuyaSmartHome *)home{
     QZHWS(weakSelf)
     NSMutableArray *vcArr = [NSMutableArray array];
     for (int i=0; i <= home.roomList.count; i++) {
@@ -195,7 +195,7 @@
 
 //DataSource方法
 #pragma mark 返回上一个ViewController对象
--(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
     
     NSInteger nowIndex = [self.arrVcs indexOfObject:viewController];
     if (nowIndex == 0) {
@@ -206,7 +206,7 @@
 }
 
 #pragma mark 返回下一个ViewController对象
--(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
     NSInteger nowIndex = [self.arrVcs indexOfObject:viewController];
     if (nowIndex == self.arrVcs.count - 1) {
         return nil;
@@ -219,7 +219,7 @@
     }
 }
 //代理方法
--(void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray<UIViewController *> *)previousViewControllers transitionCompleted:(BOOL)completed{
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray<UIViewController *> *)previousViewControllers transitionCompleted:(BOOL)completed{
     //previousViewControllers:上一个控制器
     if (!completed) {
         return;
@@ -241,14 +241,14 @@
     }
 }
 
--(void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers{
+- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers{
     //pendingViewControllers:下一个控制器
     NSLog(@"pendingViewControllers === %@", pendingViewControllers);
     self.currentIndex = [self.arrVcs indexOfObject:pendingViewControllers.firstObject];
 }
 //点击按钮事件
 #pragma mark ----按钮点击事件
--(void)btnAction:(UIButton *)sender{
+- (void)btnAction:(UIButton *)sender{
     sender.selected = YES;
     NSInteger newSelectIndex = sender.tag - 888;
     if (self.oldSelectIndex == newSelectIndex) {
@@ -278,7 +278,7 @@
     [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
 }
 #pragma mark -tableView
--(UITableView *)qzTableView{
+- (UITableView *)qzTableView{
     if (!_qzTableView) {
         _qzTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         [_qzTableView exp_tableViewDefault];
@@ -299,7 +299,7 @@
     }
     return _qzTableView;
 }
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     if (section == 0) {
@@ -335,7 +335,7 @@
     }
  
 }
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 2;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -343,18 +343,18 @@
     return section==0?self.listArr.count:1;
     
 }
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 50;
 }
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.00001;
 }
--(void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
     view.tintColor = QZHKIT_COLOR_LEADBACK;
 }
 
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     if (section == 0) {
@@ -433,7 +433,7 @@
     }
     return _listArr;
 }
--(BWTopMenuView *)topBtnsView{
+- (BWTopMenuView *)topBtnsView{
     if (!_topBtnsView) {
         _topBtnsView = [[BWTopMenuView alloc] init];
         QZHWS(weakSelf)
@@ -444,7 +444,7 @@
     return _topBtnsView;
 }
 
--(WMZPageController *)pageController{
+- (WMZPageController *)pageController{
 
     if (!_pageController) {
         _pageController =  [WMZPageController new];
@@ -452,7 +452,7 @@
     }
     return _pageController;
 }
--(WMZPageParam *)param{
+- (WMZPageParam *)param{
     if (!_param) {
         _param = PageParam()
         .wMenuTitleSelectColorSet(QZHKIT_COLOR_SKIN)

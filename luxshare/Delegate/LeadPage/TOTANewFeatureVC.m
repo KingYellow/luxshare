@@ -61,7 +61,7 @@
 
 }
 #pragma mark -- lazy
--(UIPageControl *)pageCon{
+- (UIPageControl *)pageCon{
     if (!_pageCon) {
         UIPageControl *page = [[UIPageControl alloc]init];
         page.numberOfPages = self.datas.count;
@@ -105,7 +105,7 @@
 }
 
 
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
 
     CGFloat offsetX = scrollView.contentOffset.x;
 

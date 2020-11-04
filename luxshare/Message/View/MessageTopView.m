@@ -9,7 +9,7 @@
 #import "MessageTopView.h"
 
 @implementation MessageTopView
--(instancetype)init{
+- (instancetype)init{
     if (self = [super init]) {
         [self creatViews];
     }
@@ -39,7 +39,7 @@
         make.width.mas_equalTo(80);
     }];
 }
--(UILabel *)nameLab{
+- (UILabel *)nameLab{
     if (!_nameLab) {
         _nameLab = [[UILabel alloc] init];
         _nameLab.textColor = QZHKIT_Color_BLACK_87;
@@ -47,14 +47,14 @@
     }
     return _nameLab;
 }
--(UIButton *)normalBtn{
+- (UIButton *)normalBtn{
     if (!_normalBtn) {
         _normalBtn = [[UIButton alloc] init];
         [_normalBtn setImage:QZHLoadIcon(@"ic_select") forState:UIControlStateNormal];
     }
     return _normalBtn;
 }
--(UIButton *)selectBtn{
+- (UIButton *)selectBtn{
     if (!_selectBtn) {
         _selectBtn = [[UIButton alloc] init];
         _selectBtn.hidden = YES;

@@ -38,7 +38,7 @@
     
 }
 #pragma mark -lazy
--(UILabel *)nameLab{
+- (UILabel *)nameLab{
     if (!_nameLab) {
         _nameLab = [[UILabel alloc] init];
         _nameLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
@@ -46,7 +46,7 @@
     }
     return  _nameLab;
 }
--(UILabel *)statusLab{
+- (UILabel *)statusLab{
     if (!_statusLab) {
         _statusLab = [[UILabel alloc] init];
         _statusLab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
@@ -54,7 +54,7 @@
     }
     return  _statusLab;
 }
--(UILabel *)describeLab{
+- (UILabel *)describeLab{
     if (!_describeLab) {
         _describeLab = [[UILabel alloc] init];
         _describeLab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;

@@ -69,7 +69,7 @@
     }];
 }
 //添加控制器
--(void)loadVcs{
+- (void)loadVcs{
 QZHWS(weakSelf)
     self.photoVC = [[PhotosListVC alloc] init];
     self.photoVC.selecctResultBlock = ^(NSArray * _Nonnull selectArr, BOOL isall) {
@@ -145,7 +145,7 @@ QZHWS(weakSelf)
 }
 //点击按钮事件
 #pragma mark ----按钮点击事件
--(void)btnAction:(UIButton *)sender{
+- (void)btnAction:(UIButton *)sender{
     sender.selected = YES;
     self.currentIndex = sender.tag - 888;
     if (self.oldSelectIndex == self.currentIndex) {
@@ -170,7 +170,7 @@ QZHWS(weakSelf)
 }
 //DataSource方法
 #pragma mark 返回上一个ViewController对象
--(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
     
     NSInteger nowIndex = [self.arrVcs indexOfObject:viewController];
     if (nowIndex == 0) {
@@ -181,7 +181,7 @@ QZHWS(weakSelf)
 }
 
 #pragma mark 返回下一个ViewController对象
--(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
     NSInteger nowIndex = [self.arrVcs indexOfObject:viewController];
     if (nowIndex == self.arrVcs.count - 1) {
         return nil;
@@ -190,7 +190,7 @@ QZHWS(weakSelf)
     }
 }
 //代理方法
--(void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray<UIViewController *> *)previousViewControllers transitionCompleted:(BOOL)completed{
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray<UIViewController *> *)previousViewControllers transitionCompleted:(BOOL)completed{
     //previousViewControllers:上一个控制器
     if (!completed) {
         return;
@@ -210,12 +210,12 @@ QZHWS(weakSelf)
     }
 }
 
--(void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers{
+- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers{
     //pendingViewControllers:下一个控制器
     NSLog(@"pendingViewControllers === %@", pendingViewControllers);
     self.currentIndex = [self.arrVcs indexOfObject:pendingViewControllers.firstObject];
 }
--(UIView *)titleView{
+- (UIView *)titleView{
     if (!_titleView) {
         _titleView = [[UIView alloc] init];
         [_titleView addSubview:self.bottomView];
@@ -223,7 +223,7 @@ QZHWS(weakSelf)
     }
     return _titleView;
 }
--(UIView *)bottomView{
+- (UIView *)bottomView{
     if (!_bottomView) {
         _bottomView = [[UIView alloc] init];
         _bottomView.backgroundColor = QZHKIT_COLOR_SKIN;
@@ -255,7 +255,7 @@ QZHWS(weakSelf)
 }
 #pragma mark -lazy
 
--(UIButton *)leftBtn{
+- (UIButton *)leftBtn{
     if (!_leftBtn) {
         _leftBtn = [[UIButton alloc] init];
         [_leftBtn setTitle:QZHLoaclString(@"video") forState:UIControlStateNormal];
@@ -268,7 +268,7 @@ QZHWS(weakSelf)
     }
     return _leftBtn;
 }
--(UIButton *)rightBtn{
+- (UIButton *)rightBtn{
     if (!_rightBtn) {
         _rightBtn = [[UIButton alloc] init];
         [_rightBtn setTitle:QZHLoaclString(@"photo") forState:UIControlStateNormal];
@@ -283,7 +283,7 @@ QZHWS(weakSelf)
     return _rightBtn;
 }
 
--(UIView *)topHandleView{
+- (UIView *)topHandleView{
     if (!_topHandleView) {
         _topHandleView = [[UIView alloc] init];
         _topHandleView.backgroundColor = UIColor.whiteColor;
@@ -312,7 +312,7 @@ QZHWS(weakSelf)
     }
     return _topHandleView;
 }
--(UIView *)bottomHandleView{
+- (UIView *)bottomHandleView{
     if (!_bottomHandleView) {
         _bottomHandleView = [[UIView alloc] init];
         _bottomHandleView.backgroundColor = UIColor.whiteColor;
@@ -427,7 +427,7 @@ QZHWS(weakSelf)
     }
     
 }
--(void) goMicroPhoneSetTitle:(NSString *)title
+- (void) goMicroPhoneSetTitle:(NSString *)title
 {
     UIAlertController * alert = [UIAlertController alertControllerWithTitle:title message:QZHLoaclString(@"gotoSetting") preferredStyle:UIAlertControllerStyleAlert];
 

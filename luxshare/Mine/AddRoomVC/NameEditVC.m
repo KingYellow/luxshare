@@ -76,7 +76,7 @@
     }];
     
 }
--(UITextField *)nameField{
+- (UITextField *)nameField{
     if (!_nameField) {
         _nameField = [[UITextField alloc] init];
         _nameField.textColor = QZHKIT_Color_BLACK_87;
@@ -103,7 +103,7 @@
     }
 }
 
--(void)exp_rightAction{
+- (void)exp_rightAction{
     if (self.selectBlock) {
         self.selectBlock(self.nameField.text);
         [self.navigationController popViewControllerAnimated:YES];
@@ -179,7 +179,7 @@
     return cell;
 }
 
--(CGFloat )collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+- (CGFloat )collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
     return 5;
 }
@@ -193,7 +193,7 @@
     
     return ceil(textRect.size.width);
 }
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     [self.rightBtn setTitleColor:QZH_KIT_Color_WHITE_100 forState:UIControlStateNormal];
     self.rightBtn.enabled = YES;
     self.nameField.text = self.infoArr[indexPath.row];

@@ -40,7 +40,7 @@
 }
 @end
 @implementation zyyy_DateView
--(void)getDateInformation{
+- (void)getDateInformation{
     // 获取代表公历的NSCalendar对象
     NSCalendar *gregorian = [[NSCalendar alloc]
                              initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
@@ -65,7 +65,7 @@
     NSLog(@"%ld",(long)comp.month);
     
 }
--(void)btnSelector:(UIButton *)sender{
+- (void)btnSelector:(UIButton *)sender{
     NSInteger numberDay = [DateListTools getDaysInMonth:_selectedYear month:_selectedMonth];//当月有多少天
     NSInteger LastNumberDay = [DateListTools GetTheWeekOfDayByYera:_selectedYear andByMonth:_selectedMonth] + 1;//上月在这显示了多少天
     //可以选中
@@ -128,7 +128,7 @@
     }
     return self;
 }
--(void)setUIchange{
+- (void)setUIchange{
     //默认选中当天
     selectedDay = currentDay;
     
@@ -195,7 +195,7 @@
     }
     }
 
--(void)setSelectedMonth:(NSInteger)selectedMonth{
+- (void)setSelectedMonth:(NSInteger)selectedMonth{
 
     if (selectedMonth ==13) {
         _selectedMonth = 1;
@@ -210,12 +210,12 @@
     [self setUIchange];
 }
 
--(void)setSelectedYear:(NSInteger)selectedYear{
+- (void)setSelectedYear:(NSInteger)selectedYear{
     _selectedYear = selectedYear;
     [self setUIchange];
 }
 
--(void)setFreeMonth:(NSInteger)freeMonth{
+- (void)setFreeMonth:(NSInteger)freeMonth{
     self.camera.delegate = self;
     [self.camera queryRecordDaysWithYear:_selectedYear month:_selectedMonth];
     
@@ -233,10 +233,10 @@
 - (void)camera:(id<TuyaSmartCameraType>)camera ty_didReceiveVideoFrame:(CMSampleBufferRef)sampleBuffer frameInfo:(TuyaSmartVideoFrameInfo)frameInfo {
    
 }
--(void)cameraDidBeginPlayback:(id<TuyaSmartCameraType>)camera{
+- (void)cameraDidBeginPlayback:(id<TuyaSmartCameraType>)camera{
     
 }
--(void)cameraDidStopPlayback:(id<TuyaSmartCameraType>)camera{
+- (void)cameraDidStopPlayback:(id<TuyaSmartCameraType>)camera{
     
 }
 @end

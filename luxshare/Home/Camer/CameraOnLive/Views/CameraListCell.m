@@ -54,14 +54,14 @@
     
 }
 #pragma mark -lazy
--(UIView *)bigView{
+- (UIView *)bigView{
     if (!_bigView) {
         _bigView = [[UIView alloc] init];
         _bigView.backgroundColor = QZHColorWhite;
     }
     return _bigView;
 }
--(UILabel *)nameLab{
+- (UILabel *)nameLab{
     if (!_nameLab) {
         _nameLab = [[UILabel alloc] init];
         _nameLab.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
@@ -70,13 +70,13 @@
     return  _nameLab;
 }
 
--(UIImageView *)IMGView{
+- (UIImageView *)IMGView{
     if (!_IMGView) {
         _IMGView = [[UIImageView alloc] init];
     }
     return _IMGView;
 }
--(UILabel *)tagLab{
+- (UILabel *)tagLab{
     if (!_tagLab) {
         _tagLab = [[UILabel alloc] init];
         _tagLab.font = QZHKIT_FONT_LISTCELL_TIME_TITLE;

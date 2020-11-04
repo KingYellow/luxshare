@@ -47,7 +47,7 @@
     
 }
 #pragma mark -lazy
--(UILabel *)nameLab{
+- (UILabel *)nameLab{
     if (!_nameLab) {
         _nameLab = [[UILabel alloc] init];
         _nameLab.textAlignment = NSTextAlignmentRight;
@@ -66,7 +66,7 @@
     }
     return _selectBtn;
 }
--(UILabel *)tipLab{
+- (UILabel *)tipLab{
     if (!_tipLab) {
         _tipLab = [[UILabel alloc] init];
         _tipLab.font = QZHKIT_FONT_LISTCELL_DESCRIBE_TITLE;

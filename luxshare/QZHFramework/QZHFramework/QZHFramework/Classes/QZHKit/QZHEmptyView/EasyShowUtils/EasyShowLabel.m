@@ -43,7 +43,7 @@
     
     return rect;
 }
--(void)drawTextInRect:(CGRect)rect
+- (void)drawTextInRect:(CGRect)rect
 {
     [super drawTextInRect:UIEdgeInsetsInsetRect(rect, self.contentInset)];
 }

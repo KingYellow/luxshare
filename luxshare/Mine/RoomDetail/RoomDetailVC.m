@@ -40,13 +40,13 @@
          make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0 ));
      }];
 }
--(void)exp_rightAction{
+- (void)exp_rightAction{
     
     [self updateRoomName:self.roomName];
 
 }
 #pragma mark -tableView
--(UITableView *)qzTableView{
+- (UITableView *)qzTableView{
     if (!_qzTableView) {
         _qzTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         [_qzTableView exp_tableViewDefault];
@@ -61,7 +61,7 @@
     return _qzTableView;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger section = indexPath.section;
     if (section == 0) {
         PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
@@ -83,7 +83,7 @@
     }
  
 }
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 1) {
         UIView *view = [[UIView alloc] init];
         UILabel *lab = [[UILabel alloc] init];
@@ -98,7 +98,7 @@
     }
 
 }
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 
     return 2;
 }
@@ -106,21 +106,21 @@
     return section == 0?1:0;
     
 }
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 
     return 50;
 }
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
    
      return 30;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
     view.tintColor = QZHKIT_COLOR_LEADBACK;
 }
 
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     QZHWS(weakSelf)
     UIAlertController *alert = [UIAlertController alertWithTextfieldTitle:QZHLoaclString(@"room_editRoomName") originaltext:self.roomName textblock:^(NSString * _Nonnull fieldtext) {
         if (fieldtext.length == 0) {
@@ -137,7 +137,7 @@
 
 #pragma mark --lazy
 
--(TuyaSmartRoom *)room{
+- (TuyaSmartRoom *)room{
     if (!_room) {
         self.room =[TuyaSmartRoom roomWithRoomId:self.roomModel.roomId homeId:self.homeModel.homeId];
     }

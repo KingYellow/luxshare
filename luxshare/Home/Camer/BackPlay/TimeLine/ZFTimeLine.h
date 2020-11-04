@@ -25,7 +25,7 @@ typedef enum{
 @property (copy, nonatomic)NSArray *dateArr;
 @property (assign, nonatomic)BOOL isHor;
 //刷新,但不改变时间
--(void)refresh;
+- (void)refresh;
 #pragma mark --- 刷新到到当前时间
 - (void)refreshNow;
 #pragma mark --- 移动到某时间
@@ -34,7 +34,7 @@ typedef enum{
 
 #pragma mark --- 获取时间轴指向的时间
 //返回数据举例 20170815121020
--(NSString *)currentTimeStr;
+- (NSString *)currentTimeStr;
 
 //锁定 不可拖动
 - (void)lockMove;

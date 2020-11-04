@@ -54,7 +54,7 @@
  *  开始
  */
 
--(void)startWithSecond:(int)totalSecond {
+- (void)startWithSecond:(int)totalSecond {
     _totalSecond = totalSecond;
     _second = totalSecond;
     _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timeStart:) userInfo:nil repeats:YES];

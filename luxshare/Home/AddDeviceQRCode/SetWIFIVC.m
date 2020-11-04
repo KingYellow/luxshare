@@ -123,7 +123,7 @@
     
 }
 
--(UILabel *)titleLab{
+- (UILabel *)titleLab{
     if (!_titleLab) {
         _titleLab = [[UILabel alloc] init];
         _titleLab.font = QZHKIT_FONT_LISTCELL_BIG_TITLE;
@@ -134,7 +134,7 @@
     return _titleLab;
 }
 
--(UILabel *)subLab{
+- (UILabel *)subLab{
     if (!_subLab) {
         _subLab = [[UILabel alloc] init];
         _subLab.font = QZHKIT_FONT_LISTCELL_SUB_TITLE;
@@ -145,7 +145,7 @@
     return _subLab;
 }
 
--(UIButton *)submitBtn{
+- (UIButton *)submitBtn{
     if (!_submitBtn) {
         _submitBtn = [[UIButton alloc] init];
         [_submitBtn setTitle:QZHLoaclString(@"nextstep") forState:UIControlStateNormal];
@@ -156,7 +156,7 @@
 }
 
 
--(UITextField *)passwordText{
+- (UITextField *)passwordText{
     if (!_passwordText) {
         UITextField *text= [[UITextField alloc] init];
         text.placeholder = QZHLoaclString(@"wifi_password");
@@ -175,7 +175,7 @@
 
 
 //显示密码
--(UIButton *)openBtn{
+- (UIButton *)openBtn{
     if (!_openBtn) {
         UIButton *button = [[UIButton alloc] init];
         button.frame = CGRectMake(0, 0, 24, 24);
@@ -187,7 +187,7 @@
     return _openBtn;
 }
 
--(UITextField *)phoneText{
+- (UITextField *)phoneText{
     if (!_phoneText) {
         UITextField *text= [[UITextField alloc] init];
         text.placeholder = QZHLoaclString(@"wifi_name");
@@ -250,7 +250,7 @@
     }
 }
 #pragma mark -- wifi
--(NSDictionary *)getWifiInfo{
+- (NSDictionary *)getWifiInfo{
 
     NSArray *ifs = (__bridge_transfer id)(CNCopySupportedInterfaces());
 

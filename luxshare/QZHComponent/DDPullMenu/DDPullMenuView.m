@@ -95,7 +95,7 @@
     UIImage *image = [UIImage imageNamed:imageName];
     CGFloat space = 5;
     
-    CGFloat edgeSpace = (btn.width-(titleSize.width+image.size.width+space))/2+titleSize.width+space;
+    CGFloat edgeSpace = (btn.width- (titleSize.width+image.size.width+space))/2+titleSize.width+space;
     
     [btn setImageEdgeInsets:UIEdgeInsetsMake(0, 0.0, 0.0, -edgeSpace)];
     [btn setImage:image forState:UIControlStateNormal];
@@ -193,7 +193,7 @@
     UIImage *image = [UIImage imageNamed:imageName];
     CGFloat space = 5;
     
-    CGFloat edgeSpace = (btn.width-(titleSize.width+image.size.width+space))+titleSize.width+space;
+    CGFloat edgeSpace = (btn.width- (titleSize.width+image.size.width+space))+titleSize.width+space;
     
     // 90 - 60
     // 78 - 50

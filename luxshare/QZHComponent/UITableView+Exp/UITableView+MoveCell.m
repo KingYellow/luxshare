@@ -12,7 +12,7 @@
 @implementation UITableView (MoveCell)
 
 //绑定数据源和添加手势
--(void)setDataWithArray:(NSMutableArray *)array withBlock:(moveCellBlock)block{
+- (void)setDataWithArray:(NSMutableArray *)array withBlock:(moveCellBlock)block{
     self.dataArray = [[NSMutableArray alloc] init];
     [self.dataArray addObjectsFromArray:array];
     self.block = block;
@@ -20,7 +20,7 @@
     [self addGestureRecognizer:longPress];
 }
 
--(void)longPress:(UILongPressGestureRecognizer *)longPress
+- (void)longPress:(UILongPressGestureRecognizer *)longPress
 {
     switch (longPress.state) {
         case UIGestureRecognizerStateBegan:{
@@ -172,7 +172,7 @@
 }
 
 //更新数据源
--(void)updateDataWithIndexPath:(NSIndexPath *)moveIndexPath
+- (void)updateDataWithIndexPath:(NSIndexPath *)moveIndexPath
 {
     //判断是否是嵌套数组
     if ([self nestedArrayCheck:self.dataArray]) {
@@ -195,7 +195,7 @@
     
 
 }
--(void)gestureEnd{
+- (void)gestureEnd{
     self.block(self.dataArray);
 
 }
@@ -208,69 +208,69 @@
     return NO;
 }
 
--(NSMutableArray *)dataArray
+- (NSMutableArray *)dataArray
 {
     return objc_getAssociatedObject(self, "dataArray");
 
 }
 
--(void)setDataArray:(NSMutableArray *)dataArray{
+- (void)setDataArray:(NSMutableArray *)dataArray{
     objc_setAssociatedObject(self, "dataArray", dataArray,OBJC_ASSOCIATION_RETAIN);
 }
 
--(moveCellBlock)block
+- (moveCellBlock)block
 {
     return objc_getAssociatedObject(self, "block");
 
 }
--(void)setBlock:(moveCellBlock)block
+- (void)setBlock:(moveCellBlock)block
 {
     objc_setAssociatedObject(self, "block", block, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
--(UIView *)snapView
+- (UIView *)snapView
 {
     return objc_getAssociatedObject(self, "snapView");
 }
--(void)setSnapView:(UIView *)snapView
+- (void)setSnapView:(UIView *)snapView
 {
     objc_setAssociatedObject(self, "snapView", snapView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
--(NSIndexPath *)indexPath
+- (NSIndexPath *)indexPath
 {
     return objc_getAssociatedObject(self, "indexPath");
 }
--(void)setIndexPath:(NSIndexPath *)indexPath
+- (void)setIndexPath:(NSIndexPath *)indexPath
 {
     objc_setAssociatedObject(self, "indexPath", indexPath, OBJC_ASSOCIATION_COPY_NONATOMIC);
 
 }
 
--(CADisplayLink *)autoScrollTimer
+- (CADisplayLink *)autoScrollTimer
 {
     return objc_getAssociatedObject(self, "autoScrollTimer");
 }
 
--(void)setAutoScrollTimer:(CADisplayLink *)autoScrollTimer
+- (void)setAutoScrollTimer:(CADisplayLink *)autoScrollTimer
 {
     objc_setAssociatedObject(self, "autoScrollTimer", autoScrollTimer, OBJC_ASSOCIATION_RETAIN);
 }
--(UITableViewCell *)moveCell
+- (UITableViewCell *)moveCell
 {
     return objc_getAssociatedObject(self, "moveCell");
 }
--(void)setMoveCell:(UITableViewCell *)moveCell
+- (void)setMoveCell:(UITableViewCell *)moveCell
 {
     objc_setAssociatedObject(self, "moveCell", moveCell, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
 }
--(SnapshotMeetsEdge)autoScrollDirection
+- (SnapshotMeetsEdge)autoScrollDirection
 {
 
     return (SnapshotMeetsEdge)[objc_getAssociatedObject(self, "autoScrollDirection") integerValue];
 
 }
--(void)setAutoScrollDirection:(SnapshotMeetsEdge)autoScrollDirection
+- (void)setAutoScrollDirection:(SnapshotMeetsEdge)autoScrollDirection
 {
     objc_setAssociatedObject(self, "autoScrollDirection", @(autoScrollDirection), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 

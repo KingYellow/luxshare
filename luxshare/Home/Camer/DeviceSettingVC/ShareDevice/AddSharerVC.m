@@ -85,7 +85,7 @@
 }
 
 #pragma mark  -- getter
--(UITextField *)phoneText{
+- (UITextField *)phoneText{
     if (!_phoneText) {
         UITextField *text= [[UITextField alloc] init];
         text.placeholder = QZHLoaclString(@"login_account");
@@ -99,7 +99,7 @@
     return _phoneText;
 }
 
--(UIButton *)submitBtn{
+- (UIButton *)submitBtn{
     if (!_submitBtn) {
         _submitBtn = [[UIButton alloc] init];
         [_submitBtn setTitle:QZHLoaclString(@"nextstep") forState:UIControlStateNormal];

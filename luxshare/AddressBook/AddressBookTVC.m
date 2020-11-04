@@ -38,7 +38,7 @@
     [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTitle:QZHLoaclString(@"cancel")];
     
 }
--(void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.indexView removeFromSuperview];
 }
@@ -131,7 +131,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _isSearch?self.searchResultArr.count:[self.rowArr[section] count];
 }
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 50.0;
 }
 
@@ -154,7 +154,7 @@
 
     return _isSearch?0:22;
 }
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (_isSearch) {
         ContactModel *model = _searchResultArr[indexPath.row];
@@ -192,7 +192,7 @@
 }
 
 // --searchbar的代理方法
--(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
     self.searchController.searchBar.showsCancelButton = YES;
     self.indexView.hidden = YES;
     NSArray*searchBarSubViews = self.searchController.searchBar.subviews;//UIView
@@ -267,13 +267,13 @@
     }
     return _serverDataArr;
 }
--(NSMutableArray *)dataArr{
+- (NSMutableArray *)dataArr{
     if (!_dataArr) {
         _dataArr = [NSMutableArray array];
     }
     return _dataArr;
 }
--(NSMutableArray *)searchResultArr{
+- (NSMutableArray *)searchResultArr{
     if (!_searchResultArr) {
         _searchResultArr = [NSMutableArray array];
     }

@@ -43,7 +43,7 @@ static DateModel *datemodel;
     return self;
 }
 
--(NSInteger)lastMonth{
+- (NSInteger)lastMonth{
     NSInteger  lastmonth;
     if (datemodel.month == 1) {
         lastmonth = 12;
@@ -54,7 +54,7 @@ static DateModel *datemodel;
     return lastmonth;
 }
 
--(NSInteger)nextMonth{
+- (NSInteger)nextMonth{
     NSInteger  nextmonth;
     if (datemodel.month == 12) {
         nextmonth = 1;

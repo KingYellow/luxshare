@@ -1174,8 +1174,8 @@
 			isa = PBXGroup;
 			children = (
 				89DB09F024A05A3800324E36 /* TOTANewFeatureVC.h */,
-				89DB09F124A05A3800324E36 /* NewFeatureCell.h */,
 				89DB09F224A05A3800324E36 /* TOTANewFeatureVC.m */,
+				89DB09F124A05A3800324E36 /* NewFeatureCell.h */,
 				89DB09F324A05A3800324E36 /* NewFeatureCell.m */,
 			);
 			path = LeadPage;
@@ -1532,10 +1532,10 @@
 		89E591AB24A3360C00EEB26A /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				89E591AC24A3360C00EEB26A /* NSString+Utils.h */,
 				89E591AD24A3360C00EEB26A /* ContactDataHelper.h */,
-				89E591AE24A3360C00EEB26A /* NSString+Utils.m */,
 				89E591AF24A3360C00EEB26A /* ContactDataHelper.m */,
+				89E591AC24A3360C00EEB26A /* NSString+Utils.h */,
+				89E591AE24A3360C00EEB26A /* NSString+Utils.m */,
 			);
 			path = libs;
 			sourceTree = "<group>";
@@ -1552,8 +1552,8 @@
 		89E591B324A3360C00EEB26A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				89E591B424A3360C00EEB26A /* ContactCell.m */,
 				89E591B524A3360C00EEB26A /* ContactCell.h */,
+				89E591B424A3360C00EEB26A /* ContactCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2383,7 +2383,7 @@
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = N3B52BZX68;
 				ENABLE_BITCODE = NO;
-				EXCLUDED_ARCHS = "";
+				EXCLUDED_ARCHS = arm64;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/luxshare/Support/luxshare.pch";
 				INFOPLIST_FILE = luxshare/Info.plist;
@@ -2604,7 +2604,7 @@
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = N3B52BZX68;
 				ENABLE_BITCODE = NO;
-				EXCLUDED_ARCHS = "";
+				EXCLUDED_ARCHS = arm64;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/luxshare/Support/luxshare.pch";
 				INFOPLIST_FILE = luxshare/Info.plist;

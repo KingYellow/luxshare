@@ -60,7 +60,7 @@
         [self.grain setMask:self.mainLine];
     }
 }
--(NSMutableAttributedString*)labelStytle:(NSInteger)value{
+- (NSMutableAttributedString*)labelStytle:(NSInteger)value{
     NSString* pace=[NSString stringWithFormat:@"%ld%@",value,@"%"];
     NSMutableAttributedString* pace1=[[NSMutableAttributedString alloc]initWithString:pace];
     [pace1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20] range:NSMakeRange(0, pace.length-1)];
