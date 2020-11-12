@@ -1000,15 +1000,15 @@
 - (void)startTalk {
     if (self.isHor) {
         self.talkHud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-        self.talkHud.labelText = QZHLoaclString(@"creatingTalkSession");
+        self.talkHud.label.text = QZHLoaclString(@"creatingTalkSession");
         self.talkHud.transform = CGAffineTransformMakeRotation(90*M_PI/180);
 
     }else{
         self.talkHud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-        self.talkHud.labelText = QZHLoaclString(@"creatingTalkSession");
+        self.talkHud.label.text = QZHLoaclString(@"creatingTalkSession");
     }
 
-    [self.talkHud show:YES];
+    [self.talkHud showAnimated:YES];
     [self.camera startTalk];
 }
 
@@ -1017,7 +1017,7 @@
 }
 
 - (void)cameraDidBeginTalk:(id<TuyaSmartCameraType>)camera {
-    [self.talkHud hide:YES];
+    [self.talkHud hideAnimated:YES];
 
         // 对讲已成功开启
     [self startTalkTimer];
@@ -1337,8 +1337,4 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)dealloc{
-    
-    
-}
 @end

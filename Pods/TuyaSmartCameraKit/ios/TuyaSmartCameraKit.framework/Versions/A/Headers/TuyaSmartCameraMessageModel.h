@@ -7,6 +7,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, TuyaCameraMessageAttachmentType) {
+    TuyaCameraMessageAttachmentPicture,
+    TuyaCameraMessageAttachmentVideo,
+    TuyaCameraMessageAttachmentAudio,
+};
+
 @interface TuyaSmartCameraMessageModel : NSObject
 
 /**
@@ -56,6 +62,18 @@
  
 */
 @property (nonatomic, copy) NSArray *attachVideos;
+
+/**
+ [^en]
+ audio list
+ [$en]
+
+ [^zh]
+ 音频地址
+ [$zh]
+ 
+*/
+@property (nonatomic, copy) NSArray *attachAudios;
 
 /**
  [^en]

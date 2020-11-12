@@ -47,9 +47,9 @@
 
 // --------------------------color-------------------------------
 //主色
-#define QZHKIT_COLOR_SKIN                 UIColorFromHex(0x228B22)
+#define QZHKIT_COLOR_SKIN                 UIColorFromHex(0x2782FA)
 
-#define QZHKIT_COLOR_SKIN_AlPHA                UIColorFromHexA(0x228B22,0.5)
+#define QZHKIT_COLOR_SKIN_AlPHA                UIColorFromHexA(0x2782FA,0.5)
 
 
 //辅色

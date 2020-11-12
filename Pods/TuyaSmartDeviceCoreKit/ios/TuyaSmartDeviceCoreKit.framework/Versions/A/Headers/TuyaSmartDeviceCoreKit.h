@@ -34,4 +34,6 @@
 #import "TuyaSmartSingleTransfer.h"
 #import "TYCoreCacheService.h"
 
+#import "TuyaSmartDeviceCoreKitErrors.h"
+
 #endif /* TuyaSmartDeviceCoreKit_h */

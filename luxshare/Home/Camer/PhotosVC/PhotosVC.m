@@ -191,6 +191,7 @@ QZHWS(weakSelf)
 }
 //代理方法
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray<UIViewController *> *)previousViewControllers transitionCompleted:(BOOL)completed{
+    [self isOpenPhotoPtivate];
     //previousViewControllers:上一个控制器
     if (!completed) {
         return;
@@ -404,7 +405,9 @@ QZHWS(weakSelf)
 }
 
 - (void)isOpenPhotoPtivate{
+
     PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+
     if (status == PHAuthorizationStatusRestricted || status == PHAuthorizationStatusDenied)
     {
         [self goMicroPhoneSetTitle:QZHLoaclString(@"noPhotoPrivate")];
@@ -418,11 +421,15 @@ QZHWS(weakSelf)
           }
       }];
         
-    }else if(status == AVAuthorizationStatusNotDetermined){
-        [self goMicroPhoneSetTitle:QZHLoaclString(@"noAllPhotoPrivate")];
-        
-    }else{
-
+    }else {
+        if (@available(iOS 14, *)) {
+            PHAccessLevel level = PHAccessLevelReadWrite;
+            status = [PHPhotoLibrary authorizationStatusForAccessLevel:level];
+            if(status == PHAuthorizationStatusLimited){
+                [self goMicroPhoneSetTitle:QZHLoaclString(@"openAllPhotosPrivate")];
+            }
+            
+        }
         
     }
     
@@ -448,4 +455,5 @@ QZHWS(weakSelf)
 
     [self presentViewController:alert animated:YES completion:nil];
 }
+
 @end

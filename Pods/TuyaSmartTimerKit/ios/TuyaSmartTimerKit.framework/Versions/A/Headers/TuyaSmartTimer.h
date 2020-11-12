@@ -118,7 +118,7 @@
 - (void)getTimerListWithTask:(NSString *)task
                        bizId:(NSString *)bizId
                      bizType:(NSUInteger)bizType
-                     success:(void(^)(NSArray<TYTimerTaskModel *> *list))success
+                     success:(void(^)(NSArray<TYTimerModel *> *list))success
                      failure:(TYFailureError)failure;
 
 /**

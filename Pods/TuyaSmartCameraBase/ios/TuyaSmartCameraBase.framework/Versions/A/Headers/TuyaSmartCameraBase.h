@@ -8,7 +8,7 @@
 #ifndef TuyaSmartCameraBase_h
 #define TuyaSmartCameraBase_h
 
-#define TuyaSmartCameraBase_version @"4.17.0"
+#define TuyaSmartCameraBase_version @"4.20.0"
 
 #import "TuyaSmartCameraDefines.h"
 #import "TuyaSmartCameraFactory.h"

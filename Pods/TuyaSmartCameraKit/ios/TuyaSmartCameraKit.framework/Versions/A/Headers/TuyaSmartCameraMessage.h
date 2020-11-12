@@ -21,6 +21,17 @@
  */
 @property (nonatomic, strong) NSTimeZone *timeZone;
 
+/**
+[^en]
+Enable image encryption, which is disabled by default. After opening, the pictures carried in the message will be encrypted, and you need to use the TYEncryptImage component to display or download the pictures.
+[$en]
+
+[^zh]
+开启图片加密，默认为关闭。打开后，消息中携带的图片会加密，需要使用 TYEncryptImage 组件显示或者下载图片。
+[$zh]
+*/
+@property (nonatomic, assign) BOOL enableEncryptedImage;
+
 - (instancetype)initWithDeviceId:(NSString *)devId timeZone:(NSTimeZone *)timeZone;
 
 
@@ -101,6 +112,53 @@ remove messages by message id list
  */
 - (void)getMessageSchemes:(void (^)(NSArray<TuyaSmartCameraMessageSchemeModel *> *result))success
                   failure:(void (^)(NSError *error))failure;
+
+/**
+ [^en]
+ start download attachment of message
+ [$en]
+ 
+ [^zh]
+ 开始下载消息中的附件
+ [$zh]
+ 
+ @param messageModel [^en]message model[$en] [^zh]消息模型[$zh]
+ @param type [^en]attachment type[$en] [^zh]附件类型[$zh]
+ @param filePath [^en]file path to save attachment[$en] [^zh]附件保存的文件路径[$zh]
+ @param successCallback [^en]success callbak[$en] [^zh]成功回调[$zh]
+ @param progressCallBack [^en]progress callbak[$en] [^zh]进度回调[$zh]
+ @param failureCallBack [^en]failure callbak[$en] [^zh]失败回调[$zh]
+*/
+- (void)startDownloadMessageAttachmentWithMeesageModel:(TuyaSmartCameraMessageModel *)messageModel attachType:(TuyaCameraMessageAttachmentType)type filePath:(NSString *)filePath success:(void(^)(void))successCallback progress:(void (^)(int progress))progressCallBack failure:(void (^)(int errCode))failureCallBack;
+
+/**
+ [^en]
+ start download attachment of message
+ [$en]
+ 
+ [^zh]
+ 开始下载消息中的附件
+ [$zh]
+ 
+ @param attachPath [^en]attachment path[$en] [^zh]附件地址[$zh]
+ @param type [^en]attachment type[$en] [^zh]附件类型[$zh]
+ @param filePath [^en]file path to save attachment[$en] [^zh]附件保存的文件路径[$zh]
+ @param successCallback [^en]success callbak[$en] [^zh]成功回调[$zh]
+ @param progressCallBack [^en]progress callbak[$en] [^zh]进度回调[$zh]
+ @param failureCallBack [^en]failure callbak[$en] [^zh]失败回调[$zh]
+*/
+- (void)startDownloadMessageAttachmentWithUrl:(NSString *)attachPath attachType:(TuyaCameraMessageAttachmentType)type filePath:(NSString *)filePath success:(void(^)(void))successCallback progress:(void (^)(int progress))progressCallBack failure:(void (^)(int errCode))failureCallBack;
+
+/**
+ [^en]
+ cancel download
+ [$en]
+ 
+ [^zh]
+ 取消下载
+ [$zh]
+*/
+- (void)cancelDownloadMessageAttachment:(TuyaCameraMessageAttachmentType)type;
 
 @end
 

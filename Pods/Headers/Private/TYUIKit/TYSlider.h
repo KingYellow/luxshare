@@ -1,0 +1,1 @@
+../../../TYUIKit/TYUIKit-1.12.0-rc.3/Headers/Public/TYSlider.h

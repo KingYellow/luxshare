@@ -169,6 +169,8 @@ IPC_EXTERN NSString * const kTuyaSmartTimeSliceStopTime;
  */
 - (void)camera:(id<TuyaSmartCameraType>)camera playbackDidFinishedWithStatus:(NSInteger)status;
 
+- (void)camera:(id<TuyaSmartCameraType>)camera playbackTimeSlice:(NSDictionary *)timeSlice didFinishedWithStatus:(NSInteger)status;
+
 /**
  [^en]
  receive first video frame
@@ -261,7 +263,8 @@ IPC_EXTERN NSString * const kTuyaSmartTimeSliceStopTime;
  @param camera camera
  @param isHd [^en]is high definition[$en] [^zh]是否为高清[$zh]
  */
-- (void)camera:(id<TuyaSmartCameraType>)camera didReceiveDefinitionState:(BOOL)isHd;
+- (void)camera:(id<TuyaSmartCameraType>)camera didReceiveDefinitionState:(BOOL)isHd __deprecated_msg("Use camera:definitionChanged: instead");
+- (void)camera:(id<TuyaSmartCameraType>)camera definitionChanged:(TuyaSmartCameraDefinition)definition;
 
 /**
  [^en]
@@ -406,6 +409,8 @@ IPC_EXTERN NSString * const kTuyaSmartTimeSliceStopTime;
 
 @property (nonatomic, weak) id<TuyaSmartCameraDelegate> delegate;
 
+@property (nonatomic, strong) NSString *devId;
+
 /// [^en]if you want get the original video frame data, set isRecvFrame YES.[$en] [^zh]如果需要获取原始视频帧数据，设置 isRecvFrame 为 YES[$zh]
 @property (nonatomic, assign) BOOL isRecvFrame;
 
@@ -499,6 +504,18 @@ with p2p 2.0, could get YUV data with - (void)camera:(id<TuyaSmartCameraType>)ca
  [$zh]
  */
 - (void)startPreview;
+
+/**
+[^en]
+ start live video
+[$en]
+
+[^zh]
+ 开始视频实时预览
+ @param definition definition
+[$zh]
+*/
+- (void)startPreviewWithDefinition:(TuyaSmartCameraDefinition)definition;
 
 /**
  [^en]
@@ -606,6 +623,19 @@ with p2p 2.0, could get YUV data with - (void)camera:(id<TuyaSmartCameraType>)ca
 - (void)enableHD:(BOOL)hd;
 
 /**
+[^en]
+set definition
+[$en]
+
+[^zh]
+设置分辨率
+[$zh]
+
+@param definition definition
+*/
+- (void)setDefinition:(TuyaSmartCameraDefinition)definition;
+
+/**
  [^en]
  get the definition state
  [$en]
@@ -615,6 +645,17 @@ with p2p 2.0, could get YUV data with - (void)camera:(id<TuyaSmartCameraType>)ca
  [$zh]
  */
 - (void)getHD;
+
+/**
+[^en]
+get the definition state
+[$en]
+
+[^zh]
+获取当前分辨率
+[$zh]
+*/
+- (void)getDefinition;
 
 /**
  [^en]
@@ -695,6 +736,9 @@ with p2p 2.0, could get YUV data with - (void)camera:(id<TuyaSmartCameraType>)ca
 
 @optional
 
+
+- (double)getVideoBitRateKBPS;
+
 /**
 [^en]
 if you want processing the audio data of talking, call this with YES and implement the delegate method:
@@ -746,11 +790,9 @@ get a screenshot of the video and save it to filepah. if you do not need a thumb
 
 - (void)getSupportedDefinitions:(void(^)(NSArray *definitions))success failure:(void(^)(NSError *error))failure;
 
-- (void)startPreviewWithDefinition:(TuyaSmartCameraDefinition)definition;
+//- (void)getDefinition:(void(^)(TuyaSmartCameraDefinition definitions))success failure:(void(^)(NSError *error))failure;
 
-- (void)getDefinition:(void(^)(TuyaSmartCameraDefinition definitions))success failure:(void(^)(NSError *error))failure;
-
-- (void)setDefinition:(TuyaSmartCameraDefinition)definition success:(void(^)(void))success failure:(void(^)(NSError *error))failure;
+//- (void)setDefinition:(TuyaSmartCameraDefinition)definition success:(void(^)(void))success failure:(void(^)(NSError *error))failure;
 
 - (void)setOutLineEnable:(BOOL)enable;
 

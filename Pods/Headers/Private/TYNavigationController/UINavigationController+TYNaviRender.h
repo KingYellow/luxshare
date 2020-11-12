@@ -1,1 +1,1 @@
-../../../TYNavigationController/TYNavigationController-1.10.1/Headers/Public/UINavigationController+TYNaviRender.h
+../../../TYNavigationController/TYNavigationController-1.12.0-rc.7/Headers/Public/UINavigationController+TYNaviRender.h

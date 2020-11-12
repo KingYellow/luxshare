@@ -185,6 +185,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ *  Edit group icon.
+ *  修改群组图片
+ *
+ *  @param cloudKey cloudKey
+ *  @param success  Success block
+ *  @param failure  Failure block
+ */
+- (void)updateIconWithCloudKey:(NSString *)cloudKey
+                       success:(nullable TYSuccessHandler)success
+                       failure:(nullable TYFailureError)failure;
+
+
+/**
  *  Modify the device list of the group
  *  修改群组设备列表
  *

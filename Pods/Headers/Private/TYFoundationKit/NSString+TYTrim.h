@@ -1,1 +1,1 @@
-../../../TYFoundationKit/TYFoundationKit-1.10.3/Headers/Public/NSString+TYTrim.h
+../../../TYFoundationKit/TYFoundationKit-1.12.0-rc.5/Headers/Public/NSString+TYTrim.h

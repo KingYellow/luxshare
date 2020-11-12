@@ -20,6 +20,10 @@ typedef NS_ENUM(NSUInteger, TuyaSmartCloudState) {
     TuyaSmartCloudStateLoadFailed       // [^en]load cloud data failed[$en] [^zh]加载云端数据失败[$zh]
 };
 
+typedef void(^DownloadSuccess)(NSString *filePath);
+typedef void(^DownloadFailure)(NSError *error);
+typedef void(^DownloadProgress)(NSUInteger progress);
+
 @class TuyaSmartCloudManager;
 @protocol TuyaSmartCloudManagerDelegate <NSObject>
 
@@ -44,6 +48,19 @@ typedef NS_ENUM(NSUInteger, TuyaSmartCloudState) {
 @property (nonatomic, strong) NSString *encryptKey;
 
 @property (nonatomic, strong) NSString *authJson;
+
+@property (nonatomic, strong) NSTimeZone *timeZone;
+
+/**
+[^en]
+Enable image encryption, which is disabled by default. After opening, the pictures carried in the event model will be encrypted, and you need to use the TYEncryptImage component to display or download the pictures.
+[$en]
+
+[^zh]
+开启图片加密，默认为关闭。打开后，云存储事件中携带的图片会加密，需要使用 TYEncryptImage 组件显示或者下载图片。
+[$zh]
+*/
+@property (nonatomic, assign) BOOL enableEncryptedImage;
 
 - (instancetype)initWithDeviceId:(NSString *)devId;
 
@@ -295,6 +312,53 @@ typedef NS_ENUM(NSUInteger, TuyaSmartCloudState) {
  */
 - (void)destroy;
 
+/*
+ [^en] download a cloud video [$en]
+ [^zh] 下载一段云存储视频 [$zh]
+ 
+ @param timeRange   [^en] Time period of the video you want to download. [$en] [^zh] 想要下载的视频的时间段，开始时间和长度。 [$zh]
+ @param videoPath   [^en] file path to save video, ex: "folderPath/fileName.mp4". [$en] [^zh] 保存视频的文件路径，格式："folderPath/fileName.mp4"。 [$zh]
+ @param success     [^en] download success callback. [$en] [^zh] 下载成功回调。 [$zh]
+ @param progress    [^en] download progress callback, progress is an integer from 1 to 100. [$en] [^zh] 下载进度回调，进度以 1 到 100 之间的整数表示。 [$zh]
+ @param failure     [^en] download failed callback. [$en] [^zh] 下载失败回调。 [$zh]
+*/
+- (void)downloadCloudVideoWithRange:(NSRange)timeRange
+                           filePath:(NSString *)videoPath
+                            success:(DownloadSuccess)success
+                           progress:(DownloadProgress)progress
+                            failure:(DownloadFailure)failure;
+
+/**
+ [^en] pause cloud video download task [$en]
+ [^zh] 暂停云存储视频下载 [$zh]
+*/
+- (void)pauseDownloadCloudVideo;
+
+/**
+ [^en] resume cloud video download task [$en]
+ [^zh] 恢复云存储视频下载 [$zh]
+ 
+ @param failure [^en] resume success callback. [$en] [^zh] 恢复下载失败回调。 [$zh]
+*/
+- (void)resumeDownloadCloudVideo:(DownloadFailure)failure;
+
+/**
+ [^en] cancel cloud video download task [$en]
+ [^zh] 取消云存储视频下载 [$zh]
+*/
+- (void)cancelDownloadCloudVideo;
+
+/**
+ [^en] delete cloud video which during the time range [$en]
+ [^zh] 删除一个时间段里的云存储视频 [$zh]
+ @param timeRange [^en] the time range to delete [$en] [^zh] 需要删除的时间段 [$zh]
+ @param success success callback
+ @param failure failure callback
+*/
+- (void)deleteCloudVideoWithRange:(NSRange)timeRange success:(void(^)(void))success failure:(void(^)(NSError *error))failure;
+
+#pragma mark - deprecated
+
 /**
  [^en]
  play encrypt video in detect message
@@ -312,7 +376,7 @@ typedef NS_ENUM(NSUInteger, TuyaSmartCloudState) {
 
  @return error code
 */
-- (int)playVideoMessageWithUrl:(NSString *)url startTime:(int)nStartTime encryptKey:(NSString *)encryptKey onResponse:(void (^)(int errCode))callback onFinish:(void (^)(int errCode))finihedCallBack;
+- (int)playVideoMessageWithUrl:(NSString *)url startTime:(int)nStartTime encryptKey:(NSString *)encryptKey onResponse:(void (^)(int errCode))callback onFinish:(void (^)(int errCode))finihedCallBack __deprecated_msg("Use -[TuyaSmartCameraMessageMediaPlayer playMessage:attachmentType:success:failure:finished:] instead");
 
 /**
  [^en]
@@ -325,7 +389,7 @@ typedef NS_ENUM(NSUInteger, TuyaSmartCloudState) {
  
  @return error code
 */
-- (int)pausePlayVideoMessage;
+- (int)pausePlayVideoMessage __deprecated_msg("Use -[TuyaSmartCameraMessageMediaPlayer pausePlay:] instead");
 
 /**
  [^en]
@@ -338,7 +402,7 @@ typedef NS_ENUM(NSUInteger, TuyaSmartCloudState) {
  
  @return error code
 */
-- (int)resumePlayVideoMessage;
+- (int)resumePlayVideoMessage __deprecated_msg("Use -[TuyaSmartCameraMessageMediaPlayer resumePlay:] instead");
 
 /**
  [^en]
@@ -351,7 +415,7 @@ typedef NS_ENUM(NSUInteger, TuyaSmartCloudState) {
  
  @return error code
 */
-- (int)stopPlayVideoMessage;
+- (int)stopPlayVideoMessage __deprecated_msg("Use -[TuyaSmartCameraMessageMediaPlayer stopPlay:] instead");
 
 /**
  [^en]
@@ -370,7 +434,7 @@ typedef NS_ENUM(NSUInteger, TuyaSmartCloudState) {
 
  @return error code
 */
-- (int)playAudioMessageWithUrl:(NSString *)url startTime:(int)nStartTime encryptKey:(NSString *)encryptKey onResponse:(void (^)(int errCode))callback onFinish:(void (^)(int errCode))finihedCallBack;
+- (int)playAudioMessageWithUrl:(NSString *)url startTime:(int)nStartTime encryptKey:(NSString *)encryptKey onResponse:(void (^)(int errCode))callback onFinish:(void (^)(int errCode))finihedCallBack __deprecated_msg("Use -[TuyaSmartCameraMessageMediaPlayer playMessage:attachmentType:success:failure:finished:] instead");;
 
 /**
  [^en]
@@ -383,7 +447,7 @@ typedef NS_ENUM(NSUInteger, TuyaSmartCloudState) {
  
  @return error code
 */
-- (int)pausePlayAudioMessage;
+- (int)pausePlayAudioMessage __deprecated_msg("Use -[TuyaSmartCameraMessageMediaPlayer pausePlay:] instead");
 
 /**
  [^en]
@@ -396,7 +460,7 @@ typedef NS_ENUM(NSUInteger, TuyaSmartCloudState) {
  
  @return error code
 */
-- (int)resumePlayAudioMessage;
+- (int)resumePlayAudioMessage __deprecated_msg("Use -[TuyaSmartCameraMessageMediaPlayer resumePlay:] instead");
 
 /**
  [^en]
@@ -409,7 +473,7 @@ typedef NS_ENUM(NSUInteger, TuyaSmartCloudState) {
  
  @return error code
 */
-- (int)stopPlayAudioMessage;
+- (int)stopPlayAudioMessage __deprecated_msg("Use -[TuyaSmartCameraMessageMediaPlayer stopPlay:] instead");
 
 @end
 

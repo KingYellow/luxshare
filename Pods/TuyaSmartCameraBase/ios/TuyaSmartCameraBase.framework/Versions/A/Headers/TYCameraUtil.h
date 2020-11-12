@@ -13,10 +13,6 @@
 
 + (void)unactiveAudioSession;
 
-+ (NSDate *)localDateWithUnixTimeStamp:(NSInteger)timeStamp;
-
-+ (NSTimeZone *)sharedTimeZone;
-
 + (NSString *)libCachePath;
 
 + (NSString *)getAtCachePath:(NSString *)fileName;

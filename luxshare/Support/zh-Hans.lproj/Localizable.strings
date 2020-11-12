@@ -443,6 +443,7 @@
 
 "notAdminCantShare" = "您不是管理员,不能分享设备";
 "noAllPhotoPrivate" = "请您先允许访问相册内容";
+"openAllPhotosPrivate" = "相册权限更改为所有相册,才能访问所有图片";
 "playLullabyAuto" = "自动播放摇篮曲";
 "cannotTalkWhenPlayLullaby" = "播放摇篮曲时不能通话";
 //门铃

@@ -39,10 +39,10 @@
         pathAnima.removedOnCompletion = NO;
         
         [_mainLine addAnimation:pathAnima forKey:@"strokeEndAnimation"];
-        
+        QZHWS(weakSelf)
         if (progress>0){
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                _labelTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(NameLbChange) userInfo:nil repeats:YES];
+                weakSelf.labelTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(NameLbChange) userInfo:nil repeats:YES];
                 [[NSRunLoop currentRunLoop] run];
             });
         }

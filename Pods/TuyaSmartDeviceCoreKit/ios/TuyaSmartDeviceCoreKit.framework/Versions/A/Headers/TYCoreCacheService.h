@@ -43,6 +43,9 @@ TYSDK_SINGLETON;
 /// mesh 信息
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSString *, TuyaSmartBleMeshModel *> *meshData;
 
+/// mesh 群组信息
+@property (nonatomic, strong, readonly) NSMutableDictionary *meshGroupAddData;
+
 
 - (void)setCacheHandlerQueue:(dispatch_queue_t)queue;
 
@@ -85,7 +88,12 @@ TYSDK_SINGLETON;
 // mesh
 - (TuyaSmartBleMeshModel *)getMeshModelWithHomeId:(long long)homeId isSigMesh:(BOOL)isSigMesh;
 - (TuyaSmartBleMeshModel *)getMeshModelWithMeshId:(NSString *)meshId;
+- (void)updateMeshModel:(TuyaSmartBleMeshModel *)meshModel;
+- (NSArray<TuyaSmartBleMeshModel *> *)getAllMeshList;
 
+- (NSInteger)getMeshGroupAddressFromLocalWithMeshId:(NSString *)meshId;
+- (NSInteger)getMeshGroupCountFromLocalWithMeshId:(NSString *)meshId;
+- (void)removeMeshGroupWithAddress:(NSInteger)address meshId:(NSString *)meshId;
 
 @end
 

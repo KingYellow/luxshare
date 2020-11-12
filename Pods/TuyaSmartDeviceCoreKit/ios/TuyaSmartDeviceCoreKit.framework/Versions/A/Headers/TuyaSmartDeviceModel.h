@@ -123,6 +123,10 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSString     *localKey;
 
 @property (nonatomic, strong) NSString     *uuid;
+
+/// 设备主模块MAC地址 Media Access Control Address
+@property (nonatomic, strong) NSString *mac;
+
 // The network communication ability:0.wifi;1.cable;2.gprs;3.nb-iot; 10:bluetooth;11.blemesh;12.zigbee
 @property (nonatomic, assign) NSUInteger   capability;
 
@@ -177,6 +181,8 @@ typedef enum : NSUInteger {
 - (BOOL)attributeIsSupport:(NSUInteger)i;
 - (BOOL)capabilityIsSupport:(NSUInteger)i;
 - (BOOL)devAttributeIsSupport:(NSUInteger)i;
+- (BOOL)baseAttributeIsSupport:(NSUInteger)i;
+- (BOOL)protocolAttributeIsSupport:(NSUInteger)i;
 
 #pragma mark - subdevice
 // node Id
@@ -201,6 +207,27 @@ typedef enum : NSUInteger {
 
 // dpCodes
 @property (nonatomic, strong, readonly) NSDictionary *dpCodes;
+
+/// 最近一次 dp 更新时间
+@property (nonatomic, assign) NSTimeInterval dpMaxTime;
+
+/// 是否是虚拟设备
+@property (nonatomic, assign) BOOL isVirtualDevice;
+
+// Use `baseAttributeIsSupport: index` to check feature
+//
+// index rules:
+// 9: Tuya ble mesh device
+// 10: Support network check
+@property (nonatomic, assign) NSUInteger baseAttribute;
+
+// Use `protocolAttributeIsSupport: index` to check feature
+//
+// index rules:
+// 0: support sigmesh feature
+// 1: support zigbee feature
+// 2: support subpieces feature
+@property (nonatomic, assign) NSInteger protocolAttribute;
 
 @end
 

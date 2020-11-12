@@ -30,6 +30,16 @@ typedef enum : NSUInteger {
     TuyaSmartSceneCollectionTypeAutomation   //收藏的自动化场景类型//This is a collection automatic scene.
 } TuyaSmartSceneCollectionType;
 
+/*
+ 场景的创建时，设备相关选择是否从allDevices进行选择
+ 
+ TuyaSmartScenePanelTypeNonAllDevevice: 非allDevices列表，只可选择zigbee设备
+ TuyaSmartScenePanelTypeAllDevices: allDevices列表，包括zigbee、wifi等
+ */
+typedef NS_ENUM(NSInteger, TuyaSmartScenePanelType) {
+    TuyaSmartScenePanelTypeNonAllDevevice = 0,
+    TuyaSmartScenePanelTypeAllDevices
+};
 /**
  * 场景Model, 有conditons的场景称为自动化。
  * scene model, we call a scene with conditions "automation".
@@ -161,7 +171,11 @@ typedef enum : NSUInteger {
  */
 @property (nonatomic, assign) BOOL newLocalScene;
 
-
+/**
+ * 创建场景时，设备列表显示类型
+ * Panel Type
+ */
+@property (nonatomic, assign) TuyaSmartScenePanelType panelType;
 /**
  * 推荐场景类型
  * Recommend type.

@@ -8,11 +8,9 @@
 #ifndef TuyaSmartBLEMeshKit_h
 #define TuyaSmartBLEMeshKit_h
 
-#import <TuyaSmartDeviceKit/TuyaSmartDeviceKit.h>
+#import <TuyaSmartDeviceCoreKit/TuyaSmartDeviceCoreKit.h>
 
 #import "TuyaSmartUser+BleMesh.h"
-#import "TuyaSmartHome+BleMesh.h"
-#import "TuyaSmartActivator+BleMesh.h"
 
 #import "TuyaSmartBleMesh.h"
 #import "TuyaSmartBleMeshGroup.h"
@@ -21,12 +19,17 @@
 #import "TYBLEMeshManager.h"
 
 #import "TuyaSmartBleMesh+SIGMesh.h"
-#import "TuyaSmartHome+SIGMesh.h"
 #import "TuyaSmartSIGMeshManager.h"
 #import "TuyaSmartSIGMeshManager+Activator.h"
 #import "TuyaSmartSIGMeshManager+Config.h"
 #import "TuyaSmartSIGMeshManager+Group.h"
 #import "TuyaSmartSIGMeshManager+OTA.h"
 #import "TuyaSmartSIGMeshDiscoverDeviceInfo.h"
+
+// home
+#import "TuyaSmartHome+BleMesh.h"
+#import "TuyaSmartActivator+BleMesh.h"
+#import "TuyaSmartHome+SIGMesh.h"
+
 
 #endif /* TuyaSmartBLEMeshKit_h */

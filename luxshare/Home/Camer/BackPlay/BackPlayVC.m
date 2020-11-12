@@ -100,6 +100,7 @@
 
 //    self.playView.horizontalBtn.hidden = YES;
     self.playView.definitionBtn.hidden = YES;
+    self.playView.wifiIMG.hidden = YES;
     self.timeLine = [[ZFTimeLine alloc] init];
     [self.view addSubview:self.selectDateBtn];
     [self.view addSubview:self.recordBtn];

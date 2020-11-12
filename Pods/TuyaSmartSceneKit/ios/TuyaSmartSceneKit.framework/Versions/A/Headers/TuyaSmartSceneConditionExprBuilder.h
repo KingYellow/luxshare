@@ -9,8 +9,8 @@
 #import "TuyaSmartSceneExprModel.h"
 
 typedef enum : NSInteger {
-    kExprTypeWhether,
-    kExprTypeDevice
+    kExprTypeWhether,   //「whether」should be 「weather」 天气类型
+    kExprTypeDevice     // 设备类型
 }ExprType;
 
 typedef enum : NSInteger {
@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
  en$
 
  @param type Whether type or device's dpId.
- @param operateString @"==",@"<=",@"=="
+ @param operateString @">=",@"<=",@"=="
  @param value selected value
  @param exprType To distinguish the entity type.
  @return An ExprModel object.

@@ -364,4 +364,13 @@
                      success:(TYSuccessBOOL)success
                      failure:(TYFailureError)failure;
 
+
+/// Sync home device list
+/// 同步家庭下的设备信息
+///
+/// @param success Success block
+/// @param failure Failure block
+- (void)syncHomeDeviceListWithSuccess:(TYSuccessHandler)success
+                              failure:(TYFailureError)failure;
+
 @end

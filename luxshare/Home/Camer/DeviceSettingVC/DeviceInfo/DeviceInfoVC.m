@@ -64,7 +64,10 @@
     if (section == 0) {
         DeviceLogoCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        if ([self.deviceModel.productId isEqualToString:BATTERY_PRODUCT_ID]) {
+
+        if ([QZHDeviceStatus deviceType:self.deviceModel] == DoorbellDevice) {
+            cell.logoIMG.image = QZHLoadIcon(@"ic_doorbell");
+        }else if ([self.deviceModel.productId isEqualToString:BATTERY_PRODUCT_ID]) {
             cell.logoIMG.image = QZHLoadIcon(@"ic_ipc_battery");
         }else{
             cell.logoIMG.image = QZHLoadIcon(@"ic_ipc_ac");

@@ -18,6 +18,7 @@ static NSString * const ACTION_EXECUTOR_RULE_DISABLE = @"ruleDisable";      //�
 static NSString * const ACTION_EXECUTOR_RULE_TRIGGER = @"ruleTrigger";      //执行一个场景;   execute a scene;
 static NSString * const ACTION_EXECUTOR_DELAY = @"delay";                   //延时动作; delay action;
 static NSString * const ACTION_EXECUTOR_TOGGLE = @"toggle";                 //反转动作，bool动作支持；    toggle action。
+extern NSString * const ACTION_EXECUTOR_STEP;
 
 typedef NS_ENUM(NSInteger, TYSceneActionStatus)
 {

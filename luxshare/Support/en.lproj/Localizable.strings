@@ -442,7 +442,8 @@
 "stopPlayLullaby" = "Stop Play Cradle Song";
 
 "notAdminCantShare" = "You are not an administrator and cannot share devices";
-"noAllPhotoPrivate" = "Please allow access to all the contents of the album first";
+"noAllPhotoPrivate" = "Please allow access to the contents of the album first";
+"openAllPhotosPrivate" = "Change album permissions to all albums to access all pictures";
 "playLullabyAuto" = "Auto Play Cradle Song";
 "cannotTalkWhenPlayLullaby" = "Can't talk while playing cradle song";
 //门铃

@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <TuyaSmartDeviceKit/TuyaSmartDeviceKit.h>
+#import <TuyaSmartDeviceCoreKit/TuyaSmartDeviceCoreKit.h>
 #import "TYBLEAdvModel.h"
 
 typedef enum : NSUInteger {
@@ -113,7 +113,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)queryNameWithUUID:(NSString *)uuid
                productKey:(NSString *)productKey
                   success:(void(^)(NSString *name))success
-                  failure:(TYFailureError)failure;
+                  failure:(TYFailureError)failure;__deprecated_msg("This method is deprecated, Use -[TuyaSmartBLEManager -  queryDeviceInfoWithUUID:productKey:success:failure] instead");
+
+/**
+ 蓝牙设备未配网前查询设备信息（包括设备名称和图片）
+ 
+ @param uuid 设备 uuid
+ @param productId 产品 oid
+ @param success 成功回调
+ @param failure 失败回调
+ */
+- (void)queryDeviceInfoWithUUID:(NSString *)uuid
+                      productId:(NSString *)productId
+                        success:(TYSuccessDict)success
+                        failure:(TYFailureError)failure;
 
 
 /**

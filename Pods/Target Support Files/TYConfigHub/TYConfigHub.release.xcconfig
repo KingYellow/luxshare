@@ -2,7 +2,7 @@ CONFIGURATION_BUILD_DIR = ${PODS_CONFIGURATION_BUILD_DIR}/TYConfigHub
 FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Reachability" "${PODS_CONFIGURATION_BUILD_DIR}/YYModel" "${PODS_ROOT}/TuyaSmartBaseKit/ios" "${PODS_ROOT}/TuyaSmartUtil/ios"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public"
-LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/TYConfigHub/TYConfigHub-1.0.5"
+LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/TYConfigHub/TYConfigHub-1.0.6.3"
 OTHER_LDFLAGS = $(inherited) -l"TYConfigHub" -framework "CoreGraphics" -framework "CoreLocation" -framework "CoreTelephony" -framework "Foundation" -framework "SystemConfiguration" -framework "UIKit"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

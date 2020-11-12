@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <TuyaSmartDeviceKit/TuyaSmartDeviceKit.h>
 
 @protocol TuyaSmartBleMeshDelegate<NSObject>
 

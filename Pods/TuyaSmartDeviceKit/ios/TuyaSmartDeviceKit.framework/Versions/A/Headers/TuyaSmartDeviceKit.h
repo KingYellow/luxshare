@@ -30,6 +30,12 @@
 #endif
 
 #import "TuyaSmartHome.h"
+#import "TuyaSmartHome+Weather.h"
+#import "TuyaSmartHome+TYDeprecatedApi.h"
+#import "TuyaSmartWeatherModel.h"
+#import "TuyaSmartWeatherOptionModel.h"
+#import "TuyaSmartWeatherSketchModel.h"
+
 #import "TuyaSmartHomeManager.h"
 #import "TuyaSmartHomeMember.h"
 #import "TuyaSmartHomeInvitation.h"
@@ -38,8 +44,6 @@
 
 #import "TuyaSmartHomeMemberModel.h"
 #import "TuyaSmartHomeMemberRequestModel.h"
-
-#import "TuyaSmartHome+TYDeprecatedApi.h"
 #import "TuyaSmartHomeMember+TYDeprecatedApi.h"
 
 #import "TuyaSmartGroup+DpCode.h"

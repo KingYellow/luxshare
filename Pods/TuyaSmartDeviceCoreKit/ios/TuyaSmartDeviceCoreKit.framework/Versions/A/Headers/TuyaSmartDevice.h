@@ -14,6 +14,7 @@
 #import "TuyaSmartFirmwareUpgradeStatusModel.h"
 #import "TuyaSmartDeviceModel.h"
 #import "TuyaSmartMQTTMessageModel.h"
+#import "TuyaSmartLanMessageModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -102,13 +103,22 @@ typedef enum : NSUInteger {
 - (void)device:(TuyaSmartDevice *)device signal:(NSString *)signal;
 
 /**
- *  Recv custom message
- *  收到自定义消息
+ *  Recv MQTT custom message
+ *  收到 MQTT 自定义消息
  *
  *  @param device   instance
  *  @param message  custom message
  */
 - (void)device:(TuyaSmartDevice *)device didReceiveCustomMessage:(TuyaSmartMQTTMessageModel *)message;
+
+/**
+ *  Recv LAN custom message
+ *  收到局域网自定义消息
+ *
+ *  @param device   instance
+ *  @param message  custom message
+ */
+- (void)device:(TuyaSmartDevice *)device didReceiveLanMessage:(TuyaSmartLanMessageModel *)message;
 
 /**
  *  the delegate of warning information update
@@ -241,6 +251,18 @@ typedef enum : NSUInteger {
 - (void)updateIcon:(UIImage *)icon
            success:(nullable TYSuccessHandler)success
            failure:(nullable TYFailureError)failure;
+
+/**
+ *  Edit device icon.
+ *  修改设备图片
+ *
+ *  @param cloudKey         cloudKey
+ *  @param success  Success block
+ *  @param failure  Failure block
+ */
+- (void)updateIconWithCloudKey:(NSString *)cloudKey
+                       success:(nullable TYSuccessHandler)success
+                       failure:(nullable TYFailureError)failure;
 
 /**
  *  Sync device information.

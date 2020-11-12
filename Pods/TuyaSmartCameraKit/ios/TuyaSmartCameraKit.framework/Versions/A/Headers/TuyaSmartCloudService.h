@@ -11,6 +11,7 @@
 
 @interface TuyaSmartCloudService : TuyaSmartRequest
 
+@property (nonatomic, strong) NSTimeZone *timeZone;
 
 - (void)requestCloudStorageStateWithParams:(NSDictionary *)params success:(TYSuccessString)success failure:(TYFailureError)failure;
 
@@ -25,6 +26,8 @@
 - (void)requestCloudStorageEventWithParams:(NSDictionary *)params success:(TYSuccessList)success failure:(TYFailureError)failure;
 
 - (void)requestCloudStorageAuthorityWithDeviceId:(NSString *)devId success:(TYSuccessID)success failure:(TYFailureError)failure;
+
+- (void)deleteCloudVideoWithDeviceId:(NSString *)deviceId startTime:(NSInteger)startTime endTime:(NSInteger)endTime success:(TYSuccessHandler)success failure:(TYFailureError)failure;
 
 /// V2
 - (void)requestCloudStorageAuthorityWithDeviceId:(NSString *)devId bukets:(NSString*)bukets success:(TYSuccessID)success failure:(TYFailureError)failure;

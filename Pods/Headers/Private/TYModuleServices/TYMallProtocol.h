@@ -1,1 +1,1 @@
-../../../TYModuleServices/TYModuleServices-2.8.12.bizbundle.3.17.0.12.1/Headers/Public/TYMallProtocol.h
+../../../TYModuleServices/TYModuleServices-2.12.13-Bizbundle.3.20.0-1-rc.2/Headers/Public/TYMallProtocol.h

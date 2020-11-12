@@ -31,4 +31,5 @@ target 'luxshare' do
   pod 'BRPickerView'
   pod 'Bugly'
   pod 'WMZPageController'
+  pod 'MBProgressHUD', '1.1.0'
 end

@@ -107,7 +107,7 @@
     }
     cell.selectBtn.selected = model.isOnline;
     if ([QZHDeviceStatus deviceType:model] == DoorbellDevice) {
-        cell.poloIMG.image = QZHLoadIcon(@"ic_ipc_battery");
+        cell.poloIMG.image = QZHLoadIcon(@"ic_doorbell");
     }else if ([model.productId isEqualToString:BATTERY_PRODUCT_ID]) {
         cell.poloIMG.image = QZHLoadIcon(@"ic_ipc_battery");
     }else{

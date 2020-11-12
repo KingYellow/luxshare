@@ -8,7 +8,7 @@
 #ifndef TuyaSmartCameraKit_h
 #define TuyaSmartCameraKit_h
 
-#define TuyaSmartCameraKit_version @"4.17.1"
+#define TuyaSmartCameraKit_version @"4.20.0"
 
 #import <TuyaSmartCameraBase/TuyaSmartCameraBase.h>
 
@@ -21,5 +21,6 @@
 #import "TuyaSmartCameraMessageModel.h"
 #import "TuyaSmartCameraHelper.h"
 #import "TuyaSmartCameraLogManager.h"
+#import "TuyaSmartCameraMessageMediaPlayer.h"
 
 #endif /* TuyaSmartCameraKit_h */

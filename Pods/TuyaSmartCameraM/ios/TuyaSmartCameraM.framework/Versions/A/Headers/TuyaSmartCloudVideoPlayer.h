@@ -201,6 +201,38 @@
  */
 - (void)destroy;
 
+/*
+ start download cloud video, saved as mp4
+ @param nStartTime Expected start time of the downloaded video  欲下载的云存储视频的起始时间
+ @param nStopTime Expected end time of the downloaded video 欲下载的云存储视频的结束时间
+ @param folderPath the folder path to save mp4. 存放mp4文件的文件夹
+ @param mp4FileName video file name. mp4文件名
+ @param callback 成功失败回调
+ @param progressCallBack 进度回调
+ @param finishedCallBack 结束回调
+*/
+- (void)startCloudDataDownloadWithStartTime:(int)startTime stopTime:(int)stopTime folderPath:(NSString *)folderPath fileName:(NSString *)mp4FileName authParams:(NSString *)jsonAuthParams encryptKey:(NSString *)encryptKey onResponse:(void (^)(int errCode))callback onProgress:(void (^)(int errCode, int nPos))progressCallBack onFinish:(void (^)(int errCode))finishedCallBack;
+
+/*
+ pause download cloud video
+ 暂停云存储视频下载
+*/
+- (void)pauseCloudDataDownloadWithResponse:(void (^)(int))callback;
+
+/*
+ resume download cloud video
+ 恢复云存储视频下载
+*/
+- (void)resumeCloudDataDownloadWithResponse:(void (^)(int))callback;
+
+/*
+ cancel download cloud video
+ 取消云存储视频下载
+*/
+- (void)cancelCloudDataDownloadWithResponse:(void (^)(int))callback;
+
+#pragma mark - Video Message
+
 /**
  [^en]
  play encrypt video in detect message
@@ -317,5 +349,31 @@
 */
 - (int)stopPlayAudioMessage;
 
+/*
+ start download audio or video in message
+ @param url
+ @param encryptKey
+ @param folderPath
+ @param mp4FileName
+ @param callback
+ @param progressCallBack
+ @param finishedCallBack
+*/
+- (void)startVideoMessageDownloadWithUrl:(NSString *)url encryptKey:(NSString *)encryptKey filePath:(NSString *)filePath success:(void(^)(void))successCallback progress:(void (^)(int progress))progressCallBack failure:(void (^)(int errCode))failureCallBack;
+
+/*
+ pause download
+*/
+- (void)pauseVideoMessageDownload:(void (^)(int errCode))callback;
+
+/*
+ resume download
+*/
+- (void)resumeVideoMessageDownload:(void (^)(int errCode))callback;
+
+/*
+ cancel download
+*/
+- (void)cancelVideoMessageDownload;
 
 @end

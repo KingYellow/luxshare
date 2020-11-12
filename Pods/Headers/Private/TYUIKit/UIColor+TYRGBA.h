@@ -1,1 +1,1 @@
-../../../TYUIKit/TYUIKit-1.10.2/Headers/Public/UIColor+TYRGBA.h
+../../../TYUIKit/TYUIKit-1.12.0-rc.3/Headers/Public/UIColor+TYRGBA.h

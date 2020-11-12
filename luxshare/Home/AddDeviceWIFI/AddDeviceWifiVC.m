@@ -44,7 +44,7 @@
     [self.indicatorIMG mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.view);
         make.top.mas_equalTo(60);
-        make.width.height.mas_equalTo(220);
+        make.width.height.mas_equalTo(220 * QZHScaleHeight);
     }];
     [self.titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.mas_equalTo(0);
@@ -66,7 +66,7 @@
         make.height.mas_equalTo(50); make.bottom.mas_equalTo(self.view).offset(-QZHHeightBottom -30);
     }];
 
-    QZHViewRadius( self.indicatorIMG,110);
+    QZHViewRadius( self.indicatorIMG,110 * QZHScaleHeight);
     QZHViewRadius(self.submitBtn,25);
     QZHViewRadius(self.selectBtn,25);
 
