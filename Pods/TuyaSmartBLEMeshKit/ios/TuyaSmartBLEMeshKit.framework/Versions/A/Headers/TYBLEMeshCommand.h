@@ -1,63 +1,42 @@
 //
-//  TYBLEMeshCommand.h
-//  TYBLEMeshKit
+// TYBLEMeshCommand.h
+// TuyaSmartBLEMeshKit
 //
-//  Created by 黄凯 on 2018/5/28.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 #import "TYBLEMeshCommandType.h"
 
-//DECLARE_ENUM()
-
 @protocol TYBLEMeshCommandProtocol <NSObject>
 
-/**
- 转化为蓝牙命令
-
- @return 蓝牙命令
- */
+/// Convert to Bluetooth command.
+/// @return Bluetooth command.
 - (NSData *)command;
 
-/**
- 转化为 raw 类型命令（网关使用）
-
- @return raw 命令
- */
+/// Convert to raw command (used by gateway).
+/// @return Raw command.
 - (NSString *)raw;
 
 @end
 
 @interface TYBLEMeshCommand : NSObject <TYBLEMeshCommandProtocol>
 
-/**
- 命令类型
- */
+/// Command type
 @property (nonatomic, assign) TYBLEMeshCommandType commandType;
 
-/**
- 设备类型，小类在前，大类在后，例如四路灯，此时 pcc 为：0401「04 代表四路灯，01 代表灯大类」
- */
+/// For equipment type, the small category is in the front, and the major category is in the rear, for example, four street lamps. At this time, the PCC is 0401 "04 represents four street lamps, 01 represents major categories of lamps".
 @property (nonatomic, strong) NSString *pcc;
 
-/**
- 设备或群组地址，设备地址范围（1 ～ 255），群组地址范围 0x8001～0x8008
- */
+/// Device or group address, device address range (1-255), group address range 0x8001-0x8008.
 @property (nonatomic, assign) uint32_t address;
 
-/**
- 是否为群组命令
- */
+/// Is it a group command.
 @property (nonatomic, assign) BOOL isGroup;
 
-/**
- 命令数据，需参考文档
- */
+/// For command data, refer to the document.
 @property (nonatomic, strong) NSArray<NSString *> *dataParams;
 
-/**
- 辅助日志输出
- */
+/// Secondary log output.
 @property (nonatomic, strong) NSString *logDescription;
 
 @end

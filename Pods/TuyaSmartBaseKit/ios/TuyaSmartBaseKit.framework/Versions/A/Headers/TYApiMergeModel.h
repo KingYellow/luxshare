@@ -1,43 +1,31 @@
 //
-//  TYApiMergeModel.h
-//  TuyaSmartKit
+// TYApiMergeModel.h
+// TuyaSmartBaseKit
 //
-//  Created by 冯晓 on 2017/4/12.
-//  Copyright © 2017年 Tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 
 @interface TYApiMergeModel : NSObject
 
 
-/**
- success
- */
+/// Success.
 @property (nonatomic, assign) BOOL      success;
 
 
-/**
- api name
- */
+/// Api name.
 @property (nonatomic, strong) NSString  *apiName;
 
 
-/**
- error
- */
+/// Error.
 @property (nonatomic, strong) NSError   *error;
 
 
-/**
- response result
- */
+/// Response result.
 @property (nonatomic, strong) id        result;
 
 
-/**
- timestamp
- */
+/// Timestamp.
 @property (nonatomic, assign) NSTimeInterval time;
 
 @end

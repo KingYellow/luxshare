@@ -1,28 +1,22 @@
 //
-//  TuyaSmartActivator+BleMesh.h
-//  TuyaSmartBLEKit
+// TuyaSmartActivator+BleMesh.h
+// TuyaSmartBLEMeshKit
 //
-//  Created by 高森 on 2018/9/20.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <TuyaSmartActivatorKit/TuyaSmartActivatorKit.h>
 
 @interface TuyaSmartActivator (BleMesh)
 
-/**
- *
- *  wifi连接器加入mesh
- *  获取配网Token（有效期10分钟）
- *
- *  @param meshId meshId
- *  @param nodeId nodeId
- *  @param productId 产品Id
- *  @param uuid   设备唯一值
- *  @param authKey 权限key
- *  @param version version
- *  @param success 操作成功回调，返回配网Token
- *  @param failure 操作失败回调
- */
+/// WiFi connector adds mesh. Get distribution network token (valid for 10 minutes).
+/// @param meshId The mesh ID.
+/// @param nodeId The node ID.
+/// @param productId The product ID.
+/// @param uuid The device uuid.
+/// @param authKey The authority key.
+/// @param version Version.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)getTokenWithMeshId:(NSString *)meshId
                     nodeId:(NSString *)nodeId
                  productId:(NSString *)productId
@@ -32,14 +26,11 @@
                    success:(TYSuccessString)success
                    failure:(TYFailureError)failure;
 
-/**
- *  mesh 配网
- *
- *  @param ssid     路由器热点名称
- *  @param password 路由器热点密码
- *  @param token    配网Token
- *  @param timeout  超时时间, 默认为100秒
- */
+/// Mesh distribution network.
+/// @param ssid Router hotspot name.
+/// @param password Router hotspot password.
+/// @param token Distribution network token.
+/// @param timeout The timeout time is 100 seconds by default.
 - (void)startBleMeshConfigWiFiWithSsid:(NSString *)ssid
                               password:(NSString *)password
                                  token:(NSString *)token

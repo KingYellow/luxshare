@@ -84,11 +84,23 @@ typedef NS_ENUM(NSUInteger, TuyaSmartCameraTalkbackMode) {
 };
 
 typedef NS_ENUM(NSUInteger, TuyaSmartCameraDefinition) {
-    TuyaSmartCameraDefinitionProflow = 0x1,     // [^en]Data Save[$en] [^zh]省流量[$zh]
-    TuyaSmartCameraDefinitionStandard = 0x2,    // [^en]SD[$en] [^zh]标清[$zh]
-    TuyaSmartCameraDefinitionHigh = 0x4,        // [^en]HD[$en] [^zh]高清[$zh]
-    TuyaSmartCameraDefinitionSuper = 0x8,       // [^en]FHD[$en] [^zh]超清[$zh]
-    TuyaSmartCameraDefinitionSSuper = 0x10,     // [^en]FFHD[$en] [^zh]超超清[$zh]
+    TuyaSmartCameraDefinitionProflow    = 0x1,      // [^en]Data Save[$en] [^zh]省流量[$zh]
+    TuyaSmartCameraDefinitionStandard   = 0x2,      // [^en]SD[$en] [^zh]标清[$zh]
+    TuyaSmartCameraDefinitionHigh       = 0x4,      // [^en]HD[$en] [^zh]高清[$zh]
+    TuyaSmartCameraDefinitionSuper      = 0x8,      // [^en]FHD[$en] [^zh]超清[$zh]
+    TuyaSmartCameraDefinitionSSuper     = 0x10,     // [^en]FFHD[$en] [^zh]超超清[$zh]
+    TuyaSmartCameraDefinitionAudioOnly  = 0xFFFF    // [^en]Audio Only[$en] [^zh]语音模式[$zh]
+};
+
+typedef NS_ENUM(NSUInteger, TuyaSmartCameraPlayBackSpeed) {
+    TuyaSmartCameraPlayBackSpeed_05TIMES = 0,   // [^en]0.5 times [$en] [^zh]0.5倍速[$zh]
+    TuyaSmartCameraPlayBackSpeed_10TIMES,       // [^en]1.0 times [$en] [^zh]1.0倍速[$zh]
+    TuyaSmartCameraPlayBackSpeed_15TIMES,       // [^en]1.5 times [$en] [^zh]1.5倍速[$zh]
+    TuyaSmartCameraPlayBackSpeed_20TIMES,       // [^en]2.0 times [$en] [^zh]2.0倍速[$zh]
+    TuyaSmartCameraPlayBackSpeed_25TIMES,       // [^en]2.5 times [$en] [^zh]2.5倍速[$zh]
+    TuyaSmartCameraPlayBackSpeed_30TIMES,       // [^en]3.0 times [$en] [^zh]3.0倍速[$zh]
+    TuyaSmartCameraPlayBackSpeed_35TIMES,       // [^en]3.5 times [$en] [^zh]3.5倍速[$zh]
+    TuyaSmartCameraPlayBackSpeed_40TIMES,       // [^en]4.0 times [$en] [^zh]4.0倍速[$zh]
 };
 
 #endif /* TuyaSmartCameraDefines_h */

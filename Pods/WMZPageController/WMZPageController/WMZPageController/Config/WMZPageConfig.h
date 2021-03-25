@@ -37,34 +37,62 @@
 #define PageColor(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define PageK1px (1 / UIScreen.mainScreen.scale)
 
-#define PageVCIS_iPhoneX ({\
+#define  PageWindow \
+({\
+UIWindow *window = nil; \
+if (@available(iOS 13.0, *)) \
+{ \
+    for (UIWindowScene* windowScene in [UIApplication sharedApplication].connectedScenes) { \
+        if (windowScene.activationState == UISceneActivationStateForegroundActive) \
+        { \
+            for (UIWindow *currentWindow in windowScene.windows)\
+            { \
+                if (currentWindow.isKeyWindow)\
+                { \
+                    window = currentWindow; \
+                    break; \
+                }\
+            }\
+        }\
+    }\
+    if(!window){  \
+        window =  [UIApplication sharedApplication].keyWindow; \
+    }\
+}\
+else \
+{ \
+    window =  [UIApplication sharedApplication].keyWindow; \
+}\
+(window); \
+})\
+
+
+#define PageIsIphoneX ({\
 BOOL isPhoneX = NO;\
 if (@available(iOS 11.0, *)) {\
-if ([[[UIApplication sharedApplication] delegate] window].safeAreaInsets.bottom > 0.0) {\
+if (PageWindow.safeAreaInsets.bottom > 0.0) {\
 isPhoneX = YES;\
 }\
 }\
 isPhoneX;\
 })
+
+#define PageIsIpad ({\
+BOOL isIpad = NO;\
+if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {\
+    isIpad =  YES;\
+}\
+isIpad;\
+})
+
 
 //状态栏高度
-#define PageVCStatusBarHeight (PageVCIS_iPhoneX ? 44.f : 20.f)
+#define PageVCStatusBarHeight [[UIApplication sharedApplication] statusBarFrame].size.height
 //导航栏高度
-#define PageVCNavBarHeight (44.f+PageVCStatusBarHeight)
+#define PageVCNavBarHeight ((PageIsIpad?50.f:44.f)+ PageVCStatusBarHeight)
 //底部标签栏高度
-#define PageVCTabBarHeight (PageVCIS_iPhoneX ? (49.f+34.f) : 49.f)
+#define PageVCTabBarHeight (PageIsIphoneX ? (49.f+34.f) : 49.f)
 
-#define PageWindow   [UIApplication sharedApplication].keyWindow
-
-#define pageIsIphoneX ({\
-BOOL isPhoneX = NO;\
-if (@available(iOS 11.0, *)) {\
-if ([[[UIApplication sharedApplication] delegate] window].safeAreaInsets.bottom > 0.0) {\
-isPhoneX = YES;\
-}\
-}\
-isPhoneX;\
-})
 
 
 #define WMZPagePropStatementAndPropSetFuncStatement(propertyModifier,className, propertyPointerType, propertyName)           \
@@ -99,6 +127,7 @@ typedef enum :NSInteger{
     PageTitleMenuAiQY     = 3,            //爱奇艺效果(指示器跟随移动)
     PageTitleMenuTouTiao  = 4,            //今日头条效果(变大加颜色渐变)
     PageTitleMenuPDD      = 5,            //拼多多效果(底部线条)
+    PageTitleMenuCircleBg = 6,            //标题背景圆角
 }PageTitleMenu;
 
 

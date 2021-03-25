@@ -1,26 +1,22 @@
 //
-//  TuyaSmartReceiveMemberDetailModel.h
-//  TuyaSmartKitExample
+// TuyaSmartReceiveMemberDetailModel.h
+// TuyaSmartDeviceKit
 //
-//  Created by 冯晓 on 2017/7/15.
-//  Copyright © 2017年 tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 @class TuyaSmartShareDeviceModel;
 
 @interface TuyaSmartReceiveMemberDetailModel : NSObject
 
-
 @property (nonatomic, strong) NSArray <TuyaSmartShareDeviceModel *> *devices;
 
-//账号信息 邮箱或者手机号
+/// Account information, email or cell phone number.
 @property (nonatomic, strong) NSString *mobile;
 
-//用户昵称
+/// User nickname.
 @property (nonatomic, strong) NSString *name;
 
-//备注
+/// Remarks.
 @property (nonatomic, strong) NSString *remarkName;
-
 
 @end

@@ -1,10 +1,8 @@
 //
-//  TuyaSmartTimer.h
-//  TuyaSmartKit
+// TuyaSmartTimer.h
+// TuyaSmartTimerKit
 //
-//  Created by remy on 16/4/28.
-//  Copyright © 2016年 Tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TuyaSmart_TuyaSmartTimer
 #define TuyaSmart_TuyaSmartTimer
@@ -33,66 +31,59 @@
 @end
 
 
-/// 定时相关功能
+/// @brief TuyaSmartTimer provides basic timing capability, supporting device timing (including WiFi devices, Bluetooth Mesh sub-devices, Zigbee sub-devices) and group timing.
+///
+/// It also encapsulates the interface of adding, deleting and checking timer information for device dp points. After the application sets up the timer information through the timing interface, the hardware module will automatically perform the booked operations according to the timing requirements. Multiple timers can be included under each timing task.
 @interface TuyaSmartTimer : NSObject
 
-/**
- *  获取定时任务状态
- *
- *  @param devId        设备Id
- *  @param success     Success block
- *  @param failure     Failure block
- */
+/// Get a list of timer task.
+/// @param devId Provides the device ID which is needed to get the timer task.
+/// @param success Called when the task finishes successfully. A list of TYTimerTaskModel will be returned.
+/// @param failure Called when the task is interrupted by an error.
 - (void)getTimerTaskStatusWithDeviceId:(NSString *)devId
                                success:(void(^)(NSArray<TYTimerTaskModel *> *list))success
                                failure:(TYFailureError)failure;
 
-/**
- *  获取设备所有定时任务下所有定时钟
- *
- *  @param devId        设备Id
- *  @param success     Success block
- *  @param failure     Failure block
- */
+
+/// Call this method to get all timers that the specified device has.
+/// @param devId Provides the device ID which is needed to get all timers.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)getAllTimerWithDeviceId:(NSString *)devId
                         success:(TYSuccessDict)success
                         failure:(TYFailureError)failure;
 
-/**
- *  修改设备的时区
- *
- *  @param devId        设备Id
- *  @param timezoneId   时区Id，例如Asia/Shanghai
- *  @param success     Success block
- *  @param failure     Failure block
- */
+
+/// Call this method to update the timezone of a specified device.
+/// @param devId Provides the device ID which is needed to update the timezone.
+/// @param timezoneId The ID of the time zone, for example, "Asia/Shanghai".
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)updateTimerWithDeviceId:(NSString *)devId
                      timezoneId:(NSString *)timezoneId
                         success:(TYSuccessHandler)success
                         failure:(TYFailureError)failure;
 
-/// 取消未完成的操作
+
+/// Call this method to cancel the ongoing request.
 - (void)cancelRequest;
 
 
 #pragma mark - Timer
 
-
-/**
-*  增加定时任务（新版）
-*
-*  @param task 定时任务名称
-*  @param loops  循环次数
-*  @param bizId 业务 id，如果是设备，这里是设备 Id；如果是群组，这里是群组 id
-*  @param bizType 业务类型，0:设备;  1:设备群组
-*  @param time 定时任务下的定时钟
-*  @param dps 命令字典
-*  @param status 是否开启定时
-*  @param isAppPush 是否开启推送
-*  @param aliasName 备注
-*  @param success success block
-*  @param failure failure block
- */
+/// Set timers for each device or group.
+/// @note The maximum number of timings per device or group is 30.
+/// @param task The task name of the timer.
+/// @param loops Number of loop.
+/// @param bizId If it is a device, here is the device Id; if it is a group, here is the group id.
+/// @param bizType Pass 0 if the type is device, otherwise, 1 for the group.
+/// @param time Timed clocks under timed tasks.
+/// @param dps Command Dictionary.
+/// @param status A boolean value indicates whether to turn on the timer.
+/// @param isAppPush A boolean value indicates whether to turn on the push notification.
+/// @param aliasName The remark for the task.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)addTimerWithTask:(NSString *)task
                    loops:(NSString *)loops
                    bizId:(NSString *)bizId
@@ -106,36 +97,31 @@
                  failure:(TYFailureError)failure;
 
 
-/**
-*  拉取对应 task 下的定时任务列表（新版）
-*
-*  @param task 定时任务名称
-*  @param bizId 业务 id，如果是设备，这里是设备 Id；如果是群组，这里是群组 id
-*  @param bizType 业务类型，0:设备;  1:设备群组
-*  @param success success block
-*  @param failure failure block
- */
+/// Get the timer under the specified task of the device or group.
+/// @param task The name of the timer task.
+/// @param bizId If it is a device, here is the device Id; if it is a group, here is the group id.
+/// @param bizType Pass 0 if the type is device, otherwise, 1 for the group.
+/// @param success Called when the task finishes successfully. A list of TYTimerTaskModel will be returned.
+/// @param failure Called when the task is interrupted by an error.
 - (void)getTimerListWithTask:(NSString *)task
                        bizId:(NSString *)bizId
                      bizType:(NSUInteger)bizType
                      success:(void(^)(NSArray<TYTimerModel *> *list))success
                      failure:(TYFailureError)failure;
 
-/**
-*  更新定时任务信息（新版）
-*
-*  @param timerId 定时钟 Id
-*  @param loops  循环次数
-*  @param bizId 业务 id，如果是设备，这里是设备 Id；如果是群组，这里是群组 id
-*  @param bizType 业务类型，0:设备;  1:设备群组
-*  @param time 定时任务下的定时钟
-*  @param dps 命令字典
-*  @param status 是否开启定时
-*  @param isAppPush 是否开启推送
-*  @param aliasName 备注
-*  @param success success block
-*  @param failure failure block
- */
+
+/// Update the specified timer information for the specified task under the device or group.
+/// @param timerId The timer ID for the update process.
+/// @param loops Number of cycles, format "0000000". Each bit 0:off, 1:on, from left to right: Sunday Monday Tuesday Wednesday Thursday Friday Saturday. For example, each Monday: 0100000.
+/// @param bizId If it is a device, here is the device Id; if it is a group, here is the group id.
+/// @param bizType Pass 0 if the type is device, otherwise, 1 for the group.
+/// @param time Timed time, e.g. 18:00.
+/// @param dps Command Dictionary.
+/// @param status A boolean value indicates whether to turn on the timer.
+/// @param isAppPush A boolean value indicates whether to turn on the push notification.
+/// @param aliasName The remark for the task.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)updateTimerWithTimerId:(NSString *)timerId
                          loops:(NSString *)loops
                          bizId:(NSString *)bizId
@@ -148,16 +134,14 @@
                        success:(TYSuccessHandler)success
                        failure:(TYFailureError)failure;
 
-/**
-*  更新定时任务状态（新版）
-*
-*  @param timerId 定时钟 Id
-*  @param bizId 业务 id，如果是设备，这里是设备 Id；如果是群组，这里是群组 id
-*  @param bizType 业务类型，0:设备;  1:设备群组
-*  @param status 是否开启定时
-*  @param success success block
-*  @param failure failure block
- */
+
+/// Update the specified timer status for the specified task under the device or group.
+/// @param timerId The timer ID for the update process.
+/// @param bizId If it is a device, here is the device Id; if it is a group, here is the group id.
+/// @param bizType Pass 0 if the type is device, otherwise, 1 for the group.
+/// @param status A boolean value indicates whether to turn on the timer.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)updateTimerStatusWithTimerId:(NSString *)timerId
                                bizId:(NSString *)bizId
                              bizType:(NSUInteger)bizType
@@ -165,16 +149,14 @@
                              success:(TYSuccessHandler)success
                              failure:(TYFailureError)failure;
 
-/**
-*  更新特定任务下的所有定时钟状态（新版）
-*
-*  @param task 定时任务名称
-*  @param bizId 业务 id，如果是设备，这里是设备 Id；如果是群组，这里是群组 id
-*  @param bizType 业务类型，0:设备;  1:设备群组
-*  @param status 是否开启定时
-*  @param success success block
-*  @param failure failure block
- */
+
+/// Update the status of all time clocks under a specific task.
+/// @param task The name of the timer task.
+/// @param bizId If it is a device, here is the device Id; if it is a group, here is the group id.
+/// @param bizType Pass 0 if the type is device, otherwise, 1 for the group.
+/// @param status A boolean value indicates whether to turn on the timer.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)updateTimerStatusWithTask:(NSString *)task
                             bizId:(NSString *)bizId
                           bizType:(NSUInteger)bizType
@@ -182,15 +164,13 @@
                           success:(TYSuccessHandler)success
                           failure:(TYFailureError)failure;
 
-/**
-*  删除单个定时钟（新版）
-*
-*  @param timerId      定时钟Id
-*  @param bizId 业务 id，如果是设备，这里是设备 Id；如果是群组，这里是群组 id
-*  @param bizType 业务类型，0:设备;  1:设备群组
-*  @param success     Success block
-*  @param failure     Failure block
-*/
+
+/// Delete a single timer.
+/// @param timerId The timer ID for the delete process.
+/// @param bizId If it is a device, here is the device Id; if it is a group, here is the group id.
+/// @param bizType Pass 0 if the type is device, otherwise, 1 for the group.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)removeTimerWithTimerId:(NSString *)timerId
                          bizId:(NSString *)bizId
                        bizType:(NSUInteger)bizType
@@ -198,15 +178,12 @@
                        failure:(TYFailureError)failure;
 
 
-/**
-*  删除特定任务下的所有定时钟（新版）
-*
-*  @param task  定时任务名称
-*  @param bizId 业务 id，如果是设备，这里是设备 Id；如果是群组，这里是群组 id
-*  @param bizType 业务类型，0:设备;  1:设备群组
-*  @param success     Success block
-*  @param failure     Failure block
-*/
+/// Delete all timers under a specific task.
+/// @param task The name of the timer task.
+/// @param bizId If it is a device, here is the device Id; if it is a group, here is the group id.
+/// @param bizType Pass 0 if the type is device, otherwise, 1 for the group.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)removeTimerWithTask:(NSString *)task
                       bizId:(NSString *)bizId
                     bizType:(NSUInteger)bizType
@@ -214,14 +191,13 @@
                     failure:(TYFailureError)failure;
 
 
-/// 批量修改普通定时状态或删除定时器
-///
-/// @param timerIds 批量修改的定时 ids
-/// @param bizId 业务 id，如果是设备，这里是设备 Id；如果是群组，这里是群组 id
-/// @param bizType 业务类型，0:设备;  1:设备群组
-/// @param updateType 更新类型 0: 关闭定时器 1: 开启定时器 2:删除定时器
-/// @param success Success block
-/// @param failure Failure block
+/// Batch modification of common timing status or deletion of timers.
+/// @param timerIds Batch modified timing ids.
+/// @param bizId Service id, in case of device, here is the device id; in case of group, here is the group id.
+/// @param bizType Service type, 0:Device; 1:Device group.
+/// @param updateType Update Type 0: Turn off the timer 1: Turn on the timer 2: Delete the timer.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)updateTimerStatusWithTimerIds:(NSArray<NSString *> *)timerIds
                                 bizId:(NSString *)bizId
                               bizType:(NSUInteger)bizType
@@ -230,14 +206,13 @@
                               failure:(TYFailureError)failure;
 
 
-/// 修改定时任务下所有定时状态或删除定时器
-///
-/// @param task 定时任务名称
-/// @param bizId 业务 id，如果是设备，这里是设备 Id；如果是群组，这里是群组 id
-/// @param bizType 业务类型，0:设备;  1:设备群组
-/// @param updateType 更新类型 0: 关闭定时器 1: 开启定时器 2:删除定时器
-/// @param success Success block
-/// @param failure Failure block
+/// Modify all timing status under a timing task or delete a timer.
+/// @param task Timing task name.
+/// @param bizId Service id, in case of device, here is the device id; in case of group, here is the group id.
+/// @param bizType Service type, 0:Device; 1:Device group.
+/// @param updateType Update Type 0: Turn off the timer 1: Turn on the timer 2: Delete the timer.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)updateTimerTaskStatusWithTask:(NSString *)task
                                 bizId:(NSString *)bizId
                               bizType:(NSUInteger)bizType

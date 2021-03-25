@@ -17,6 +17,7 @@
 #import "ShareDeviceVC.h"
 #import "UpdateDeviceVC.h"
 #import "DeceteAlarmACVC.h"
+#import "CruiseVC.h"
 
 @interface DeviceSettingVC ()<UITableViewDelegate,UITableViewDataSource,TuyaSmartCameraDPObserver>
 @property (strong, nonatomic)UITableView *qzTableView;
@@ -122,21 +123,37 @@
         }
         
     }else if(section == 1){
+        if(row == 6 || row == 7){
+            //暂时隐藏 人脸识别  和离线提醒
+            return [UITableViewCell new];
+        }
         
-        if (row == 5) {
+        if (row == 7) {
             SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
             cell.nameLab.text = QZHLoaclString(@"offlineNotice");
             cell.radioPosition = 1;
             cell.switchBtn.on = YES;
             cell.switchBtn.tag = 2;
             [cell.switchBtn addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
-
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+             return cell;
+        }else if (row == 1){
+            if ([QZHDeviceStatus deviceType:self.deviceModel] != IPCamPTZDevice) {
+                return [UITableViewCell new];
+            }
+            SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
+            cell.nameLab.text = self.memberArr[row];
+            cell.radioPosition = 0;
+            cell.switchBtn.on = [self.deviceModel.dps[@"237"] boolValue];
+            cell.switchBtn.tag = 11;
+            [cell.switchBtn addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
              return cell;
         }else{
             
              if ([self.deviceModel.productId isEqualToString:AC_PRODUCT_ID]) {
-                 if (indexPath.section == 1 && indexPath.row == 3) {
+                 //非电池版 隐藏电源管理功能
+                 if (indexPath.section == 1 && indexPath.row == 5) {
                      return [UITableViewCell new];
                  }
              }
@@ -145,13 +162,26 @@
              if (row == 0) {
                  cell.radioPosition = -1;
              }else if (row == 2){
+                 cell.radioPosition = 0;
+                 //巡航设置
+                 if ([QZHDeviceStatus deviceType:self.deviceModel] != IPCamPTZDevice) {
+                     return [UITableViewCell new];
+                 }
+                 
+             }else if (row == 4){
                  if ([QZHDeviceStatus deviceIsBattery:self.deviceModel]) {
                      cell.radioPosition = 0;
                  }else{
                      cell.radioPosition = 1;
                  }
-             }else if (row == 3){
-                 cell.radioPosition = 1;
+             }else if (row == 5){
+                 if ([QZHDeviceStatus deviceIsBattery:self.deviceModel]) {
+                     cell.radioPosition = 1;
+
+                 }else{
+                     return [UITableViewCell new];
+                 }
+
              }else{
                  cell.radioPosition = 0;
              }
@@ -160,30 +190,48 @@
         }
          
     }else{
-        SettingDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
-        cell.nameLab.text = QZHLoaclString(@"firmWareInfo");
-        cell.radioPosition = 2;
-        cell.tagLab.textColor = QZHColorWhite;
-        cell.tagLab.textAlignment = NSTextAlignmentCenter;
-        if (self.deviceUpdateArr.count > 0) {
-            TuyaSmartFirmwareUpgradeModel *model = self.deviceUpdateArr.firstObject;
-            if (model.upgradeStatus == 1) {
-                cell.tagLab.backgroundColor = UIColor.redColor;
-                [cell.tagLab mas_updateConstraints:^(MASConstraintMaker *make) {
-                    make.bottom.mas_equalTo(-15);
-                    make.top.mas_equalTo(15);
-                    make.width.mas_equalTo(20);
+        if (row == 0) {
+            SettingDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
+            cell.nameLab.text = QZHLoaclString(@"firmWareInfo");
+            cell.radioPosition = -1;
+            cell.tagLab.textColor = QZHColorWhite;
+            cell.tagLab.textAlignment = NSTextAlignmentCenter;
+            if (self.deviceUpdateArr.count > 0) {
+                TuyaSmartFirmwareUpgradeModel *model = self.deviceUpdateArr.firstObject;
+                if (model.upgradeStatus == 1) {
+                    cell.tagLab.backgroundColor = UIColor.redColor;
+                    [cell.tagLab mas_updateConstraints:^(MASConstraintMaker *make) {
+                        make.bottom.mas_equalTo(-15);
+                        make.top.mas_equalTo(15);
+                        make.width.mas_equalTo(20);
 
-                }];
-                QZHViewRadius(cell.tagLab, 10);
-                cell.tagLab.text = @"1";
-            }else{
-                cell.tagLab.text = @"";
+                    }];
+                    QZHViewRadius(cell.tagLab, 10);
+                    cell.tagLab.text = @"1";
+                }else{
+                    cell.tagLab.text = @"";
+                }
+
             }
-
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+            
+        }else if(row == 1){
+            SettingDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
+            cell.nameLab.text = QZHLoaclString(@"remoteReboot");
+//            cell.radioPosition = 2;
+            cell.tagLab.text = @"";
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+            
+        }else{
+            SettingDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
+            cell.nameLab.text = QZHLoaclString(@"restoreFactorySettings");
+            cell.radioPosition = 1;
+            cell.tagLab.text = @"";
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;        }
+        
     }
  
 }
@@ -223,20 +271,31 @@
         return 4;
     }else if(section == 1){
        
-        return self.memberArr.count - 2;
+        return self.memberArr.count;
     }else{
-        return 1;
+        return 3;
     }
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
    
-    if ([self.deviceModel.productId isEqualToString:AC_PRODUCT_ID]) {
-        if (indexPath.section == 1 && indexPath.row == 3) {
+    if (![QZHDeviceStatus deviceIsBattery:self.deviceModel]) {
+        if (indexPath.section == 1 && indexPath.row == 5) {
             return 0;
         }
     }
-    if (indexPath.section == 1 && indexPath.row == 4) {
+
+    if (indexPath.section == 1 && (indexPath.row == 1 || indexPath.row == 2)) {
+        if ([QZHDeviceStatus deviceType:self.deviceModel] == IPCamPTZDevice) {
+            return 50;
+        }else{
+            return 0;
+        }
+    }
+    if (indexPath.section == 1 && indexPath.row == 7) {
+        return 0;
+    }
+    if (indexPath.section == 1 && indexPath.row == 6) {
         return 0;
     }
     
@@ -291,7 +350,7 @@
     if (section == 1) {
         if (row == 0) {
             
-            if ([self.deviceModel.productId isEqualToString:AC_PRODUCT_ID]) {
+            if ([QZHDeviceStatus deviceType:self.deviceModel] == IPCamPTZDevice || [QZHDeviceStatus deviceType:self.deviceModel] == IPCamACDevice) {
                 DeceteAlarmACVC *vc = [[DeceteAlarmACVC alloc] init];
                 vc.deviceModel = self.deviceModel;
                 vc.homeModel = self.homeModel;
@@ -304,7 +363,14 @@
             }
 
         }
-        if (row == 1) {
+        if (row == 2) {
+            CruiseVC *vc = [[CruiseVC alloc] init];
+            vc.deviceModel = self.deviceModel;
+            vc.homeModel = self.homeModel;
+            [self.navigationController pushViewController:vc animated:YES];
+            
+        }
+        if (row == 3) {
 
             if ([[self.dpManager valueForDP:TuyaSmartCameraSDCardStatusDPName] intValue] == 5) {
                 [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"noSDCardCantStorge") afterDelay:1.0];
@@ -318,13 +384,13 @@
             }
 
         }
-        if (row == 3) {
+        if (row == 5) {
             ElectricManageVC *vc = [[ElectricManageVC alloc] init];
             vc.deviceModel = self.deviceModel;
             vc.homeModel = self.homeModel;
             [self.navigationController pushViewController:vc animated:YES];
         }
-        if (row == 2) {
+        if (row == 4) {
             if (![QZHCommons isAdminOrOwner:self.homeModel]) {
                 [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"notAdminCantShare") afterDelay:1.0];
                 return;;
@@ -336,38 +402,76 @@
         }
     }
     if (section == 2) {
-        if ([self isAdminOrOwner]) {
-            TuyaSmartFirmwareUpgradeModel *model = self.deviceUpdateArr.firstObject;
-            if (model.upgradeStatus == 0) {
-                UIAlertController *alertC = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"lastVersion") message:[NSString stringWithFormat:@"%@: %@",QZHLoaclString(@"currentVersion"),model.currentVersion] preferredStyle:UIAlertControllerStyleAlert];
+        if (row == 0) {
+            if ([self isAdminOrOwner]) {
+                    TuyaSmartFirmwareUpgradeModel *model = self.deviceUpdateArr.firstObject;
+                    if (model.upgradeStatus == 0) {
+                        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"lastVersion") message:[NSString stringWithFormat:@"%@: %@",QZHLoaclString(@"currentVersion"),model.currentVersion] preferredStyle:UIAlertControllerStyleAlert];
+                        UIAlertAction *action = [UIAlertAction actionWithTitle:QZHLoaclString(@"submit") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                            
+                        }];
+                        [alertC addAction:action];
+                        [self presentViewController:alertC animated:NO completion:nil];
+                    }else{
+                        //有新版本
+                        QZHWS(weakSelf)
+                        UpdateDeviceVC *vc = [[UpdateDeviceVC alloc] init];
+                        vc.deviceModel = self.deviceModel;
+                        vc.homeModel = self.homeModel;
+                        vc.upModel = self.deviceUpdateArr.firstObject;
+                        vc.refresh = ^{
+                            [weakSelf getFirmwareUpgradeInfo];
+                        };
+                        [self.navigationController pushViewController:vc animated:YES];
+                    }
+                }else{
+                UIAlertController *alertC = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"versionInfo") message:[NSString stringWithFormat:@"%@: %@",QZHLoaclString(@"currentVersion"),self.deviceModel.verSw] preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *action = [UIAlertAction actionWithTitle:QZHLoaclString(@"submit") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                     
                 }];
                 [alertC addAction:action];
                 [self presentViewController:alertC animated:NO completion:nil];
-            }else{
-                //有新版本
-                QZHWS(weakSelf)
-                UpdateDeviceVC *vc = [[UpdateDeviceVC alloc] init];
-                vc.deviceModel = self.deviceModel;
-                vc.homeModel = self.homeModel;
-                vc.upModel = self.deviceUpdateArr.firstObject;
-                vc.refresh = ^{
-                    [weakSelf getFirmwareUpgradeInfo];
-                };
-                [self.navigationController pushViewController:vc animated:YES];
             }
-            
         }else{
-            UIAlertController *alertC = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"versionInfo") message:[NSString stringWithFormat:@"%@: %@",QZHLoaclString(@"currentVersion"),self.deviceModel.verSw] preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *action = [UIAlertAction actionWithTitle:QZHLoaclString(@"submit") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                
-            }];
-            [alertC addAction:action];
-            [self presentViewController:alertC animated:NO completion:nil];
-        }
+            if ([self isAdminOrOwner]) {
+                if (row == 1){
 
-   
+                    NSDictionary  *dps = @{@"162": @(YES)};
+                    
+                      [self.device publishDps:dps success:^{
+
+                      } failure:^(NSError *error) {
+
+                          [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:1.0];
+
+                      }];
+
+                }else{
+                    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"tip") message:QZHLoaclString(@"cannotBeRestoredafteRestored") preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *action = [UIAlertAction actionWithTitle:QZHLoaclString(@"confirm") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                        NSDictionary  *dps = @{@"233": @(YES)};
+                        
+                          [self.device publishDps:dps success:^{
+
+                          } failure:^(NSError *error) {
+
+                              [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:1.0];
+
+                          }];
+                        
+                    }];
+                    UIAlertAction *actionC = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        
+                    }];
+                    [alertC addAction:action];
+                    [alertC addAction:actionC];
+                    [self presentViewController:alertC animated:NO completion:nil];
+                }
+                
+            }else{
+                [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"notManagerNoHandle") afterDelay:1.0];
+            }
+        }
     }
 }
 
@@ -381,7 +485,7 @@
 }
 - (NSMutableArray *)memberArr{
     if (!_memberArr) {
-        _memberArr = [NSMutableArray arrayWithArray:@[QZHLoaclString(@"setting_deceteAlarm"),QZHLoaclString(@"setting_storage"),QZHLoaclString(@"mine_shareDevices"),QZHLoaclString(@"setting_electricManage"),QZHLoaclString(@"faceRecognition"),QZHLoaclString(@"offlineNotice")]];
+        _memberArr = [NSMutableArray arrayWithArray:@[QZHLoaclString(@"setting_deceteAlarm"),QZHLoaclString(@"setting_figureTracking"),QZHLoaclString(@"setting_cruise"),QZHLoaclString(@"setting_storage"),QZHLoaclString(@"mine_shareDevices"),QZHLoaclString(@"setting_electricManage"),QZHLoaclString(@"faceRecognition"),QZHLoaclString(@"offlineNotice")]];
  
     }
     return _memberArr;
@@ -407,6 +511,24 @@
                    [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
             }];
         }
+    }else if (sender.tag == 11){
+        self.device = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId];
+        self.deviceModel = self.device.deviceModel;
+        if ([self.deviceModel.dps[@"174"] boolValue]) {
+            [[QZHHUD HUD]textHUDWithMessage:QZHLoaclString(@"turnOffCruise") afterDelay:1.0];
+            sender.on = !sender.on;
+            return;
+        }
+        
+        NSDictionary  *dps = @{@"237": @(sender.on)};
+        
+          [self.device publishDps:dps success:^{
+
+          } failure:^(NSError *error) {
+              sender.on = !sender.on;
+              [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:1.0];
+
+          }];
     }else{
         //离线
     }

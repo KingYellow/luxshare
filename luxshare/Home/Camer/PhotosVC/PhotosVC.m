@@ -260,7 +260,7 @@ QZHWS(weakSelf)
     if (!_leftBtn) {
         _leftBtn = [[UIButton alloc] init];
         [_leftBtn setTitle:QZHLoaclString(@"video") forState:UIControlStateNormal];
-        _leftBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_BIG_TITLE;
+        _leftBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
         [_leftBtn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
         [_leftBtn setImage:QZHLoadIcon(@"ic_all_video") forState:UIControlStateNormal];
         _leftBtn.tag = 888;
@@ -273,7 +273,7 @@ QZHWS(weakSelf)
     if (!_rightBtn) {
         _rightBtn = [[UIButton alloc] init];
         [_rightBtn setTitle:QZHLoaclString(@"photo") forState:UIControlStateNormal];
-        _rightBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_BIG_TITLE;
+        _rightBtn.titleLabel.font = QZHKIT_FONT_LISTCELL_MAIN_TITLE;
         [_rightBtn setTitleColor:QZHKIT_Color_BLACK_87 forState:UIControlStateNormal];
         [_rightBtn setImage:QZHLoadIcon(@"ic_all_photo_n") forState:UIControlStateNormal];
         [_rightBtn jk_setImagePosition:0 spacing:15];
@@ -455,5 +455,7 @@ QZHWS(weakSelf)
 
     [self presentViewController:alert animated:YES completion:nil];
 }
-
+- (void)dealloc{
+    NSLog(@"photovc");
+}
 @end

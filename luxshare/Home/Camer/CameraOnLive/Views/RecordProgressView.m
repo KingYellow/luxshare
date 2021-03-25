@@ -27,7 +27,7 @@
         make.centerY.mas_equalTo(self);
     }];
     [self.typeLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.tipIMG.mas_right).offset(5);
+        make.left.mas_equalTo(self.tipIMG.mas_right).offset(0);
         make.height.mas_equalTo(20);
         make.centerY.mas_equalTo(self);
     }];

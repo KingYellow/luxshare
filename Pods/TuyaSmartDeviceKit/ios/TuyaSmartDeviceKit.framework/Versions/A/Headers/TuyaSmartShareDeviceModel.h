@@ -1,47 +1,28 @@
 //
-//  TuyaSmartShareDeviceModel.h
-//  TuyaSmartKitExample
+// TuyaSmartShareDeviceModel.h
+// TuyaSmartDeviceKit
 //
-//  Created by 冯晓 on 2017/7/15.
-//  Copyright © 2017年 tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 @interface TuyaSmartShareDeviceModel : NSObject
 
-/**
- *  device icon url
- */
+/// device icon url
 @property (nonatomic, strong) NSString *iconUrl;
 
-/**
- *  devId
- */
+/// devId
 @property (nonatomic, strong) NSString *devId;
 
-/**
- *  名称(设备,群组)
- *  device name or group name
- */
+/// device name or group name
 @property (nonatomic, strong) NSString *name;
 
-/**
- *  Whether or not to share
- */
+/// Whether or not to share
 @property (nonatomic, assign) BOOL share;
 
-/**
- *  room name
- */
+/// room name
 @property (nonatomic, strong) NSString *roomName;
 
-/**
- *  home name
- */
+
+/// home name
 @property (nonatomic, strong) NSString *homeName;
-
-
-
-
-
 
 @end

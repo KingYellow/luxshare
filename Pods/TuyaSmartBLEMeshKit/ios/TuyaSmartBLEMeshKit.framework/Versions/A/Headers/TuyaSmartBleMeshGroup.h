@@ -1,28 +1,25 @@
 //
-//  TuyaSmartBleMeshGroup.h
-//  TuyaSmartKit
+// TuyaSmartBleMeshGroup.h
+// TuyaSmartBLEMeshKit
 //
-//  Created by XuChengcheng on 2017/7/10.
-//  Copyright © 2017年 Tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class TuyaSmartBleMeshGroup;
+
 @protocol TuyaSmartBleMeshGroupDelegate <NSObject>
 
-/// sig mesh 设备加入到网关的群组响应
-/// 1:超过场景数上限 2:子设备超时 3:设置值超出范围 4:写文件错误 5:其他错误
-/// Group Response of Zigbee Devices Joining Gateway
-/// 1: Over the Scenario Limit 2: Subdevice Timeout 3: Setting Value Out of Range 4: Write File Error 5: Other Errors
+/// Group response of SIG mesh device joining gateway.
+/// @param group TuyaSmartBleMeshGroup.
+/// @param responseCode 1: Exceeded the maximum number of scenes 2: sub device timeout 3: set value out of range 4: write file error 5: other errors.
 - (void)meshGroup:(TuyaSmartBleMeshGroup *)group addResponseCode:(NSArray <NSNumber *> *)responseCode;
 
-/// sig mesh 设备从网关群组移除响应
-/// 1:超过场景数上限 2:子设备超时 3:设置值超出范围 4:写文件错误 5:其他错误
-/// Group Response of Zigbee Devices removing Gateway
-/// 1: Over the Scenario Limit 2: Subdevice Timeout 3: Setting Value Out of Range 4: Write File Error 5: Other Errors
+/// SIG mesh device removes response from gateway group.
+/// @param group TuyaSmartBleMeshGroup.
+/// @param responseCode 1: Exceeded the maximum number of scenes 2: sub device timeout 3: set value out of range 4: write file error 5: other errors.
 - (void)meshGroup:(TuyaSmartBleMeshGroup *)group removeResponseCode:(NSArray <NSNumber *> *)responseCode;
   
 @end
@@ -33,44 +30,31 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, readonly) TuyaSmartGroupModel *meshGroupModel;
 
-/**
- 获取mesh群组对象
- 
- @param groupId 群组Id
- */
+/// Get mesh group object.
+/// @param groupId The group ID.
 + (instancetype)meshGroupWithGroupId:(NSInteger)groupId;
 
-/**
- 获取mesh群组对象
- 
- @param groupId 群组Id
- */
+/// Get mesh group object.
+/// @param groupId The group ID.
 - (instancetype)initWithGroupId:(NSInteger)groupId NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init NS_UNAVAILABLE;
 
-
-/**
- 向云端分配群组 Id
-
- @param meshId mesh id
- @param success 成功回调 localid 10 进制
- @param failure 失败回调
- */
+/// Assign group ID to cloud.
+/// @param meshId The mesh ID.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 + (void)getBleMeshGroupAddressFromCluondWithMeshId:(NSString *)meshId
                                            success:(TYSuccessInt)success
                                            failure:(TYFailureError)failure;
 
-/**
- 创建mesh群组
- 
- @param groupName mesh群组名字
- @param meshId    meshId
- @param localId   群组的本地短地址
- @param pcc 群组设备大小类
- @param success 操作成功回调 GroupId
- @param failure 操作失败回调
- */
+/// Create mesh group.
+/// @param groupName Mesh group name.
+/// @param meshId The mesh ID.
+/// @param localId Local short address of the group.
+/// @param pcc Group device size class
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 + (void)createMeshGroupWithGroupName:(NSString *)groupName
                               meshId:(NSString *)meshId
                              localId:(NSString *)localId
@@ -79,65 +63,49 @@ NS_ASSUME_NONNULL_BEGIN
                              failure:(TYFailureError)failure;
 
 + (NSInteger)getBleMeshGroupAddress;
+
 + (NSInteger)getBleMeshGroupCount;
+
 - (void)deleteBleMeshGroupAddress:(NSInteger)address;
 
-/**
- 修改mesh群组名字
- 
- @param meshGroupName meshGroup名称
- @param success 操作成功回调
- @param failure 操作失败回调
- */
+/// Modify mesh group name.
+/// @param meshGroupName The mesh group name.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)updateMeshGroupName:(NSString *)meshGroupName success:(TYSuccessHandler)success failure:(TYFailureError)failure;
 
-
-/**
- 删除mesh群组
- 
- @param success 操作成功回调
- @param failure 操作失败回调
- */
+/// Delete mesh group.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)removeMeshGroupWithSuccess:(TYSuccessHandler)success failure:(TYFailureError)failure;
 
-/**
- 添加设备
- 
- @param success 操作成功回调
- @param failure 操作失败回调
- */
+/// Add device.
+/// @param deviceId The device ID.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)addDeviceWithDeviceId:(NSString *)deviceId success:(TYSuccessHandler)success failure:(TYFailureError)failure;
 
-/**
- 批量修改设备
- 
- @param success 操作成功回调
- @param failure 操作失败回调
- */
+/// Batch modify equipment.
+/// @param deviceList The device list.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)editDeviceWithDeviceList:(NSArray *)deviceList success:(TYSuccessHandler)success failure:(TYFailureError)failure;
 
-/**
- 移除设备
- 
- @param success 操作成功回调
- @param failure 操作失败回调
- */
+/// Remove the device.
+/// @param deviceId The device ID.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)removeDeviceWithDeviceId:(NSString *)deviceId success:(TYSuccessHandler)success failure:(TYFailureError)failure;
 
-/**
- 获取群组中设备list信息
- 
- @param success 操作成功回调
- @param failure 操作失败回调
- */
+/// Get the list information of devices in the group.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)getDeviceListInfoWithSuccess:(void (^)(NSArray <TuyaSmartDeviceModel *> *deviceList))success failure:(TYFailureError)failure;
 
-/**
-获取群组中设备list信息
-
-@param success 操作成功回调
-@param failure 操作失败回调
-*/
+/// Get the list information of devices in the group.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
+/// @deprecated This method is deprecated, Use TuyaSmartBleMeshGroup getDeviceListInfoWithSuccess:failure: instead.
 - (void)getDeviveListInfoWithSuccess:(void (^)(NSArray <TuyaSmartDeviceModel *> *deviceList))success failure:(TYFailureError)failure __deprecated_msg("This method is deprecated, Use [TuyaSmartBleMeshGroup getDeviceListInfoWithSuccess:failure:] instead");
 
 @end
@@ -146,29 +114,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TuyaSmartBleMeshGroup (SIGMesh)
 
-/**
- 通过 sig mesh 网关添加 sig mesh 子设备群组
- 需要保证子设备的关系归属在在 sig mesh 网关下
-
- @param subList 待操作的网关下子设备
- @param success 操作成功回调
- @param failure 操作失败回调
- */
+/// Add sig mesh sub device group through sig mesh gateway.
+/// It is necessary to ensure that the relationship of the sub devices belongs to the sig mesh gateway.
+/// @param subList Gateway sub equipment to be operated.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)addSubDeviceWithSubList:(NSArray<TuyaSmartDeviceModel *> * _Nonnull )subList success:(nullable TYSuccessHandler)success failure:(nullable TYFailureError)failure;
 
-/**
- 通过 sig mesh 网关删除 sig mesh 子设备群组
- 需要保证子设备的关系归属在在 sig mesh 网关下
-
- @param subList 待操作的网关下子设备
- @param success 操作成功回调
- @param failure 操作失败回调
- */
+/// Delete sig mesh sub device group through sig mesh gateway.
+/// It is necessary to ensure that the relationship of the sub devices belongs to the sig mesh gateway.
+/// @param subList Gateway sub equipment to be operated.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)removeSubDeviceWithSubList:(NSArray<TuyaSmartDeviceModel *> * _Nonnull )subList success:(nullable TYSuccessHandler)success failure:(nullable TYFailureError)failure;
-
 
 - (void)publishDps:(NSDictionary *)dps success:(nullable TYSuccessHandler)success failure:(nullable TYFailureError)failure;
 
+/// Custom param publish
+/// @param params param:dictionary  { "localId":"c050" ,"dps":{"1":true}  “pcc”:"1510"}
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
+- (void)publishDpsWithParams:(NSDictionary *)params success:(TYSuccessHandler)success failure:(TYFailureError)failure;
+
 @end
+
 NS_ASSUME_NONNULL_END
 

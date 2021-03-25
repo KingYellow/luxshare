@@ -1,6 +1,14 @@
-# WMZPageController - 分页控制器,替换UIPageController方案,具备完整的生命周期,多种指示器样式,多种标题样式,可悬浮,支持ios13暗黑模式(仿淘宝,优酷,爱奇艺,今日头条,简书,京东等多种标题菜单)（cocopod更新至1.2.7，使用有问题的话先看看是不是最新的版本,有问题加群937909825）
+# WMZPageController - 分页控制器,替换UIPageController方案,具备完整的生命周期,多种指示器样式,多种标题样式,可悬浮,支持ios13暗黑模式(仿淘宝,优酷,爱奇艺,今日头条,简书,京东等多种标题菜单)（cocopod更新至1.3.5，使用有问题的话先看看是不是最新的版本,有问题加群937909825）
 
-# 注意⚠️⚠️  使用悬浮样式需要实现协议 WMZPageProtocol 
+# ⚠️⚠️  1.3.2 新增自定义菜单高度  wMenuHeight
+# ⚠️⚠️  使用悬浮样式需要实现协议 WMZPageProtocol 
+# ⚠️⚠️   
+     //自定义整体距离顶部的位置(如果默认算的不准确 或者需要修改) block内会传回当前的值 可对比自行返回最终需要的
+      WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomNaviBarY)
+    //自定义整体距离底部的位置(如果默认算的不准确 或者需要修改) block内会传回当前的值 可对比自行返回最终需要的
+     WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomTabbarY)
+     //自定义底部滚动视图的高度(如果默认算的不准确 或者需要修改) block内会传回当前的值 可对比自行返回最终需要的
+     WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomDataViewHeight)
 
 演示
 ==============
@@ -378,25 +386,66 @@
 ### 详情看demo    
 
 ###  更新 改变wTitleArr和wControllers后直接调用实例方法即可
-     /*
-     *更新(全部重新渲染)
-     */
-     - (void)updatePageController;
-     
-     /*
-     *更新头部
-     */
-     - (void)updateHeadView;
+        /*!
+        *
+	* @brief 更新全部(会全部重新渲染)
+	*/
+	- (void)updatePageController;
 
-     /*
-     *手动调用菜单到第index个
-     */
-     - (void)selectMenuWithIndex:(NSInteger)index;
-     
-     /*
-     *底部手动滚动  传入CGPointZero则为吸顶临界点
-     */
-     - (void)downScrollViewSetOffset:(CGPoint)point animated:(BOOL)animat;
+	/*!
+	* @brief 更新头部
+	*/
+	- (void)updateHeadView;
+
+	/*!
+	* @brief 更新菜单栏
+	*/
+	- (void)updateMenuData;
+
+	/*!
+	* @brief 标题数量内容不变情况下只更新内容
+	*/
+	- (void)updateTitle;
+
+	/*!
+	* @brief 底部手动滚动 传入CGPointZero则为吸顶临界点
+	* @param point 滚动的坐标
+	* @param animat 滚动动画
+	*/
+	- (void)downScrollViewSetOffset:(CGPoint)point animated:(BOOL)animat;
+
+	/*!
+	* @brief 手动调用菜单到第index个
+	* @param index 对应下标
+	*/
+	- (void)selectMenuWithIndex:(NSInteger)index;
+
+
+
+	/*!
+	* @brief 动态插入菜单数据
+	* @param insertObject 插入对应model
+	*/
+	- (BOOL)addMenuTitleWithObject:(WMZPageTitleDataModel*)insertObject;
+
+	/*!
+	* @brief 动态删除菜单数据
+	* @param deleteObject 删除的对应下标 如@(1) 或者 传入的标题对象
+	*/
+	- (BOOL)deleteMenuTitleIndex:(id)deleteObject;
+
+
+	/*!
+	* @brief 动态插入菜单数组
+	* @param insertArr 插入对应model的数组
+	*/
+	- (BOOL)addMenuTitleWithObjectArr:(NSArray<WMZPageTitleDataModel*>*)insertArr;
+
+	/*!
+	* @brief 动态删除菜单数组
+	* @param deleteArr @[ 如@(1) 或者 传入的标题对象]
+	*/
+	- (BOOL)deleteMenuTitleIndexArr:(NSArray*)deleteArr;
 
 ### 依赖
 无任何依赖 
@@ -458,3 +507,7 @@ ios问题交流群 937909825(有问题加群哈)
 - 20200904 淘宝demo增加圆角示范,优化加入的控制器,传入字体增加UIFont对象,pod更新至1.2.5 
 - 20200920 pod更新至1.2.6 淘宝demo优化 新增自定义顶部距离 自定义整体高度 自定义底部距离
 - 20201009 pod更新至1.2.7 修复bug
+- 20201022 pod更新至1.3.2 iPhone12适配 修复bug 优化结构 
+- 20201218 pod更新至1.3.3 新增动态增删方法 优化
+- 20210127 pod更新至1.3.4 新增动态更新 修复右边按钮只能点击一次的问题 优化
+- 20210128 pod更新至1.3.5  优化

@@ -1,39 +1,38 @@
 //
-//  TuyaSmartCommunication.h
-//  CocoaAsyncSocket
+// TuyaSmartCommunicationMode.h
+// TuyaSmartDeviceCoreKit
 //
-//  Created by huangkai on 2020/7/18.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, TYCommunicationType) {
-    TYCommunicationTypeLAN      = 0, // 局域网
-    TYCommunicationTypeMQTT     = 1, // mqtt
-    TYCommunicationTypeHTTP     = 2, // http
-    TYCommunicationTypeBLE      = 3, // 单点蓝牙
-    TYCommunicationTypeSIGMesh  = 4, // sig mesh
-    TYCommunicationTypeBLEMesh  = 5, // 涂鸦私有 mesh
+    TYCommunicationTypeLAN      = 0, // LAN
+    TYCommunicationTypeMQTT     = 1, // MQTT
+    TYCommunicationTypeHTTP     = 2, // Http
+    TYCommunicationTypeBLE      = 3, // Single Point Bluetooth
+    TYCommunicationTypeSIGMesh  = 4, // Sig Mesh
+    TYCommunicationTypeBLEMesh  = 5, // Tuya Private Mesh
 };
 
 @interface TuyaSmartCommunicationMode : NSObject
 
-/// 通讯协议版本
+/// Communication protocol version
 @property (nonatomic, assign) double pv;
 
-/// 通讯协议类型
+/// Communication Protocol Type
 @property (nonatomic, assign) TYCommunicationType type;
 
 @end
 
 @interface TuyaSmartCommunication : NSObject
 
-/// 通信顺序
+/// Communication sequence
 @property (nonatomic, strong) NSArray<TuyaSmartCommunicationMode *> *communicationModes;
 
-/// 通讯节点
+/// Communication Nodes
 @property (nonatomic, strong) NSString *communicationNode;
 
 @end

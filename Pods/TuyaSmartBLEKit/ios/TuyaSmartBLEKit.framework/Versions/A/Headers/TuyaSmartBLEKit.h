@@ -1,9 +1,8 @@
 //
-//  TuyaSmartBLEKit.h
-//  TuyaSmartBLEKit
+// TuyaSmartBLEKit.h
+// TuyaSmartBLEKit
 //
-//  Created by 高森 on 2018/9/4.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TuyaSmartBLEKit_h
 #define TuyaSmartBLEKit_h

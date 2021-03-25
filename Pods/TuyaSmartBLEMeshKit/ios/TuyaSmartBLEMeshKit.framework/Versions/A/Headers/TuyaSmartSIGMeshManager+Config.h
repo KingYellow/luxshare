@@ -1,9 +1,8 @@
 //
-//  TuyaSmartSIGMeshManager+Config.h
-//  BlocksKit
+// TuyaSmartSIGMeshManager+Config.h
+// TuyaSmartBLEMeshKit
 //
-//  Created by 温明妍 on 2019/12/17.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <TuyaSmartBLEMeshKit/TuyaSmartBLEMeshKit.h>
 NS_ASSUME_NONNULL_BEGIN
@@ -12,75 +11,58 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TuyaSmartSIGMeshManager (Config)
 
-/**
- 重置节点
- 
- @param deviceModel 节点地址
- @param success 成功回调（- 目前通过代理回调，block 暂未实现）
- @param failure 失败回调（- 目前通过代理回调，block 暂未实现）
- */
+/// Reset node.
+/// @param deviceModel TuyaSmartDeviceModel.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)sendNodeResetWithDeviceModel:(TuyaSmartDeviceModel *)deviceModel
                              success:(nullable TYSuccessHandler)success
                              failure:(nullable TYFailureError)failure;
 
-/**
- 开关命令
- 
- @param nodeId 节点地址
- @param state 开关状态
- @param useUnacknowledged 是否需要回复，建议群组使用 no，单设备控制 yes
- @param success 成功回调（- 目前通过代理回调，block 暂未实现）
- @param failure 失败回调（- 目前通过代理回调，block 暂未实现）
- */
+/// Switch command.
+/// @param nodeId The node ID.
+/// @param state Switch status.
+/// @param useUnacknowledged Whether a reply is needed, it is suggested that the group should use no and single device control yes.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)sendOnoffWithNodeId:(NSString *)nodeId
                       state:(BOOL)state
           useUnacknowledged:(BOOL)useUnacknowledged
                     success:(nullable TYSuccessHandler)success
                     failure:(nullable TYFailureError)failure;
 
-
-/**
- 亮度命令
- 
- @param nodeId 节点地址
- @param brightValue 亮度值，0 -- 65535
- @param useUnacknowledged 是否需要回复，建议群组使用 no，单设备控制 yes
- @param success 成功回调（- 目前通过代理回调，block 暂未实现）
- @param failure 失败回调（- 目前通过代理回调，block 暂未实现）
- */
+/// Brightness command.
+/// @param nodeId The node ID.
+/// @param brightValue Brightness value : 0 -- 65535.
+/// @param useUnacknowledged Whether a reply is needed, it is suggested that the group should use no and single device control yes.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)sendLightBrightWithNodeId:(NSString *)nodeId
                       brightValue:(int)brightValue
                 useUnacknowledged:(BOOL)useUnacknowledged
                           success:(nullable TYSuccessHandler)success
                           failure:(nullable TYFailureError)failure;
 
-/**
- 冷暖控制
- 
- @param nodeId 节点地址
- @param tempValue 冷暖值 300 - 20000
- @param useUnacknowledged 是否需要回复，建议群组使用 no，单设备控制 yes
- @param success 成功回调（- 目前通过代理回调，block 暂未实现）
- @param failure 失败回调（- 目前通过代理回调，block 暂未实现）
- */
+/// Heating and cooling control.
+/// @param nodeId The node ID.
+/// @param tempValue Warm and cold value : 300 - 20000.
+/// @param useUnacknowledged Whether a reply is needed, it is suggested that the group should use no and single device control yes.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)sendLightCTLTempeValueWithNodeId:(NSString *)nodeId
                                tempValue:(int)tempValue
                        useUnacknowledged:(BOOL)useUnacknowledged
                                  success:(nullable TYSuccessHandler)success
                                  failure:(nullable TYFailureError)failure;
 
-
-/**
- HSL 颜色控制
- 
- @param nodeId 节点地址
- @param aHue 色调 0 - 65535
- @param aSaturation 饱和度 0 - 65535
- @param aLightness 亮度 l or v，0 - 65535
- @param useUnacknowledged 是否需要回复，建议群组使用 no，单设备控制 yes
- @param success 成功回调（- 目前通过代理回调，block 暂未实现）
- @param failure 失败回调（- 目前通过代理回调，block 暂未实现）
- */
+/// HLS color control.
+/// @param nodeId The node ID.
+/// @param aHue Hue value : 0 - 65535.
+/// @param aSaturation Saturation : 0 - 65535.
+/// @param aLightness brightness :  l or v，0 - 65535.
+/// @param useUnacknowledged Whether a reply is needed, it is suggested that the group should use no and single device control yes.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)sendLightHSLWithNodeId:(NSString *)nodeId
                            hue:(int)aHue
                  andSaturation:(int)aSaturation
@@ -89,33 +71,25 @@ NS_ASSUME_NONNULL_BEGIN
                        success:(nullable TYSuccessHandler)success
                        failure:(nullable TYFailureError)failure;
 
-
-/**
- 设置模式
- 
- @param nodeId nodeId 节点地址
- @param alightModel 0: 白光模式。 1: 彩光模式
- @param useUnacknowledged 是否需要回复，建议群组使用 no，单设备控制 yes
- @param success 成功回调（- 目前通过代理回调，block 暂未实现）
- @param failure 失败回调（- 目前通过代理回调，block 暂未实现）
- */
+/// Setup mode.
+/// @param nodeId The node ID.
+/// @param alightModel 0: white light mode. 1: Color light mode.
+/// @param useUnacknowledged Whether a reply is needed, it is suggested that the group should use no and single device control yes.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)sendLightModelWithNodeId:(NSString *)nodeId
                       lightModel:(int)alightModel
                useUnacknowledged:(BOOL)useUnacknowledged
                          success:(nullable TYSuccessHandler)success
                          failure:(nullable TYFailureError)failure;
 
-
-/**
- 通用 vendor 协议
- 
- @param nodeId 节点地址
- @param vendorData 数据内容
- @param isisQuery 是否为查询指令
- @param useUnacknowledged 是否需要回复，建议群组使用 no，单设备控制 yes
- @param success 成功回调（- 目前通过代理回调，block 暂未实现）
- @param failure 失败回调（- 目前通过代理回调，block 暂未实现）
- */
+/// General vendor protocol.
+/// @param nodeId The node ID.
+/// @param vendorData Data content.
+/// @param isisQuery Is it a query instruction.
+/// @param useUnacknowledged Whether a reply is needed, it is suggested that the group should use no and single device control yes.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)sendVendorDataWithNodeId:(NSString *)nodeId
                       vendorData:(NSData *)vendorData
                          isQuery:(BOOL)isisQuery
@@ -123,17 +97,14 @@ NS_ASSUME_NONNULL_BEGIN
                          success:(TYSuccessHandler)success
                          failure:(TYFailureError)failure;
 
-/**
- 单设备下发消息
- 
- @param nodeId 节点地址
- @param schemaArray dps 信息
- @param dps 下发 dp
- @param pcc 产品大小类标示
- @param useUnacknowledged 是否需要消息回复
- @param success 成功回调
- @param failure 失败回调
- */
+/// Single device sends messages.
+/// @param nodeId The node ID.
+/// @param schemaArray Dps information.
+/// @param dps Dps.
+/// @param pcc Product size class identification.
+/// @param useUnacknowledged Do you need a message reply?
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)publishDpsWithNodeId:(NSString *)nodeId
                  schemaArray:(NSArray<TuyaSmartSchemaModel *> *)schemaArray
                          dps:(NSDictionary *)dps
@@ -142,22 +113,15 @@ NS_ASSUME_NONNULL_BEGIN
                      success:(nullable TYSuccessHandler)success
                      failure:(nullable TYFailureError)failure;
 
-
-/**
- 获取某个设备的状态
- 
- @param deviceModel 设备 model
- */
+/// Gets the status of a device.
+/// @param deviceModel The device model.
 - (void)getDeviceStatusWithDeviceModel:(TuyaSmartDeviceModel *)deviceModel;
 
-
-/**
- 查询设备的 dps
-
- @param deviceModel 查询的设备
- @param dpIds 要查询的 dp id 组
- */
+/// Query device DPS.
+/// @param deviceModel The device model.
+/// @param dpIds DP ID group to query.
 - (void)queryDpsWithDeviceModel:(TuyaSmartDeviceModel *)deviceModel dpIds:(NSArray<NSString *> *)dpIds;
 
 @end
+
 NS_ASSUME_NONNULL_END

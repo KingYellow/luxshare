@@ -1,9 +1,8 @@
 //
-//  TYCoreCacheService.h
-//  TuyaSmartDeviceCoreKit
+// TYCoreCacheService.h
+// TuyaSmartDeviceCoreKit
 //
-//  Created by huangkai on 2020/6/23.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 
@@ -28,22 +27,22 @@ TYSDK_SINGLETON;
 
 @property (nonatomic, weak) id<TYCoreCacheServiceDelegate> delegate;
 
-/// 设备缓存
+/// Device cache.
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSString *, TuyaSmartDeviceModel *> *deviceData;
 
-/// 群组缓存
+/// Group caching.
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSString *, TuyaSmartGroupModel *> *groupData;
 
-/// 群组产品信息缓存
+/// Group product information cache.
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSString *, NSDictionary *> *groupProductData;
 
-/// 群组设备关系缓存
-@property (nonatomic, strong, readonly) NSMutableDictionary *groupDeviceRelation;
+/// Group device relationship cache.
+@property (nonatomic, strong, readonly) NSMutableDictionary<NSString *, NSArray<NSString *> *> *groupDeviceRelation;
 
-/// mesh 信息
+/// Mesh information.
 @property (nonatomic, strong, readonly) NSMutableDictionary<NSString *, TuyaSmartBleMeshModel *> *meshData;
 
-/// mesh 群组信息
+/// Mesh Group information.
 @property (nonatomic, strong, readonly) NSMutableDictionary *meshGroupAddData;
 
 
@@ -94,6 +93,9 @@ TYSDK_SINGLETON;
 - (NSInteger)getMeshGroupAddressFromLocalWithMeshId:(NSString *)meshId;
 - (NSInteger)getMeshGroupCountFromLocalWithMeshId:(NSString *)meshId;
 - (void)removeMeshGroupWithAddress:(NSInteger)address meshId:(NSString *)meshId;
+
+/// This is a special sharing type of device, such as sharing the family and sharing the device at the same time, to distinguish.
+- (NSArray <NSString *> *)getSpecialSharedDevIds;
 
 @end
 

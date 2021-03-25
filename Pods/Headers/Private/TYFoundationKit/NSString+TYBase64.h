@@ -1,1 +1,1 @@
-../../../TYFoundationKit/TYFoundationKit-1.12.0-rc.5/Headers/Public/NSString+TYBase64.h
+../../../TYFoundationKit/TYFoundationKit-1.14.0-rc.5/Headers/Public/NSString+TYBase64.h

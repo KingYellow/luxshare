@@ -1,43 +1,32 @@
 //
-//  TuyaSmartSIGMeshManager+Group.h
-//  BlocksKit
+// TuyaSmartSIGMeshManager+Group.h
+// TuyaSmartBLEMeshKit
 //
-//  Created by 温明妍 on 2019/12/17.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <TuyaSmartBLEMeshKit/TuyaSmartBLEMeshKit.h>
 
 @interface TuyaSmartSIGMeshManager (Group)
 
-/**
- 把设备加入到群组
- 
- @param devId 设备 id
- @param groupAddress 群组地址
- */
+/// Add device to group.
+/// @param devId The device ID.
+/// @param groupAddress Group address.
 - (void)addDeviceToGroupWithDevId:(NSString *)devId
                      groupAddress:(uint32_t)groupAddress;
 
-
-
-/**
- 把设备从群组内移除
- 
- @param devId 设备 id
- @param groupAddress 群组地址
- */
+/// Remove device from group.
+/// @param devId The device ID.
+/// @param groupAddress The group address.
 - (void)deleteDeviceToGroupWithDevId:(NSString *)devId
                         groupAddress:(uint32_t)groupAddress;
 
-
-/**
- 通过群组地址查询群组中的设备
-
- @param groupAddress 群组地址
- */
+/// Query the devices in the group through the group address.
+/// @param groupAddress The group address.
 - (void)queryGroupMemberWithGroupAddress:(uint32_t)groupAddress;
 
 
+/// Query group list.
+/// @param devId The device ID.
 - (void)queryGroupListWithDevid:(NSString *)devId;
 
 @end

@@ -1,10 +1,8 @@
 //
-//  TuyaFirmwareUpgradeInfo.h
-//  TuyaSmartKit
+// TuyaFirmwareUpgradeInfo.h
+// TuyaSmartDeviceCoreKit
 //
-//  Created by fengyu on 15/9/15.
-//  Copyright (c) 2015年 Tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TuyaSmart_TuyaSmartFirmwareUpgradeModel
 #define TuyaSmart_TuyaSmartFirmwareUpgradeModel
@@ -13,52 +11,52 @@
 
 @interface TuyaSmartFirmwareUpgradeModel : NSObject
 
-//升级文案
+/// Upgrade copywriting.
 @property (nonatomic, strong) NSString  *desc;
 
-// 设备类型文案
+/// Equipment Type Copywriting.
 @property (nonatomic, strong) NSString *typeDesc;
 
-//0:无新版本 1:有新版本 2:在升级中 5:等待设备唤醒
+/// 0:No new version 1:There is a new version. 2:In the process of upgrading. 5:Waiting for the device to wake up.
 @property (nonatomic, assign) NSInteger upgradeStatus;
 
-//新版本使用的固件版本
+/// Firmware version used in the new version.
 @property (nonatomic, strong) NSString  *version;
 
-//当前在使用的固件版本
+/// Current firmware version in use.
 @property (nonatomic, strong) NSString  *currentVersion;
 
-//升级超时时间（秒）
+/// Upgrade timeout (seconds)
 @property (nonatomic, assign) NSInteger timeout;
 
-//0:app提醒升级 2:app强制升级 3:检测升级
+/// 0:app remind upgrade. 2:app force upgrade. 3:detect upgrade.
 @property (nonatomic, assign) NSInteger upgradeType;
 
-// 设备类型
+/// Equipment Type.
 @property (nonatomic, assign) NSInteger type;
 
-// 蓝牙设备的升级固件的下载URL
+/// Download URL of the upgrade firmware for Bluetooth devices.
 @property (nonatomic, strong) NSString *url;
 
-//固件的md5
+/// Firmware md5.
 @property (nonatomic, strong) NSString *md5;
 
-//固件包的size, byte
+/// Size of the firmware package (byte).
 @property (nonatomic, strong) NSString *fileSize;
 
-//上次升级时间
+/// Last upgrade time
 @property (nonatomic, assign) long long lastUpgradeTime;
 
-//固件发布时间
+/// Firmware Release Date.
 @property (nonatomic, assign) long long firmwareDeployTime;
 
-// 升级设备是否可控,0可控 1不可控
+/// Whether the upgrade device is controllable.  0 : controllable; 1 : not controllable.
 @property (nonatomic, assign) BOOL controlType;
 
-// 固件升级中的提示文案
+/// Tip text in firmware upgrade.
 @property (nonatomic, strong) NSString *upgradingDesc;
 
-// 设备下载固件中的提示文案，目前只有nb设备有
+/// The prompt text in the device download firmware, currently only nb devices have.
 @property (nonatomic, strong) NSString *downloadingDesc;
 
 @end

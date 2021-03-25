@@ -1,10 +1,8 @@
 //
-//  TuyaSmartReceivedShareUserModel.h
-//  TuyaSmartKit
+// TuyaSmartReceivedShareUserModel.h
+// TuyaSmartDeviceKit
 //
-//  Created by 冯晓 on 2018/1/9.
-//  Copyright © 2018年 Tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 @interface TuyaSmartReceivedShareUserModel : NSObject
 

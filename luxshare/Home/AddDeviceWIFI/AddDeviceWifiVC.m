@@ -51,7 +51,6 @@
         make.height.mas_equalTo(30);
     }];
 
-  
     [self.submitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(20);
         make.right.mas_equalTo(-20);
@@ -91,9 +90,9 @@
     return _titleLab;
 }
 
-
 - (UIButton *)selectBtn{
     if (!_selectBtn) {
+        
         _selectBtn = [[UIButton alloc] init];
         [_selectBtn setTitle:QZHLoaclString(@"device_lightUnnormal") forState:UIControlStateNormal];
         [_selectBtn addTarget:self action:@selector(selectAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -113,6 +112,7 @@
     return _submitBtn;
 }
 - (void)selectAction:(UIButton *)sender{
+    
     TOTAWebVC *vc = [[TOTAWebVC alloc] init];
     vc.urlString = @"https://smartapp.tuya.com/tuyasmart/help";
     [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];

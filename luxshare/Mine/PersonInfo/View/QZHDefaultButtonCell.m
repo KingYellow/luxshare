@@ -20,8 +20,6 @@
 
 - (void)creatSubViews {
     [self.contentView addSubview:self.nameLab];
-     
-
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.mas_equalTo(self.contentView);
      }];

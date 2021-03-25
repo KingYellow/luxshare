@@ -1,65 +1,82 @@
 //
-//  TuyaSmartMessageRequestModel.h
-//  TuyaSmartMessageKit
+// TuyaSmartMessageRequestModel.h
+// TuyaSmartMessageKit
 //
-//  Created by Hemin Won on 2020/4/7.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 #import "TuyaSmartMessageUtils.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// 消息中心消息列表请求模型
+/// Message center message list request model.
 @interface TuyaSmartMessageListRequestModel : NSObject
 
-/// 消息类型 message type
+/// Message type.
 @property (nonatomic, assign) TYMessageType msgType;
 
-/// 限制列表数 limit count
+/// Limit count.
 @property (nonatomic, assign) NSInteger limit;
 
-/// 偏移 offset
 @property (nonatomic, assign) NSInteger offset;
 
 @end
 
-/// 消息中心消息详情列表请求模型
+/// Message center message detail list request model.
 @interface TuyaSmartMessageDetailListRequestModel : NSObject
 
-/// 消息类型(目前仅支持TYMessageTypeAlarm类消息) message type( Currently only supported TYMessageTypeAlarm)
+/// Message type (Currently only supported TYMessageTypeAlarm).
 @property (nonatomic, assign) TYMessageType msgType;
 
-/// 限制列表数 limit count
+/// Limit count.
 @property (nonatomic, assign) NSInteger limit;
 
-/// 偏移 offset
 @property (nonatomic, assign) NSInteger offset;
 
-/// 消息来源设备ID message device ID
+/// Message device ID.
 @property (nonatomic, copy) NSString *msgSrcId;
 
 @end
 
 @interface TuyaSmartMessageListDeleteRequestModel : NSObject
-/// 消息类型 message type
+/// Message type.
 @property (nonatomic, assign) TYMessageType msgType;
 
-/// 消息ID message ID
+/// Message ID.
 @property (nonatomic, copy) NSArray<NSString *> *msgIds;
 
-/// 消息来源设备ID message device ID
+/// Message device ID.
 @property (nonatomic, copy) NSArray<NSString *> *msgSrcIds;
 
 @end
 
 @interface TuyaSmartMessageListReadRequestModel : NSObject
 
-/// 消息类型(目前仅支持TYMessageTypeAlarm类消息) message type( Currently only supported TYMessageTypeAlarm)
+/// Message type (Currently only supported TYMessageTypeAlarm).
 @property (nonatomic, assign) TYMessageType msgType;
 
-/// 消息ID message ID
+/// Message ID.
 @property (nonatomic, copy) NSArray<NSString *> *msgIds;
+
+@end
+
+#pragma mark - setting
+@interface TuyaSmartMessageSettingDNDRequestModel : NSObject
+
+/// 开始时间 start time
+@property (nonatomic, copy) NSString *startTime;
+
+/// 结束时间 end time
+@property (nonatomic, copy) NSString *endTime;
+
+/// 设备ID列表 device ID list
+@property (nonatomic, copy) NSArray<NSString *> *devIDs;
+
+/// 每周重复 周一 ～ 周日 0 代表当天不开启 1 代表当天开启 如@“0000111”, 代表仅仅周五～周天开启 Repeat days per week
+@property (nonatomic, copy) NSString *loops;
+
+/// 是否是全部设备免打扰，YES是忽略 devIDs中值 all device DND
+@property (nonatomic, assign) BOOL isAllDevIDs;
 
 @end
 

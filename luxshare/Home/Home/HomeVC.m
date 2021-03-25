@@ -53,13 +53,13 @@
     [self initConfig];
     [self getHomeList];
 
-  
 }
 - (void)initConfig{
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
     [self exp_navigationBarTextWithColor:QZHKIT_COLOR_NAVIBAR_TITLE font:QZHKIT_FONT_TABBAR_TITLE];
     [self exp_navigationBarColor:QZHKIT_COLOR_NAVIBAR_BACK hiddenShadow:NO];
     self.leftBtn = [self exp_addLeftItemTitle:@"home" itemIcon:@""];
+    self.leftBtn.frame = CGRectMake(20, 20, 204, 44);
     [self exp_addRightItemTitle:QZHLoaclString(@"device_addDevice") itemIcon:@""];
     [self UIConfig];
 
@@ -80,6 +80,7 @@
 
 }
 - (void)exp_leftAction{
+    
     [self getHomeList];
     self.qzTableView.backgroundColor = QZHKIT_Color_BLACK_26;
     [UIView animateWithDuration:0.3 animations:^{
@@ -453,6 +454,7 @@
     return _pageController;
 }
 - (WMZPageParam *)param{
+    
     if (!_param) {
         _param = PageParam()
         .wMenuTitleSelectColorSet(QZHKIT_COLOR_SKIN)
@@ -488,17 +490,18 @@
 
         [self.currentHome getHomeDetailWithSuccess:^(TuyaSmartHomeModel *homeModel) {
              
-              NSMutableArray  *arrm = [NSMutableArray array];
+              NSMutableArray *arrm = [NSMutableArray array];
              [arrm addObject:QZHLoaclString(@"allDevices")];
               for (TuyaSmartRoomModel *room in self.currentHome.roomList) {
                   [arrm addObject:room.name];
               }
+            
               [self.leftBtn setTitle:model.name forState:UIControlStateNormal];
               self.param.wTitleArr = arrm;
             [self loadVcs:self.currentHome];
             
          } failure:^(NSError *error) {
-                [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
          }];
 
 

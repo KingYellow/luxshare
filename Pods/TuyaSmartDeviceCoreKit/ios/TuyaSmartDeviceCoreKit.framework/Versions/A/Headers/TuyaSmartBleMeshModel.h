@@ -1,10 +1,8 @@
 //
-//  TuyaSmartBleMeshModel.h
-//  TuyaSmartKit
+// TuyaSmartBleMeshModel.h
+// TuyaSmartDeviceCoreKit
 //
-//  Created by XuChengcheng on 2017/6/7.
-//  Copyright © 2017年 Tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TuyaSmart_TuyaSmartBleMeshModel
 #define TuyaSmart_TuyaSmartBleMeshModel

@@ -1,90 +1,72 @@
 //
-//  TuyaSmartSIGMeshManager.h
-//  TuyaSmartBLEMeshKit
+// TuyaSmartSIGMeshManager.h
+// TuyaSmartBLEMeshKit
 //
-//  Created by 黄凯 on 2019/3/14.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, TuyaSmartSIGScanType) {
-    ScanForUnprovision, // 扫描未配网设备
-    //    ScanForProvision,
-    ScanForProxyed, // 扫描已经配网的设备
+    ScanForUnprovision, /// Scan equipment without distribution network
+    ScanForProxyed, /// Scan the equipment with distribution network.
 };
 
 @class TuyaSmartSIGMeshManager;
+
 @class TuyaSmartSIGMeshDiscoverDeviceInfo;
 
 @protocol TuyaSmartSIGMeshManagerDelegate <NSObject>
 
 @optional;
 
-/**
- 激活子设备成功回调
- 
- @param manager mesh manager
- @param device 设备
- @param devId 设备 Id
- @param error 激活中的错误，若发生错误，`name` 以及 `deviceId` 为空
- */
+/// Activate sub device successfully callback.
+/// @param manager TuyaSmartSIGMeshManager.
+/// @param device TuyaSmartSIGMeshDiscoverDeviceInfo.
+/// @param devId The device ID.
+/// @param error Error in activation. If an error occurs, ` name 'and' deviceid 'are empty.
 - (void)sigMeshManager:(TuyaSmartSIGMeshManager *)manager didActiveSubDevice:(TuyaSmartSIGMeshDiscoverDeviceInfo *)device devId:(NSString *)devId error:(NSError *)error;
 
-/**
- 激活设备失败回调
- 
- @param manager mesh manager
- @param device 设备
- @param error 激活中的错误
- */
+/// Activate device failure callback.
+/// @param manager TuyaSmartSIGMeshManager.
+/// @param device TuyaSmartSIGMeshDiscoverDeviceInfo.
+/// @param error Error in activation.
 - (void)sigMeshManager:(TuyaSmartSIGMeshManager *)manager didFailToActiveDevice:(TuyaSmartSIGMeshDiscoverDeviceInfo *)device error:(NSError *)error;
 
-/**
- 激活完成回调
- */
+/// Activate completion callback.
 - (void)didFinishToActiveDevList;
 
-/**
- 断开设备回调
- */
+/// Disconnect device callback.
 - (void)notifyCentralManagerDidDisconnectPeripheral;
 
-/**
- 扫描到待配网的设备
- 
- @param manager mesh manager
- @param device 待配网设备信息
- */
+/// Equipment scanned to the distribution network.
+/// @param manager TuyaSmartSIGMeshManager.
+/// @param device TuyaSmartSIGMeshDiscoverDeviceInfo.
 - (void)sigMeshManager:(TuyaSmartSIGMeshManager *)manager didScanedDevice:(TuyaSmartSIGMeshDiscoverDeviceInfo *)device;
 
-
-/**
- 群组操作完成
- 
- @param manager manager
- @param groupAddress 群组 mesh 地址， 16 进制
- @param nodeId 设备 mesh 节点地址，16 进制
- @param error 错误
- */
+/// Group operation completed.
+/// @param manager TuyaSmartSIGMeshManager.
+/// @param groupAddress Group mesh address, hex.
+/// @param nodeId Device mesh node address, hexadecimal.
+/// @param error Error.
 - (void)sigMeshManager:(TuyaSmartSIGMeshManager *)manager didHandleGroupWithGroupAddress:(NSString *)groupAddress deviceNodeId:(NSString *)nodeId error:(NSError *)error;
 
-/**
- 查找设备群组list
- 
- @param manager manager
- @param groupList 群组地址list
- @param deviceModel 设备
- */
+/// Find device group list.
+/// @param manager TuyaSmartSIGMeshManager.
+/// @param groupList Group address list.
+/// @param deviceModel The device model.
+/// @param error Error.
 - (void)sigMeshManager:(TuyaSmartSIGMeshManager *)manager
         queryGroupList:(NSArray<NSString *> *)groupList
            deviceModel:(TuyaSmartDeviceModel *)deviceModel
                  error:(NSString * _Nullable)error;
-/**
- 登录成功通知，升级所需
- */
+
+/// Login success notification, upgrade required.
 - (void)notifySIGLoginSuccess;
+
+/// Mesh callback for successful connection, subsequent local communication can be done directly
+- (void)didConnectMeshNodeAndLoginMesh;
 
 - (void)sigMeshManager:(TuyaSmartSIGMeshManager *)manager queryDeviceModel:(TuyaSmartDeviceModel *)deviceModel groupAddress:(uint32_t)groupAddress;
 
@@ -100,7 +82,7 @@ typedef NS_ENUM(NSUInteger, TuyaSmartSIGScanType) {
 
 @property (nonatomic, weak) id<TuyaSmartSIGMeshManagerDelegate> delegate;
 
-@property (nonatomic, copy) NSString *otaTargetNodeId;/// < 升级的设备的nodeId
+@property (nonatomic, copy) NSString *otaTargetNodeId; /// Node ID of the upgraded device.
 
 @end
 

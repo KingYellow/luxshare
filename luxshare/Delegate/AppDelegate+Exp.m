@@ -28,10 +28,13 @@
     [Bugly startWithAppId:APP_BUGLY_ID];
 
     [[TuyaSmartSDK sharedInstance] startWithAppKey:APP_TUYA_KEY secretKey:APP_TUYA_SECRET_KEY];
+//#ifdef DEBUG
+//    [[TuyaSmartSDK sharedInstance] setDebugMode:YES];
+//#else
+//#endif
     
     [application registerForRemoteNotifications];
     [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
-
 
     if (@available(iOS 10.0, *)) {
         //iOS10需要加下面这段代码。
@@ -82,7 +85,7 @@
             
         } else if (status == QZHNetworkStatusReachableViaWiFi || status == QZHNetworkStatusReachableViaWWAN) {
             //TODO: 有网络
-            
+               
         }
     }];
 
@@ -126,7 +129,7 @@
 //- 程序即将退出
 - (void)exp_applicationWillTerminate:(UIApplication *)application {
     ///保存用户书数据
-    NSLog(@"UIApplication WillTerminate  程序即将退出了程序即将退出了程序即将退出了程序即将退出了");
+
     [QZHDataHelper saveValue:QZHUserModel.User forKey:QZHKEY_USER];
 }
 
@@ -159,16 +162,14 @@
 }
 
 
-- (void) onAppOpenAttribution:(NSDictionary*) attributionData {
+- (void)onAppOpenAttribution:(NSDictionary*) attributionData {
     //Handle Deep Link
     NSLog(@"installData = %@", attributionData);
 }
 
-- (void) onAppOpenAttributionFailure:(NSError *)error {
+- (void)onAppOpenAttributionFailure:(NSError *)error {
     NSLog(@"%@",error);
 }
-
-
 
 #pragma mark - rootvc
 

@@ -8,8 +8,6 @@
 #import <UIKit/UIKit.h>
 #import "TYEncryptImageDefine.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface UIImageView (TYAESImage)
 
 /// Set the imageView `image` with an `imageUrl` and  an 'encrypt key string'.
@@ -36,4 +34,3 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-NS_ASSUME_NONNULL_END

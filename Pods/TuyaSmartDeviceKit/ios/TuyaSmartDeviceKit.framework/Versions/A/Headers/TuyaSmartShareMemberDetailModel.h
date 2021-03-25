@@ -1,38 +1,26 @@
 //
-//  TuyaSmartShareMemberDetailModel.h
-//  TuyaSmartKitExample
+// TuyaSmartShareMemberDetailModel.h
+// TuyaSmartDeviceKit
 //
-//  Created by 冯晓 on 2017/7/15.
-//  Copyright © 2017年 tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 @class TuyaSmartShareDeviceModel;
 
 @interface TuyaSmartShareMemberDetailModel : NSObject
 
-/**
- deviceModel list
- */
+/// deviceModel list
 @property (nonatomic, strong) NSArray <TuyaSmartShareDeviceModel *> *devices;
 
-/**
- mobile
- */
+/// mobile
 @property (nonatomic, strong) NSString *mobile;
 
-/**
- name
- */
+/// name
 @property (nonatomic, strong) NSString *name;
 
-/**
- remark name
- */
+/// remark name
 @property (nonatomic, strong) NSString *remarkName;
 
-/**
- auto sharing
- */
+/// auto sharing
 @property (nonatomic, assign) BOOL autoSharing;
 
 

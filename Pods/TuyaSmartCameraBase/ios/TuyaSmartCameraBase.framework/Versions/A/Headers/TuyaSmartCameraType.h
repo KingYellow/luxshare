@@ -19,6 +19,12 @@ IPC_EXTERN NSString * const kTuyaSmartTimeSliceStartTime;
 
 IPC_EXTERN NSString * const kTuyaSmartTimeSliceStopTime;
 
+typedef NS_ENUM(NSUInteger, TuyaSmartCameraConnectMode) {
+    TuyaSmartCameraConnectAuto,
+    TuyaSmartCameraConnectFromInternet,
+    TuyaSmartCameraConnectFromLocal
+};
+
 @protocol TuyaSmartCameraType;
 
 @protocol TuyaSmartCameraDelegate <NSObject>
@@ -403,6 +409,8 @@ IPC_EXTERN NSString * const kTuyaSmartTimeSliceStopTime;
 */
 - (void)camera:(id<TuyaSmartCameraType>)camera ty_didRecieveAudioRecordDataWithPCM:(const unsigned char*)pcm length:(int)length sampleRate:(int)sampleRate;
 
+- (void)camera:(id<TuyaSmartCameraType>)camera ty_didSpeedPlayWithSpeed:(TuyaSmartCameraPlayBackSpeed)playBackSpeed;
+
 @end
 
 @protocol TuyaSmartCameraType <NSObject>
@@ -736,6 +744,16 @@ get the definition state
 
 @optional
 
+/**
+[^en]
+connect p2p with specified mode
+[$en]
+
+[^zh]
+以指定的模式连接 p2p 通道
+[$zh]
+*/
+- (void)connectWithMode:(TuyaSmartCameraConnectMode)mode;
 
 - (double)getVideoBitRateKBPS;
 
@@ -785,6 +803,43 @@ get a screenshot of the video and save it to filepah. if you do not need a thumb
 [$zh]
 */
 - (UIImage *)snapShootSavedAtPath:(NSString *)filePath thumbnilPath:(NSString *)thumbnilPath;
+
+- (int)downloadPlayBackVideoWithRange:(NSRange)timeRange filePath:(NSString *)videoPath success:(void(^)(NSString *filePath))success progress:(void(^)(NSUInteger progress))progress failure:(void(^)(NSError *error))failure;
+
+/**
+    pause download
+ */
+- (int)pausePlayBackDownloadWithResponse:(void (^)(int))callback;
+
+/**
+    resume download
+ */
+- (int)resumePlayBackDownloadWithResponse:(void (^)(int))callback;
+
+/**
+ Description Stop current sd card playback.
+ 
+ @param callback Async result callback. errCode see TuyaErrCode.
+ */
+- (int)stopPlayBackDownloadWithResponse:(void (^)(int errCode))callback;
+
+
+- (int)deletePlayBackDataWithDay:(NSString *)day onResponse:(void (^)(int errCode))callback onFinish:(void (^)(int errCode))finishedCallBack;
+
+- (void)speedPlayWithPlayBackSpeed:(TuyaSmartCameraPlayBackSpeed)playBackSpeed;
+
+/**
+ Enable speaker
+
+ @param enabled Speaker enabled
+ @return error code, 0 is success
+*/
+- (int)enableSpeaker:(BOOL)enabled;
+
+/**
+  Get speaker enabled status
+*/
+- (BOOL)speakerEnabled;
 
 #pragma mark - private, please igore these method
 

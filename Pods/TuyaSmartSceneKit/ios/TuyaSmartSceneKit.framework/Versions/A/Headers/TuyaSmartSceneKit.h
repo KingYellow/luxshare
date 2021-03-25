@@ -1,9 +1,8 @@
 //
-//  TuyaSmartSceneKit.h
-//  TuyaSmartSceneKit
+// TuyaSmartSceneKit.h
+// TuyaSmartSceneKit
 //
-//  Created by TuyaInc on 2018/9/3.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com/)
 
 #ifndef TuyaSmartSceneKit_h
 #define TuyaSmartSceneKit_h

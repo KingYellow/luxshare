@@ -16,6 +16,7 @@
 #import "WMZPageScroller.h"
 #import "NSObject+SafeKVO.h"
 #import "UIView+PageRect.h"
+#import "WMZPageTitleDataModel.h"
 #import "WMZPageLoopView.h"
 #import "WMZPageMunuView.h"
 #import "WMZPageParam.h"

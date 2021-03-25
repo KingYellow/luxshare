@@ -1,104 +1,78 @@
 //
-//  TYBLEMeshCommandType.h
-//  TYBLEMeshKit
+// TYBLEMeshCommandType.h
+// TuyaSmartBLEMeshKit
 //
-//  Created by 黄凯 on 2018/5/28.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TYBLEMeshCommandType_h
 #define TYBLEMeshCommandType_h
 
-//
-//#define TY_DEF(X) \
-//X(TYBLEMeshSetDeviceAddressCommand, = 0XAA) \
-//X(TYBLEMeshGroupHandlingCommand, ) \
-//X(TYBLEMeshFetchGroupAddressCommand, ) \
-//X(TYBLEMeshKickedOutCommand, ) \
-//X(TYBLEMeshFetchAllDeviceIdFromGroupCommand, ) \
-//X(TYBLEMeshRequestAuthKeyCommand, ) \
-//X(TYBLEMeshTurnOnAndOffCommand, ) \
-//X(TYBLEMeshFetchAllStateCommand, ) \
-//X(TYBLEMeshSetBrightnessValueCommand, ) \
-//X(TYBLEMeshSetRGBWCLCommand, ) \
-//X(TYBLEMeshSetLightModelCommand, ) \
-//X(TYBLEMeshControlSubSwitchCommand, ) \
-//X(TYBLEMeshSetCountDownCommand, ) \
-//X(TYBLEMeshFetchCountDownCommand, ) \
-//X(TYBLEMeshFetchSensorValueCommand, ) \
-//X(TYBLEMeshSendDPSCommand, ) \
-//X(TYBLEMeshFetchStateCommand, ) \
-//X(TYBLEMeshSetLightSceneModelCommand, ) \
-//X(TYBLEMeshGetLightSceneModelCommand, ) \
-//
-//DECLARE_ENUM(TYBLEMeshCommandType, TY_DEF)
-
-
 typedef NS_ENUM(NSUInteger, TYBLEMeshCommandType) {
     
-    // 修改设备地址
+    /// Modify device address.
     TYBLEMeshSetDeviceAddressCommand = 0xAA,
     
-    // 群组操作，如新增、删除、设备加入群组
+    /// Group operations, such as adding, deleting, and adding devices to a group.
     TYBLEMeshGroupHandlingCommand,
     
-    // 获取设备所在组的地址
+    /// Get the address of the device group.
     TYBLEMeshFetchGroupAddressCommand,
     
-    // 将设备踢出网络
+    /// Kick the device out of the network.
     TYBLEMeshKickedOutCommand,
     
-    // 获取群组内所有设备的 ID
+    /// Get the ID of all devices in the group.
     TYBLEMeshFetchAllDeviceIdFromGroupCommand,
     
-    // 请求 Auth Key
+    /// Request auth key.
     TYBLEMeshRequestAuthKeyCommand,
     
-    // 开关命令
+    /// Switch command.
     TYBLEMeshTurnOnAndOffCommand,
     
-    // 获取 mesh 中所有设备状态
+    /// Get status of all devices in mesh.
     TYBLEMeshFetchAllStateCommand,
     
-    // 设置亮度值
+    /// Set brightness value.
     TYBLEMeshSetBrightnessValueCommand,
     
-    // 设置 RGBWCL 值
+    /// Set RGBWCL value.
     TYBLEMeshSetRGBWCLCommand,
     
-    // 设置灯亮模式，彩光 / 白光
+    /// Set the light on mode, color light / white light.
     TYBLEMeshSetLightModelCommand,
     
-    // 控制子排插
+    /// Control sub row insertion.
     TYBLEMeshControlSubSwitchCommand,
     
-    // 设置倒计时
+    /// Set countdown.
     TYBLEMeshSetCountDownCommand,
     
-    // 读取倒计时
+    /// Read countdown.
     TYBLEMeshFetchCountDownCommand,
     
-    // 读取传感器值
+    /// Read sensor value.
     TYBLEMeshFetchSensorValueCommand,
     
-    // 发送 dp 点
+    /// Send DP point.
     TYBLEMeshSendDPSCommand,
     
-    // 获取一个或两个状态
+    /// Gets one or two states.
     TYBLEMeshFetchStateCommand,
     
-    // 修改当前 mesh 灯场景模式数据
+    /// Modify the current mesh light scene mode data.
     TYBLEMeshSetLightSceneModelCommand,
     
-    // 获取当前 mesh 灯场景模式数据
+    /// Get the current mesh light scene mode data.
     TYBLEMeshGetLightSceneModelCommand,
     
-    // 时间同步
+    /// time synchronization.
     TYBLEMeshTimeSynchronizationCommand,
     
-    // 设置定时
+    /// Setting timing.
     TYBLEMeshSetTimerCommand,
     
-    // 读取定时
+    /// Read timing.
     TYBLEMeshGetTimerCommand,
     
 };

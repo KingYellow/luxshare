@@ -1,9 +1,8 @@
 //
-//  TuyaSmartHome+SIGMesh.h
-//  TuyaSmartBLEMeshKit
+// TuyaSmartHome+SIGMesh.h
+// TuyaSmartBLEMeshKit
 //
-//  Created by 黄凯 on 2019/3/8.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <TuyaSmartDeviceKit/TuyaSmartDeviceKit.h>
 
@@ -13,12 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, readonly) TuyaSmartBleMeshModel *sigMeshModel;
 
-/**
- *  获取家庭下的 sig mesh 列表
- *
- *  @param success 操作成功回调
- *  @param failure 操作失败回调
- */
+/// Get the sig mesh list under the family
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)getSIGMeshListWithSuccess:(void(^)(NSArray <TuyaSmartBleMeshModel *> *list))success
                           failure:(TYFailureError)failure;
 

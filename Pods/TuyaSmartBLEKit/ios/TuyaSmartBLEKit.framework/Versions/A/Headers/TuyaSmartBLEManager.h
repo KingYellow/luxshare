@@ -1,219 +1,228 @@
 //
-//  TuyaSmartBLEManager.h
-//  TuyaSmartBLEKit
+// TuyaSmartBLEManager.h
+// TuyaSmartBLEKit
 //
-//  Created by 黄凯 on 2018/12/22.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 #import <TuyaSmartDeviceCoreKit/TuyaSmartDeviceCoreKit.h>
 #import "TYBLEAdvModel.h"
 
+/// @brief TuyaSmartBLEManager provides methods for developers to activator, control or OTA BLE device.
+///
+/// The two types of OTA. Provides firmware and MCU types.
 typedef enum : NSUInteger {
-    TuyaSmartBLEOTATypeFirmware = 0, //蓝牙固件 OTA
-    TuyaSmartBLEOTATypeMCU, //MCU OTA
+    /// The firmware OTA type.
+    TuyaSmartBLEOTATypeFirmware = 0,
+    /// The MCU OTA type.
+    TuyaSmartBLEOTATypeMCU,
 } TuyaSmartBLEOTAType;
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class TuyaSmartBLEManager;
 
 @protocol TuyaSmartBLEManagerDelegate <NSObject>
 
 @optional
 
-/**
- 蓝牙状态变化通知
- 
- @param isPoweredOn 蓝牙状态，开启或关闭
- */
+/// The notification for bluetooth status changing.
+///
+/// @param isPoweredOn      Bluetooth status, on or off
 - (void)bluetoothDidUpdateState:(BOOL)isPoweredOn;
 
+/// Results of the scanning inactive devices.
+///
+/// @param uuid         The UUID for the device.
+/// @param productKey   The product Id for the device.
+/// @deprecated This method is deprecated, Use TuyaSmartBLEManager::didDiscoveryDeviceWithDeviceInfo: instead.
+- (void)didDiscoveryDeviceWithUUID:(NSString *)uuid productKey:(NSString *)productKey __deprecated_msg("This method is deprecated, Use TuyaSmartBLEManager::didDiscoveryDeviceWithDeviceInfo: instead");
 
-/**
- 扫描到未激活的设备
- 
- @param uuid 未激活设备 uuid
- @param productKey 未激活设备产品 key
- */
-- (void)didDiscoveryDeviceWithUUID:(NSString *)uuid productKey:(NSString *)productKey __deprecated_msg("This method is deprecated, Use -[TuyaSmartBLEManager -  didDiscoveryDeviceWithDeviceInfo:] instead");
-
-/**
- 扫描到未激活的设备
- 
- @param deviceInfo 未激活设备信息 Model
- */
+/// Results of the scanning inactive devices.
+///
+/// @param deviceInfo   The advertisingData model for the inactive device.
 - (void)didDiscoveryDeviceWithDeviceInfo:(TYBLEAdvModel *)deviceInfo;
 
-/**
- 收到设备上报的透传数据
- 
- @param data 透传数据
- @param devId 设备Id
- */
+/// The result of the activator BLE devices.
+///
+/// @param manager          The class itself.
+/// @param deviceModel      When activator successfully, this param will be called with DeviceModel.
+/// @param error            This error will be called if some error occurred.
+- (void)bleManager:(TuyaSmartBLEManager *)manager didFinishActivateDevice:(TuyaSmartDeviceModel *)deviceModel error:(NSError *)error;
+
+/// Receive the transmission data from the device.
+///
+/// @param data     Transmission data receiving from the device.
+/// @param devId    The device Id for the device.
 - (void)bleReceiveTransparentData:(NSData *)data devId:(NSString *)devId;
 
 @end
 
 @interface TuyaSmartBLEManager : NSObject
 
+/// Single instance.
 + (instancetype)sharedInstance;
 
-/**
- 蓝牙是否打开可用
- */
+/// A boolean value indicates whether the mobile phone's Bluetooth is on or off.
 @property (nonatomic, assign, readonly) BOOL isPoweredOn;
 
-/**
- 代理，用于扫描和蓝牙状态变更通知
- */
+/// Delegate for scanning and Bluetooth status change notification.
 @property (nonatomic, weak) id<TuyaSmartBLEManagerDelegate> delegate;
 
-// ----------------------------------------------------------------------
-
-/**
- 开始扫描
- 
- 如果扫描到未激活设备，结果会通过 `TuyaSmartBLEManagerDelegate` 中的 `- (void)didDiscoveryDeviceWithDeviceInfo:(TYBLEAdvModel *)deviceInfo` 返回;
- 
- 如果扫描到激活设备，会自动进行连接入网，不会返回扫描结果
- 
- @param clearCache 是否清理已扫描到的设备
- */
+/// Start listening broadcast package for BLE devices.
+///
+/// If an inactive device is scanned, the device info will be callback by `TuyaSmartBLEManagerDelegate::didDiscoveryDeviceWithDeviceInfo:`
+///
+/// If an active device is scanned, it will be automatically connected.
+///
+/// @param clearCache Whether to clean up the broadcast packets of scanned devices.
 - (void)startListening:(BOOL)clearCache;
 
-
-/**
- 停止扫描
- 
- @param clearCache 是否清理已扫描到的设备
- */
+/// Stop listening broadcast package for BLE devices.
+///
+/// @param clearCache Whether to clean up the broadcast packets of scanned devices.
 - (void)stopListening:(BOOL)clearCache;
-
-/**
- 连接设备
  
- @param uuid 设备 uuid
- @param productKey 产品 key
- @param success 成功回调
- @param failure 失败回调
- */
+/// Connect device
+///
+/// @param uuid         The UUID for the device.
+/// @param productKey   The product Id for the device.
+/// @param success      When connect successfully, this block will be called success.
+/// @param failure      This block will be called if some error occurred.
 - (void)connectBLEWithUUID:(NSString *)uuid
                 productKey:(NSString *)productKey
                    success:(TYSuccessHandler)success
                    failure:(TYFailureHandler)failure;
 
+/// Disconnect device
+///
+/// @param uuid         The UUID for the device.
+/// @param success      When disconnect successfully, this block will be called success.
+/// @param failure      This block will be called if some error occurred.
+- (void)disconnectBLEWithUUID:(NSString *)uuid
+                      success:(TYSuccessHandler)success
+                      failure:(TYFailureError)failure;
 
-/**
- 查询设备名称
- 
- @param uuid 设备 uuid
- @param productKey 产品 key
- @param success 成功回调
- @param failure 失败回调
- */
+
+/// Query device information before activator.
+///
+/// @param uuid         The UUID for the device.
+/// @param productKey   The product Id for the device.
+/// @param success      When query successfully, this block will be called with a string for device name.
+/// @param failure      This block will be called if some error occurred.
+///
+/// @deprecated This method is deprecated, Use TuyaSmartBLEManager::queryDeviceInfoWithUUID:productKey:success:failure: instead.
 - (void)queryNameWithUUID:(NSString *)uuid
                productKey:(NSString *)productKey
                   success:(void(^)(NSString *name))success
-                  failure:(TYFailureError)failure;__deprecated_msg("This method is deprecated, Use -[TuyaSmartBLEManager -  queryDeviceInfoWithUUID:productKey:success:failure] instead");
+                  failure:(TYFailureError)failure __deprecated_msg("This method is deprecated, Use TuyaSmartBLEManager::queryDeviceInfoWithUUID:productKey:success:failure instead");
 
-/**
- 蓝牙设备未配网前查询设备信息（包括设备名称和图片）
- 
- @param uuid 设备 uuid
- @param productId 产品 oid
- @param success 成功回调
- @param failure 失败回调
- */
+/// Query device information before activator
+///
+/// @param uuid         The UUID for the device.
+/// @param productId    The product Id for the device.
+/// @param success      When query successfully, this block will be called with a dictionary for device information.
+/// @param failure      This block will be called if some error occurred.
 - (void)queryDeviceInfoWithUUID:(NSString *)uuid
                       productId:(NSString *)productId
                         success:(TYSuccessDict)success
                         failure:(TYFailureError)failure;
 
-
-/**
- 激活设备，设备 uuid 来源于搜索发现的设备
- 激活过程会将设备信息注册到云端
- 
- @param uuid 设备 uuid
- @param homeId 家庭 id
- @param productKey 产品 key
- @param success 成功回调
- @param failure 失败回调
- */
+/// Activator BLE device.
+/// @param uuid The UUID for the device.
+/// @param homeId The Id for the current home.
+/// @param productKey The product Id for the device.
+/// @param success When activator successfully, this block will be called with DeviceModel.
+/// @param failure This block will be called if some error occurred.
+/// @deprecated This method is deprecated, Use TuyaSmartBLEManager::activeBLE:homeId:success:failure: instead.
 - (void)activeBLEWithUUID:(NSString *)uuid
                    homeId:(long long)homeId
                productKey:(NSString *)productKey
                   success:(void(^)(TuyaSmartDeviceModel *deviceModel))success
-                  failure:(TYFailureHandler)failure __deprecated_msg("This method is deprecated, Use -[TuyaSmartBLEManager -  activeBLE:homeId:success:failure] instead");
+                  failure:(TYFailureHandler)failure __deprecated_msg("This method is deprecated, Use TuyaSmartBLEManager::activeBLE:homeId:success:failure instead");
 
-
-/**
- 激活设备，设备 uuid 来源于搜索发现的设备
- 激活过程会将设备信息注册到云端
- 
- @param deviceInfo 设备信息 Model
- @param homeId 家庭 id
- @param success 成功回调
- @param failure 失败回调
- */
+/// Activator BLE device.
+///
+/// @param deviceInfo       The advertisingData model for the BLE device.
+/// @param homeId           The Id for the current home.
+/// @param success          When activator successfully, this block will be called with DeviceModel.
+/// @param failure          This block will be called if some error occurred.
 - (void)activeBLE:(TYBLEAdvModel *)deviceInfo
            homeId:(long long)homeId
           success:(void(^)(TuyaSmartDeviceModel *deviceModel))success
           failure:(TYFailureHandler)failure;
 
-/**
- 下发透传数据
-
- @param devId   设备Id
- @param data    透传数据
- @param success 成功回调
- @param failure 失败回调
-*/
+/// Publish the transmitted data.
+///
+/// @param devId        The device Id for the device.
+/// @param data         Data to be transmitted to the device.
+/// @param success      Transmission data returned by the device.
+/// @param failure      This block will be called if some error occurred.
 - (void)publishBleTransparentData:(NSString *)devId
                              data:(NSData *)data
                           success:(TYSuccessData)success
                           failure:(TYFailureError)failure;
 
-/**
- 发送OTA包，升级固件。升级前请务必保证设备已通过蓝牙连接
- 
- @param uuid 设备 uuid
- @param otaData 升级固件的数据
- @param success 成功回调
- @param failure 失败回调
- */
+/// Query device dp data by Bluetooth channel.
+///
+/// @param devId        The device Id for the device.
+/// @param dpIds        Array of dpId's to be queried.
+/// @param success      When query successfully, this block will be called.
+/// @param failure      This block will be called if some error occurred.
+- (void)publishQueryDpCommand:(NSString *)devId
+                        dpIds:(NSArray *)dpIds
+                      success:(TYSuccessBOOL)success
+                      failure:(TYFailureError)failure;
+
+/// Send OTA package to upgrade firmware.
+///
+/// The `otaData` can be obtained from TuyaSmartFirmwareUpgradeModel. You can get TuyaSmartFirmwareUpgradeModel by TuyaSmartDevice::getFirmwareUpgradeInfo:failure: .
+///
+/// @note Please make sure your device is connected via Bluetooth before upgrading.
+///
+/// @param uuid         The UUID for the device.
+/// @param otaData      The OTA package data.
+/// @param success      When ota successfully, this block will be called success.
+/// @param failure      This block will be called if some error occurred.
+///
+/// @deprecated This method is deprecated, Use TuyaSmartBLEManager::sendOTAPack:pid:otaData:otaType:otaVersion:success:failure: instead.
 - (void)sendOTAPack:(NSString *)uuid
             otaData:(NSData *)otaData
             success:(TYSuccessHandler)success
-            failure:(TYFailureHandler)failure __deprecated_msg("This method is deprecated, Use -[TuyaSmartBLEManager -  sendOTAPack:pid:otaData:otaType:success:failure] instead");
+            failure:(TYFailureHandler)failure __deprecated_msg("This method is deprecated, Use TuyaSmartBLEManager::sendOTAPack:pid:otaData:otaType:success:failure instead");
 
-
-/**
- 发送OTA包，升级固件。升级前请务必保证设备已通过蓝牙连接
- 
- @param uuid    设备 uuid
- @param pid     设备 pid
- @param otaData 升级固件的数据
- @param success 成功回调
- @param failure 失败回调
- */
+/// Send OTA package to upgrade firmware.
+///
+/// The `otaData` can be obtained from TuyaSmartFirmwareUpgradeModel. You can get TuyaSmartFirmwareUpgradeModel by TuyaSmartDevice::getFirmwareUpgradeInfo:failure: .
+///
+/// @note Please make sure your device is connected via Bluetooth before upgrading.
+///
+/// @param uuid         The UUID for the device.
+/// @param pid          The product Id for the device.
+/// @param otaData      The OTA package data.
+/// @param success      When ota successfully, this block will be called success.
+/// @param failure      This block will be called if some error occurred.
+///
+/// @deprecated This method is deprecated, Use TuyaSmartBLEManager::sendOTAPack:pid:otaData:otaType:otaVersion:success:failure: instead.
 - (void)sendOTAPack:(NSString *)uuid
                 pid:(NSString *)pid
             otaData:(NSData *)otaData
             success:(TYSuccessHandler)success
-            failure:(TYFailureHandler)failure __deprecated_msg("This method is deprecated, Use -[TuyaSmartBLEManager -  sendOTAPack:pid:otaData:otaType:otaVersion:success:failure] instead");
+            failure:(TYFailureHandler)failure __deprecated_msg("This method is deprecated, Use TuyaSmartBLEManager::sendOTAPack:pid:otaData:otaType:otaVersion:success:failure instead");
 
-
-/**
- 发送OTA包，升级固件。升级前请务必保证设备已通过蓝牙连接
- 
- @param uuid        设备 uuid
- @param pid         设备 pid
- @param otaData     升级固件的数据
- @param otaType     升级类型
- @param otaVersion  升级版本
- @param success     成功回调
- @param failure     失败回调
- */
+/// Send OTA package to upgrade firmware.
+///
+/// The `otaData`、`otaType` and `otaVersion` can be obtained from TuyaSmartFirmwareUpgradeModel. You can get TuyaSmartFirmwareUpgradeModel by TuyaSmartDevice::getFirmwareUpgradeInfo:failure: .
+///
+/// @note Please make sure your device is connected via Bluetooth before upgrading.
+///
+/// @param uuid         The UUID for the device.
+/// @param pid          The product Id for the device.
+/// @param otaData      The OTA package data.
+/// @param otaType      The OTA type.
+/// @param otaVersion   The OTA version.
+/// @param success      When ota successfully, this block will be called success.
+/// @param failure      This block will be called if some error occurred.
 - (void)sendOTAPack:(NSString *)uuid
                 pid:(NSString *)pid
             otaData:(NSData *)otaData
@@ -222,22 +231,27 @@ NS_ASSUME_NONNULL_BEGIN
             success:(TYSuccessHandler)success
             failure:(TYFailureHandler)failure;
 
-
-/**
- 获取蓝牙外设的信号
- 
- @param uuid 设备 uuid
- @return 设备信号，若为 0，则获取失败。
- */
+/// Get the RSSI of the BLE device
+///
+/// @param uuid        The UUID for the device.
+///
+/// @return The RSSI of the BLE device
 - (NSInteger)getPeripheralRSSI:(NSString *)uuid;
 
-
-/**
- 根据 UUID 来判断设备是否已连接
- @param uuid 设备 uuid
- @return 该设备是否连接
-*/
+/// Get the local connection status of the BLE device by device UUID
+///
+/// @param uuid        The UUID for the device.
+///
+/// @return The local connection status of the BLE device
 - (BOOL)deviceStatueWithUUID:(NSString *)uuid;
+
+/// Sending parameters data to the BLE device, whilc make device report data through big data channels.
+/// 
+/// @param devId        The device Id for the device.
+/// @param paramsDict   A dictionary of parameter, defined by the protocol party.
+/// @param success      When ota successfully, this block will be called success.
+/// @param failure      This block will be called if some error occurred.
+- (void)postBleBigDataChannel:(NSString *)devId params:(NSDictionary *)paramsDict success:(TYSuccessHandler)success failure:(TYFailureError)failure;
 
 @end
 

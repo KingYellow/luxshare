@@ -108,8 +108,10 @@
     cell.selectBtn.selected = model.isOnline;
     if ([QZHDeviceStatus deviceType:model] == DoorbellDevice) {
         cell.poloIMG.image = QZHLoadIcon(@"ic_doorbell");
-    }else if ([model.productId isEqualToString:BATTERY_PRODUCT_ID]) {
+    }else if ([QZHDeviceStatus deviceType:model] == IPCamBatteryDevice) {
         cell.poloIMG.image = QZHLoadIcon(@"ic_ipc_battery");
+    }else if ([QZHDeviceStatus deviceType:model] == IPCamPTZDevice) {
+        cell.poloIMG.image = QZHLoadIcon(@"ic_ipc_ptz");
     }else{
         cell.poloIMG.image = QZHLoadIcon(@"ic_ipc_ac");
     }

@@ -8,16 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "RecordProgressView.h"
+#import "CamerGestureView.h"
 
 NS_ASSUME_NONNULL_BEGIN
-typedef void(^playbuttontag)(UIButton *sender, BOOL selected);
+typedef void(^Playbuttontag)(UIButton *sender, BOOL selected);
 
 @interface CameraPlayView : UIView
 @property (strong, nonatomic)UIButton *playBtn;
 @property (strong, nonatomic)UIButton *voiceBtn;
 @property (strong, nonatomic)UIButton *definitionBtn;
 @property (strong, nonatomic)UIButton *horizontalBtn;
-@property (copy, nonatomic)playbuttontag buttonBlock;
+@property (copy, nonatomic)Playbuttontag buttonBlock;
 @property (strong, nonatomic)UIImageView *playPreGif;
 @property (strong, nonatomic)UIImageView *wifiIMG;
 @property (strong, nonatomic)UIImageView *batteryIMG;
@@ -26,7 +27,7 @@ typedef void(^playbuttontag)(UIButton *sender, BOOL selected);
 @property (strong, nonatomic)UIButton *videoRecordBtn;
 @property (strong, nonatomic)UIButton *videoTalkBtn;
 @property (strong, nonatomic)UIButton *videoPhotoBtn;
-
+@property (strong, nonatomic)CamerGestureView *camerGestureView;
 @end
 
 NS_ASSUME_NONNULL_END

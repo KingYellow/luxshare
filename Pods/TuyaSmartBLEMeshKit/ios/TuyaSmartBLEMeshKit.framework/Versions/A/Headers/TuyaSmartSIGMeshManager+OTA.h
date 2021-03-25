@@ -1,24 +1,22 @@
 //
-//  TuyaSmartSIGMeshManager+OTA.h
-//  BlocksKit
+// TuyaSmartSIGMeshManager+OTA.h
+// TuyaSmartBLEMeshKit
 //
-//  Created by 温明妍 on 2019/12/17.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <TuyaSmartBLEMeshKit/TuyaSmartBLEMeshKit.h>
 
 @interface TuyaSmartSIGMeshManager (OTA)
 
-/**
- 准备给目标设备升级
- 
- @param targetNodeId 目标设备 nodeid
- */
+/// Ready to upgrade target device.
+/// @param targetNodeId Target device node ID.
 - (void)prepareForOTAWithTargetNodeId:(NSString *)targetNodeId;
 
-/**
- 开始发送升级包
- */
+/// Start sending upgrade package.
+/// @param data Data.
+/// @param targetVersion Target version.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)startSendOTAPack:(NSData *)data
            targetVersion:(NSString *)targetVersion
                  success:(TYSuccessHandler)success

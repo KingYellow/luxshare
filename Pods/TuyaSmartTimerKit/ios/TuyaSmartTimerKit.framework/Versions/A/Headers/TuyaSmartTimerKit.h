@@ -1,9 +1,8 @@
 //
-//  TuyaSmartTimerKit.h
-//  TuyaSmartTimerKit
+// TuyaSmartTimerKit.h
+// TuyaSmartTimerKit
 //
-//  Created by 高森 on 2019/1/18.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TuyaSmartTimerKit_h
 #define TuyaSmartTimerKit_h

@@ -1,15 +1,14 @@
 //
-//  TuyaSmartUser+WCSession.h
-//  TuyaSmartBaseKit
+// TuyaSmartUser+WCSession.h
+// TuyaSmartBaseKit
 //
-//  Created by 高森 on 2019/3/29.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import "TuyaSmartUser.h"
 
 /**
  We don't link WatchConnectivity.framework because not all developers need this feature.
- If the sdk links WatchConnectivity.framework and don't use this feature, your app might be reject when submit to Apple Store.
+ If the SDKs links WatchConnectivity.framework and don't use this feature, your app might be reject when submit to Apple Store.
  So please link WatchConnectivity.framework manually and use it on demand.
  */
 //#import <WatchConnectivity/WatchConnectivity.h>
@@ -20,27 +19,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern NSString *const TuyaSmartUserWCSessionKey;
 
+/// We don't link WatchConnectivity.framework because not all developers need this feature.
+/// If the SDKs links WatchConnectivity.framework and don't use this feature, your app might be reject when submit to Apple Store.
+/// So please link WatchConnectivity.framework manually and use it on demand.
 @interface TuyaSmartUser (WCSession)
 
-/**
- Sync TuyaSmartUser context to iWatch. When user login/logout/session expired on iPhone, please use this method to sync manually.
- 同步TuyaSmartUser用户信息到iWatch。当用户在iPhone登录、登出、session过期时，需要手动调用此方法同步。
- 
- Example:
- 
- [TuyaSmartUser.sharedInstance updateApplicationContext:session];
-
- @param session session
- @return results of synchron
- */
+/// Sync TuyaSmartUser context to Apple Watch. When user login/logout/session expired on iPhone, please use this method to sync manually.
+/// Example: [TuyaSmartUser.sharedInstance updateApplicationContext:session];
+/// @param session Session.
+/// @return Results of synchrony.
 - (BOOL)updateApplicationContext:(WCSession *)session API_AVAILABLE(ios(9.0));
 
-/**
- Receive TuyaSmartUser context from iPhone.
- 从iPhone获取TuyaSmartUser用户信息。
-
- @param applicationContext applicationContext
- */
+/// Receive TuyaSmartUser context from iPhone.
+/// @param applicationContext Application Context.
 - (void)didReceiveApplicationContext:(NSDictionary *)applicationContext API_AVAILABLE(watchos(2.0));
 
 @end

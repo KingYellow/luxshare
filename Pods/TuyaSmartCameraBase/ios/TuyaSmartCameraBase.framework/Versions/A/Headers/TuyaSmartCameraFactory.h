@@ -128,6 +128,8 @@ typedef NS_ENUM(NSUInteger, TuyaSmartCameraP2PType) {
 
 + (id<TuyaSmartCameraType>)createCameraWithConfig:(TuyaSmartCameraConfig *)ipcConfig delegate:(id<TuyaSmartCameraDelegate>)delegate;
 
++ (id<TuyaSmartCameraType>)createCameraWithDeviceId:(NSString *)devId delegate:(id<TuyaSmartCameraDelegate>)delegate;
+
 @end
 
 @interface TuyaSmartCameraFactory : NSObject
@@ -163,6 +165,24 @@ typedef NS_ENUM(NSUInteger, TuyaSmartCameraP2PType) {
  @return camera instance
  */
 + (id<TuyaSmartCameraType>)cameraWithP2PType:(id)type config:(TuyaSmartCameraConfig *)ipcConfig delegate:(id<TuyaSmartCameraDelegate>)delegate;
+
+/**
+[^en]
+create a camera instance
+[$en]
+
+[^zh]
+创建一个camera实例
+[$zh]
+
+@param type [^en]p2p type，pass the value of the "p2pType" field in the "skills" attribute of the "TuyaSmartDeviceModel" object corresponding to the camera device.[$en] [^zh]p2p 类型，传递camera设备的"TuyaSmartDeviceModel"对象的"skills"属性中的"p2pType"字段[$zh]
+
+@param devId device id
+@param delegate delgate
+@return camera instance
+*/
++ (id<TuyaSmartCameraType>)cameraWithP2PType:(id)type deviceId:(NSString *)devId delegate:(id<TuyaSmartCameraDelegate>)delegate;
+
 
 /**
  [^en]

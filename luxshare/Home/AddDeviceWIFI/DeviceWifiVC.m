@@ -235,11 +235,15 @@
         }
         
     } else {
-        
+
         [self getWifiInfo];
     }
 }
+
 - (void)applicationWillEnterForeground{
+    
     [self upDateWifiInfo];
+    
 }
+
 @end

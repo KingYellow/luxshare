@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <TuyaSmartCameraBase/TuyaSmartCameraBase.h>
 #import <TuyaSmartBaseKit/TuyaSmartBaseKit.h>
-#import <TuyaSmartDeviceKit/TuyaSmartDeviceKit.h>
+#import <TuyaSmartDeviceCoreKit/TuyaSmartDeviceCoreKit.h>
 
 typedef NSString * TuyaSmartCameraDPKey NS_EXTENSIBLE_STRING_ENUM;
 typedef NSString * TuyaSmartCameraNightvision NS_EXTENSIBLE_STRING_ENUM;
@@ -90,6 +90,9 @@ IPC_EXTERN TuyaSmartCameraPTZDirection const TuyaSmartCameraPTZDirectionLeft;
 /// [^en]Wireless device power mode values[$en] [^zh]无线设备电量模式值[$zh]
 IPC_EXTERN TuyaSmartCameraPowerMode const TuyaSmartCameraPowerModeBattery;
 IPC_EXTERN TuyaSmartCameraPowerMode const TuyaSmartCameraPowerModePlug;
+
+/// [^en]Object outline[$en] [^zh]智慧画框[$zh]
+IPC_EXTERN TuyaSmartCameraDPKey const TuyaSmartCameraOutlineDPName;
 
 /// [^en]sd card state[$en] [^zh]SD卡状态[$zh]
 typedef NS_ENUM(NSUInteger, TuyaSmartCameraSDCardStatus) {

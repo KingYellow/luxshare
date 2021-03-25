@@ -17,8 +17,11 @@
     }
     return self;
 }
+
 - (void)creatSubViews {
+    self.camerGestureView = [[CamerGestureView alloc] initWithFrame:self.frame];
 //    [self.contentView addSubview:self.preView];
+    [self addSubview:self.camerGestureView];
     [self addSubview:self.playBtn];
     [self addSubview:self.voiceBtn];
     [self addSubview:self.definitionBtn];
@@ -123,6 +126,10 @@
         make.height.mas_equalTo(30);
         make.left.mas_equalTo(self.videoTalkBtn.mas_right).offset(15);
         make.bottom.mas_equalTo(-15);
+
+    }];
+    [self.camerGestureView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.right.left.bottom.mas_equalTo(0);
 
     }];
   

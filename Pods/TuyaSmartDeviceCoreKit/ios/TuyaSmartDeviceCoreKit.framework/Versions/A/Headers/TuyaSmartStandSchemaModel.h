@@ -1,32 +1,31 @@
 //
-//  TuyaSmartStandSchemaModel.h
-//  TuyaSmartDeviceKit-iOS
+// TuyaSmartStatusSchemaModel.h
+// TuyaSmartDeviceCoreKit
 //
-//  Created by 黄凯 on 2019/8/28.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-// 上报的映射策略
+/// Reported Mapping Policies.
 @interface TuyaSmartStatusSchemaModel : NSObject
 
-@property (nonatomic, strong) NSString     *strategyValue; // 映射规则
-@property (nonatomic, strong) NSString     *strategyCode; // 策略代号，目前支持 10 余种
-@property (nonatomic, strong) NSString     *dpCode; // 上报的 dpId 对应的 dpCode，不是标准 dpCode
-@property (nonatomic, strong) NSString     *standardType; // 标准后的 dpValue 类型
+@property (nonatomic, strong) NSString     *strategyValue; /// Mapping Rules.
+@property (nonatomic, strong) NSString     *strategyCode; /// Policy designators, currently supporting more than 10.
+@property (nonatomic, strong) NSString     *dpCode; /// The reported dpId corresponds to a dpCode that is not a standard dpCode.
+@property (nonatomic, strong) NSString     *standardType; /// DpValue type after standard.
 
 
 @end
 
-// 下发的映射策略
+/// Distributed mapping strategy.
 @interface TuyaSmartFunctionSchemaModel : NSObject
 
-@property (nonatomic, strong) NSString     *strategyCode; // 策略代号，目前支持 10 余种
-@property (nonatomic, strong) NSString     *strategyValue; // 映射规则
-@property (nonatomic, strong) NSString     *standardCode; // 标准化的 dpCode
-@property (nonatomic, strong) NSString     *standardType; // 标准后的 dpValue 类型
+@property (nonatomic, strong) NSString     *strategyCode; /// At present, more than 10 kinds of policy codes are supported.
+@property (nonatomic, strong) NSString     *strategyValue; /// Mapping rules.
+@property (nonatomic, strong) NSString     *standardCode; /// Standardized dpcode.
+@property (nonatomic, strong) NSString     *standardType; /// Dpvalue type after standard.
 
 @end
 

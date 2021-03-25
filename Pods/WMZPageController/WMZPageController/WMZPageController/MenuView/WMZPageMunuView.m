@@ -19,6 +19,7 @@
         self.showsHorizontalScrollIndicator = NO;
         self.decelerationRate = UIScrollViewDecelerationRateFast;
         self.bounces = NO;
+        self.currentTitleIndex = NSNotFound;
         self.bouncesZoom = NO;
         if (@available(iOS 11.0, *)) {
             self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
@@ -40,12 +41,28 @@
         WMZPageNaviBtn *btn = [WMZPageNaviBtn buttonWithType:UIButtonTypeCustom];
         [self setPropertiesWithBtn:btn withIndex:i withTemp:temp];
         temp = btn;
+        if (i == self.param.wTitleArr.count - 1) {
+            [self resetMainViewContenSize:btn];
+        }
+    }
+    if (self.param.wCustomMenuView) {
+        self.param.wCustomMenuView(self);
     }
     //指示器
     [self setUpIndicator];
     //右边固定标题
     [self setUpFixRightBtn:temp];
     
+}
+
+//重置contensize
+- (void)resetMainViewContenSize:(WMZPageNaviBtn*)btn{
+    if (CGRectGetMaxX(btn.frame) <= self.frame.size.width) {
+        self.scrollEnabled = NO;
+    }else{
+        self.scrollEnabled = YES;
+    }
+    self.contentSize = CGSizeMake(CGRectGetMaxX(btn.frame), 0);
 }
 
 //初始化指示器
@@ -62,7 +79,8 @@
         [self sendSubviewToBack:self.lineView];
     }
     self.lineView.hidden = (self.param.wMenuAnimal == PageTitleMenuNone||
-                            self.param.wMenuAnimal == PageTitleMenuTouTiao
+                            self.param.wMenuAnimal == PageTitleMenuTouTiao||
+                            self.param.wMenuAnimal == PageTitleMenuCircleBg
                             );
     if (self.param.wMenuIndicatorRadio) {
         self.lineView.layer.cornerRadius = self.param.wMenuIndicatorRadio;
@@ -84,15 +102,15 @@
         for (int i = ((int)fixData.count - 1); i>=0; i--) {
             id info = fixData[i];
             WMZPageNaviBtn *fixBtn = [WMZPageNaviBtn buttonWithType:UIButtonTypeCustom];
-            CGFloat menuFixWidth = self.param.wMenuFixWidth;
-            id fixWidth = [self getTitleData:info key:@"width"];
+            CGFloat menuFixWidth = [self getTitleData:info key:@"width"]?[[self getTitleData:info key:@"width"] floatValue]:self.param.wMenuFixWidth;
+            CGFloat originY = [self getTitleData:info key:@"y"]?[[self getTitleData:info key:@"y"] floatValue]:temp.frame.origin.y;
+            CGFloat menuFixHeight = [self getTitleData:info key:@"height"]?[[self getTitleData:info key:@"height"] floatValue]:temp.frame.size.height;
             id text = [self getTitleData:info key:@"name"];
             id selectText = [self getTitleData:info key:@"selectName"];
             id image = [self getTitleData:info key:@"image"];
             id selectImage = [self getTitleData:info key:@"selectImage"];
-            if (fixWidth && [fixWidth floatValue]>=0) {
-                menuFixWidth = [fixWidth floatValue];
-            }
+            id titleColor = [self getTitleData:info key:@"titleColor"]?:self.param.wMenuTitleColor;
+            id titleSelectColor = [self getTitleData:info key:@"titleSelectColor"]?:self.param.wMenuTitleSelectColor;
             if (text) {
                 [fixBtn setTitle:text forState:UIControlStateNormal];
             }
@@ -110,14 +128,16 @@
             }
             allWidth += menuFixWidth;
             fixBtn.titleLabel.font = self.param.wMenuTitleUIFont;
-            [fixBtn setTitleColor:self.param.wMenuTitleColor forState:UIControlStateNormal];
-            fixBtn.frame = CGRectMake(CGRectGetWidth(self.frame)-allWidth, temp.frame.origin.y, menuFixWidth, temp.frame.size.height);
+            [fixBtn setTitleColor:titleColor forState:UIControlStateNormal];
+            [fixBtn setTitleColor:titleSelectColor forState:UIControlStateSelected];
+            fixBtn.frame = CGRectMake(CGRectGetMaxX(self.frame)-allWidth, originY, menuFixWidth, menuFixHeight);
             fixBtn.tag = 10086+i;
             fixBtn.backgroundColor = temp.backgroundColor;
             [self addSubview:fixBtn];
             [self bringSubviewToFront:fixBtn];
+            CGFloat margin = [self getTitleData:info key:@"margin"]?[[self getTitleData:info key:@"margin"] floatValue]:self.param.wMenuImageMargin;
             if (image) {
-                [fixBtn TagSetImagePosition:self.param.wMenuImagePosition spacing:self.param.wMenuImageMargin];
+                [fixBtn TagSetImagePosition:self.param.wMenuImagePosition spacing:margin];
             }
             if (self.param.wMenuFixShadow) {
                [fixBtn viewShadowPathWithColor:PageColor(0x333333) shadowOpacity:0.8 shadowRadius:3 shadowPathType:PageShadowPathLeft shadowPathWidth:2];
@@ -137,26 +157,34 @@
 }
 
 //设置按钮样式
-- (void)setPropertiesWithBtn:(WMZPageNaviBtn*)btn withIndex:(int)i  withTemp:(WMZPageNaviBtn*)temp{
+- (void)setPropertiesWithBtn:(WMZPageNaviBtn*)btn withIndex:(NSInteger)i  withTemp:(WMZPageNaviBtn*)temp{
     CGFloat margin = self.param.wMenuCellMargin;
     btn.param = self.param;
-    [btn  setAdjustsImageWhenHighlighted:NO];
+    btn.titleLabel.font = self.param.wMenuTitleUIFont;
+    [btn setAdjustsImageWhenHighlighted:NO];
     [btn addTarget:self action:@selector(tap:) forControlEvents:UIControlEventTouchUpInside];
-    id name = [self getTitleData:self.param.wTitleArr[i] key:@"name"];
+    id titleInfo = self.param.wTitleArr[i];
+    id selectColor = [self getTitleData:titleInfo key:@"titleSelectColor"]?:self.param.wMenuTitleSelectColor;
+    id color = [self getTitleData:titleInfo key:@"titleColor"]?:self.param.wMenuTitleColor;
+    [btn setTitleColor:selectColor?:self.param.wMenuTitleSelectColor forState:UIControlStateSelected];
+    [btn setTitleColor:color forState:UIControlStateNormal];
+    id name = [self getTitleData:titleInfo key:@"name"];
     if (name) {
         [btn setTitle:name forState:UIControlStateNormal];
         btn.normalText = name;
     }
-    id selectName = [self getTitleData:self.param.wTitleArr[i] key:@"selectName"];
+    id selectName = [self getTitleData:titleInfo key:@"selectName"];
     if (selectName) {
         [btn setTitle:selectName forState:UIControlStateSelected];
         btn.selectText = selectName;
     }
     CGSize size =  btn.maxSize;
     //设置图片
-    id image = [self getTitleData:self.param.wTitleArr[i] key:@"image"];
-    id selectImage = [self getTitleData:self.param.wTitleArr[i] key:@"selectImage"];
-    id onlyClick = [self getTitleData:self.param.wTitleArr[i] key:@"onlyClick"];
+    id image = [self getTitleData:titleInfo key:@"image"];
+    id selectImage = [self getTitleData:titleInfo key:@"selectImage"];
+    id onlyClick = [self getTitleData:titleInfo key:@"onlyClick"];
+    id titleBackground = [self getTitleData:titleInfo key:@"titleBackground"];
+    btn.backgroundColor = titleBackground?:self.param.wMenuTitleBackground;
     if (image) {
         [btn setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
         btn.imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -185,20 +213,8 @@
             btn.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         }
     }
-    btn.titleLabel.font = self.param.wMenuTitleUIFont;
-
-    id selectColor = [self getTitleData:self.param.wTitleArr[i] key:@"titleSelectColor"];
-    [btn setTitleColor:selectColor?:self.param.wMenuTitleSelectColor forState:UIControlStateSelected];
-    [btn setTitleColor:self.param.wMenuTitleColor forState:UIControlStateNormal];
-    btn.tag = i;
-    btn.frame = CGRectMake(temp?(CGRectGetMaxX(temp.frame)+self.param.wMenuTitleOffset):0, 0, self.param.wMenuTitleWidth?:(size.width + margin), self.param.wMenuHeight);
-    [self addSubview:btn];
-    [self.btnArr addObject:btn];
-    if (image) {
-        [btn TagSetImagePosition:self.param.wMenuImagePosition spacing:self.param.wMenuImageMargin];
-    }
     //设置右上角红点
-    NSString *badge = [self getTitleData:self.param.wTitleArr[i] key:@"badge"];
+    NSString *badge = [self getTitleData:titleInfo key:@"badge"];
     if (badge) {
        [btn showBadgeWithTopMagin:self.param.wTitleArr[i]];
     }
@@ -207,8 +223,8 @@
         btn.titleLabel.textAlignment = NSTextAlignmentCenter;
     }
     //设置富文本
-    id wrapColor = [self getTitleData:self.param.wTitleArr[i] key:@"wrapColor"];
-    id firstColor = [self getTitleData:self.param.wTitleArr[i] key:@"firstColor"];
+    id wrapColor = [self getTitleData:titleInfo key:@"wrapColor"];
+    id firstColor = [self getTitleData:titleInfo key:@"firstColor"];
     if ([btn.titleLabel.text containsString:@"\n"]&&(wrapColor||firstColor)) {
         NSMutableAttributedString *mStr = [[NSMutableAttributedString alloc] initWithString:btn.titleLabel.text];
         NSMutableAttributedString *mSelectStr = [[NSMutableAttributedString alloc] initWithString:btn.titleLabel.text];
@@ -222,20 +238,42 @@
         }
         [btn setAttributedTitle:mStr forState:UIControlStateNormal];
         [btn setAttributedTitle:mSelectStr forState:UIControlStateSelected];
-        btn.attributed = YES;
+
     }
-    //重新设置布局
-    if (i == (self.param.wTitleArr.count -1)) {
-        if (CGRectGetMaxX(btn.frame) <= self.frame.size.width) {
-           self.scrollEnabled = NO;
-        }else{
-           self.scrollEnabled = YES;
+    
+    CGFloat btnWidth = [self getTitleData:titleInfo key:@"width"]?[[self getTitleData:titleInfo key:@"width"] floatValue]:(self.param.wMenuTitleWidth?:(size.width + margin));
+    CGFloat marginX = 0;
+    CGFloat originY = [self getTitleData:titleInfo key:@"y"]?[[self getTitleData:titleInfo key:@"y"] floatValue]:0;
+    CGFloat btnHeight = [self getTitleData:titleInfo key:@"height"]?[[self getTitleData:titleInfo key:@"height"] floatValue]:self.param.wMenuHeight;
+    btn.tag = i;
+    if (temp) {
+        marginX = [self getTitleData:titleInfo key:@"marginX"]?[[self getTitleData:titleInfo key:@"marginX"] floatValue]:self.param.wMenuTitleOffset;
+        btn.frame = CGRectMake((CGRectGetMaxX(temp.frame)+marginX), originY, btnWidth, btnHeight);
+    }else{
+        marginX = [self getTitleData:titleInfo key:@"marginX"]?[[self getTitleData:titleInfo key:@"marginX"] floatValue]:0;
+        btn.frame = CGRectMake(marginX, originY, btnWidth, btnHeight);
+    }
+    
+    if (self.param.wMenuAnimal == PageTitleMenuCircleBg) {
+        if (self.param.wMenuTitleRadios == 0) {
+            self.param.wMenuTitleRadios = btnHeight/2;
         }
-        self.contentSize = CGSizeMake(CGRectGetMaxX(btn.frame), 0);
     }
-    if (self.param.wCustomMenuView) {
-        self.param.wCustomMenuView(self);
+    if (self.param.wMenuTitleRadios) {
+        btn.layer.cornerRadius = self.param.wMenuTitleRadios;
     }
+    CGFloat imageMargin = [self getTitleData:titleInfo key:@"margin"]?[[self getTitleData:titleInfo key:@"margin"] floatValue]:self.param.wMenuImageMargin;
+    if (image) {
+        [btn TagSetImagePosition:self.param.wMenuImagePosition spacing:imageMargin];
+    }
+    if (self.btnArr.count>i) {
+        [self.btnArr insertObject:btn atIndex:i];
+        [self insertSubview:btn atIndex:i];
+    }else{
+        [self.btnArr addObject:btn];
+        [self addSubview:btn];
+    }
+    
 }
 
 //解析字典
@@ -262,8 +300,9 @@
     }
 }
 
-//滚动到中间
-- (void)scrollToIndex:(NSInteger)newIndex{
+
+- (void)scrollToIndex:(NSInteger)newIndex animal:(BOOL)animal{
+    if (self.btnArr.count<=newIndex) return;
     WMZPageNaviBtn *btn = self.btnArr[newIndex] ;
     //隐藏右上角红点
     [btn hidenBadge];
@@ -271,13 +310,10 @@
     id backgroundColor = [self getTitleData:self.param.wTitleArr[newIndex] key:@"backgroundColor"];
     //改变指示器颜色
     id indicatorColor = [self getTitleData:self.param.wTitleArr[newIndex] key:@"indicatorColor"];
-    //改变其他未选中标题的颜色
-    id titleColor = [self getTitleData:self.param.wTitleArr[newIndex] key:@"titleColor"];
-    
     //改变标题颜色
-    
     [self.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn * _Nonnull temp, NSUInteger idx, BOOL * _Nonnull stop) {
-        temp.selected = (temp.tag == newIndex ?YES:NO);
+        NSInteger btnIndex = [self.btnArr indexOfObject:temp];
+        temp.selected = (btnIndex == newIndex ?YES:NO);
         if ([temp isSelected]) {
             UIColor *tempBackgroundColor = self.param.wMenuBgColor;
             UIColor *fixBackgroundColor = self.param.wMenuBgColor;
@@ -310,12 +346,12 @@
                     [obj setTitleColor:[temp titleColorForState:UIControlStateSelected] forState:UIControlStateNormal];
                 }
             }];
+            temp.layer.backgroundColor = self.param.wMenuSelectTitleBackground.CGColor;
         }else{
-            [temp setTitleColor:titleColor?:self.param.wMenuTitleColor forState:UIControlStateNormal];
             temp.titleLabel.font = self.param.wMenuTitleUIFont;
+            temp.layer.backgroundColor = self.param.wMenuTitleBackground.CGColor;
         }
     }];
-    
     
     //滚动到中间
     CGFloat centerX = self.frame.size.width/2 ;
@@ -330,36 +366,35 @@
         point = CGPointMake(CGRectGetMaxX(indexFrame) -  centerX-  indexFrame.size.width/2, 0);
     }
     if ([self isScrollEnabled]) {
-        [self setContentOffset:point animated:self.first?NO:YES];
+        [self setContentOffset:point animated:animal?YES:NO];
     }
     
-    CGFloat dataWidth = btn.titleLabel.frame.size.width?:btn.maxSize.width;
-    //改变指示器frame
-    CGRect lineRect = indexFrame;
-    lineRect.size.height = self.param.wMenuIndicatorHeight?:PageK1px;
-    lineRect.origin.y = [self getMainHeight] - lineRect.size.height/2 - self.param.wMenuIndicatorY;
-    lineRect.size.width =  self.param.wMenuIndicatorWidth?:(dataWidth+6);
-    lineRect.origin.x =  (indexFrame.size.width - lineRect.size.width)/2 + indexFrame.origin.x;
-    
-    if (self.param.wMenuAnimal == PageTitleMenuCircle) {
-        lineRect = indexFrame;
-        lineRect.origin.x =  indexFrame.origin.x ;
-        lineRect.size.width =  indexFrame.size.width ;
-        lineRect.size.height =  self.param.wMenuIndicatorHeight?:(btn.maxSize.height + 8);
-        lineRect.origin.y =  (indexFrame.size.height -  lineRect.size.height)/2;
-        self.lineView.layer.masksToBounds = YES;
-        self.lineView.layer.cornerRadius =  self.param.wMenuCircilRadio?:(lineRect.size.height/2);
-    }
-    
-    
-    if (self.first) {
-        self.lineView.frame = lineRect;
-    }else{
-        [UIView animateWithDuration:0.2 animations:^{
+    if (![self.lineView isHidden]) {
+        CGFloat dataWidth = btn.titleLabel.frame.size.width?:btn.maxSize.width;
+        //改变指示器frame
+        CGRect lineRect = indexFrame;
+        lineRect.size.height = self.param.wMenuIndicatorHeight?:PageK1px;
+        lineRect.origin.y = [self getMainHeight] - lineRect.size.height/2 - self.param.wMenuIndicatorY;
+        lineRect.size.width =  self.param.wMenuIndicatorWidth?:(dataWidth+6);
+        lineRect.origin.x =  (indexFrame.size.width - lineRect.size.width)/2 + indexFrame.origin.x;
+        
+        if (self.param.wMenuAnimal == PageTitleMenuCircle) {
+            lineRect = indexFrame;
+            lineRect.origin.x =  indexFrame.origin.x ;
+            lineRect.size.width =  indexFrame.size.width ;
+            lineRect.size.height =  self.param.wMenuIndicatorHeight?:(btn.maxSize.height + 8);
+            lineRect.origin.y =  (indexFrame.size.height -  lineRect.size.height)/2;
+            self.lineView.layer.masksToBounds = YES;
+            self.lineView.layer.cornerRadius =  self.param.wMenuCircilRadio?:(lineRect.size.height/2);
+        }
+        
+        if (!animal) {
             self.lineView.frame = lineRect;
-        } completion:^(BOOL finished) {
-            
-        }];
+        }else{
+            [UIView animateWithDuration:0.2f animations:^{
+                self.lineView.frame = lineRect;
+            }];
+        }
     }
         
     self.currentTitleIndex = newIndex;
@@ -367,14 +402,20 @@
         self.backgroundColor = [UIColor clearColor];
     }
     
+    
     if (self.param.wCustomMenuSelectTitle) {
         self.param.wCustomMenuSelectTitle(self.btnArr);
     }
 }
 
+//滚动到中间
+- (void)scrollToIndex:(NSInteger)newIndex{
+    [self scrollToIndex:newIndex animal:YES];
+}
+
 
 - (CGFloat)getMainHeight{
-    if ((pageIsIphoneX&&self.param.wMenuPosition == PageMenuPositionBottom)) {
+    if ((PageIsIphoneX&&self.param.wMenuPosition == PageMenuPositionBottom)) {
         return (self.frame.size.height - 15);
     }else if (self.param.wMenuPosition == PageMenuPositionNavi) {
         return 44;

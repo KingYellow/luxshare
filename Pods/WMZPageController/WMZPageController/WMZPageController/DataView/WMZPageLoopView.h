@@ -10,6 +10,7 @@
 #import "WMZPageScroller.h"
 #import "WMZPageDataView.h"
 #import "WMZPageMunuView.h"
+#import "WMZPageTitleDataModel.h"
 @class WMZPageController;
 NS_ASSUME_NONNULL_BEGIN
 
@@ -56,15 +57,12 @@ NS_ASSUME_NONNULL_BEGIN
 //是否往相反方向滑动
 @property(nonatomic,assign)BOOL hasDifferenrDirection;
 //当前显示VC
-@property(nonatomic,strong)UIViewController *currentVC;
+@property(nonatomic,strong,nullable)UIViewController *currentVC;
 //代理
 @property(nonatomic,weak)id <WMZPageLoopDelegate> loopDelegate;
 
 //初始化
 - (instancetype)initWithFrame:(CGRect)frame param:(WMZPageParam*)param;
-
-//滚动到index
-- (void)scrollToIndex:(NSInteger)newIndex;
 
 //标题动画和scrollview联动
 - (void)animalAction:(UIScrollView*)scrollView lastContrnOffset:(CGFloat)lastContentOffset;
@@ -74,6 +72,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 //找寻view的父控制器
 - (nullable WMZPageController *)findBelongViewControllerForView:(UIView *)view;
+
+//添加
+- (void)addChildVC:(NSInteger)index VC:(UIViewController*)newVC;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -60,6 +60,8 @@
     if([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     }
+    [self.camera stopPreview];
+    [self.camera destory];
     [self.playView removeFromSuperview];
 
 }
@@ -104,11 +106,11 @@
                                                               error:&err];
         NSDictionary *dic = dicjson[@"region0"];
 
-        if (([dic[@"xlen"] intValue] - [dic[@"x"] intValue])/100.0*(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN) < (QZHSIZE_WIDTH_ALARMAREA - 5)  || ([dic[@"ylen"] intValue] - [dic[@"y"] intValue])/100.0*QZHScreenWidth < (QZHSIZE_WIDTH_ALARMAREA - 5)) {
+        if ([dic[@"xlen"] intValue]/100.0*(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN) < (QZHSIZE_WIDTH_ALARMAREA - 5)  || [dic[@"ylen"] intValue]/100.0*QZHScreenWidth < (QZHSIZE_WIDTH_ALARMAREA - 5)) {
             return;
         }
-        self.maskView.centerRect = CGRectMake([dic[@"x"] intValue]/100.0*(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN) + QZH_VIDEO_LEFTMARGIN, [dic[@"y"] intValue]/100.0*QZHScreenWidth, ([dic[@"xlen"] intValue] - [dic[@"x"] intValue])/100.0*(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN), ([dic[@"ylen"] intValue] - [dic[@"y"] intValue])/100.0*QZHScreenWidth);
-        self.selectRect = CGRectMake([dic[@"x"] intValue]/100.0*(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN) + QZH_VIDEO_LEFTMARGIN, [dic[@"y"] intValue]/100.0*QZHScreenWidth, ([dic[@"xlen"] intValue] - [dic[@"x"] intValue])/100.0*(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN), ([dic[@"ylen"] intValue] - [dic[@"y"] intValue])/100.0*QZHScreenWidth);
+        self.maskView.centerRect = CGRectMake([dic[@"x"] intValue]/100.0*(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN) + QZH_VIDEO_LEFTMARGIN, [dic[@"y"] intValue]/100.0*QZHScreenWidth, [dic[@"xlen"] intValue]/100.0*(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN), [dic[@"ylen"] intValue] /100.0*QZHScreenWidth);
+        self.selectRect = CGRectMake([dic[@"x"] intValue]/100.0*(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN) + QZH_VIDEO_LEFTMARGIN, [dic[@"y"] intValue]/100.0*QZHScreenWidth, [dic[@"xlen"] intValue] /100.0*(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN), [dic[@"ylen"] intValue]/100.0*QZHScreenWidth);
     }
 }
 - (void)setConfigs{
@@ -276,11 +278,13 @@
 }
 - (void)submitAction{
     
-    NSDictionary *dic = @{@"num":@(1),@"region0":@{@"x":@((int)((self.selectRect.origin.x - QZH_VIDEO_LEFTMARGIN) * 100/(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN))),@"xlen":@((int)((self.selectRect.origin.x + self.selectRect.size.width - QZH_VIDEO_LEFTMARGIN) *100/(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN))),@"y":@((int)(self.selectRect.origin.y * 100/QZHScreenWidth)),@"ylen":@((int)((self.selectRect.origin.y + self.selectRect.size.height) * 100/QZHScreenWidth))}};
+    NSDictionary *dic = @{@"num":@(1),@"region0":@{@"x":@((int)((self.selectRect.origin.x - QZH_VIDEO_LEFTMARGIN) * 100/(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN))),@"xlen":@((int)(self.selectRect.size.width *100/(QZH_VIDEO_RIGHTMARGIN - QZH_VIDEO_LEFTMARGIN))),@"y":@((int)(self.selectRect.origin.y * 100/QZHScreenWidth)),@"ylen":@((int)(self.selectRect.size.height * 100/QZHScreenWidth))}};
     
      NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
     NSString *area = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+
    NSString *areaClear = [area stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    areaClear = [areaClear stringByReplacingOccurrencesOfString:@" " withString:@""];
 
     NSDictionary  *dps = @{@"169": areaClear};
 
@@ -296,7 +300,6 @@
             [self.navigationController popViewControllerAnimated:YES];
         });
 
-
     } failure:^(NSError *error) {
         [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
     }];
@@ -307,4 +310,8 @@
     return self.statusHiden;
 }
 
+-(void)dealloc{
+    
+    NSLog(@"设置区域释放了~~~~~~~~~~~~~~");
+}
 @end

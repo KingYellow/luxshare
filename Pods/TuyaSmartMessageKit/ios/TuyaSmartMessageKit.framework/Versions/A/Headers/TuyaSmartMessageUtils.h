@@ -1,17 +1,16 @@
 //
-//  TuyaSmartMessageUtils.h
-//  Pods
+// TuyaSmartMessageUtils.h
+// TuyaSmartMessageKit
 //
-//  Created by Hemin Won on 2020/4/7.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TuyaSmartMessageUtils_h
 #define TuyaSmartMessageUtils_h
 
 typedef NS_ENUM(NSInteger, TYMessageType) {
-    TYMessageTypeAlarm = 1, ///< 告警类型 alarm type
-    TYMessageTypeFamily,    ///< 家庭类型 family type
-    TYMessageTypeNotice,    ///< 通知类型 notice type
+    TYMessageTypeAlarm = 1, ///<  Alarm type.
+    TYMessageTypeFamily,    ///< Family type.
+    TYMessageTypeNotice,    ///< Notification type.
 };
 
 #endif /* TuyaSmartMessageUtils_h */

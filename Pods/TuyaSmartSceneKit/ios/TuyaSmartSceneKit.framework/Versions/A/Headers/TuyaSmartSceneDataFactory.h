@@ -1,12 +1,12 @@
 //
-//  TuyaSmartSceneDataFactory.h
-//  TuyaSmartSceneKit
+// TuyaSmartSceneDataFactory.h
+// TuyaSmartSceneKit
 //
-//  Created by TuyaInc on 2019/6/11.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com/)
 
 #ifndef TYSmartSceneDataFactory_h
 #define TYSmartSceneDataFactory_h
+/// @brief Header import for Scene
 
 #import "TuyaSmartScenePreConditionFactory.h"
 #import "TuyaSmartSceneExprModel.h"

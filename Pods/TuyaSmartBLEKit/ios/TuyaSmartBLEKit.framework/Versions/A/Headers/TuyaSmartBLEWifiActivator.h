@@ -1,9 +1,8 @@
 //
-//  TuyaSmartBleWifiActivator.h
-//  TuyaSmartBLEKit
+// TuyaSmartBLEWifiActivator.h
+// TuyaSmartBLEKit
 //
-//  Created by 吴戈 on 2019/2/20.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 
@@ -11,36 +10,41 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class TuyaSmartBLEWifiActivator;
 
+/// @brief TuyaSmartBLEWifiActivator provides methods for developers to implement dual-mode device activator functionalities.
+///
+/// Dual-mode device, which has both Bluetooth and Wi-Fi chips, can publish activator data through Bluetooth channel and completed through Wi-Fi channel.
 @protocol TuyaSmartBLEWifiActivatorDelegate <NSObject>
 
+/// The result of the activator dual-mode devices.
+///
+/// @param activator        The class itself.
+/// @param deviceModel      When activator successfully, this param will be called with DeviceModel.
+/// @param error            This error will be called if some error occurred.
 - (void)bleWifiActivator:(TuyaSmartBLEWifiActivator *)activator didReceiveBLEWifiConfigDevice:(TuyaSmartDeviceModel *)deviceModel error:(NSError *)error;
 
 @end
 
 @interface TuyaSmartBLEWifiActivator : NSObject
 
+/// Delegate for dual-mode device activator result.
 @property (nonatomic, weak) id<TuyaSmartBLEWifiActivatorDelegate> bleWifiDelegate;
 
+/// The UUID for the device.
 @property (nonatomic, strong) NSString *deviceUUID;
 
-/**
- *  单例
- */
+/// Single instance.
 + (instancetype)sharedInstance;
 
-/**
- *  connect ble wifi device
- *  连接蓝牙 Wifi 设备
- *
- *  @param UUID        蓝牙设备唯一标识
- *  @param homeId      当前家庭Id
- *  @param productId   产品Id
- *  @param ssid        路由器热点名称
- *  @param password    路由器热点密码
- *  @param timeout     轮询时间
- *  @param success     操作成功回调
- *  @param failure     操作失败回调
- */
+/// Activator dual-mode device.
+///
+/// @param UUID         The UUID for the device.
+/// @param homeId       The Id for the current home.
+/// @param productId    The product Id for the device.
+/// @param ssid         The name of the router
+/// @param password     The password Id for the device.
+/// @param timeout      Timeout time.
+/// @param success      When data send successfully, this block will be called success.
+/// @param failure      This block will be called if some error occurred.
 - (void)startConfigBLEWifiDeviceWithUUID:(NSString *)UUID
                                   homeId:(long long)homeId
                                productId:(NSString *)productId
@@ -50,10 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
                                  success:(TYSuccessHandler)success
                                  failure:(TYFailureHandler)failure;
 
-/**
- * stop discover device
- * 停止发现设备
- */
+/// Stop discover device.
 - (void)stopDiscover;
 
 @end

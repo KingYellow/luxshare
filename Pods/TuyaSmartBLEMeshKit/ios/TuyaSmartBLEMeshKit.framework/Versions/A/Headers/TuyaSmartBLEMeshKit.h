@@ -1,9 +1,8 @@
 //
-//  TuyaSmartBLEMeshKit.h
-//  TuyaSmartBLEMeshKit
+// TuyaSmartBLEMeshKit.h
+// TuyaSmartBLEMeshKit
 //
-//  Created by 黄凯 on 2018/11/24.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TuyaSmartBLEMeshKit_h
 #define TuyaSmartBLEMeshKit_h

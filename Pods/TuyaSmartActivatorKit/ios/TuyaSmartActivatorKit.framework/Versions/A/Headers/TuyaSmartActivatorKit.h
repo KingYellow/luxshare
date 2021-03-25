@@ -1,10 +1,8 @@
 //
-//  TuyaSmartActivatorKit.h
-//  TuyaSmartActivatorKit
+// TuyaSmartActivatorKit.h
+// TuyaSmartActivatorKit
 //
-//  Created by TuyaInc on 19/3/19.
-//  Copyright (c) 2019年 Tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TuyaSmartActivatorKit_h
 #define TuyaSmartActivatorKit_h

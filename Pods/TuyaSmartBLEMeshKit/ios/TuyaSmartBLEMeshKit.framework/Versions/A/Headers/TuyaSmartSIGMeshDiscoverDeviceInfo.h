@@ -1,23 +1,22 @@
 //
-//  TuyaSmartSIGMeshDiscoverDeviceInfo.h
-//  TuyaSmartSIGMesh
+// TuyaSmartSIGMeshDiscoverDeviceInfo.h
+// TuyaSmartBLEMeshKit
 //
-//  Created by 黄凯 on 2019/2/26.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 #import <TYBluetooth/TYBLEAgent.h>
 
 typedef NS_ENUM(NSUInteger, SIGMeshNodeProvisionType) {
     SIGMeshNodeUnknow,
-    SIGMeshNodeUnprovision, // new device
-    SIGMeshNodeProvisioned, // provisiond device
-    SIGMeshNodeProxyed, // Already proxy, only need connect and control
+    SIGMeshNodeUnprovision, /// New device.
+    SIGMeshNodeProvisioned, /// Provisiond device.
+    SIGMeshNodeProxyed, /// Already proxy, only need connect and control.
 };
 
 typedef enum : NSUInteger {
-    TYSIGMeshNodeActivatorTypeStandard = 0,// 标准配网
-    TYSIGMeshNodeActivatorTypeQuick = 1 << 0,// 快速配网
+    TYSIGMeshNodeActivatorTypeStandard = 0, /// Standard distribution network.
+    TYSIGMeshNodeActivatorTypeQuick = 1 << 0, /// Fast distribution network.
 } TYSIGMeshNodeActivatorType;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -30,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) SIGMeshNodeProvisionType provisionType;
 
-@property (nonatomic, assign) TYSIGMeshNodeActivatorType activatorType;/// < 配网类型
+@property (nonatomic, assign) TYSIGMeshNodeActivatorType activatorType; /// < Distribution network type.
 
 @property (nonatomic, copy) NSString *mac;
 
@@ -38,12 +37,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *productId;
 
-// for ota
+/// For ota.
 @property (nonatomic, copy) NSString *nodeId;
-// quickSuccess: YES | NO
-// for extend
-@property (nonatomic, strong) NSDictionary *extendInfo;
 
+/// QuickSuccess: YES | NO , for extend.
+@property (nonatomic, strong) NSDictionary *extendInfo;
 
 @end
 

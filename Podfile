@@ -12,7 +12,7 @@ target 'luxshare' do
   pod "TuyaSmartHomeKit"
   pod "TuyaSmartActivatorKit"
   pod 'TuyaSmartCameraKit'
-#  pod "TuyaSmartCameraT"
+  pod "TuyaSmartCameraT"
   pod 'TuyaSmartHelpCenterBizBundle'
 #  pod 'TYCameraCloudServicePanelSDK'
 

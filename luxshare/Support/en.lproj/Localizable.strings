@@ -53,6 +53,7 @@
 "login_account" = "Mobile Number/Email";
 "login_phone" = "Mobile Number";
 "login_password" = "Password";
+"login_newPassword" = "NewPasswoed";
 "login_verifyCode" = "Verification Code";
 "login_sendCode" = "Send";
 "login_loginPassword" = "Password Login";
@@ -60,6 +61,8 @@
 "reset_newPassword" = "New Password";
 "login_success" = "Login Successful";
 "login_fail" = "Login Failed";
+"resetPWSuccess" = "Reset Success";
+"cantOnlyInt" = "Password cannot be a pure number";
 
 "login_getCode" = "Get";
 "login_loginWithMessage" = "SMS Verification";
@@ -186,6 +189,8 @@
 //设置
 "setting_setting" = "Settings";
 "setting_deceteAlarm" = "Detection alarm settings";
+"setting_figureTracking" = "Figure tracking";
+"setting_cruise" = "Cruise settings";
 "setting_moveAlarm" = "Mobile alarm";
 "setting_decetecCry" = "Crying detection";
 "setting_decetecCrySensitivity" = "Cry Detection Sensitivity";
@@ -196,9 +201,9 @@
 "setting_decetecVoice" = "Sound Detection";
 "setting_decetecVoiceSensitivity" = "Sound Detection Sensitivity";
 
-"setting_decrteAlarmSwitch" = "Movement Detection Alarm Switch";
-"setting_personFilter" = "Human Shape Detection";
-"setting_alarmSensitivity" = "Alarm Sensitivity";
+"setting_MotionDetectionSwitch" = "Motion Detection Switch";
+"setting_personFilter" = "Humanoid Filter";
+"setting_motionDetectionSensitivity" = "Motion Detection Sensitivity";
 "setting_deceteMusic" = "Alarm Tone";
 
 "setting_storage" = "Storage Settings";
@@ -215,7 +220,7 @@
 //消息
 "message_warningDetail" = "Alarm Message Details";
 "message_selectWeek" = "Select Week";
-"message_center_detail" = "View Detail";
+"message_center_detail" = "Check";
 
 //回放
 "backplayDate" = "Date";
@@ -237,6 +242,7 @@
 
 "cancel" = "Cancel";
 "setting" = "Set Up";
+"confirm" = "Confirm";
 //直播
 "recordingPleaseStop" = "Recording, please stop recording first";
 "talkingPleaseStop" = "Talking, please stop talking first";
@@ -450,3 +456,22 @@
 "doorbellRefuse" = "Refuse";
 "doorbellAnswer" = "Answer";
 "waitingAnswerDoorbell" = "Waiting for doorbell call";
+"remoteReboot" = "Remote Reboot";
+"restoreFactorySettings" = "Restore factory settings";
+"cannotBeRestoredafteRestored" = "It cannot be restored after factory settings are restored";
+"cruise_turnOnCamerCruise" = "Turn on the camera cruise";
+"notManagerNoHandle" = "You are not an administrator and cannot operate";
+"cruise_setCruiseMode" = "Please set cruise mode";
+"cruise_panoramicCruise" = "Panoramic Cruise";
+"cruise_cycleThroughAllMonitoringAngles" = "The camera will cycle through all monitoring angles";
+"cruise_collectionPointCruise" = "Collection point Cruise";
+"cruise_cycleThrougAllTheCollectionPoints" = "The camera will cycle through all the collection points and stay at each position for 10 seconds";
+"cruise_selectCruiseTime" = "Please select cruise time";
+"cruise_cruiseAllDay" = "All day cruise";
+"cruise_camerCurisingAllDay" = "The camera will be cruising all day";
+"cruise_timedCruise" = "Timed Cruise";
+"cruise_cruiseInTheSpecifieTime" = "The camera will cruise in the specified time";
+"cruise_cruiseTime" = "Cruise time:";
+"member_leaveFamily" = "Leave Family";
+"turnOffHumanTracking" = "Please turn off human tracking first";
+"turnOffCruise" = "Please turn off cruise function first";

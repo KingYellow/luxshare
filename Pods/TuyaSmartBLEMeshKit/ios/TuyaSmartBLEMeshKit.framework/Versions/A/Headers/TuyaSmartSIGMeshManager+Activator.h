@@ -1,43 +1,31 @@
 //
-//  TuyaSmartSIGMeshManager+Activator.h
-//  BlocksKit
+// TuyaSmartSIGMeshManager+Activator.h
+// TuyaSmartBLEMeshKit
 //
-//  Created by 温明妍 on 2019/12/17.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <TuyaSmartBLEMeshKit/TuyaSmartBLEMeshKit.h>
 
 @interface TuyaSmartSIGMeshManager (Activator)
 
-/**
- 开始扫描设备
- 
- @param scanType 扫描类型，目前分为未配网和已配网，已配网扫描到结果会自动入网
- @param meshModel mesh model 信息
- */
+/// Start scanning device.
+/// @param scanType At present, the scanning type is divided into non distribution network and distributed network. The scanned result of distribution network will automatically enter the network.
+/// @param meshModel The mesh model.
 - (void)startScanWithScanType:(TuyaSmartSIGScanType)scanType meshModel:(TuyaSmartBleMeshModel *)meshModel;
 
-
-/**
- 开始激活设备
- 
- @param devList 待激活设备列表
- @param meshModel mesh model 信息
- */
+/// Start activating device.
+/// @param devList List of devices to be activated.
+/// @param meshModel The mesh model information.
 - (void)startActive:(NSArray<TuyaSmartSIGMeshDiscoverDeviceInfo *> *)devList meshModel:(TuyaSmartBleMeshModel *)meshModel;
 
-/**
- 停止激活设备
- */
+/// Stop activating device.
 - (void)stopActiveDevice;
 
-/**
- 停止扫描设备
- */
+/// Stop scanning device.
 - (void)stopSerachDevice;
 
+/// Gets the node ID of the current connection.
 - (NSString *)currentConnectNodeId;
-
 
 @end
 

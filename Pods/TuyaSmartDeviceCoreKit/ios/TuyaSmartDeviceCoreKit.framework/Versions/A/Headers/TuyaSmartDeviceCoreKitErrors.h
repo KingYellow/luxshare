@@ -1,9 +1,8 @@
 //
-//  TuyaSmartDeviceCoreKitErrors.h
-//  Pods
+// TuyaSmartDeviceCoreKitErrors.h
+// TuyaSmartDeviceCoreKit
 //
-//  Created by huangkai on 2020/7/14.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TuyaSmartDeviceCoreKitErrors_h
 #define TuyaSmartDeviceCoreKitErrors_h
@@ -17,14 +16,15 @@
 extern NSString *const kTYDeviceCoreKitErrorDomain;
 
 typedef NS_ENUM(NSInteger, TYDeviceCoreKitError) {
-    kTYDeviceCoreKitErrorDeviceNotSupport                      = 3000, // 设备不支持某个能力(设备维度上报的能力)
-    kTYDeviceCoreKitErrorSocketSendDataFailed                  = 3001, // 局域网下发数据失败
-    kTYDeviceCoreKitErrorEmptyDpsData                          = 3002, // dps 命令为空
-    kTYDeviceCoreKitErrorGroupDeviceListEmpty                  = 3003, // 群组设备为空
-    kTYDeviceCoreKitErrorGroupIdLengthError                    = 3004, // 群组 id 长度错误
-    kTYDeviceCoreKitErrorIllegalDpData                         = 3005, // 非法的 dps，查阅产品 dp 定义
-    kTYDeviceCoreKitErrorDeviceIdLengthError                   = 3006, // 设备 id 长度错误
-    kTYDeviceCoreKitErrorDeviceLocalKeyNotFound                = 3007, // 缺少 local key
+    kTYDeviceCoreKitErrorDeviceNotSupport                      = 3000, ///< The device does not support a certain capability (capability reported on the device dimension).
+    kTYDeviceCoreKitErrorSocketSendDataFailed                  = 3001, ///< LAN downstream data failure
+    kTYDeviceCoreKitErrorEmptyDpsData                          = 3002, // DPS command is empty.
+    kTYDeviceCoreKitErrorGroupDeviceListEmpty                  = 3003, // Group device is empty.
+    kTYDeviceCoreKitErrorGroupIdLengthError                    = 3004, // Group ID length error.
+    kTYDeviceCoreKitErrorIllegalDpData                         = 3005, // Illegal dps, see product dp definition.
+    kTYDeviceCoreKitErrorDeviceIdLengthError                   = 3006, // Device ID length error.
+    kTYDeviceCoreKitErrorDeviceLocalKeyNotFound                = 3007, // Missing local key.
+    kTYDeviceCoreKitErrorDeviceProductIDLengthError            = 3008, // Product ID length error.
     
 };
 

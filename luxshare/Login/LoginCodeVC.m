@@ -254,7 +254,7 @@
     jcBtn.enabled = NO;
     [jcBtn startWithSecond:60];
     [jcBtn didChangBlock:^NSString *(CodeButton *countDownButton,int second) {
-        NSString *title = [NSString stringWithFormat:@"%@%dS",QZHLoaclString(@"left"),second];
+        NSString *title = [NSString stringWithFormat:@"%dS",second];
         
         return title;
         

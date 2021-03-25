@@ -1,26 +1,19 @@
 //
-//  TuyaSmartFeedbackItemModel.h
-//  TuyaSmartKit
+// TuyaSmartFeedbackItemModel.h
+// TuyaSmartFeedbackKit
 //
-//  Created by xuyongbo on 2017/9/11.
-//  Copyright © 2017年 Tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc (https://developer.tuya.com)
 
 @interface TuyaSmartFeedbackItemModel : NSObject
 
-/**
- 反馈类型item id
- */
+
+/// The feedback item id.
 @property (nonatomic, strong) NSString      *hdId;
 
-/**
- 反馈类型item类型
- */
+/// The feedback item type.
 @property (nonatomic, assign) NSUInteger    hdType;
 
-/**
- 反馈类型item标题
- */
+/// The feedback item title.
 @property (nonatomic, strong) NSString      *title;
 
 @end

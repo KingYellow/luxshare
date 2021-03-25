@@ -1,9 +1,8 @@
 //
-//  TuyaSmartUser+BleMesh.h
-//  TuyaSmartBLEKit
+// TuyaSmartUser+BleMesh.h
+// TuyaSmartBLEMeshKit
 //
-//  Created by 高森 on 2018/9/4.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <TuyaSmartBaseKit/TuyaSmartUser.h>
 #import "TuyaSmartBleMesh.h"

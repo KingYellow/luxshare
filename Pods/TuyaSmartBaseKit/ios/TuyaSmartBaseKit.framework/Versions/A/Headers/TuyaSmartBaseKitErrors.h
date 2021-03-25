@@ -1,9 +1,8 @@
 //
-//  TuyaSmartBaseKitErrors.h
-//  TuyaSmartBaseKit
+// TuyaSmartBaseKitErrors.h
+// TuyaSmartBaseKit
 //
-//  Created by huangkai on 2020/6/29.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TuyaSmartBaseKitErrors_h
 #define TuyaSmartBaseKitErrors_h
@@ -18,11 +17,16 @@
 extern NSString *const kTYBaseKitErrorDomain;
 
 typedef NS_ENUM(NSInteger, TYBaseKitError) {
-    kTYBaseKitErrorAPIRequestError                       = 2000, // 请求错误
-    kTYBaseKitErrorAPIResponseDataTypeIllegal            = 2001, // 返回数据类型非法
-    kTYBaseKitErrorAPIResponseDataSignInconsistent       = 2002, // 返回的数据 sign 不一致
-    kTYBaseKitErrorAPIResponseDataDecodeError            = 2003, // 返回数据 decode 错误
-    kTYBaseKitErrorNetworkError                          = 2004, // 网络错误
+    /// Request Error.
+    kTYBaseKitErrorAPIRequestError                       = 2000,
+    /// Return data type is illegal.
+    kTYBaseKitErrorAPIResponseDataTypeIllegal            = 2001,
+    /// The returned data sign is inconsistent.
+    kTYBaseKitErrorAPIResponseDataSignInconsistent       = 2002,
+    /// Return data decode error.
+    kTYBaseKitErrorAPIResponseDataDecodeError            = 2003,
+    /// Network Error.
+    kTYBaseKitErrorNetworkError                          = 2004,
     
 };
 

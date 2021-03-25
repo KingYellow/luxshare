@@ -1,9 +1,8 @@
 //
-//  TuyaSmartBleMesh+SIGMesh.h
-//  TuyaSmartBLEMeshKit
+// TuyaSmartBleMesh+SIGMesh.h
+// TuyaSmartBLEMeshKit
 //
-//  Created by 黄凯 on 2019/3/8.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import "TuyaSmartBleMesh.h"
 
@@ -15,18 +14,15 @@ NS_ASSUME_NONNULL_BEGIN
                         success:(void(^)(TuyaSmartBleMeshModel *meshModel))success
                         failure:(TYFailureError)failure;
 
-/**
- 蓝牙设备入网 后绑定 productKey + mac = pid
- 
- @param uuid        蓝牙子设备短地址标识
- @param devKey      设备 key
- @param nodeId      mesh节点id（短地址）
- @param productKey  产品 Key
- @param ver         版本号
- @param mac         设备 mac
- @param success     操作成功回调
- @param failure     操作失败回调
- */
+/// Bluetooth device binding after network access, productKey + mac = pid.
+/// @param uuid Bluetooth sub device short address identification.
+/// @param devKey The device key.
+/// @param nodeId The node ID.
+/// @param productKey The product key.
+/// @param ver Version.
+/// @param mac The device mac.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)addSIGMeshSubDeviceWithUuid:(NSString *)uuid
                              devKey:(NSString *)devKey
                              nodeId:(NSString *)nodeId
@@ -36,21 +32,17 @@ NS_ASSUME_NONNULL_BEGIN
                             success:(void (^)(NSString *devId, NSString *name))success
                             failure:(TYFailureError)failure;
 
-
-/**
-蓝牙设备入网 后绑定 productKey + mac = pid，可兼容配网第三方设备
-
-@param uuid        蓝牙子设备短地址标识
-@param devKey      设备 key
-@param nodeId      mesh节点id（短地址）
-@param productKey  产品 Key
-@param ver         版本号
-@param mac         设备 mac
-@param companyId         SIG Mesh设备对应的公司ID
-@param venderId           第三方设备需要传入，目前支持灯组与开关，如果存在lightless操作，默认传入 “01” ，没有则传入 “02”
-@param success     操作成功回调
-@param failure     操作失败回调
-*/
+/// Bluetooth device binding after network access,  productKey + mac = pid, Compatible with third party equipment of distribution network.
+/// @param uuid Bluetooth sub device short address identification.
+/// @param devKey The device key.
+/// @param nodeId The node ID.
+/// @param productKey The product key.
+/// @param ver Version.
+/// @param mac The device mac.
+/// @param companyId Company ID corresponding to sig mesh device.
+/// @param venderId The third-party device needs to be transferred in. At present, it supports the light group and switch. If lightless operation exists, it will pass in "01" by default, and "02" will be passed in if there is no lightless operation.
+/// @param success  Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)addSIGMeshSubDeviceWithUuid:(NSString *)uuid
                              devKey:(NSString *)devKey
                              nodeId:(NSString *)nodeId
@@ -62,19 +54,15 @@ NS_ASSUME_NONNULL_BEGIN
                             success:(void (^)(NSString *devId, NSString *name))success
                             failure:(TYFailureError)failure;
 
-
-/**
- 蓝牙设备入网 前绑定 pid
- 
- @param uuid        蓝牙子设备短地址标识
- @param devKey      设备 key
- @param nodeId      mesh节点id（短地址）
- @param productId   产品 ID
- @param ver         版本号
- @param mac         设备 mac
- @param success     操作成功回调
- @param failure     操作失败回调
- */
+/// Bind PID to Bluetooth device before network access.
+/// @param uuid Bluetooth sub device short address identification.
+/// @param devKey The device key.
+/// @param nodeId The node ID.
+/// @param productId The product ID.
+/// @param ver Version.
+/// @param mac The device mac.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)addSIGMeshSubDeviceWithUuid:(NSString *)uuid
                              devKey:(NSString *)devKey
                              nodeId:(NSString *)nodeId
@@ -84,20 +72,17 @@ NS_ASSUME_NONNULL_BEGIN
                             success:(void (^)(NSString *devId, NSString *name))success
                             failure:(TYFailureError)failure;
 
-/**
-蓝牙设备入网 前绑定 pid,可兼容配网第三方设备
-
-@param uuid        蓝牙子设备短地址标识
-@param devKey      设备 key
-@param nodeId      mesh节点id（短地址）
-@param productId   产品 ID
-@param ver         版本号
-@param mac         设备 mac
-@param companyId         SIG Mesh设备对应的公司ID
-@param venderId           第三方设备需要传入，目前支持灯组与开关，如果存在lightless操作，默认传入 “01” ，没有则传入 “02”
-@param success     操作成功回调
-@param failure     操作失败回调
-*/
+/// The Bluetooth device is bound with PID before entering the network, which can be compatible with the third-party equipment of distribution network
+/// @param uuid Bluetooth sub device short address identification.
+/// @param devKey The device key.
+/// @param nodeId The node ID.
+/// @param productId The product ID.
+/// @param ver Version.
+/// @param mac The device mac.
+/// @param companyId The company ID.
+/// @param venderId The third-party device needs to be transferred in. At present, it supports the light group and switch. If lightless operation exists, it will pass in "01" by default, and "02" will be passed in if there is no lightless operation.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)addSIGMeshSubDeviceWithUuid:(NSString *)uuid
                              devKey:(NSString *)devKey
                              nodeId:(NSString *)nodeId
@@ -109,42 +94,30 @@ NS_ASSUME_NONNULL_BEGIN
                             success:(void (^)(NSString *devId, NSString *name))success
                             failure:(TYFailureError)failure;
 
-
-/**
- 向云端分配 sig mesh 的 node id, 每次分配 + 0000 0111 = 8
- 
- @param success 操作成功回调
- @param failure 操作失败回调
- */
+/// Assign the node ID of SIG mesh to the cloud, + 0000 0111 = 8 each time.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)getSIGMeshNodeAddressFromServerWithSuccess:(TYSuccessInt)success failure:(TYFailureError)failure;
 
-
-/// 向批量获取sig mesh的node id
-/// @param number 分配的数量
-/// @param success 操作成功回调
-/// @param failure 操作失败回调
+/// Get node ID of SIG mesh in batch
+/// @param number Allocated quantity
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)getMultiNodeAddressFromServerWithNumber:(NSInteger)number success:(TYSuccessList)success failure:(TYFailureError)failure;
 
-/**
- 在网关连接下通过网关移除 sig mesh 子设备
-
- @param gatewayId 网关 id
- @param subDeviceId 子设备 id
- @param success 操作成功回调
- @param failure 操作失败回调
- */
+/// Remove the sig mesh sub device through the gateway under the gateway connection.
+/// @param gatewayId The gateway ID.
+/// @param subDeviceId The sub device ID.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)removeMeshSubDeviceWithGatewayId:(NSString *)gatewayId
                              subDeviceId:(NSString *)subDeviceId
                                  success:(TYSuccessHandler)success
                                  failure:(TYFailureError)failure;
 
-
-/**
- 向云端分配 sig mesh 的终端 source id
- 
- @param success 操作成功回调
- @param failure 操作失败回调
- */
+/// Assign sig mesh terminal source ID to cloud.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)getSIGMeshSourceAddressFromServerWithSuccess:(TYSuccessInt)success
                                              failure:(TYFailureError)failure;
 

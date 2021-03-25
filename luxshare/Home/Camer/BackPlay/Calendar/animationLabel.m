@@ -33,6 +33,7 @@
 
 
 - (void)setChangeStr:(NSString *)changeStr{
+    _changeStr = changeStr;
     QZHWS(weakSelf)
     [UIView animateWithDuration:0.3f animations:^{
         weakSelf.changeLabel.x = self.size.width;
@@ -41,7 +42,8 @@
         weakSelf.changeLabel.alpha = 1;
         weakSelf.changeLabel.x = 0;
         weakSelf.changeLabel.text = changeStr;
-        weakSelf.changeStr = changeStr;
+//        weakSelf.changeStr = changeStr;
     }];
 }
+
 @end

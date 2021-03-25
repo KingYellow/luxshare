@@ -7,7 +7,7 @@
 //
 #import <TuyaSmartFeedbackKit/TuyaSmartFeedbackKit.h>
 #import <TuyaSmartBizCore/TuyaSmartBizCore.h>
-#import <TYModuleServices/TYHelpCenteProtocol.h>
+#import <TYModuleServices/TYHelpCenterProtocol.h>
 #import "MineVC.h"
 #import "MineHeaderCell.h"
 #import "MineDefaultCell.h"
@@ -18,7 +18,6 @@
 
 @interface MineVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic)UITableView *qzTableView;
-
 @property (strong, nonatomic)NSMutableArray *listArr;
 @property (strong, nonatomic)NSMutableArray *logoArr;
 
@@ -153,11 +152,10 @@
         [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
     }
     if (section == 1 && row == 0) {
-
-
-        id<TYHelpCenteProtocol> impl = [[TuyaSmartBizCore sharedInstance] serviceOfProtocol:@protocol(TYHelpCenteProtocol)];
+        id<TYHelpCenterProtocol> impl = [[TuyaSmartBizCore sharedInstance] serviceOfProtocol:@protocol(TYHelpCenterProtocol)];
 
         [impl gotoHelpCenter];
+
 //        TOTAWebVC *vc = [[TOTAWebVC alloc] init];
 //        vc.urlString = @"https://smartapp.tuya.com/tuyasmart/help";
 //        [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
@@ -166,9 +164,11 @@
         HomeManageVC *vc = [[HomeManageVC alloc] init];
         [self.navigationController pushViewController:[vc exp_hiddenTabBar] animated:YES];
     }
+    if (section == 1 && row == 2) {
+    }
 
     if (section == 1 && row == 3) {
-        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"提示" message:@"一周后账号才会永久停用,并删除你账户中的所有信息" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"tip") message:@"一周后账号才会永久停用,并删除你账户中的所有信息" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             [self cancelAccount];
 
@@ -208,4 +208,5 @@
         
     }];
 }
+
 @end

@@ -47,6 +47,8 @@
 @implementation BackPlayVC
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
+
     UIApplication *app = [UIApplication sharedApplication];
     [QZHNotification addObserver:self
     selector:@selector(applicationWillEnterForeground)
@@ -71,6 +73,8 @@
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [UIApplication sharedApplication].idleTimerDisabled = NO;
+
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     if (_backCamera) {
         [self.backCamera stopPlayback];
@@ -684,6 +688,8 @@
     }
     self.connected = NO;
     [self.backCamera disConnect];
+    [self.backCamera stopPlayback];
+
 }
 - (void)applicationWillResignActive{
     if (self.recording) {

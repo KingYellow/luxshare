@@ -1,21 +1,16 @@
 //
-//  TuyaSmartDeviceCoreKit.h
-//  TuyaSmartDeviceCoreKit
+// TuyaSmartDeviceCoreKit.h
+// TuyaSmartDeviceCoreKit
 //
-//  Created by 高森 on 2018/9/3.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TuyaSmartDeviceCoreKit_h
 #define TuyaSmartDeviceCoreKit_h
 
-/**
- *  当前客户端支持的最高的外网通信协议
- */
+/// The highest currently supported extranet communication protocol for clients.
 #define TUYA_CURRENT_GW_PROTOCOL_VERSION 2.2
 
-/**
- *  当前客户端支持的最高的局域网通信协议
- */
+/// Highest currently supported LAN communication protocol for clients.
 #define TUYA_CURRENT_LAN_PROTOCOL_VERSION 3.4
 
 #import <TuyaSmartBaseKit/TuyaSmartBaseKit.h>
@@ -35,5 +30,7 @@
 #import "TYCoreCacheService.h"
 
 #import "TuyaSmartDeviceCoreKitErrors.h"
+
+#import "TuyaSmartDevice+OfflineReminder.h"
 
 #endif /* TuyaSmartDeviceCoreKit_h */

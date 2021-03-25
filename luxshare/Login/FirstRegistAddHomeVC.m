@@ -8,7 +8,7 @@
 
 #import "FirstRegistAddHomeVC.h"
 #import "AddHomeVC.h"
-
+ 
 @interface FirstRegistAddHomeVC ()
 @property (strong, nonatomic)UIButton *submitBtn;
 @property (strong, nonatomic)UIButton *logoutBtn;

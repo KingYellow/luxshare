@@ -1,9 +1,8 @@
 //
-//  TuyaSmartMultiControlDatapointModel.h
-//  TuyaSmartDeviceKit
+// TuyaSmartMultiControlDatapointModel.h
+// TuyaSmartDeviceKit
 //
-//  Created by Misaka on 2020/5/18.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 
@@ -12,9 +11,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TuyaSmartMultiControlDatapointModel : NSObject
 
 @property (copy, nonatomic) NSString *dpId;///< dp id
-@property (copy, nonatomic) NSString *name;///< dp 名称
-@property (copy, nonatomic) NSString *code;///< dp 标准名称（dpCode）
-@property (copy, nonatomic) NSString *schemaId;///< 按键所属的 schema Id
+@property (copy, nonatomic) NSString *name;///< dp name
+@property (copy, nonatomic) NSString *code;///< dp standard name（dpCode）
+@property (copy, nonatomic) NSString *schemaId;///< The schema ID to which the key belongs.
 
 @end
 

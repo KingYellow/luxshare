@@ -1,9 +1,8 @@
 //
-//  TuyaSmartMultiControlParentRuleModel.h
-//  TuyaSmartDeviceKit
+// TuyaSmartMultiControlParentRuleModel.h
+// TuyaSmartDeviceKit
 //
-//  Created by Misaka on 2020/5/18.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 #import "TuyaSmartMultiControlDatapointModel.h"
@@ -13,14 +12,14 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TuyaSmartMultiControlParentRuleDpModel : NSObject
 
 @property (copy, nonatomic) NSString *dpId;///< dp id
-@property (copy, nonatomic) NSString *dpName;///< dp 名称
+@property (copy, nonatomic) NSString *dpName;///< dp name
 
 @end
 
 @interface TuyaSmartMultiControlParentRuleModel : NSObject
 
-@property (copy, nonatomic) NSString *ruleId;///< 自动化 id
-@property (copy, nonatomic) NSString *name;///< 自动化名称
+@property (copy, nonatomic) NSString *ruleId;///< Automation id
+@property (copy, nonatomic) NSString *name;///< Automation name
 
 @property (strong, nonatomic) NSArray<TuyaSmartMultiControlParentRuleDpModel *> *dpList;
 

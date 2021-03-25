@@ -1,9 +1,8 @@
 //
-//  TYLoginRegionModel.h
-//  Bolts
+// TYLoginRegionModel.h
+// TuyaSmartBaseKit
 //
-//  Created by lan on 2019/2/12.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 
@@ -12,19 +11,13 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TYRegionModel : NSObject
 
 
-/**
- region name
- */
+/// Region name.
 @property (nonatomic, strong) NSString *name;
 
-/**
- region code
- */
+/// Region code.
 @property (nonatomic, strong) NSString *region;
 
-/**
- default
- */
+/// Default or not.
 @property (nonatomic, assign) BOOL isDefault;
 
 @end

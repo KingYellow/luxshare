@@ -1,15 +1,14 @@
 //
-//  TuyaSmartBaseKit.h
-//  TuyaSmartBaseKit
+// TuyaSmartBaseKit.h
+// TuyaSmartBaseKit
 //
-//  Created by 高森 on 2019/1/21.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TuyaSmartBaseKit_h
 #define TuyaSmartBaseKit_h
 
 #define TUYA_HOMEKIT_SDK
-#define TUYA_SDK_VERSION @"3.20.1"
+#define TUYA_SDK_VERSION @"3.22.2"
 
 #import <TuyaSmartUtil/TuyaSmartUtil.h>
 

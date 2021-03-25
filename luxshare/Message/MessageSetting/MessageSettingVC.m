@@ -134,7 +134,7 @@
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    //暂时关闭免打扰
+    //暂时关闭免打扰 SDK暂不支持
     if (indexPath.section == 1 && indexPath.row == 1) {
         return 0;
     }

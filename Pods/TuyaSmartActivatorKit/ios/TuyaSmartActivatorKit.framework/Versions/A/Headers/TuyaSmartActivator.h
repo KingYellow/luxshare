@@ -1,32 +1,29 @@
 //
-//  TuyaSmartActivator.h
-//  TuyaSmartKit
+// TuyaSmartActivator.h
+// TuyaSmartActivatorKit
 //
-//  Created by fengyu on 15/8/31.
-//  Copyright (c) 2015年 Tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TuyaSmart_TuyaSmartActivator
 #define TuyaSmart_TuyaSmartActivator
 
 #import <TuyaSmartDeviceKit/TuyaSmartDeviceKit.h>
 
-/// 收到有线配网设备的广播后，会发送此通知。objec为dictionary，@{@"productId":productId, @"gwId":gwId}
-/// Receiving broadcasts from wired config network
+/// This notification is sent after receiving a broadcast from a wired distribution device. Object is dictionary, @{@"productId":productId, @"gwId":gwId}
 extern NSString *const TuyaSmartActivatorNotificationFindGatewayDevice;
 
 typedef enum : NSUInteger {
-    TYActivatorModeEZ,// smart config mode
-    TYActivatorModeAP,// access point mode
-    TYActivatorModeQRCode,// QR Code mode
-    TYActivatorModeWired, // wired mode
+    TYActivatorModeEZ,///< smart config mode
+    TYActivatorModeAP,///< access point mode
+    TYActivatorModeQRCode,///< QR Code mode
+    TYActivatorModeWired, ///< wired mode
 } TYActivatorMode;
 
 typedef enum : NSUInteger {
-    TYActivatorStepFound = 1,// device found
-    TYActivatorStepRegisted = 2,// device registed
-    TYActivatorStepIntialized = 3,// device intialized
-    TYActivatorStepTimeOut = 4, // device config timeout
+    TYActivatorStepFound = 1,///< device found
+    TYActivatorStepRegisted = 2,///< device registered
+    TYActivatorStepIntialized = 3,///< device initialized
+    TYActivatorStepTimeOut = 4, ///< device config timeout
 } TYActivatorStep;
 
 @class TuyaSmartActivator;
@@ -35,233 +32,150 @@ typedef enum : NSUInteger {
 
 @required
 
-/**
- Callback of Config Network Status Update
- 配网状态更新的回调，wifi单品，zigbee网关，zigbee子设备
-
- @param activator   instance
- @param deviceModel deviceModel
- @param error       error
- */
+/// Callback for distribution status update, wifi single product, zigbee gateway, zigbee sub device.
+/// @param activator instance
+/// @param deviceModel deviceModel
+/// @param error error
 - (void)activator:(TuyaSmartActivator *)activator didReceiveDevice:(TuyaSmartDeviceModel *)deviceModel error:(NSError *)error;
 
 @optional
 
-/**
- Callback of Config Network Status Update
- 配网状态更新的回调，wifi单品，zigbee网关，zigbee子设备
-
- @param activator   instance
- @param deviceModel deviceModel
- @param step        activator step
- @param error       error
- */
+/// Callback for distribution status update, wifi single product, zigbee gateway, zigbee sub device.
+/// @param activator instance
+/// @param deviceModel deviceModel
+/// @param step activator step
+/// @param error error
 - (void)activator:(TuyaSmartActivator *)activator didReceiveDevice:(TuyaSmartDeviceModel *)deviceModel step:(TYActivatorStep)step error:(NSError *)error;
 
-/**
- Callback of Config Network Status Update (mesh gateway),deprecated
- 配网状态更新的回调 mesh网关，已经废弃
-
- @param activator   instance
- @param deviceId    devId
- @param meshId      meshId
- @param error       error
- */
+/// Callback for distribution status update mesh gateway, deprecated.
+/// @param activator instance
+/// @param deviceId devId
+/// @param meshId meshId
+/// @param error error
+/// @deprecated This method is deprecated, Use TuyaSmartActivatorDelegate::activator:didReceiveDevice:error: instead `deviceId` is `deviceModel.devId`, `meshId` is `deviceModel.parentId`.
 - (void)meshActivator:(TuyaSmartActivator *)activator didReceiveDeviceId:(NSString *)deviceId meshId:(NSString *)meshId error:(NSError *)error __deprecated_msg("Use -[TuyaSmartActivatorDelegate activator:didReceiveDevice:error:] instead. `deviceId` is `deviceModel.devId`, `meshId` is `deviceModel.parentId`.");
 
 @end
 
 @interface TuyaSmartActivator : NSObject
 
-/**
- Singleton
- 单例
-
- @return instance
- */
+/// Returns a singleton of the class.
 + (instancetype)sharedInstance;
 
-#pragma mark - ssid
+#pragma mark - SSID
 
-/**
- Get the SSID of the current Wi-Fi
- 获取当前 Wi-Fi 的 SSID
- 
- @discussion To use this function in iOS 12 and later, enable the Access WiFi Information capability for your app in Xcode.
- To use this function in iOS 13 and later, must also meet at least one of criteria below:
-    - Apps with permission to access location
-    - Currently enabled VPN app
-    - NEHotspotConfiguration (only Wi-Fi networks that the app configured)
- 
- 从 iOS 12 开始，调用该函数将默认返回 nil，需要在 Xcode 项目中开启「Access WiFi Information」后才会返回正确的值。这个功能需要在开发者页面的 App IDs 中激活才能使用。
- 从 iOS 13 开始，还需要符合下列三项条件中的至少一项：
-    - 获得了定位服务权限的应用；
-    - 目前正处于启用状态的 VPN 应用；
-    - 使用 NEHotspotConfiguration（仅支援通过应用配置的 Wi-Fi 网路）。
- 
- @see https://developer.apple.com/videos/play/wwdc2019/713/
- 
- @return Wi-Fi SSID
- */
+/// Get the SSID of the current Wi-Fi.
+///
+/// Starting with iOS 12, calls to this function will return nil by default, and will only return the correct value if "Access WiFi Information" is enabled in the Xcode project. This function needs to be activated in the App IDs on the developer page in order to use it.
+/// Starting with iOS 13, at least one of the following three conditions must also be met.
+///   - An app that has been granted Location Services permissions.
+///   - A VPN application that is currently enabled.
+///   - Use of NEHotspotConfiguration (only Wi-Fi networks configured through the app are supported).
+///
+/// @see https://developer.apple.com/videos/play/wwdc2019/713/
+///
+/// @return Wi-Fi SSID
 + (NSString *)currentWifiSSID;
 
-/**
- Get the BSSID of the current Wi-Fi
- 获取当前 Wi-Fi 的 BSSID
- 
- @discussion See +[TuyaSmartActivator currentWifiSSID];
- 
- @return Wi-Fi BSSID
- */
+/// Get the BSSID of the current Wi-Fi.
+/// @see TuyaSmartActivator::currentWifiSSID.
+/// @return Wi-Fi BSSID
 + (NSString *)currentWifiBSSID;
 
-/**
- Get the SSID of the current Wi-Fi asynchronous
- 异步获取当前 Wi-Fi 的 SSID
- 
- @discussion See +[TuyaSmartActivator currentWifiSSID];
- 
- @param success Success block
- @param failure Failure block
- */
+/// Get the SSID of the current Wi-Fi asynchronously.
+/// @see TuyaSmartActivator::currentWifiSSID
+/// @param success Called when the task finishes successfully. TYSuccessString will be returned.
+/// @param failure Called when the task is interrupted by an error.
 + (void)getSSID:(TYSuccessString)success
         failure:(TYFailureError)failure;
 
-/**
- Get the BSSID of the current Wi-Fi asynchronous
- 异步获取当前 Wi-Fi 的 BSSID
-
- @discussion See +[TuyaSmartActivator currentWifiBSSID];
-
- @param success Success block
- @param failure Failure block
-*/
+/// Asynchronously get the BSSID of the current Wi-Fi.
+/// @param success Called when the task finishes successfully. TYSuccessString will be returned.
+/// @param failure Called when the task is interrupted by an error.
 + (void)getBSSID:(TYSuccessString)success
          failure:(TYFailureError)failure;
 
-#pragma mark -
+#pragma mark - Delegate
 
 @property (nonatomic, weak) id<TuyaSmartActivatorDelegate> delegate;
 
 #pragma mark - active gateway
 
-/**
- *  To obtain token (valid for 10 minutes)
- *  获取配网Token（有效期10分钟）
- *
- *  @param homeId  Home Id
- *  @param success Success block
- *  @param failure Failure block
- */
+/// Obtain allocation token using home ID (valid for 10 minutes).
+/// @param homeId Home Id
+/// @param success Called when the task finishes successfully. TYSuccessString will be returned.
+/// @param failure Called when the task is interrupted by an error.
 - (void)getTokenWithHomeId:(long long)homeId
                    success:(TYSuccessString)success
                    failure:(TYFailureError)failure;
 
-
-/**
- *  To obtain token with productId  (valid for 10 minutes)
- *  获取配网Token（有效期10分钟）
- *
- *  @param productKey   Product Id
- *  @param homeId       Home Id
- *  @param success      Success block
- *  @param failure      Failure block
- */
+/// Obtain allocation token using product ID (valid for 10 minutes).
+/// @param productKey Product Id
+/// @param homeId Home Id
+/// @param success Called when the task finishes successfully. TYSuccessString will be returned.
+/// @param failure Called when the task is interrupted by an error.
 - (void)getTokenWithProductKey:(NSString *)productKey
                         homeId:(long long)homeId
                        success:(TYSuccessString)success
                        failure:(TYFailureError)failure;
 
-/**
- *  To obtain token with uuid  (valid for 10 minutes)
- *  获取配网Token（有效期10分钟）
- *
- *  @param uuid    Device uuid
- *  @param homeId  Home Id
- *  @param success Success block
- *  @param failure Failure block
- */
+/// Obtain allocation token using UUID (valid for 10 minutes).
+/// @param uuid Device uuid
+/// @param homeId Home Id
+/// @param success Called when the task finishes successfully. TYSuccessString will be returned.
+/// @param failure Called when the task is interrupted by an error.
 - (void)getTokenWithUUID:(NSString *)uuid
                   homeId:(long long)homeId
                  success:(TYSuccessString)success
                  failure:(TYFailureError)failure;
 
-/**
- *  start config (Wireless config)
- *  开始配网 (无线配网)
- *
- *  @param mode     Config mode, EZ or AP
- *  @param ssid     Name of route
- *  @param password Password of route
- *  @param token    Config Token
- *  @param timeout  Timeout, default 100 seconds
- */
+/// Start configuration (Wireless config).
+/// @param mode Config mode, EZ or AP.
+/// @param ssid Name of route.
+/// @param password Password of route.
+/// @param token Config Token.
+/// @param timeout Timeout, default 100 seconds.
 - (void)startConfigWiFi:(TYActivatorMode)mode
                    ssid:(NSString *)ssid
                password:(NSString *)password
                   token:(NSString *)token
                 timeout:(NSTimeInterval)timeout;
 
-/**
- *  start config (Wired config)
- *  开始配网（有线配网）
- *
- *  @param token    Token
- *  @param timeout  Timeout, default 100 seconds
- */
+/// Start configuration (Wired config).
+/// @param token Token
+/// @param timeout Timeout, default 100 seconds.
 - (void)startConfigWiFiWithToken:(NSString *)token timeout:(NSTimeInterval)timeout;
 
-/**
- *  start config with productId (Wired config)
- *  开始配网（有线配网）只去激活一个品类的设备
- *
- *  @param token        Config Token
- *  @param productId    ProductId of device
- *  @param timeout      Timeout, default 100 seconds
- */
+/// Start configuring the network to activate only one category of devices (Wired config).
+/// @param token Config Token.
+/// @param productId ProductId of device.
+/// @param timeout Timeout, default 100 seconds.
 - (void)startConfigWiFiWithToken:(NSString *)token
                        productId:(NSString *)productId
                          timeout:(NSTimeInterval)timeout;
 
-/**
- *  start EZ mode multi-device config
- *  开始EZ模式多设备配网
- *
- *  @param ssid     Name of route 路由器热点名称
- *  @param password Password of route 路由器热点密码
- *  @param token    Config Token 配网 token
- *  @param timeout  Timeout, default 100 seconds
- */
+/// Start EZ mode multi-device configuration network
+/// @param ssid Name of route.
+/// @param password Password of route.
+/// @param token Config Token.
+/// @param timeout Timeout, default 100 seconds.
 - (void)startEZMultiConfigWiFiWithSsid:(NSString *)ssid
                               password:(NSString *)password
                                  token:(NSString *)token
                                timeout:(NSTimeInterval)timeout;
 
-
-/**
- *  停止配网
- *  stop config
- */
+/// Stop configuring the network.
 - (void)stopConfigWiFi;
 
 #pragma mark - active sub device
 
-/**
- *  激活子设备 如 zigbee、Wi-Fi 子设备 ...
- *  active sub device
- *
- *  @param gwId     Gateway Id
- *  @param timeout  Timeout, default 100 seconds
- */
+/// Activate sub-devices e.g. zigbee, Wi-Fi sub-devices.
+/// @param gwId     Gateway Id
+/// @param timeout  Timeout, default 100 seconds
 - (void)activeSubDeviceWithGwId:(NSString *)gwId timeout:(NSTimeInterval)timeout;
 
-
-/**
- *  stop active sub device
- *  停止激活子设备
- *
- *  @param gwId     Gateway Id
- */
+/// Stop activate sub device with gateway ID.
+/// @param gwId Gateway Id
 - (void)stopActiveSubDeviceWithGwId:(NSString *)gwId;
 
 @end

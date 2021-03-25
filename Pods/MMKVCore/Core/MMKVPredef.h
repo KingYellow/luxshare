@@ -23,6 +23,7 @@
 
 // disable encryption & decryption to reduce some code
 //#define MMKV_DISABLE_CRYPT
+//#define MMKV_DISABLE_FLUTTER
 
 // using POSIX implementation
 //#define FORCE_POSIX
@@ -33,7 +34,7 @@
 #include <vector>
 #include <unordered_map>
 
-constexpr auto MMKV_VERSION = "v1.2.4";
+constexpr auto MMKV_VERSION = "v1.2.7";
 
 #ifdef DEBUG
 #    define MMKV_DEBUG
@@ -44,7 +45,11 @@ constexpr auto MMKV_VERSION = "v1.2.4";
 #endif
 
 #ifdef __ANDROID__
-#    define MMKV_ANDROID
+#    ifdef FORCE_POSIX
+#        define MMKV_POSIX
+#    else
+#        define MMKV_ANDROID
+#    endif
 #elif __APPLE__
 #    ifdef FORCE_POSIX
 #        define MMKV_POSIX

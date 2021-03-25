@@ -1,1 +1,1 @@
-../../../TYFoundationKit/TYFoundationKit-1.12.0-rc.5/Headers/Public/NSString+TYBounding.h
+../../../TYFoundationKit/TYFoundationKit-1.14.0-rc.5/Headers/Public/NSString+TYBounding.h

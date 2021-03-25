@@ -99,7 +99,7 @@
    [cell.IMGView addGestureRecognizer:tap];
 
     cell.nameLab.text = [model.creationDate jk_stringWithFormat:@"yyyy-MM-dd"];
-    cell.describeLab.text = [model.creationDate jk_stringWithFormat:@"hh:mm"];
+    cell.describeLab.text = [model.creationDate jk_stringWithFormat:@"HH:mm"];
     cell.logoIMG.image = QZHLoadIcon(@"ic_all_video");
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -154,7 +154,7 @@
             NSString *appname = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
             if ([mm.albumName isEqualToString:appname]) {
                 has = YES;
-                [manager getPhotoListWithAlbumModel:albums.lastObject complete:^(NSArray *allList, NSArray *previewList, NSArray *photoList, NSArray *videoList, NSArray *dateList, HXPhotoModel *firstSelectModel, HXAlbumModel *albumModel) {
+                [manager getPhotoListWithAlbumModel:mm complete:^(NSArray *allList, NSArray *previewList, NSArray *photoList, NSArray *videoList, NSArray *dateList, HXPhotoModel *firstSelectModel, HXAlbumModel *albumModel) {
                 
                     weakSelf.listArr = videoList;
                     [weakSelf.qzTableView reloadData];

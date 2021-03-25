@@ -106,7 +106,12 @@
         
     }else{
         QZHDefaultButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_DEFAULT];
-        cell.nameLab.text = QZHLoaclString(@"member_removeMember");
+        if ([self.memberModel.uid isEqualToString:[TuyaSmartUser sharedInstance].uid]) {
+            cell.nameLab.text = QZHLoaclString(@"member_leaveFamily");
+        }else{
+            cell.nameLab.text = QZHLoaclString(@"member_removeMember");
+        }
+        
         cell.nameLab.textColor = QZHKIT_Color_BLACK_26;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -115,6 +120,9 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+   // self.homeModel 自己在家庭里身份
+    // self.memberModel 查看的人在家庭里身份
+    NSString *uid = [TuyaSmartUser sharedInstance].uid;
     if ([QZHCommons isAdminOrOwner:self.homeModel]) {
         //拥有者
         if (self.homeModel.role == TYHomeRoleType_Owner) {
@@ -128,7 +136,11 @@
         }
     }else{
         //普通
-        return 2;
+        if ([self.memberModel.uid isEqualToString:uid]) {
+            return 3;
+        }else{
+            return 2;
+        }
     }
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

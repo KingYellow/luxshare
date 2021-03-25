@@ -1,9 +1,8 @@
 //
-//  TuyaSpeechService.h
-//  TuyaSmartBaseKit-iOS
+// TuyaSpeechService.h
+// TuyaSmartBaseKit
 //
-//  Created by Kennaki Kai on 2019/6/13.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 
@@ -11,17 +10,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TuyaSmartSpeechService : NSObject
 
-/**
- audio data convert to text
- 音频转为文字
 
- @param audioData   audio data
- @param audioRate   audio rate
- @param audioType   audio type
- @param homeId      home id
- @param success     Success block (audio text)
- @param failure     Failure block
- */
+/// Audio to text.
+/// @param audioData Audio data.
+/// @param audioRate Audio rate.
+/// @param audioType Audio type.
+/// @param homeId Home id.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)convertToTextWithAudioData:(NSData *)audioData
                          audioRate:(NSString *)audioRate
                          audioType:(NSString *)audioType
@@ -29,15 +25,12 @@ NS_ASSUME_NONNULL_BEGIN
                            success:(nullable TYSuccessString)success
                            failure:(nullable TYFailureError)failure;
 
-/**
- execute voice command
- 执行音频命令
- 
- @param speechText  Voice text
- @param homeId      home id
- @param success     Success block (dictionary contains command result and if need to keep session)
- @param failure     Failure block
- */
+
+/// Execute audio commands.
+/// @param speechText Voice text
+/// @param homeId Home id
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)executeCommandWithSpeechText:(NSString *)speechText
                               homeId:(long long)homeId
                              success:(nullable TYSuccessDict)success

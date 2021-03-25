@@ -28,7 +28,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self initConfig];
     [self circleShow];
     [self startConfigWiFi:self.wifi password:self.pw token:self.token];

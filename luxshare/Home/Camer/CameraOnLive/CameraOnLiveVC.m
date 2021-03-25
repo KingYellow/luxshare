@@ -11,6 +11,7 @@
 #import "CameraTBtnCell.h"
 #import "CameraThreeBtnCell.h"
 #import "OnLiveCell.h"
+#import "PTZDirectionCell.h"
 #import "ZYGlKImageView.h"
 #import "DeviceSettingVC.h"
 #import "CameraPlayView.h"
@@ -56,12 +57,17 @@
 @property (assign, nonatomic)BOOL isAwake;
 @property (strong, nonatomic)MBProgressHUD *talkHud;
 @property (assign, nonatomic)int awakingCount;
+@property (strong, nonatomic)NSTimer *timer;
+@property (strong, nonatomic)NSTimer *directionTimer;
+
 @end
 
 @implementation CameraOnLiveVC
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     UIApplication *app = [UIApplication sharedApplication];
+    [self keepIdleTimerDisabled];
+
     [QZHNotification addObserver:self
     selector:@selector(applicationWillEnterForeground)
                                                  name:UIApplicationDidBecomeActiveNotification
@@ -94,9 +100,11 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [UIApplication sharedApplication].idleTimerDisabled = NO;
+//    [[UIApplication sharedApplication] removeObserver:self forKeyPath:@"idleTimerDisabled"];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     if (_camera) {
-        [self.talkHud hide:YES];
+        [self.talkHud hideAnimated:YES];
         [self cameraStopPreview];
         self.camera.delegate = nil;
         self.device.delegate = nil;
@@ -106,11 +114,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = QZHKIT_COLOR_LEADBACK;
-   
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
     self.awakingCount = 0;
     [self UIConfig];
     [self setConfigs];
-    [self.camera getHD];
+    [self.camera getDefinition];
+    if ([QZHDeviceStatus deviceType:self.deviceModel] != IPCamPTZDevice) {
+        self.playView.camerGestureView.hidden = YES;
+    }
     self.isMuted = YES;
     self.dpManager = [[TuyaSmartCameraDPManager alloc] initWithDeviceId:self.deviceModel.devId];
     self.device = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId];
@@ -157,6 +168,11 @@
     if (self.recording) {
         [self.camera stopRecord];
     }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.camera destory];
+
+    });
+
     if (self.isDoorbellCall) {
         [self stopTalkTimer];
 
@@ -180,8 +196,7 @@
         return;
     }
     
-    [self disconnectCamera];
-    self.connected = NO;
+    [self cameraStopPreview];
     DeviceSettingVC *vc = [[DeviceSettingVC alloc] init];
     vc.deviceModel = self.deviceModel;
     vc.homeModel = self.homeModel;
@@ -213,9 +228,9 @@
 }
 #pragma mark -- 连接摄像机
 - (void)connectCamera{
-    if (self.camera) {
-        [self.camera.videoView tuya_clear];
-    }
+//    if (self.camera) {
+//        [self.camera.videoView tuya_clear];
+//    }
     [self startPlayGif];
     QZHWS(weakSelf)
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -227,15 +242,17 @@
 }
 #pragma mark -- 断开连接摄像机
 - (void)disconnectCamera{
-    QZHWS(weakSelf)
-    if (self.camera) {
-        [self.camera.videoView tuya_clear];
-    }
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        [weakSelf.camera disConnect];
+//    QZHWS(weakSelf)
+//    if (self.camera) {
+//        [self.camera.videoView tuya_clear];
+//    }
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//
+//        [weakSelf.camera disConnect];
+//
+//    });
 
-    });
+    [self.camera disConnect];
     
 }
 #pragma mark -- 开始播放视频
@@ -263,7 +280,7 @@
 - (void)startPrivateModel{
     [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"privateModelStart") afterDelay:1.0];
     [self cameraStopPreview];
-    [self disconnectCamera];
+//    [self disconnectCamera];
     self.privateView.hidden = !self.private;
     [self.qzTableView reloadData];
 }
@@ -297,6 +314,8 @@
         [self.qzTableView registerClass:[OnLiveCell class] forCellReuseIdentifier:QZHCELL_REUSE_FIELD];
 
         [self.qzTableView registerClass:[CameraListCell class] forCellReuseIdentifier:QZHCELL_REUSE_DEFAULT];
+        [self.qzTableView registerClass:[PTZDirectionCell class] forCellReuseIdentifier:QZHCELL_REUSE_Direction];
+
     }
     return _qzTableView;
 }
@@ -305,7 +324,7 @@
     QZHWS(weakSelf)
     if (row == 0) {
         
-        if ([self.deviceModel.productId isEqualToString:AC_PRODUCT_ID]) {
+        if (![QZHDeviceStatus deviceIsBattery:self.deviceModel]) {
             return [UITableViewCell new];
         }
         CameraTBtnCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
@@ -363,13 +382,60 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else if (row == 3) {
-        CameraListCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_DEFAULT];
-        cell.nameLab.text = QZHLoaclString(@"photoManage");
-        cell.IMGView.image = QZHLoadIcon(@"ic_all_doc");
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        if ([QZHDeviceStatus deviceType:self.deviceModel] == IPCamPTZDevice) {
+            PTZDirectionCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_Direction];
+            QZHWS(weakSelf)
+            cell.direblock = ^(NSInteger directionTag) {
+                if (directionTag == 8) {
+                    if ([weakSelf.dpManager isSupportDP:TuyaSmartCameraPTZStopDPName]) {
+                        [weakSelf.dpManager setValue:@(YES) forDP:TuyaSmartCameraPTZStopDPName success:^(id result) {
+                            // 设备停止转动
+                        } failure:^(NSError *error) {
+                            // 网络错误
+                        }];
+                    }
+                    
+                }else if(directionTag == 40000){
+                    [weakSelf stopDirectionTimer];
+                } else{
+                    if (self.directionTimer) {
+                        return;
+                    }
+                    self.directionTimer = [NSTimer timerWithTimeInterval:0.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
+                            NSString *dir = [NSString stringWithFormat:@"%ld",(long)directionTag];
+                            NSDictionary  *dps = @{@"119": dir};
+                        
+                          [weakSelf.device publishDps:dps success:^{
 
-        return cell;
-    }else if(row == 4){
+                          } failure:^(NSError *error) {
+
+                              [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:1.0];
+                          }];
+                        
+                    }];
+                    
+                    [[NSRunLoop currentRunLoop] addTimer:self.directionTimer
+                                                 forMode:NSRunLoopCommonModes];
+                   
+                }
+            };
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+
+        }else{
+                return [UITableViewCell new];
+        }
+            
+    }else if (row == 4) {
+            CameraListCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_DEFAULT];
+            cell.nameLab.text = QZHLoaclString(@"photoManage");
+            cell.IMGView.image = QZHLoadIcon(@"ic_all_doc");
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+            return cell;
+
+    }else if(row == 5){
         CameraListCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_DEFAULT];
         cell.nameLab.text = QZHLoaclString(@"playBack");
         cell.IMGView.image = QZHLoadIcon(@"ic_all_safety");
@@ -394,15 +460,15 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
- 
 }
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if ([QZHDeviceStatus deviceIsBattery:self.deviceModel]) {
-        return  5;;
-    }
+//    if ([QZHDeviceStatus deviceIsBattery:self.deviceModel]) {
+//        return  6;;
+//    }
     return 6;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -421,16 +487,25 @@
     if (row == 2) {
         return 90 * QZHScaleWidth;
     }
+    if (row == 3) {
+        if ([QZHDeviceStatus deviceType:self.deviceModel] == IPCamPTZDevice) {
+            return 180 * QZHScaleWidth;
+        }
+        return 0;
+    }
     if (row == 0) {
-        if ([self.deviceModel.productId isEqualToString:AC_PRODUCT_ID]) {
+        if ([QZHDeviceStatus deviceIsBattery:self.deviceModel]) {
+            return 70;
+        }else{
             return 0;
         }
     }
     return 70;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if (indexPath.row == 0 || indexPath.row == 1|| indexPath.row == 2) {
+        
+    if (indexPath.row == 0 || indexPath.row == 1|| indexPath.row == 2 || indexPath.row == 3) {
+
         return;
     }
     
@@ -443,17 +518,12 @@
         return;
     }
     NSInteger row = indexPath.row;
-    if (row == 3) {
-        [self disconnectCamera];
-        self.connected = NO;
+    if (row == 4) {
+        [self cameraStopPreview];
         PhotosVC *vc = [[PhotosVC alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
-    if (row == 4) {
-//        if ([[self.dpManager valueForDP:TuyaSmartCameraSDCardStatusDPName] intValue] == 5) {
-//            [[QZHHUD HUD] textHUDWithMessage:@"该设备没有存储卡不能回放" afterDelay:1.0];
-//
-//        }else{
+    if (row == 5) {
 
         BackPlayVC *vc = [[BackPlayVC alloc] init];
         vc.deviceModel = self.deviceModel;
@@ -463,9 +533,8 @@
             vc.backCamera = self.camera;
         }
         [self.navigationController pushViewController:vc animated:YES];
-//        }
     }
-    if (row == 5) {
+    if (row == 6) {
 
         bool b = [self.deviceModel.dps[@"235"] boolValue] ?NO:YES;
 
@@ -505,9 +574,11 @@
             self.playView.wifiIMG.hidden = NO;
             self.playView.batteryIMG.hidden = NO;
     }
-    [self cameraStartPreview];
+    [camera startPreview];
+//    [self cameraStartPreview];
 
 }
+
 - (void)cameraDisconnected:(id<TuyaSmartCameraType>)camera{
       // p2p 连接被动断开，一般为网络波动导致
     self.connected = NO;
@@ -517,10 +588,8 @@
             return;
         }
     }
-
     [self stopPlayGif];
     [self connectCamera];
-    
 }
 - (void)cameraDidStartRecord:(id<TuyaSmartCameraType>)camera{
     [self startRecordTimer];
@@ -583,7 +652,7 @@
 
 }
 - (void)camera:(id<TuyaSmartCameraType>)camera didOccurredErrorAtStep:(TYCameraErrorCode)errStepCode specificErrorCode:(NSInteger)errorCode{
-    [self.talkHud hide:YES];
+    [self.talkHud hideAnimated:YES];
      if (errStepCode == TY_ERROR_CONNECT_FAILED) {
          [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"connectOnceAgain") afterDelay:1.0];
           // p2p 连接失败
@@ -597,9 +666,9 @@
                  }
              }
          }
-         [self connectCamera];
+         [self creatP2PConnectChannel];
     }else if (errStepCode == TY_ERROR_START_PREVIEW_FAILED) {
-        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"preViewFialed") afterDelay:1.0];
+//        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"preViewFialed") afterDelay:1.0];
           // 实时视频播放失败
         self.previewing = NO;
         if ([QZHDeviceStatus deviceIsBattery:self.deviceModel]) {
@@ -607,7 +676,7 @@
                 return;
             }
         }
-        [self connectCamera];
+        [self creatP2PConnectChannel];
     }else
     
     if (errStepCode == TY_ERROR_START_TALK_FAILED) {
@@ -687,7 +756,7 @@
 
 - (void)device:(TuyaSmartDevice *)device dpsUpdate:(NSDictionary *)dps{
     if ([dps jk_hasKey:@"235"]) {
-        CameraListCell *cell = [self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:5 inSection:0]];
+        CameraListCell *cell = [self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:6 inSection:0]];
         
         if ([dps[@"235"] boolValue]) {
             cell.nameLab.text = [NSString stringWithFormat:@"    %@",QZHLoaclString(@"stopPlayLullaby")];
@@ -969,18 +1038,38 @@
     if (self.recording) {
         return;
     }
-    [self.camera enableHD:!self.HD];
+    if (self.HD) {
+        [self.camera setDefinition:TuyaSmartCameraDefinitionStandard];
+    }else{
+        [self.camera setDefinition:TuyaSmartCameraDefinitionHigh];
+    }
+//    [self.camera enableHD:!self.HD];
 }
 
 // 视频分辨率改变的代理方法，实时视频直播或者录像回放刚开始时也会调用
 - (void)camera:(id<TuyaSmartCameraType>)camera resolutionDidChangeWidth:(NSInteger)width height:(NSInteger)height {
         // 获取当前的清晰度
-    [self.camera getHD];
+    [self.camera getDefinition];
 }
 
-// 清晰度状态代理方法
-- (void)camera:(id<TuyaSmartCameraType>)camera didReceiveDefinitionState:(BOOL)isHd {
-    self.HD = isHd;
+//// 清晰度状态代理方法
+//- (void)camera:(id<TuyaSmartCameraType>)camera didReceiveDefinitionState:(BOOL)isHd {
+//    self.HD = isHd;
+//    if (self.HD) {
+//        [self.playView.definitionBtn setTitle:QZHLoaclString(@"HD") forState:UIControlStateNormal];
+//    }else{
+//        [self.playView.definitionBtn setTitle:QZHLoaclString(@"SD") forState:UIControlStateNormal];
+//
+//    }
+//}
+-(void)camera:(id<TuyaSmartCameraType>)camera definitionChanged:(TuyaSmartCameraDefinition)definition{
+    if (definition == TuyaSmartCameraDefinitionHigh) {
+        //标清
+        self.HD = YES;
+    }else{
+        self.HD = NO;
+        
+    }
     if (self.HD) {
         [self.playView.definitionBtn setTitle:QZHLoaclString(@"HD") forState:UIControlStateNormal];
     }else{
@@ -1101,7 +1190,45 @@
         id traget = self.navigationController.interactivePopGestureRecognizer.delegate;
         UIPanGestureRecognizer * pan = [[UIPanGestureRecognizer alloc]initWithTarget:traget action:nil];
         [_playView addGestureRecognizer:pan];
+        _playView.camerGestureView.scaGestureBolok = ^(CGFloat sca) {
+            [weakSelf.camera.videoView tuya_setScaled:sca];
+        };
 
+        _playView.camerGestureView.panGestureBolok = ^(CGFloat gestureX, CGFloat gestureY, CGFloat scale, BOOL end) {
+            if (scale == 1) {
+                if (end) {
+                    [weakSelf stopDirectionTimer];
+                }else{
+                    long directionTag = 8;
+                    if (gestureX == 6) {
+                        directionTag = 6;
+                    }
+                    if (gestureX == 2) {
+                        directionTag = 2;
+                    }
+                    if (gestureY == 0) {
+                        directionTag = 0;
+                    }
+                    if (gestureY == 4) {
+                        directionTag = 4;
+                    }
+                    
+                    NSString *dir = [NSString stringWithFormat:@"%ld",(long)directionTag];
+                    NSDictionary  *dps = @{@"119": dir};
+                    
+                    [weakSelf.device publishDps:dps success:^{
+
+                    } failure:^(NSError *error) {
+
+                        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:1.0];
+                    }];
+                                            
+                }
+            }else{
+                [weakSelf.camera.videoView tuya_setOffset:CGPointMake(gestureX, gestureY)];
+            }
+
+        };
         _playView.buttonBlock = ^(UIButton *sender, BOOL selected) {
             if (weakSelf.private) {
                 [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"unableOpeateWhenPrivate") afterDelay:1.0];
@@ -1115,14 +1242,15 @@
                 [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"recordingCantOperate") afterDelay:1.0];
                 return;
             }
-            if ((weakSelf.recording || weakSelf.talking) && sender.tag == 3) {
-                if (weakSelf.isHor) {
-                    [MBProgressHUD showError:QZHLoaclString(@"stopRecordOrTalk") toView:weakSelf.playView];
-                }else{
-                    [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"stopRecordOrTalk") afterDelay:1.0];
-                }
-                return;
-            }
+            //语音通话中或者录屏时  不让切换横屏
+//            if ((weakSelf.recording || weakSelf.talking) && sender.tag == 3) {
+//                if (weakSelf.isHor) {
+//                    [MBProgressHUD showError:QZHLoaclString(@"stopRecordOrTalk") toView:weakSelf.playView];
+//                }else{
+//                    [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"stopRecordOrTalk") afterDelay:1.0];
+//                }
+//                return;
+//            }
             if (sender.tag > 100) {
                 [weakSelf videoHandle:sender isselected:sender.selected];
             }else{
@@ -1167,6 +1295,7 @@
             make.bottom.mas_equalTo(weakSelf.isHor?-60:-15);
         }];
     }
+    
     self.talkTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(talkTimerAction:) userInfo:nil repeats:YES];
 }
 - (void)stopRecordTimer{
@@ -1255,10 +1384,14 @@
 }
 #pragma mark  -- 系统消息
 - (void)applicationWillEnterForeground{
+    if (self.timer) {
+        [self.timer invalidate];
+        self.timer = nil;
+    }
     if (self.connected) {
         [self.camera startPreview];
     }else{
-        [self connectCamera];
+        [self creatP2PConnectChannel];
     }
 }
 - (void)applicationWillEnterBackground{
@@ -1275,18 +1408,26 @@
             
         }
 
-
         [self cameraStopPreview];
-        [self disconnectCamera];
-        self.connected = NO;
+        // 创建定时器
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(disConnectCamerTimerAction) userInfo:nil repeats:NO];
+        // 停止定时器
+
     }
 }
+- (void)disConnectCamerTimerAction{
+    self.connected = NO;
+    [self disconnectCamera];
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
 - (void)applicationWillResignActive{
     if (self.recording) {
         CameraThreeBtnCell *cell = (CameraThreeBtnCell *)[self.qzTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
         [self videoHandle:cell.leftBtn isselected:cell.leftBtn.selected];
-        
     }
+    
     [self.camera stopPreview];
 }
 ////获取焦点
@@ -1303,6 +1444,7 @@
         [self.camera stopTalk];
         self.talkBtn.selected = NO;
     }
+    
 }
 - (BOOL)prefersStatusBarHidden{
 
@@ -1337,4 +1479,35 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+- (void)keepIdleTimerDisabled {
+    [[UIApplication sharedApplication] setIdleTimerDisabled: YES];
+//    [[UIApplication sharedApplication] addObserver:self forKeyPath:@"idleTimerDisabled" options:NSKeyValueObservingOptionNew context:nil];
+}
+//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+//    if (![UIApplication sharedApplication].idleTimerDisabled) {
+//        [UIApplication sharedApplication].idleTimerDisabled = YES;
+//    }
+//}
+
+- (void)stopDirectionTimer{
+    QZHWS(weakSelf)
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (weakSelf.directionTimer) {
+            [weakSelf.directionTimer invalidate];
+        }
+        weakSelf.directionTimer = nil;
+        
+    });
+
+}
+
+- (void)dealloc{
+    if (self.directionTimer) {
+        [self.directionTimer invalidate];
+        self.directionTimer = nil;
+    }
+    NSLog(@"camerplay释放了释放了释放了释放了释放了");
+}
 @end
+ 

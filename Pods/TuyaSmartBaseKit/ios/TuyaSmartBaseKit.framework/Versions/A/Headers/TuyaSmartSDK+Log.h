@@ -1,9 +1,8 @@
 //
-//  TuyaSmartSDK+Log.h
-//  TuyaSmartBaseKit
+// TuyaSmartSDK+Log.h
+// TuyaSmartBaseKit
 //
-//  Created by 高森 on 2019/8/14.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import "TuyaSmartSDK.h"
 
@@ -32,7 +31,6 @@ void TYSDKLog(NSInteger level, NSString *module, const char *file, const char *f
 @interface TuyaSmartSDK (Log)
 
 /// Debug mode
-/// 调试模式
 @property (nonatomic, assign) BOOL debugMode;
 
 @end

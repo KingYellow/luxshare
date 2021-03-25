@@ -87,19 +87,8 @@
     NSDictionary *dps = @{@"139":@(self.voiceON),@"134":@(self.motionON)};
     self.timer = [[TuyaSmartTimer alloc] init];
     if (self.timerModel) {
-        [self.timer updateTimerWithTask:QZHTUYATIMERALARM loops:loop devId:self.deviceModel.devId timerId:self.timerModel.timerId time:self.selectTime dps:dps timeZone:@"+08:00" isAppPush:self.noticeON aliasName:self.remarkText success:^{
-            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                weakSelf.refresh();
-                [weakSelf.navigationController popViewControllerAnimated:YES];
-                
-            });
-        } failure:^(NSError *error) {
-            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
-
-        }];
-    }else{
-        [self.timer addTimerWithTask:QZHTUYATIMERALARM loops:loop devId:self.deviceModel.devId time:self.selectTime dps:dps timeZone:@"+08:00" isAppPush:self.noticeON aliasName:self.remarkText success:^{
+        [self.timer updateTimerWithTimerId:self.timerModel.timerId loops:loop bizId:self.deviceModel.devId bizType:0 time:self.selectTime dps:dps status:YES isAppPush:self.noticeON aliasName:self.remarkText success:^{
+                    
             [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 weakSelf.refresh();
@@ -108,8 +97,36 @@
             });
             
         } failure:^(NSError *error) {
-               [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+            
+            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:1.0];
+                    
         }];
+//
+//        [self.timer updateTimerWithTask:QZHTUYATIMERALARM loops:loop devId:self.deviceModel.devId timerId:self.timerModel.timerId time:self.selectTime dps:dps timeZone:@"+08:00" isAppPush:self.noticeON aliasName:self.remarkText success:^{
+//            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                weakSelf.refresh();
+//                [weakSelf.navigationController popViewControllerAnimated:YES];
+//
+//            });
+//        } failure:^(NSError *error) {
+//
+//            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+//
+//        }];
+    }else{
+        [self.timer addTimerWithTask:QZHTUYATIMERALARM loops:loop bizId:self.deviceModel.devId bizType:0 time:self.selectTime dps:dps status:YES isAppPush:self.noticeON aliasName:self.remarkText success:^{
+            [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"handleSuccess") afterDelay:0.5];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                weakSelf.refresh();
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+                
+            });
+        } failure:^(NSError *error) {
+                 
+            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:1.0];
+        }];
+
     }
 }
 #pragma mark -tableView

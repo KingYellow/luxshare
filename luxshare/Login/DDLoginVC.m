@@ -215,9 +215,11 @@
        [self.submitBtn exp_buttonState:QZHButtonStateEnable];
 
     }else if (QZHEMAILRIGHT(self.phoneText.text) && self.passwordText.text.length > 0){
+        
         [self.submitBtn exp_buttonState:QZHButtonStateEnable];
 
     }else{
+        
         [self.submitBtn exp_buttonState:QZHButtonStateDisEnable];
     }
 
@@ -231,10 +233,11 @@
             //登录接口请求成功后
             [self getHomeList];
 
-
         } failure:^(NSError *error) {
+            
             [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
         }];
+        
     }else{
         
         [[TuyaSmartUser sharedInstance] loginByEmail:self.countryModel.code email:self.phoneText.text password:self.passwordText.text success:^{

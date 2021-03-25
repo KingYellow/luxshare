@@ -1,1 +1,1 @@
-../../../TYModuleManager/TYModuleManager-2.10.1.10-rc.1/Headers/Public/TYModuleLifeCycleCallbackProtocol.h
+../../../TYModuleManager/TYModuleManager-2.10.2-rc.1/Headers/Public/TYModuleLifeCycleCallbackProtocol.h

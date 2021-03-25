@@ -87,7 +87,7 @@
         if (row == 2) {
 
              PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
-             cell.nameLab.text = QZHLoaclString(@"setting_alarmSensitivity");
+             cell.nameLab.text = QZHLoaclString(@"setting_motionDetectionSensitivity");
              int state = [[self.dpManager valueForDP:TuyaSmartCameraMotionSensitivityDPName] intValue];
 
              if (state == 0) {
@@ -102,9 +102,8 @@
             if ([self.deviceModel.dps[@"134"] boolValue]) {
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }else{
-                cell.accessoryType = UITableViewCellAccessoryNone;
-                cell.describeLab.text = @"";
-                cell.nameLab.text = @"";
+                //关闭人形侦测时候 隐藏报警灵敏度
+                return [UITableViewCell new];
             }
              cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
@@ -115,15 +114,20 @@
             [cell.nameLab mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.left.mas_equalTo(15);
             }];
-            if (row == 0) {
-                cell.nameLab.text = QZHLoaclString(@"setting_decrteAlarmSwitch");
-                cell.switchBtn.on = [self.deviceModel.dps[@"170"] boolValue];
-                cell.switchBtn.hidden = YES;
-                cell.switchBtn.tag = 0;
-            }else{
+            if (row == 1) {
                 cell.nameLab.text = QZHLoaclString(@"setting_personFilter");
+                if ([self.deviceModel.dps[@"134"] boolValue]) {
+                    cell.switchBtn.on = [self.deviceModel.dps[@"170"] boolValue];
+                    cell.switchBtn.tag = 1;
+
+                }else{
+                    //关闭人形侦测时候 隐藏报警灵敏度
+                    return [UITableViewCell new];
+                }
+            }else{
+                cell.nameLab.text = QZHLoaclString(@"setting_decrteAlarmSwitch");
                 cell.switchBtn.on = [self.deviceModel.dps[@"134"] boolValue];
-                cell.switchBtn.tag = 1;
+                cell.switchBtn.tag = 0;
             }
 
             cell.contentView.backgroundColor = QZHColorWhite;
@@ -320,8 +324,9 @@
             return 1;
         }
     }else if(section == 4){
-       
-        return 1;
+       //暂时隐藏提示音
+        return 0;
+//        return 1;
     }else{
         return 2;
     }
@@ -330,10 +335,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
-    if (section == 0 && row == 0) {
-        return 0;
-    }
-    if (section == 0 && row == 2) {
+
+    if ((section == 0 && row == 2) || (section == 0 && row == 1)) {
         if ([self.deviceModel.dps[@"134"] boolValue]) {
             return 50;
         }else{
@@ -347,6 +350,10 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 2) {
+        return 0;
+    }
+    if (section == 4) {
+        //暂时隐藏提示音
         return 0;
     }
      return 50;
@@ -464,7 +471,7 @@
         return;
     }
     QZHWS(weakSelf)
-    if (sender.tag == 0) {
+    if (sender.tag == 1) {
         
         NSDictionary  *dps = @{@"170": @(sender.on)};
           [self.device publishDps:dps success:^{
@@ -481,7 +488,7 @@
 //            sender.on = !sender.on;
 //        }];
     }
-    if (sender.tag == 1) {
+    if (sender.tag == 0) {
         NSDictionary  *dps = @{@"134": @(sender.on)};
           [self.device publishDps:dps success:^{
 

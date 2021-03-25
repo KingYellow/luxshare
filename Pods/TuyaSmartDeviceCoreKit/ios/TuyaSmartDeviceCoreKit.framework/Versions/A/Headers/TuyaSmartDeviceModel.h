@@ -1,10 +1,8 @@
 //
-//  TuysSmartDeviceModel.h
-//  TuyaSmartKit
+// TuyaSmartDeviceModel.h
+// TuyaSmartDeviceCoreKit
 //
-//  Created by fengyu on 15/9/12.
-//  Copyright (c) 2015年 Tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TuyaSmart_TuyaSmartDeviceModel
 #define TuyaSmart_TuyaSmartDeviceModel
@@ -45,89 +43,88 @@ typedef enum : NSUInteger {
 
 @interface TuyaSmartDeviceModel : NSObject
 
-// device Id
+/// device Id
 @property (nonatomic, strong) NSString     *devId;
 
-// name of device
+/// name of device
 @property (nonatomic, strong) NSString     *name;
 
-// link of device icon
+/// link of device icon
 @property (nonatomic, strong) NSString     *iconUrl;
 
-// ability of device
+/// ability of device
 @property (nonatomic, assign) NSInteger    ability;
 
-// online of device
+/// online of device
 @property (nonatomic, assign) BOOL         isOnline;
 
-// cloud online of device
+/// cloud online of device
 @property (nonatomic, assign) BOOL         isCloudOnline;
 
-// whether the device is shared
+/// whether the device is shared
 @property (nonatomic, assign) BOOL         isShare;
 
-//
 @property (nonatomic, strong) NSString     *verSw;
 
-// data point of device
+/// data point of device
 @property (nonatomic, strong) NSDictionary *dps;
 
-// data point execution time of device
+/// data point execution time of device
 @property (nonatomic, strong) NSDictionary *dpsTime;
 
-// product Id
+/// product Id
 @property (nonatomic, strong) NSString     *productId;
 
-// whether to support group
+/// whether to support group
 @property (nonatomic, assign) BOOL         supportGroup;
 
-// whether to support standard group
+/// whether to support standard group
 @property (nonatomic, assign) BOOL         supportSGroup;
 
-// type of gateway
+/// type of gateway
 @property (nonatomic, strong) NSString     *gwType;
 
-// protocol version of gateway
+/// protocol version of gateway
 @property (nonatomic, assign) double       pv;
 
 #if TARGET_OS_IOS
 
-// online status of LAN
+/// online status of LAN
 @property (nonatomic, assign) BOOL         isLocalOnline;
 
-// gateway protocol version of LAN
+/// gateway protocol version of LAN
 @property (nonatomic, assign) double       lpv;
 
 #endif
 
-// hardware baseline version
+/// hardware baseline version
 @property (nonatomic, assign) double       bv;
 
-// lat, lon
+/// lat, lon
 @property (nonatomic, strong) NSString     *latitude;
 @property (nonatomic, strong) NSString     *longitude;
 
-// dp name
+/// dp name
 @property (nonatomic, strong) NSDictionary *dpName;
 
-// schema of device
+/// schema of device
 @property (nonatomic, strong) NSString     *schema;
 @property (nonatomic, strong) NSString     *schemaExt;
 @property (nonatomic, strong) NSArray<TuyaSmartSchemaModel *> *schemaArray;
 
 @property (nonatomic, strong) NSString     *runtimeEnv;
 
-// attribute
+/// attribute
 @property (nonatomic, assign) NSUInteger    attribute;
 
 @property (nonatomic, strong) NSString     *localKey;
 
 @property (nonatomic, strong) NSString     *uuid;
 
-/// 设备主模块MAC地址 Media Access Control Address
+/// Media Access Control Address
 @property (nonatomic, strong) NSString *mac;
 
-// The network communication ability:0.wifi;1.cable;2.gprs;3.nb-iot; 10:bluetooth;11.blemesh;12.zigbee
+/// The network communication ability:0.wifi;1.cable;2.gprs;3.nb-iot; 10:bluetooth;11.blemesh;12.zigbee.
 @property (nonatomic, assign) NSUInteger   capability;
 
 @property (nonatomic, strong) NSString     *timezoneId;
@@ -136,13 +133,13 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) long long    roomId;
 @property (nonatomic, assign) long long    sharedTime;
 
-// order
+/// order
 @property (nonatomic, assign) NSInteger    displayOrder;
 @property (nonatomic, assign) NSInteger    homeDisplayOrder;
 
 @property (nonatomic, strong) NSString     *ip;
 
-// skills
+/// skills
 @property (nonatomic, strong) NSDictionary *skills;
 
 @property (nonatomic, strong) NSString     *cloudId;
@@ -178,6 +175,10 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, strong) TuyaSmartDeviceModuleModel *moduleMap;
 
+@property (nonatomic, assign) NSUInteger    bizAttribute;
+
+@property (nonatomic, strong) NSDictionary *meta;
+
 - (BOOL)attributeIsSupport:(NSUInteger)i;
 - (BOOL)capabilityIsSupport:(NSUInteger)i;
 - (BOOL)devAttributeIsSupport:(NSUInteger)i;
@@ -185,33 +186,33 @@ typedef enum : NSUInteger {
 - (BOOL)protocolAttributeIsSupport:(NSUInteger)i;
 
 #pragma mark - subdevice
-// node Id
+/// node Id
 @property (nonatomic, strong) NSString     *nodeId;
 @property (nonatomic, strong) NSString     *parentId;
 
-// mesh
+/// mesh
 @property (nonatomic, strong) NSString     *vendorInfo;
 @property (nonatomic, assign) BOOL         isMeshBleOnline;
 @property (nonatomic, strong) NSString     *pcc;
 
 #pragma mark - discovery device
-// mark:  0: 1<<0 auto  3：1<<3 route
+/// mark:  0: 1<<0 auto  3：1<<3 route
 @property (nonatomic, assign) NSUInteger devAttribute;
 
-// sig mesh dev key
+/// sig mesh dev key
 @property (nonatomic, strong) NSString     *devKey;
 
-/// 是否标准化
+/// Whether to standardize.
 @property (nonatomic, assign) BOOL standard;
 @property (nonatomic, strong) TuyaSmartStandSchemaModel *standSchemaModel;
 
-// dpCodes
+/// dpCodes
 @property (nonatomic, strong, readonly) NSDictionary *dpCodes;
 
-/// 最近一次 dp 更新时间
+/// Last dp update time.
 @property (nonatomic, assign) NSTimeInterval dpMaxTime;
 
-/// 是否是虚拟设备
+/// Is it a virtual device.
 @property (nonatomic, assign) BOOL isVirtualDevice;
 
 // Use `baseAttributeIsSupport: index` to check feature
@@ -228,6 +229,13 @@ typedef enum : NSUInteger {
 // 1: support zigbee feature
 // 2: support subpieces feature
 @property (nonatomic, assign) NSInteger protocolAttribute;
+
+/// Whether auto-upgrade is supported. Currently NB/Bluetooth mesh devices do not support auto-upgrade.
+@property (nonatomic, assign) BOOL supportAuto;
+
+/// Support OTA upgrade method, from left to right, decreasing priority:
+/// 0: WIFI, 1: BLE, 2: SIGMESH, 3: NB
+@property (nonatomic, strong) NSArray *otaUpgradeModes;
 
 @end
 

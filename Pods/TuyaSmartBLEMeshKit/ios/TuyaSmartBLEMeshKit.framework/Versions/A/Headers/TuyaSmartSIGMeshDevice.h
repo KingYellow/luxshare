@@ -1,9 +1,8 @@
 //
-//  TuyaSmartSIGMeshDevice.h
-//  TuyaSmartBLEMeshKit
+// TuyaSmartSIGMeshDevice.h
+// TuyaSmartBLEMeshKit
 //
-//  Created by 黄凯 on 2019/3/13.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 NS_ASSUME_NONNULL_BEGIN
 

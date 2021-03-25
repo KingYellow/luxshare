@@ -1,9 +1,8 @@
 //
-//  TuyaSmartFeedbackKit.h
-//  TuyaSmartFeedbackKit
+// TuyaSmartFeedbackKit.h
+// TuyaSmartFeedbackKit
 //
-//  Created by 高森 on 2019/1/18.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TuyaSmartFeedbackKit_h
 #define TuyaSmartFeedbackKit_h

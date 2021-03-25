@@ -12,7 +12,6 @@
 #import "QZHDefaultButtonCell.h"
 #import "HXPhotoPicker.h"
 #import "NameEditVC.h"
-#import "ResetPWVC.h"
 #import "RegisterSecondVC.h"
 
 @interface PerInfoVC ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate,HXPhotoViewControllerDelegate,HXAlbumListViewControllerDelegate>
@@ -41,6 +40,7 @@
     [self UIConfig];
 
 }
+
 - (void)UIConfig{
     
     [self.view addSubview:self.qzTableView];

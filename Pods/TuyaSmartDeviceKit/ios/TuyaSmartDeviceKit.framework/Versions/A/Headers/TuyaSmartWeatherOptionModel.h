@@ -1,51 +1,48 @@
 //
-//  TuyaSmartWeattherOptionModel.h
-//  Bolts
+// TuyaSmartWeatherOptionModel.h
+// TuyaSmartDeviceKit
 //
-//  Created by 温明妍 on 2019/10/23.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 
 typedef enum : NSUInteger {
-    TuyaSmartWeattherOptionPressureUnit_unknown = 0,
-    TuyaSmartWeattherOptionPressureUnit_hPa = 1,
-    TuyaSmartWeattherOptionPressureUnit_inHg = 2,
-    TuyaSmartWeattherOptionPressureUnit_mmHg = 3,
-    TuyaSmartWeattherOptionPressureUnit_mb = 4,
-} TuyaSmartWeattherOptionPressureUnit;
+    TuyaSmartWeatherOptionPressureUnit_unknown = 0,
+    TuyaSmartWeatherOptionPressureUnit_hPa = 1,
+    TuyaSmartWeatherOptionPressureUnit_inHg = 2,
+    TuyaSmartWeatherOptionPressureUnit_mmHg = 3,
+    TuyaSmartWeatherOptionPressureUnit_mb = 4,
+} TuyaSmartWeatherOptionPressureUnit;
 
 typedef enum : NSUInteger {
-    TuyaSmartWeattherOptionWindSpeedUnit_unknown = 0,
-    TuyaSmartWeattherOptionWindSpeedUnit_mph = 1,
-    TuyaSmartWeattherOptionWindSpeedUnit_m_s = 2,// m/s
-    TuyaSmartWeattherOptionWindSpeedUnit_kph = 3,
-    TuyaSmartWeattherOptionWindSpeedUnit_km_h = 4// km/h
-} TuyaSmartWeattherOptionWindSpeedUnit;
+    TuyaSmartWeatherOptionWindSpeedUnit_unknown = 0,
+    TuyaSmartWeatherOptionWindSpeedUnit_mph = 1,
+    TuyaSmartWeatherOptionWindSpeedUnit_m_s = 2,// m/s
+    TuyaSmartWeatherOptionWindSpeedUnit_kph = 3,
+    TuyaSmartWeatherOptionWindSpeedUnit_km_h = 4// km/h
+} TuyaSmartWeatherOptionWindSpeedUnit;
 
 typedef enum : NSUInteger {
-    TuyaSmartWeattherOptionTemperatureUnit_unknown = 0,
-    TuyaSmartWeattherOptionTemperatureUnit_Centigrade = 1,// ℃
-    TuyaSmartWeattherOptionTemperatureUnit_Fahrenheit = 2,// ℉
-} TuyaSmartWeattherOptionTemperatureUnit;
+    TuyaSmartWeatherOptionTemperatureUnit_unknown = 0,
+    TuyaSmartWeatherOptionTemperatureUnit_Centigrade = 1,// ℃
+    TuyaSmartWeatherOptionTemperatureUnit_Fahrenheit = 2,// ℉
+} TuyaSmartWeatherOptionTemperatureUnit;
 
 NS_ASSUME_NONNULL_BEGIN
 
-/**
- * 获取家庭天气请求入参
- */
+/// Get home weather request entry.
 @interface TuyaSmartWeatherOptionModel : NSObject
 
-/// 气压单位
-@property (nonatomic, assign) TuyaSmartWeattherOptionPressureUnit pressureUnit;
+/// Barometric unit.
+@property (nonatomic, assign) TuyaSmartWeatherOptionPressureUnit pressureUnit;
 
-/// 风速单位
-@property (nonatomic, assign) TuyaSmartWeattherOptionWindSpeedUnit windspeedUnit;
+/// Wind speed unit
+@property (nonatomic, assign) TuyaSmartWeatherOptionWindSpeedUnit windspeedUnit;
 
-/// 温度单位
-@property (nonatomic, assign) TuyaSmartWeattherOptionTemperatureUnit temperatureUnit;
+/// Temperature units
+@property (nonatomic, assign) TuyaSmartWeatherOptionTemperatureUnit temperatureUnit;
 
-/// 请求多少个天气详情，若不配置，则默认全部返回
+/// The number of requests for weather details, if not configured, all are returned by default.
 @property (nonatomic, assign) NSInteger limit;
 
 @end

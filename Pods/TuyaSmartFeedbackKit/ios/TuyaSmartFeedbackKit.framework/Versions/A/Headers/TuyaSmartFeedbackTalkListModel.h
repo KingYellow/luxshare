@@ -1,37 +1,24 @@
 //
-//  TuyaSmartFeedbackTalkListModel.h
-//  TuyaSmartKit
+// TuyaSmartFeedbackTalkListModel.h
+// TuyaSmartFeedbackKit
 //
-//  Created by xuyongbo on 2017/9/11.
-//  Copyright © 2017年 Tuya. All rights reserved.
-//
-
+// Copyright (c) 2014-2021 Tuya Inc (https://developer.tuya.com)
 
 @interface TuyaSmartFeedbackTalkListModel : NSObject
 
-/**
- 会话时间
- */
+/// The time of the feedback talk.
 @property (nonatomic, strong) NSString          *dateTime;
 
-/**
- 会话id
- */
+/// The talk ID.
 @property (nonatomic, strong) NSString          *hdId;
 
-/**
- 会话类型
- */
+/// The type of the feedback talk.
 @property (nonatomic, assign) NSUInteger        hdType;
 
-/**
- 会话标题
- */
+/// A string title for the feedback talk.
 @property (nonatomic, strong) NSString          *title;
 
-/**
- 会话内容
- */
+/// The string content of the feedback talk.
 @property (nonatomic, strong) NSString          *content;
 
 @end

@@ -2,7 +2,7 @@
 //  CircleView.h
 //  进度条究极版
 //
-//  Created by 孙昊 on 16/7/12.
+//  Created by huangzhen on 16/7/12.
 //  Copyright © 2016年 sunhao. All rights reserved.
 //
 

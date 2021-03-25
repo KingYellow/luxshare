@@ -1,37 +1,26 @@
 //
-//  TuyaSmartFeedbackModel.h
-//  TuyaSmartKit
+// TuyaSmartFeedbackModel.h
+// TuyaSmartFeedbackKit
 //
-//  Created by xuyongbo on 2017/9/11.
-//  Copyright © 2017年 Tuya. All rights reserved.
-//
-
+// Copyright (c) 2014-2021 Tuya Inc (https://developer.tuya.com)
 
 typedef enum : NSUInteger {
-    TuyaSmartFeedbackQuestion,      //提问
-    TuyaSmartFeedbackAnswer,        //回答
+    TuyaSmartFeedbackQuestion,
+    TuyaSmartFeedbackAnswer,
 } TuyaSmartFeedbackType;
 
 @interface TuyaSmartFeedbackModel : NSObject
 
-/**
- 反馈类型
- */
+/// The feedback type.
 @property (nonatomic, assign) TuyaSmartFeedbackType     type;
 
-/**
- 反馈时间
- */
+/// The time when the feedback opened.
 @property (nonatomic, assign) NSTimeInterval            ctime;
 
-/**
- 反馈id
- */
+/// The feedback ID.
 @property (nonatomic, assign) NSUInteger                uniqueId;
 
-/**
- 反馈内容
- */
+/// The content of the feedback.
 @property (nonatomic, strong) NSString                  *content;
 
 @end

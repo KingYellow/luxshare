@@ -16,6 +16,7 @@
     CGFloat lastContentOffset;
     WMZPageController *page;
     NSInteger _currentTitleIndex;
+    WMZPageNaviBtn *_fixLastBtn ;
 }
 //最底部下划线
 @property(nonatomic,strong)UIView *bottomView;
@@ -38,7 +39,7 @@
 }
 
 - (void)setUp{
-    
+    self.currentTitleIndex = NSNotFound;
     //菜单栏
     [self addSubview:self.mainView];
     self.mainView.frame = [self.frameInfo[@(self.param.wMenuPosition)] CGRectValue];
@@ -79,7 +80,7 @@
     if (self.param.wMenuPosition == PageMenuPositionBottom) {
         CGRect rect = self.frame;
         rect.origin.y -= self.frame.size.height;
-        if (pageIsIphoneX) {
+        if (PageIsIphoneX) {
             rect.size.height+=15;
             rect.origin.y-=15;
         }
@@ -103,22 +104,23 @@
 }
 //标题点击
 - (void)tap:(WMZPageNaviBtn*)btn{
-    if (!self.mainView.first) {
-        if (self.param.wEventClick) {
-            self.param.wEventClick(btn, btn.tag);
-        }
+    NSInteger index = [self.btnArr indexOfObject:btn];
+    if (index == NSNotFound) return;
+    if (self.param.wEventClick) {
+        self.param.wEventClick(btn, btn.tag);
     }
-    if (self.currentTitleIndex == btn.tag) return;
-    NSInteger index = btn.tag;
+    if (self.currentTitleIndex == index) return;
+    
     if (!btn.onlyClick) {
         if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(selectBtnWithIndex:)]) {
             [self.loopDelegate selectBtnWithIndex:index];
         }
-        if (self.mainView.first) {
+        if (self.currentTitleIndex == NSNotFound) {
             self.lastPageIndex = self.currentTitleIndex;
             self.nextPageIndex = index;
             self.currentTitleIndex = index;
             UIViewController *newVC = [self getVCWithIndex:index];
+            self.currentVC = newVC;
             [newVC beginAppearanceTransition:YES animated:YES];
             [self addChildVC:index VC:newVC];
             [self.dataView setContentOffset:CGPointMake(index*PageVCWidth, 0) animated:NO];
@@ -126,28 +128,32 @@
             if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)]) {
                 [self.loopDelegate setUpSuspension:newVC index:index end:YES];
             }
+            [self.mainView scrollToIndex:index animal:NO];
         }else{
+            
             [self beginAppearanceTransitionWithIndex:index withOldIndex:self.currentTitleIndex];
             self.lastPageIndex = self.currentTitleIndex;
             self.nextPageIndex = index;
             self.currentTitleIndex = index;
             [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.lastPageIndex isFlag:NO];
             [self.dataView setContentOffset:CGPointMake(index*PageVCWidth, 0) animated:self.param.wTapScrollAnimal];
-        }
-        [self scrollToIndex:index];
-        if (self.mainView.first) {
-            self.mainView.first = NO;
+            [self.mainView scrollToIndex:index];
+            
         }
     }else{
-        [self scrollToIndex:index];
+        [self.mainView scrollToIndex:index];
     }
 }
 //固定标题点击
 - (void)fixTap:(WMZPageNaviBtn*)btn{
-    btn.selected = ![btn isSelected];
+    if (_fixLastBtn) {
+        _fixLastBtn.selected = NO;
+    }
+    btn.selected = YES;
     if (self.param.wEventFixedClick) {
         self.param.wEventFixedClick(btn, btn.tag);
     }
+    _fixLastBtn = btn;
 }
 #pragma -mark- scrollerDeleagte
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
@@ -197,9 +203,6 @@
     }
 }
 
-- (void)scrollToIndex:(NSInteger)newIndex{
-    [self.mainView scrollToIndex:newIndex];
-}
 
 //管理生命周期
 - (void)lifeCycleManage:(UIScrollView*)scrollView{
@@ -256,26 +259,36 @@
 }
 
 - (UIViewController*)getVCWithIndex:(NSInteger)index{
+    UIViewController *controller = nil;
     if (index < 0|| index >= self.param.wTitleArr.count) {
-        return nil;
+        return controller;
     }
-    if ([[self findBelongViewControllerForView:self].cache objectForKey:@(index)]) {
-        return [[self findBelongViewControllerForView:self].cache objectForKey:@(index)];
+    
+    controller = [[self findBelongViewControllerForView:self].cache objectForKey:@(index)];
+    if (controller) {
+        return controller;
     }
-    if (self.param.wViewController) {
-       return self.param.wViewController(index);
+    
+    if (self.param.wControllers) {
+        controller = self.param.wControllers[index];
+        if (controller) {
+            return controller;
+        }
     }else{
-        if (self.param.wControllers) {
-            return self.param.wControllers[index];
+        if (self.param.wViewController) {
+            controller = self.param.wViewController(index);
+            if (controller) {
+                return controller;
+            }
         }
     }
-    return nil;
+    return controller;
 }
 
 - (void)beginAppearanceTransitionWithIndex:(NSInteger)index withOldIndex:(NSInteger)old{
     UIViewController *newVC = [self getVCWithIndex:index];
     UIViewController *oldVC = [self getVCWithIndex:old];
-    if (!newVC||!oldVC||(index==old)) return;
+    if (!newVC||!oldVC||(index==old)||(oldVC==newVC)) return;
     [newVC beginAppearanceTransition:YES animated:YES];
     [self addChildVC:index VC:newVC];
     [oldVC beginAppearanceTransition:NO  animated:YES];
@@ -291,6 +304,7 @@
 }
 
 - (void)addChildVC:(NSInteger)index VC:(UIViewController*)newVC{
+    if (!newVC) return;
     if (![[self findBelongViewControllerForView:self].childViewControllers containsObject:newVC]) {
         [[self findBelongViewControllerForView:self] addChildViewController:newVC];
         CGRect frame = CGRectMake(index * self.dataView.frame.size.width,0,self.dataView.frame.size.width,
@@ -360,6 +374,9 @@
        ||self.param.wMenuPosition == PageMenuPositionBottom
        ||self.param.wMenuPosition == PageMenuPositionNavi){
           return NO;
+    }
+    if (!self.param.wTitleArr.count) {
+        return NO;
     }
     return YES;
 }
@@ -469,7 +486,7 @@
             @(PageMenuPositionRight):[NSValue valueWithCGRect:CGRectMake(PageVCWidth-self.param.wMenuWidth, self.param.wMenuCellMarginY  , self.param.wMenuWidth,self.param.wMenuHeight)],
             @(PageMenuPositionCenter):[NSValue valueWithCGRect:CGRectMake((PageVCWidth-self.param.wMenuWidth)/2, self.param.wMenuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight)],
             @(PageMenuPositionNavi):[NSValue valueWithCGRect:CGRectMake((PageVCWidth-self.param.wMenuWidth)/2, self.param.wMenuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight)],
-            @(PageMenuPositionBottom):[NSValue valueWithCGRect:CGRectMake(0, PageVCHeight, self.param.wMenuWidth,pageIsIphoneX?(self.param.wMenuHeight + 15):self.param.wMenuHeight)],
+            @(PageMenuPositionBottom):[NSValue valueWithCGRect:CGRectMake(0, PageVCHeight, self.param.wMenuWidth,PageIsIphoneX?(self.param.wMenuHeight + 15):self.param.wMenuHeight)],
         };
     }
     return _frameInfo;
@@ -477,5 +494,7 @@
 - (void)setCurrentTitleIndex:(NSInteger)currentTitleIndex{
     _currentTitleIndex = currentTitleIndex;
     self.dataView.currentIndex = currentTitleIndex;
+    self.currentVC = [self getVCWithIndex:currentTitleIndex];
+    
 }
 @end

@@ -1,10 +1,8 @@
 //
-//  TuyaSmartSingleTransfer.h
-//  TuyaSmartPublic
+// TuyaSmartSingleTransfer.h
+// TuyaSmartDeviceCoreKit
 //
-//  Created by 黄凯 on 2018/10/24.
-//  Copyright © 2018 Tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 
@@ -16,25 +14,15 @@ typedef NS_ENUM(NSUInteger, TuyaSmartTransferState) {
 @class TuyaSmartSingleTransfer;
 @protocol TuyaSmartTransferDelegate<NSObject>
 
-/**
- When the connection state changes, the delegate will execute.
- 数据通道连接情况变化
- 当通道连接、断开连接等都会通过此方法回调，
- 
- @param transfer transfer
- @param state TuyaSmartTransferState
- */
+/// When the connection state changes, the delegate will execute.
+/// @param transfer transfer.
+/// @param state TuyaSmartTransferState.
 - (void)transfer:(TuyaSmartSingleTransfer *)transfer didUpdateConnectState:(TuyaSmartTransferState)state;
 
-
-/**
- When received device data, the delegate will execute.
- 数据通道收到新数据
- 
- @param transfer transfer
- @param devId Device Id
- @param data Received Data
- */
+/// When received device data, the delegate will execute.
+/// @param transfer transfer.
+/// @param devId Device Id.
+/// @param data Received Data.
 - (void)transfer:(TuyaSmartSingleTransfer *)transfer didReciveDataWithDevId:(NSString *)devId data:(NSData *)data;
 
 @end
@@ -45,41 +33,22 @@ __deprecated_msg("The channel already merged. We will provide new way to support
 
 #if TARGET_OS_IOS
 
-/**
- Start Connect
- 开始连接通道
- */
+/// Start Connect.
 - (void)startConnect;
 
-/**
- The connection state
- 通道连接状态
- 
- @return Connection Result
- */
+/// The connection state.
+/// @return Connection Result.
 - (BOOL)isConnected;
 
-/**
- Close
- 关闭通道
- ！！！（通道合并的缘故，将不会进行关闭，因为此操作会影响正常的设备订阅流程）
- */
+/// Close the channel; Because of channel merging, it will not be closed because it will affect the normal device subscription process.
 - (void)close __deprecated_msg("will remove it");;
 
-/**
- Subscribe device
- 订阅设备
- 
- @param devId Device Id
- */
+/// Subscribe device.
+/// @param devId The device ID.
 - (void)subscribeDeviceWithDevId:(NSString *)devId;
 
-/**
- Unsubscribe device
- 取消订阅设备
- 
- @param devId Device Id
- */
+/// Unsubscribe device.
+/// @param devId The device ID.
 - (void)unsubscribeDeviceWithDevId:(NSString *)devId;
 
 #endif

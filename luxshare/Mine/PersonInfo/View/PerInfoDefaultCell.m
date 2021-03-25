@@ -39,9 +39,9 @@
         make.bottom.mas_equalTo(0);
         make.left.mas_equalTo(self.nameLab.mas_right).offset(5);
     }];
-
     
 }
+
 #pragma mark -lazy
 - (UILabel *)nameLab{
     if (!_nameLab) {
@@ -51,6 +51,7 @@
     }
     return  _nameLab;
 }
+
 - (UILabel *)statusLab{
     if (!_statusLab) {
         _statusLab = [[UILabel alloc] init];
@@ -59,6 +60,7 @@
     }
     return  _statusLab;
 }
+
 - (UILabel *)describeLab{
     if (!_describeLab) {
         _describeLab = [[UILabel alloc] init];

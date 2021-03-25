@@ -1,10 +1,8 @@
 //
-//  TYGroupDevList.h
-//  TuyaSmart
+// TYGroupDevList.h
+// TuyaSmartDeviceCoreKit
 //
-//  Created by 冯晓 on 15/12/15.
-//  Copyright © 2015年 Tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TuyaSmart_TuyaSmartGroupDevListModel
 #define TuyaSmart_TuyaSmartGroupDevListModel
@@ -14,28 +12,28 @@
 @interface TuyaSmartGroupDevListModel : NSObject
 
 
-/// 设备Id
+/// The device ID.
 @property(nonatomic,strong) NSString    *devId;
 
-/// 设备Id
+/// The device ID.
 @property(nonatomic,strong) NSString    *gwId;
 
-/// 设备是否在线
+/// Is the device online.
 @property(nonatomic,assign) BOOL        online;
 
-/// 设备图标url
+/// Device icon URL.
 @property(nonatomic,strong) NSString    *iconUrl;
 
-/// 产品Id
+/// The product ID.
 @property(nonatomic,strong) NSString    *productId;
 
-/// 设备是否选中
+/// Is the device selected.
 @property(nonatomic,assign) BOOL        checked;
 
-/// 设备名字
+/// The device name.
 @property(nonatomic,strong) NSString    *name;
 
-/// 设备地址
+/// The device address.
 @property(nonatomic,strong) NSString    *nodeId;
 
 

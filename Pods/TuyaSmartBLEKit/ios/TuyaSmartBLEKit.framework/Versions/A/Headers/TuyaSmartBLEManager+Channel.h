@@ -1,52 +1,40 @@
 //
-//  TuyaSmartBLEManager+Channel.h
-//  TuyaSmartBLEKit
+// TuyaSmartBLEManager+Channel.h
+// TuyaSmartBLEKit
 //
-//  Created by 黄凯 on 2019/2/22.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 #import "TuyaSmartBLEManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-/**
- ble 大数据通道，针对手环等需要短时间传输大量数据时使用
- */
 typedef void (^TPBleResultBlock)(NSString *result);
+
+/// @brief TuyaSmartBLEManager+Channel provides methods for developers to make BLE device report large amounts of data through bluetooth channel.
 @interface TuyaSmartBLEManager (Channel)
-
-/**
- 判断设备是否已连接
- check the device is connected.
-
- @param uuid 设备id
- @return connected
- */
+ 
+/// Determine if the device is connected.
+///
+/// @param uuid     The UUID for the device.
+///
+/// @return The local connection status of the BLE device
 - (BOOL)isBLEChannelDeviceConnect:(NSString *)uuid;
 
-
-/**
- 判断设备是否已连接
- check the device is connected.
- 
- @param block 回调
- @param uuid 设备id
- */
+/// Set the callback when the transfer is completed.
+///
+/// @param block    When transfer successfully, this block will be called success.
+/// @param uuid     The UUID for the device.
 - (void)setCompletionBlock:(TPBleResultBlock)block uuid:(NSString *)uuid;
 
-/**
- APP 申请启动大数据通道
- 
- @param uuid 设备id
- */
+/// App request to start big data transfer.
+///
+/// @param uuid     The UUID for the device.
 - (void)appApplyLaunch:(NSString *)uuid;
 
-/**
- APP 强制传输终止
- 
- @param uuid 设备id
- */
+/// App forced termination of data transmission.
+///
+/// @param uuid     The UUID for the device.
 - (BOOL)appMandatoryTrans:(NSString *)uuid;
 
 @end

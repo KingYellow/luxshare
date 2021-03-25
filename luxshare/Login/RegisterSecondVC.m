@@ -10,7 +10,7 @@
 #import "CodeButton.h"
 #import "QZHHUD.h"
 
-@interface RegisterSecondVC ()
+@interface RegisterSecondVC ()<UITextFieldDelegate>
 @property (strong, nonatomic)UITextField *passwordText;
 @property (strong, nonatomic)UITextField *codeText;
 @property (strong, nonatomic)CodeButton *sendBtn;
@@ -120,11 +120,21 @@
 - (UITextField *)passwordText{
     if (!_passwordText) {
         UITextField *text= [[UITextField alloc] init];
-        text.placeholder = QZHLoaclString(@"login_password");
+        //忘记 重置密码
+        if ([self.titleText isEqualToString:QZHLoaclString(@"login_getPassword")]||[self.titleText isEqualToString:QZHLoaclString(@"login_resetPassword")]){
+            
+            text.placeholder = QZHLoaclString(@"login_newPassword");
+            
+        }else{
+            
+            text.placeholder = QZHLoaclString(@"login_password");
+            
+        }
         text.textColor = QZHKIT_Color_BLACK_87;
         text.font = QZHTEXT_FONT(17);
         text.clearButtonMode =  UITextFieldViewModeWhileEditing;
         text.tag = 2;
+        text.delegate = self;
         text.rightView = self.openBtn;
         text.rightViewMode = UITextFieldViewModeAlways;
         text.secureTextEntry = YES;
@@ -168,7 +178,7 @@
         
         [_sendBtn setTitle:QZHLoaclString(@"login_getCode") forState:UIControlStateNormal];
         [_sendBtn setTitleColor:QZHKIT_Color_BLACK_54 forState:UIControlStateNormal];
-        _sendBtn.titleLabel.font = QZHTEXT_FONT(18);
+        _sendBtn.titleLabel.font = QZHTEXT_FONT(16);
         _sendBtn.backgroundColor = QZHKIT_COLOR_SKIN;
         QZHViewRadius(_sendBtn, 25);
         [_sendBtn addTarget:self action:@selector(getCodeWord:) forControlEvents:UIControlEventTouchUpInside];
@@ -182,23 +192,31 @@
         text.textColor = QZHKIT_Color_BLACK_87;
         text.font = QZHTEXT_FONT(17);
         text.clearButtonMode =  UITextFieldViewModeWhileEditing;
-        text.tag = 2;
+        text.tag = 1;
         text.keyboardType = UIKeyboardTypeNumberPad;
         [text addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventEditingChanged];
         _codeText = text;
     }
     return _codeText;
 }
+#pragma mark - textdelegate
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    return [NSString exp_isEqualToReplacementString:string];
+}
 #pragma mark - action
 
 - (void)valueChanged:(UITextField *)textField{
-    if (self.codeText.text.length > 0 && self.passwordText.text.length > 0) {
+    if (self.codeText.text.length > 0 && self.passwordText.text.length> 5 && self.passwordText.text.length < 20) {
         [self.submitBtn exp_buttonState:QZHButtonStateEnable];
     }else{
         [self.submitBtn exp_buttonState:QZHButtonStateDisEnable];
     }
 }
 - (void)submitAction{
+    if ([self.passwordText.text exp_isPureInt]) {
+        [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"cantOnlyInt") afterDelay:1.0];
+        return;
+    }
     //忘记 重置密码
     if ([self.titleText isEqualToString:QZHLoaclString(@"login_getPassword")]||[self.titleText isEqualToString:QZHLoaclString(@"login_resetPassword")]){
         //重置密码
@@ -287,10 +305,7 @@
                 
             }];
         }
-
-  
     }
-
 }
 
 - (UILabel *)leftNameLabelText:(NSString *)title{
@@ -302,11 +317,11 @@
     return label;
 }
 
-
 - (void)passAction:(UIButton *)sender{
     self.openBtn.selected = !self.openBtn.selected;
     self.passwordText.secureTextEntry = !self.openBtn.selected;
 }
+
 - (void)getCodeWord:(CodeButton *)jcBtn{
     
     //忘记 重置密码
@@ -323,7 +338,7 @@
     jcBtn.enabled = NO;
     [jcBtn startWithSecond:60];
     [jcBtn didChangBlock:^NSString *(CodeButton *countDownButton,int second) {
-        NSString *title = [NSString stringWithFormat:@"%@%dS",QZHLoaclString(@"left"),second];
+        NSString *title = [NSString stringWithFormat:@"%dS",second];
         
         return title;
         

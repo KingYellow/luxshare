@@ -1,9 +1,8 @@
 //
-//  TuyaSmartDiscovery.h
-//  TuyaSmartActivatorKit
+// TuyaSmartDiscovery.h
+// TuyaSmartActivatorKit
 //
-//  Created by huangjj on 2019/7/1.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <TuyaSmartDeviceKit/TuyaSmartDeviceKit.h>
 
@@ -15,14 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @required
 
-/**
- Callback of Device Discovery
- 设备搜索回调
- 
- @param discovery   instance
- @param deviceModel deviceModel
- @param error       error
- */
+/// Callback of device discovery.
+/// @param discovery Instance of TuyaSmartDiscovery class.
+/// @param deviceModel Tuya smart device model.
+/// @param error NSError object.
 - (void)discovery:(TuyaSmartDiscovery *)discovery didDiscoveryDevice:(TuyaSmartDeviceModel *)deviceModel error:(NSError *)error;
 
 @end
@@ -31,44 +26,31 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id<TuyaSmartDiscoveryDelegate> delegate;
 
-/**
- *  To obtain token (valid for 10 minutes)
- *  获取配网Token（有效期10分钟）
- *
- *  @param success Success block
- *  @param failure Failure block
- */
+/// Obtain configuration token (valid for 10 minutes).
+/// @param success Called when the task finishes successfully. TYSuccessString will be returned.
+/// @param failure Called when the task is interrupted by an error.
 - (void)getTokenSuccess:(TYSuccessString)success
                 failure:(TYFailureError)failure;
 
-/**
- * start discover device
- * 开始发现设备
- *
- * @param ssid      Name of route 路由器热点名称
- * @param password  Password of route 路由器热点密码
- * @param timeout   Timeout, default 100 seconds
- * @param success   Success block
- * @param failure   Failure block
- */
+/// Start discovering devices.
+/// @param ssid Name of route.
+/// @param password Password of route.
+/// @param timeout Timeout, default 100 seconds.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)startDiscoveryWithSsid:(NSString *)ssid
                      password:(NSString *)password
                       timeout:(NSTimeInterval)timeout
                       success:(TYSuccessHandler)success
                       failure:(TYFailureError)failure;
 
-
-/**
- * start discover device with token
- * 开始发现设备
- *
- * @param ssid      Name of route 路由器热点名称
- * @param password  Password of route 路由器热点密码
- * @param token     Config token 配网 token
- * @param timeout   Timeout, default 100 seconds
- * @param success   Success block
- * @param failure   Failure block
- */
+/// Start discovering devices using token.
+/// @param ssid Name of route.
+/// @param password Password of route.
+/// @param token Configuration token.
+/// @param timeout Timeout, default 100 seconds.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)startDiscoveryWithSsid:(NSString *)ssid
                      password:(NSString *)password
                          token:(NSString *)token
@@ -76,25 +58,14 @@ NS_ASSUME_NONNULL_BEGIN
                       success:(TYSuccessHandler)success
                       failure:(TYFailureError)failure;
 
-
-
-
-/**
- * Binding device to the home
- * 将设备绑定家庭
- *
- * @param homeId  HomeId
- * @param devIds  Deivce Id list
- * @param success Success block
- * @param failure Failure block
- */
+/// Binding devices to home.
+/// @param homeId Home ID.
+/// @param devIds Device ID list.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)bindDeviceWithHomeId:(long long)homeId devIds:(NSArray <NSString *>*)devIds success:(TYSuccessHandler)success failure:(TYFailureError)failure;
 
-
-/**
- *  stop Discovery
- *  停止发现
- */
+/// Stop discovering.
 - (void)stopDiscovery;
 
 @end

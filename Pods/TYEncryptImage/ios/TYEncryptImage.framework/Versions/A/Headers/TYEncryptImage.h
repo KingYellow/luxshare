@@ -10,5 +10,7 @@
 
 #import "TYEncryptImageDefine.h"
 #import "UIImageView+TYAESImage.h"
+#import "TYEncryptImageDownloader.h"
+#import "TYImageAESCoder.h"
 
 #endif /* TYEncryptImage_h */

@@ -1,1 +1,1 @@
-../../../TuyaSmartHelpCenterBizBundle/TuyaSmartHelpCenterBizBundle-3.20.0-rc.1/Headers/Public/TuyaSmartHelpCenterBizBundle.h
+../../../TuyaSmartHelpCenterBizBundle/TuyaSmartHelpCenterBizBundle-3.22.0-rc.1/Headers/Public/TuyaSmartHelpCenterBizBundle.h

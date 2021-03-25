@@ -250,7 +250,7 @@
     jcBtn.enabled = NO;
     [jcBtn startWithSecond:60];
     [jcBtn didChangBlock:^NSString *(CodeButton *countDownButton,int second) {
-        NSString *title = [NSString stringWithFormat:@"剩余%d秒",second];
+        NSString *title = [NSString stringWithFormat:@"%dS",second];
         
         return title;
         
@@ -268,7 +268,7 @@
 //            textField.text = [textField.text substringToIndex:11];
 //        }
     }
-    if (textField.tag == 1) {
+    if (textField.tag == 2) {
 //        if (textField.text.length > 11) {
 //            textField.text = [textField.text substringToIndex:6];
 //        }
@@ -317,7 +317,7 @@
         
         if (result) {
             [[TuyaSmartUser sharedInstance] resetPasswordByPhone:self.countryCodeText.text phoneNumber:self.phoneText.text newPassword:self.passwordText.text code:self.codeText.text success:^{
-                [[QZHHUD HUD] textHUDWithMessage:@"重置成功" afterDelay:1.0];
+                [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"resetPWSuccess") afterDelay:1.0];
                 NSLog(@"resetPasswordByPhone success");
             } failure:^(NSError *error) {
                 [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
@@ -332,7 +332,6 @@
 }
 - (void)selectValue{
     AddressBookTVC *vc = [[AddressBookTVC alloc] init];
-    QZHWS(weakSelf)
 
     [self.navigationController pushViewController:vc animated:YES];
 }

@@ -1,10 +1,8 @@
 //
-//  TYApiMergeService.h
-//  TuyaSmartKit
+// TYApiMergeService.h
+// TuyaSmartBaseKit
 //
-//  Created by 冯晓 on 2017/4/11.
-//  Copyright © 2017年 Tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import "TYApiMergeModel.h"
 #import "TuyaSmartRequest.h"
@@ -13,26 +11,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TYApiMergeService : TuyaSmartRequest
 
-@property (nonatomic, strong) NSMutableArray *requestList;
+@property (nonatomic, strong) TYSDKSafeMutableArray *requestList;
 
 
-/**
- add api request
-
- @param apiName     api name
- @param postData    post data
- @param version     version
- */
+/// Add api request.
+/// @param apiName Api name.
+/// @param postData Post data.
+/// @param version Version.
 - (void)addApiRequest:(NSString *)apiName postData:(NSDictionary *)postData version:(NSString *)version;
 
 
-/**
- send request
-
- @param getData get data
- @param success Success block
- @param failure Failure block
- */
+/// Send request.
+/// @param getData Get data.
+/// @param success Called when the task finishes successfully. A list of TYApiMergeModel will be returned.
+/// @param failure Called when the task is interrupted by an error.
 - (void)sendRequest:(NSDictionary *)getData success:(nullable void (^)(NSArray <TYApiMergeModel *> *list))success failure:(nullable TYFailureError)failure;
 
 @end

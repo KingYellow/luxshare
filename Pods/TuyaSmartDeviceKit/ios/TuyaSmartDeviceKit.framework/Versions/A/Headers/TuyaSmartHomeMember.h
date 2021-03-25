@@ -1,10 +1,8 @@
 //
-//  TuyaSmartHomeMember.h
-//  TuyaSmartKit
+// TuyaSmartHomeMember.h
+// TuyaSmartDeviceKit
 //
-//  Created by 冯晓 on 2017/12/18.
-//  Copyright © 2017年 Tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 #import "TuyaSmartHomeMemberModel.h"
@@ -14,75 +12,68 @@
 
 #pragma mark - public
 
-/**
- *  Remove a home member
- *  删除家庭成员
- *
- *  @param memberId    Member Id
- *  @param success     Success block
- *  @param failure     Failure block
- */
+
+/// Remove a home member.
+///
+/// @param memberId    Member Id
+/// @param success     Called when the task finishes successfully.
+/// @param failure     If error occurred while adding the task, this block will be called.
 - (void)removeHomeMemberWithMemberId:(long long)memberId
                              success:(TYSuccessHandler)success
                              failure:(TYFailureError)failure;
 
 
-/**
- Update home member info
- 修改家庭成员信息
 
- @param memberRequestModel request model, Set the corresponding property
- @param success            success callback
- @param failure            failure callcack
- */
+/// Update home member info
+///
+/// @param memberRequestModel request model, Set the corresponding property
+/// @param success            Called when the task finishes successfully.
+/// @param failure            If error occurred while adding the task, this block will be called.
 - (void)updateHomeMemberInfoWithMemberRequestModel:(TuyaSmartHomeMemberRequestModel *)memberRequestModel
                                            success:(TYSuccessHandler)success
                                            failure:(TYFailureError)failure;
 
-/**
- *  获取可选的房间列表 fetch optional room list
- *  @param homeID homeID 家庭ID
- *  @param memberID member id 成员ID
- *  @param success success callback
- *  @param failure failure callback
- */
+
+/// Get a list of optional rooms.
+/// @param homeID homeID
+/// @param memberID member id
+/// @param success Called when the task finishes successfully.
+/// @param failure If error occurred while adding the task, this block will be called.
  - (void)getAuthRoomListWithHomeId:(long long)homeID
                          memberID:(long long)memberID
                           success:(TYSuccessList)success
                           failure:(TYFailureError)failure;
-/**
- *  获取可选的场景或自动化列表 fetch optional scene list
- *  @param homeID homeID 家庭ID
- *  @param memberID member id 成员ID
- *  @param success success callback
- *  @param failure failure callback
- */
+
+/// Get a list of optional scenes or automations.
+/// @param homeID homeID
+/// @param memberID member id
+/// @param success Called when the task finishes successfully.
+/// @param failure If error occurred while adding the task, this block will be called.
 - (void)getAuthSceneListWithHomeID:(long long)homeID
                           memberID:(long long)memberID
                            success:(TYSuccessList)success
                            failure:(TYFailureError)failure;
-/**
- *  更新自定义角色有权限的房间列表 update custom role have jurisdiction rooms
- *  @param homeID homeID 家庭ID
- *  @param memberID member id 成员ID
- *  @param roomIDs 有权限的房间ID列表 have jurisdiction room id list
- *  @param success success callback
- *  @param failure failure callback
- */
+
+
+/// Update the list of rooms to which custom roles have access.
+/// @param homeID homeID
+/// @param memberID member id
+/// @param roomIDs List of room IDs with permission.
+/// @param success Called when the task finishes successfully.
+/// @param failure If error occurred while adding the task, this block will be called.
  - (void)saveAuthRoomListWithHomeId:(long long)homeID
                           memberID:(long long)memberID
                            roomIDs:(NSArray <NSNumber *> *)roomIDs
                            success:(TYSuccessID)success
                            failure:(TYFailureError)failure;
 
-/**
- *  更新自定义角色有权限的的场景列表 update custom role have jurisdiction rule list
- *  @param homeID homeID 家庭ID
- *  @param memberID member id 成员ID
- *  @param ruleIDs 有权限的场景ID列表 have jurisdiction rule id list
- *  @param success success callback
- *  @param failure failure callback
- */
+
+/// Update the list of scenes to which custom roles have access.
+/// @param homeID homeID
+/// @param memberID member id
+/// @param ruleIDs List of scene IDs with permissions.
+/// @param success Called when the task finishes successfully.
+/// @param failure If error occurred while adding the task, this block will be called.
 - (void)saveAuthSceneListWithHomeId:(long long)homeID
                            memberID:(long long)memberID
                             ruleIDs:(NSArray <NSString *> *)ruleIDs

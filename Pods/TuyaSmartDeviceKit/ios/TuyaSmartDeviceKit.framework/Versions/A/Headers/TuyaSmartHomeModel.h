@@ -1,10 +1,8 @@
 //
-//  TuyaSmartHomeModel.h
-//  TuyaSmartKit
+// TuyaSmartHomeModel.h
+// TuyaSmartDeviceKit
 //
-//  Created by 冯晓 on 2017/12/18.
-//  Copyright © 2017年 Tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 #import "TuyaSmartHomeModelUtils.h"

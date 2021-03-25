@@ -1,1 +1,1 @@
-../../../TuyaSmartBizCore/TuyaSmartBizCore-3.20.0.3-rc.1/Headers/Public/TuyaSmartBizCore.h
+../../../TuyaSmartBizCore/TuyaSmartBizCore-3.22.0-rc.3/Headers/Public/TuyaSmartBizCore.h

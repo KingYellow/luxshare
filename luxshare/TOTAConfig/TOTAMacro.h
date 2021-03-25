@@ -47,9 +47,9 @@
 
 // --------------------------color-------------------------------
 //主色
-#define QZHKIT_COLOR_SKIN                 UIColorFromHex(0x2782FA)
+#define QZHKIT_COLOR_SKIN                 UIColorFromHex(0x0A9D59)
 
-#define QZHKIT_COLOR_SKIN_AlPHA                UIColorFromHexA(0x2782FA,0.5)
+#define QZHKIT_COLOR_SKIN_AlPHA                UIColorFromHexA(0x0A9D59,0.5)
 
 
 //辅色
@@ -116,7 +116,7 @@
 //LISTCELL 间距
 #define QZHSIZE_HEIGHT_LISTCELL_SEPARATOR          1
 //报警区域设置最小值
-#define QZHSIZE_WIDTH_ALARMAREA                   200
+#define QZHSIZE_WIDTH_ALARMAREA                   150
 
 
 
@@ -145,14 +145,21 @@
 #define QZHKIT_LENGTH_TEXT_NOIMAGE              10
 
 //p2p通道建立参数
-#define kTuyaSmartIPCConfigAPI @"tuya.m.rtc.session.init"
-#define kTuyaSmartIPCConfigAPIVersion @"1.0"
+#define kTuyaSmartIPCConfigAPI @"tuya.m.ipc.config.get"
+#define kTuyaSmartIPCConfigAPIVersion @"2.0"
 
 // --------------------------margin-------------------------------
-static NSString * const BATTERY_PRODUCT_ID = @"b4hq7aoy4m4ciabx";
-static NSString * const AC_PRODUCT_ID= @"u3ctgwxzrovkuamh";
-static NSString * const DOORbell_PRODUCT_ID = @"pqumrmnjs5bscfvl";
+static NSString * const BATTERY_PRODUCT_ID_HS = @"b4hq7aoy4m4ciabx";
+static NSString * const AC_PRODUCT_ID_HS= @"u3ctgwxzrovkuamh";
+static NSString * const DOORbell_PRODUCT_ID_HS = @"pqumrmnjs5bscfvl";
+//君正
+static NSString * const BATTERY_PRODUCT_ID = @"";
+static NSString * const AC_PRODUCT_ID= @"1sz5hbhzzssl71yy";
+static NSString * const AC_PRODUCT_ID_T31= @"odwadiii5vyxlytx";
 
+static NSString * const DOORbell_PRODUCT_ID = @"";
+static NSString * const PTZ_PRODUCT_ID_LIST = @"apdty2x8gueavizi";
+static NSString * const PTZ_PRODUCT_ID_LIST_T31 = @"3no0mwcdw41nc2xn";
 
 //第一次安装app记录时使用
 static NSString * const QZHKKEY_FIRST_INSTALL = @"QZHKeyFirstInstall";
@@ -170,6 +177,8 @@ static NSString * const QZHCELL_REUSE_TEXT = @"QZHReuseCellText";
 static NSString * const QZHCELL_REUSE_IMAGE = @"QZHReuseCellimage";
 static NSString * const QZHCELL_REUSE_DEFAULT = @"QZHReuseCellDefult";
 static NSString * const QZHCELL_REUSE_FIELD = @"QZHReuseCellField";
+static NSString * const QZHCELL_REUSE_Direction = @"QZHReuseCellDirection";
+
 
 
 //占位图

@@ -2,57 +2,166 @@
 //  TuyaSmartScene.h
 //  TuyaSmartSceneKit
 //
-//  Created by TuyaInc on 2017/9/4.
-//  Copyright © 2017年 Tuya. All rights reserved.
-//
+//  Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <TuyaSmartUtil/TuyaSmartUtil.h>
 #import "TuyaSmartSceneModel.h"
 #import "TuyaSmartSceneActionModel.h"
 #import "TuyaSmartSceneConditionModel.h"
 
+/// @brief TuyaSmartScene is used to add, edit delete and execute scenes. 
 @interface TuyaSmartScene : NSObject
 
-/**
- * 使用场景数据对象初始化一个TuyaSmartScene对象。
- * Initialize method of TuyaSmartScene.
- *
- * @param sceneModel scene model.
- * @return instance of TuyaSmartScene.
- */
+/// Class method for initialize TuyaSmartScene by TuyaSmartSceneModel.
+///
+/// @param sceneModel scene model.
+/// @return instance of TuyaSmartScene.
 + (instancetype)sceneWithSceneModel:(TuyaSmartSceneModel *)sceneModel;
 
-/**
- * 使用场景数据对象初始化一个TuyaSmartScene对象。
- * Initialize method of TuyaSmartScene.
- *
- * @param sceneModel scene model.
- * @return instance of TuyaSmartScene.
- */
+/// Instance method for initialize TuyaSmartScene by TuyaSmartSceneModel.
+///
+/// @param sceneModel scene model.
+/// @return instance of TuyaSmartScene.
 - (instancetype)initWithSceneModel:(TuyaSmartSceneModel *)sceneModel;
 
-/**
- * 不要使用init进行初始化。
- * Don't initialize an instance with init methed.
- *
- * @return    This method will return an unavailable instance.
- */
+/// Don't initialize an instance with init method.
+///
+/// @return    This method will return an unavailable instance.
 - (instancetype)init NS_UNAVAILABLE;
 
-/**
- * 添加场景（已废弃)
- * Add a scene,deprecated.
- *
- * @param name               scene name
- * @param homeId             homeId
- * @param background         background image url
- * @param showFirstPage      show the scene in index page or not
- * @param conditionList      condition list
- * @param actionList         action list
- * @param matchType          Match all conditons/any conditon will execute the automation.
- * @param success            success block
- * @param failure            failure block
- */
+/// Add a scene by all param
+///
+/// @param name               The scene name.
+/// @param homeId            The home id.
+/// @param background        The background image url.
+/// @param showFirstPage      Show the scene in index page or not.
+/// @param preConditionList       preconditions, like valid time period.
+/// @param conditionList      Condition list.
+/// @param actionList         Action list.
+/// @param matchType          Match all conditions/any condition will execute the automation.
+/// @param success            When success return TuyaSmartSceneModel.
+/// @param failure            When failure return TYFailureError.
++ (void)addNewSceneWithName:(NSString *)name
+                     homeId:(long long)homeId
+                 background:(NSString *)background
+              showFirstPage:(BOOL)showFirstPage
+           preConditionList:(NSArray<TuyaSmartScenePreConditionModel*> *)preConditionList
+              conditionList:(NSArray<TuyaSmartSceneConditionModel*> *)conditionList
+                 actionList:(NSArray<TuyaSmartSceneActionModel*> *)actionList
+                  matchType:(TuyaSmartConditionMatchType)matchType
+                    success:(void (^)(TuyaSmartSceneModel *sceneModel))success
+                    failure:(TYFailureError)failure;
+
+/// Add a new scene.Use a sceneModel with complete information of a scene.
+///
+/// @param sceneModel     TuyaSmartSceneModel
+/// @param homeId              The home id.
+/// @param success            When success return TuyaSmartSceneModel.
+/// @param failure            When failure return TYFailureError.
++ (void)addNewSceneWithSceneModel:(TuyaSmartSceneModel *)sceneModel
+                           homeId:(long long)homeId
+                          success:(void (^)(TuyaSmartSceneModel *sceneModel))success
+                          failure:(TYFailureError)failure;
+
+/// Edit a existed scene with all param
+///
+/// @param name               The scene name.
+/// @param background        The background image url.
+/// @param showFirstPage      Show the scene in index page or not.
+/// @param preConditionList       preconditions, like valid time period.
+/// @param conditionList      Condition list.
+/// @param actionList         Action list.
+/// @param matchType          Match all conditions/any condition will execute the automation.
+/// @param success            When success return TYSuccessHandler.
+/// @param failure            When failure return TYFailureError.
+- (void)modifySceneWithName:(NSString *)name
+                 background:(NSString *)background
+              showFirstPage:(BOOL)showFirstPage
+           preConditionList:(NSArray<TuyaSmartScenePreConditionModel*> *)preConditionList
+              conditionList:(NSArray<TuyaSmartSceneConditionModel*> *)conditionList
+                 actionList:(NSArray<TuyaSmartSceneActionModel*> *)actionList
+                  matchType:(TuyaSmartConditionMatchType)matchType
+                    success:(TYSuccessHandler)success
+                    failure:(TYFailureError)failure;
+
+/// Edit a existed scene.Use a sceneModel with complete information of a scene.
+///
+/// @param sceneModel     TuyaSmartSceneModel
+/// @param success            When success return TYSuccessHandler.
+/// @param failure            When failure return TYFailureError.
+- (void)modifySceneWithSceneModel:(TuyaSmartSceneModel *)sceneModel
+                          success:(TYSuccessHandler)success
+                          failure:(TYFailureError)failure;
+
+/// Delete a existed scene.
+///
+/// @param success            When success return TYSuccessHandler.
+/// @param failure            When failure return TYFailureError.
+- (void)deleteSceneWithSuccess:(TYSuccessHandler)success
+                       failure:(TYFailureError)failure;
+
+/// Execute a scene.
+///
+/// @param success            When success return TYSuccessHandler.
+/// @param failure            When failure return TYFailureError.
+- (void)executeSceneWithSuccess:(TYSuccessHandler)success
+                        failure:(TYFailureError)failure;
+
+/// Disable an automation, which will not executed automatically.
+///
+/// @param success            When success return TYSuccessHandler.
+/// @param failure            When failure return TYFailureError.
+- (void)disableSceneWithSuccess:(TYSuccessHandler)success
+                        failure:(TYFailureError)failure;
+
+/// Enable an automation, which will be executed while the conditions are matched.
+///
+/// @param success            When success return TYSuccessHandler.
+/// @param failure            When failure return TYFailureError.
+- (void)enableSceneWithSuccess:(TYSuccessHandler)success
+                       failure:(TYFailureError)failure;
+
+/// Cancel the request being executed.
+- (void)cancelRequest;
+
+#pragma mark - Recommend scene
+
+/// Execute a recommended scene.
+///
+/// @param homeId              The home id.
+/// @param success            When success return TYSuccessHandler.
+/// @param failure            When failure return TYFailureError.
+- (void)triggerRecommendSceneWithHomeId:(long long)homeId success:(TYSuccessHandler)success failure:(TYFailureError)failure;
+
+/// Delete a recommended scene.
+///
+/// @param homeId              The home id.
+/// @param success            When success return TYSuccessHandler.
+/// @param failure            When failure return TYFailureError.
+- (void)removeRecommendSceneWithHomeId:(long long)homeId success:(TYSuccessHandler)success failure:(TYFailureError)failure;
+
+/// Save a recommended scene, this scene can be modified by user. this scene will become a normal scene after save successfully, and the recommended scene will not show anymore.
+///
+/// @param homeId              The home id.
+/// @param success            When success return TYSuccessHandler.
+/// @param failure            When failure return TYFailureError.
+- (void)saveRecommendSceneWithHomeId:(long long)homeId success:(void (^)(TuyaSmartSceneModel *sceneModel))success failure:(TYFailureError)failure;
+
+#pragma mark - Deprecated
+
+/// Add a scene by all param, (deprecated).
+///
+/// @param name               The scene name.
+/// @param homeId            The home id.
+/// @param background        The background image url.
+/// @param showFirstPage      Show the scene in index page or not.
+/// @param conditionList      Condition list.
+/// @param actionList         Action list.
+/// @param matchType          Match all conditions/any condition will execute the automation.
+/// @param success            When success return TuyaSmartSceneModel.
+/// @param failure            When failure return TYFailureError.
+///
+/// @deprecated This method is deprecated, Use -[TuyaSmartScene addNewSceneWithName:homeId:background:showFirstPage:preConditionList:conditionList:actionList:matchType:success:failure:] instead
 + (void)addNewSceneWithName:(NSString *)name
                      homeId:(long long)homeId
                  background:(NSString *)background
@@ -63,58 +172,18 @@
                     success:(void (^)(TuyaSmartSceneModel *sceneModel))success
                     failure:(TYFailureError)failure __deprecated_msg("This method is deprecated, Use -[TuyaSmartScene addNewSceneWithName:homeId:background:showFirstPage:preConditionList:conditionList:actionList:matchType:success:failure:] instead");
 
-/**
- * 添加场景
- * Add a new scene.
- *
- * @param name                   scene name
- * @param homeId                 homeId
- * @param background             background image url
- * @param showFirstPage          show the scene in index page or not
- * @param preConditionList       preconditons, like valid time period.
- * @param conditionList          condition list
- * @param actionList             action list
- * @param matchType              Match all conditons/any conditon will execute the automation.
- * @param success                success block
- * @param failure                failure block
- */
-+ (void)addNewSceneWithName:(NSString *)name
-                     homeId:(long long)homeId
-                 background:(NSString *)background
-              showFirstPage:(BOOL)showFirstPage
-           preConditionList:(NSArray<TuyaSmartScenePreConditionModel*> *)preConditionList
-              conditionList:(NSArray<TuyaSmartSceneConditionModel*> *)conditionList
-                 actionList:(NSArray<TuyaSmartSceneActionModel*> *)actionList
-                  matchType:(TuyaSmartConditionMatchType)matchType
-                    success:(void (^)(TuyaSmartSceneModel *sceneModel))success
-                    failure:(TYFailureError)failure;
-/**
-* 添加场景，使用一个带有完整数据的sceneModel进行添加。
-* Add a new scene.Use a sceneModel with complete infomation of a scene.
-*
-* @param sceneModel             sceneModel
-* @param homeId                 homeId
-* @param success                success block
-* @param failure                failure block
-*/
-+ (void)addNewSceneWithSceneModel:(TuyaSmartSceneModel *)sceneModel
-                           homeId:(long long)homeId
-                          success:(void (^)(TuyaSmartSceneModel *sceneModel))success
-                          failure:(TYFailureError)failure;
-
-/**
- * 修改场景(已废弃)
- * Edit a existed scene, deprecated.
- *
- * @param name               scene name
- * @param background         background image url
- * @param showFirstPage      show the scene in index page or not
- * @param conditionList      condition list
- * @param actionList         action list
- * @param matchType          Match all conditons/any conditon will execute the automation.
- * @param success            success block
- * @param failure            failure block
- */
+/// Edit an existed scene with all param, (deprecated).
+///
+/// @param name               The scene name.
+/// @param background        The background image url.
+/// @param showFirstPage      Show the scene in index page or not.
+/// @param conditionList      Condition list.
+/// @param actionList         Action list.
+/// @param matchType          Match all conditions/any condition will execute the automation.
+/// @param success            When success return TYSuccessHandler.
+/// @param failure            When failure return TYFailureError.
+///
+/// @deprecated This method is deprecated, Use -[TuyaSmartScene modifySceneWithName:background:showFirstPage:preConditionList:conditionList:actionList:matchType:success:failure:] instead.
 - (void)modifySceneWithName:(NSString *)name
                  background:(NSString *)background
               showFirstPage:(BOOL)showFirstPage
@@ -123,122 +192,4 @@
                   matchType:(TuyaSmartConditionMatchType)matchType
                     success:(TYSuccessHandler)success
                     failure:(TYFailureError)failure __deprecated_msg("This method is deprecated, Use -[TuyaSmartScene modifySceneWithName:background:showFirstPage:preConditionList:conditionList:actionList:matchType:success:failure:] instead");
-
-/**
- * 修改场景
- * Edit a existed scene.
- *
- * @param name               scene name
- * @param background         background image url
- * @param showFirstPage      show the scene in index page or not
- * @param preConditionList       preconditons, like valid time period.
- * @param conditionList      condition list
- * @param actionList         action list
- * @param matchType          Match all conditons/any conditon will execute the automation.
- * @param success            success block
- * @param failure            failure block
- */
-- (void)modifySceneWithName:(NSString *)name
-                 background:(NSString *)background
-              showFirstPage:(BOOL)showFirstPage
-           preConditionList:(NSArray<TuyaSmartScenePreConditionModel*> *)preConditionList
-              conditionList:(NSArray<TuyaSmartSceneConditionModel*> *)conditionList
-                 actionList:(NSArray<TuyaSmartSceneActionModel*> *)actionList
-                  matchType:(TuyaSmartConditionMatchType)matchType
-                    success:(TYSuccessHandler)success
-                    failure:(TYFailureError)failure;
-
-/**
-* 修改一个已经存在的场景，使用一个带有完成信息的sceneModel修改场景。
-* Edit a existed scene. Use a sceneModel with complete infomation of a scene.
-*
-* @param sceneModel         sceneModel
-* @param success            success block
-* @param failure            failure block
-*/
-- (void)modifySceneWithSceneModel:(TuyaSmartSceneModel *)sceneModel
-                          success:(TYSuccessHandler)success
-                          failure:(TYFailureError)failure;
-
-/**
- * 删除场景。
- * Delete a scene.
- *
- * @param success    success callback
- * @param failure    failure callback
- */
-- (void)deleteSceneWithSuccess:(TYSuccessHandler)success
-                       failure:(TYFailureError)failure;
-
-
-/**
- * 执行场景
- * Execute a scene.
- *
- * @param success    success callback
- * @param failure    failure callback
- */
-- (void)executeSceneWithSuccess:(TYSuccessHandler)success
-                        failure:(TYFailureError)failure;
-
-
-/**
- * 设置一个自动化为关闭状态，不会自动触发。
- * Disable an automation, which will not executed automaticaly.
- *
- * @param success    success callback
- * @param failure    failure callback
- */
-- (void)disableSceneWithSuccess:(TYSuccessHandler)success
-                        failure:(TYFailureError)failure;
-
-
-/**
- * 设置一个自动化为生效状态。
- * Enable an automation, which will be executed whild the conditons are matched.
- *
- * @param success    success callback
- * @param failure    failure callback
- */
-- (void)enableSceneWithSuccess:(TYSuccessHandler)success
-                       failure:(TYFailureError)failure;
-
-/**
- * 取消正在进行的操作。
- * Cancel the request being executed.
- */
-- (void)cancelRequest;
-
-#pragma mark - Recommend scene
-
-/**
- * 执行一个推荐场景
- * Execute a recommended scene.
- *
- * @param homeId    homeId
- * @param success    success callback
- * @param failure    failure callback
- */
-- (void)triggerRecommendSceneWithHomeId:(long long)homeId success:(TYSuccessHandler)success failure:(TYFailureError)failure;
-
-/**
- * 删除一个推荐场景
- * Delete a recommended scene.
- *
- * @param homeId    homeId
- * @param success    success callback
- * @param failure    failure callback
- */
-- (void)removeRecommendSceneWithHomeId:(long long)homeId success:(TYSuccessHandler)success failure:(TYFailureError)failure;
-
-/**
- * 保存一个推荐场景，推荐场景可以在推荐的基础上做修改，保存成功后会变成普通场景，同时被保存的推荐场景也不再推荐。
- * Save a recommended scene, this scene can be modified by user. this scene will become a normal scene after save successfully, and the recommended scene will not show anymore.
- *
- * @param homeId    homeId
- * @param success    success callback
- * @param failure    failure callback
- */
-- (void)saveRecommendSceneWithHomeId:(long long)homeId success:(void (^)(TuyaSmartSceneModel *sceneModel))success failure:(TYFailureError)failure;
-
 @end

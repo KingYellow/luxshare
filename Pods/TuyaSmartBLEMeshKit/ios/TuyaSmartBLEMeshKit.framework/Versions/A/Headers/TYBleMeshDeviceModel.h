@@ -1,9 +1,8 @@
 //
-//  TYBleMeshDeviceModel.h
-//  TuyaSmartBLEMeshKit
+// TYBleMeshDeviceModel.h
+// TuyaSmartBLEMeshKit
 //
-//  Created by 黄凯 on 2019/3/21.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 #import <TYBluetooth/TYBluetooth.h>
@@ -12,49 +11,31 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TYBleMeshDeviceModel : NSObject
 
-/**
- 设备名称
- */
+/// The device name.
 @property (nonatomic, strong) NSString *name;
 
-/**
- 设备本身
- */
+/// The device.
 @property (nonatomic, strong) TYBLEPeripheral *device;
 
-/**
- 地址
- */
+/// The device address.
 @property (nonatomic, assign) uint32_t address;
 
-/**
- 产品 id
- */
+/// The product ID.
 @property (nonatomic, strong) NSString *productId;
 
-/**
- 设备版本号
- */
+/// The device version.
 @property (nonatomic, strong) NSString *version;
 
-/**
- mac 地址
- */
+/// The device mac.
 @property (nonatomic, assign) uint32_t mac;
 
-/**
- 设备 uuid
- */
+/// THe device uuid.
 @property (nonatomic, strong) NSString *uuid;
 
-/**
- 设备大小类
- */
+/// The device type.  Device size class.
 @property (nonatomic, assign) uint32_t type;
 
-/**
- 融合类拓展信息
- */
+/// Fusion expansion information
 @property (nonatomic, strong) NSString *vendorInfo;
 
 @end

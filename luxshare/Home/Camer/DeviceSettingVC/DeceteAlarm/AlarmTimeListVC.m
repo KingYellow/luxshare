@@ -164,13 +164,14 @@
 
 - (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath {
     TYTimerModel *model = self.listArr[indexPath.row];
-    [self.timer removeTimerWithTask:QZHTUYATIMERALARM devId:self.deviceModel.devId  timerId:model.timerId success:^{
+    [self.timer removeTimerWithTimerId:model.timerId bizId:self.deviceModel.devId bizType:0 success:^{
         [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"deleteSuccesee") afterDelay:1.0];
         [self getTimerList];
-    } failure:^(NSError *error) {
-        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
         
+    } failure:^(NSError *error) {
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:1.0];
     }];
+
 }
 #pragma mark --lazy
 - (NSMutableArray *)listArr{
@@ -192,14 +193,15 @@
 
 - (void)getTimerList{
      self.timer = [[TuyaSmartTimer alloc] init];
-
-    [self.timer getTimerWithTask:QZHTUYATIMERALARM devId:self.deviceModel.devId success:^(NSArray<TYTimerModel *> *list) {
+    [self.timer getTimerListWithTask:QZHTUYATIMERALARM bizId:self.deviceModel.devId bizType:0 success:^(NSArray<TYTimerModel *> *list) {
         self.listArr =  [NSMutableArray arrayWithArray:list];
         [self.qzTableView reloadData];
+        
     } failure:^(NSError *error) {
+            
         [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
-
     }];
+
 }
 - (NSArray *)getweekArr:(NSString *)weekday{
     NSMutableArray *week = [NSMutableArray array];
@@ -248,12 +250,13 @@
 #pragma mark -- action
 - (void)valueChanged:(UISwitch *)sender{
     TYTimerModel *model = self.listArr[sender.tag];
-    [self.timer updateTimerStatusWithTask:QZHTUYATIMERALARM devId:self.deviceModel.devId timerId:model.timerId status:sender.on success:^{
-        [self getTimerList];
-        
-      } failure:^(NSError *error) {
-           [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
-          sender.on = !sender.on;
-      }];
+    [self.timer updateTimerStatusWithTimerId:model.timerId bizId:self.deviceModel.devId bizType:0 status:sender.on success:^{
+            [self getTimerList];
+    } failure:^(NSError *error) {
+        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:0.5];
+        sender.on = !sender.on;
+            
+    }];
+
 }
 @end

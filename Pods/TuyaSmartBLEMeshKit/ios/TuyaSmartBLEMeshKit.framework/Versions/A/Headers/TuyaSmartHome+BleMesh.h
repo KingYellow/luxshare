@@ -1,9 +1,8 @@
 //
-//  TuyaSmartHome+BleMesh.h
-//  TuyaSmartBLEKit
+// TuyaSmartHome+BleMesh.h
+// TuyaSmartBLEMeshKit
 //
-//  Created by 高森 on 2018/9/4.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <TuyaSmartDeviceKit/TuyaSmartDeviceKit.h>
 
@@ -11,12 +10,9 @@
 
 @property (nonatomic, strong, readonly) TuyaSmartBleMeshModel *meshModel;
 
-/**
- *  获取家庭下的mesh列表
- *
- *  @param success     操作成功回调
- *  @param failure     操作失败回调
- */
+/// Get the mesh list under the family.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)getMeshListWithSuccess:(void(^)(NSArray <TuyaSmartBleMeshModel *> *list))success
                        failure:(TYFailureError)failure;
 

@@ -10,7 +10,6 @@
 
 @implementation SelectRoomCell
 
-
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.contentView.backgroundColor = QZH_KIT_Color_WHITE_70;

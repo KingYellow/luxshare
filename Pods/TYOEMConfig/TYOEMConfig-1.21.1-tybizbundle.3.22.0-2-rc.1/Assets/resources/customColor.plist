@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>colors</key>
+	<dict>
+		<key>B1</key>
+		<string>#F8F8F8</string>
+		<key>B2</key>
+		<string>#FFFFFF</string>
+		<key>B3</key>
+		<string>#FFFFFF</string>
+		<key>B4</key>
+		<string>#FFFFFF</string>
+		<key>B5</key>
+		<string>#FFFFFF</string>
+		<key>M1</key>
+		<string>#FF5A28</string>
+		<key>M2</key>
+		<string>#FF4444</string>
+		<key>M3</key>
+		<string>#00CC99</string>
+		<key>M4</key>
+		<string>#1989FA</string>
+		<key>M5</key>
+		<string>#FF5A28</string>
+	</dict>
+	<key>color_alpha</key>
+	<dict>
+		<key>N1</key>
+		<real>0.9</real>
+		<key>N2</key>
+		<real>0.7</real>
+		<key>N3</key>
+		<real>0.5</real>
+		<key>N4</key>
+		<real>0.3</real>
+		<key>N5</key>
+		<real>0.7</real>
+		<key>N6</key>
+		<real>0.2</real>
+		<key>N7</key>
+		<real>0.1</real>
+		<key>N8</key>
+		<real>0.4</real>
+	</dict>
+	<key>corner</key>
+	<dict>
+		<key>card_corner_type</key>
+		<string>angle</string>
+		<key>alert_corner_type</key>
+		<string>angle</string>
+		<key>button_corner_type</key>
+		<string>angle</string>
+	</dict>
+	<key>font</key>
+	<dict>
+		<key>app_bold_font</key>
+		<string></string>
+		<key>app_font</key>
+		<string></string>
+	</dict>
+</dict>
+</plist>

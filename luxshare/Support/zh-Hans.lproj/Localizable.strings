@@ -25,6 +25,7 @@
 "EveryDay" = "每天";
 "WorkDay" = "工作日";
 "onlyOnce" = "仅限一次";
+
 //星期 简写
 "Sun" = "日";
 "Mon" = "一";
@@ -52,6 +53,7 @@
 "login_account" = "手机号/邮箱";
 "login_phone" = "手机号";
 "login_password" = "密码";
+"login_newPassword" = "新密码";
 "login_verifyCode" = "验证码";
 "login_sendCode" = "发送验证码";
 "login_loginPassword" = "密码登录";
@@ -59,6 +61,8 @@
 "reset_newPassword" = "新密码";
 "login_success" = "登录成功";
 "login_fail" = "登录失败";
+"resetPWSuccess" = "重置成功";
+"cantOnlyInt" = "密码不能为纯数字";
 
 "login_getCode" = "获取";
 "login_loginWithMessage" = "通过短信验证码登录";
@@ -87,7 +91,6 @@
 "personInfo_name" = "姓名";
 "personInfo_nickName" = "昵称";
 "personInfo_phoneNum" = "手机号码";
-"personInfo_headPic" = "头像";
 "personInfo_editLoginPW" = "修改登录密码";
 "personInfo_info" = "个人信息";
 "editNickname" = "修改昵称";
@@ -186,6 +189,8 @@
 //设置
 "setting_setting" = "设置";
 "setting_deceteAlarm" = "侦测报警设置";
+"setting_figureTracking" = "人形追踪";
+"setting_cruise" = "巡航设置";
 "setting_moveAlarm" = "移动报警";
 "setting_decetecCry" = "哭声检测";
 "setting_decetecCrySensitivity" = "哭声检测灵敏度";
@@ -196,9 +201,9 @@
 "setting_decetecVoice" = "声音侦测";
 "setting_decetecVoiceSensitivity" = "声音侦测灵敏度";
 
-"setting_decrteAlarmSwitch" = "移动侦测报警开关";
-"setting_personFilter" = "人形侦测";
-"setting_alarmSensitivity" = "报警灵敏度";
+"setting_decrteAlarmSwitch" = "移动侦测开关";
+"setting_personFilter" = "人形过滤";
+"setting_motionDetectionSensitivity" = "移动侦测灵敏度";
 "setting_deceteMusic" = "报警提示音";
 
 "setting_storage" = "存储设置";
@@ -237,6 +242,7 @@
 
 "cancel" = "取消";
 "setting" = "设置";
+"confirm" = "确认";
 //直播
 "recordingPleaseStop" = "录制中,请先停止录制";
 "talkingPleaseStop" = "通话中,请先停止通话";
@@ -450,4 +456,23 @@
 "doorbellRefuse" = "拒绝";
 "doorbellAnswer" = "接受";
 "waitingAnswerDoorbell" = "等待接听门铃呼叫";
+"remoteReboot" = "远程重启";
+"restoreFactorySettings" = "恢复出厂设置";
+"cannotBeRestoredafteRestored" = "恢复出厂设置后不能恢复";
+"notManagerNoHandle" = "您不是管理员,不能操作";
+"cruise_turnOnCamerCruise" = "开启摄像机巡航";
+"cruise_setCruiseMode" = "请设置巡航模式";
+"cruise_panoramicCruise" = "全景巡航";
+"cruise_cycleThroughAllMonitoringAngles" = "摄像机将循环拍摄所有监控角度";
+"cruise_collectionPointCruise" = "收藏点巡航";
+"cruise_cycleThrougAllTheCollectionPoints" = "摄像机将循环拍摄所有收藏点,每个位置停留10秒钟";
+"cruise_selectCruiseTime" = "请选择巡航时间";
+"cruise_cruiseAllDay" = "全天巡航";
+"cruise_camerCurisingAllDay" = "摄像机将全天进行巡航拍摄";
+"cruise_timedCruise" = "定时巡航";
+"cruise_cruiseInTheSpecifieTime" = "摄像机将在指定的时间内巡航拍摄";
+"cruise_cruiseTime" = "巡航时间:";
+"member_leaveFamily" = "退出家庭";
+"turnOffHumanTracking" = "请先关闭人形追踪";
+"turnOffCruise" = "请先关闭巡航功能";
 

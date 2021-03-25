@@ -232,18 +232,6 @@
 	</dict>
 	<dict>
 		<key>abbr</key>
-		<string>BR</string>
-		<key>chinese</key>
-		<string>巴西</string>
-		<key>code</key>
-		<string>55</string>
-		<key>english</key>
-		<string>Brazil</string>
-		<key>spell</key>
-		<string>baxi</string>
-	</dict>
-	<dict>
-		<key>abbr</key>
 		<string>VG</string>
 		<key>chinese</key>
 		<string>英属维京群岛</string>

@@ -29,15 +29,17 @@
 //设备供电类型  电池/常电版
 + (BOOL)deviceIsBattery:(TuyaSmartDeviceModel *)deviceModel{
     
-    return [deviceModel.productId isEqualToString:BATTERY_PRODUCT_ID] || [deviceModel.productId isEqualToString:DOORbell_PRODUCT_ID];
+    return [deviceModel.productId isEqualToString:BATTERY_PRODUCT_ID_HS] || [deviceModel.productId isEqualToString:BATTERY_PRODUCT_ID] || [deviceModel.productId isEqualToString:DOORbell_PRODUCT_ID] ||[deviceModel.productId isEqualToString:DOORbell_PRODUCT_ID_HS];
 }
 
 //设备类型
 + (DeviceType)deviceType:(TuyaSmartDeviceModel *)deviceModel{
-    if ([deviceModel.productId isEqualToString:DOORbell_PRODUCT_ID]) {
+    if ([deviceModel.productId isEqualToString:DOORbell_PRODUCT_ID_HS] ||[deviceModel.productId isEqualToString:DOORbell_PRODUCT_ID]) {
         return DoorbellDevice;
-    }else if([deviceModel.productId isEqualToString:BATTERY_PRODUCT_ID]){
+    }else if([deviceModel.productId isEqualToString:BATTERY_PRODUCT_ID_HS] || [deviceModel.productId isEqualToString:BATTERY_PRODUCT_ID]){
         return IPCamBatteryDevice;
+    }else if([deviceModel.productId isEqualToString:PTZ_PRODUCT_ID_LIST] || [deviceModel.productId isEqualToString:PTZ_PRODUCT_ID_LIST_T31]){
+        return IPCamPTZDevice;
     }else{
         return IPCamACDevice;
     }

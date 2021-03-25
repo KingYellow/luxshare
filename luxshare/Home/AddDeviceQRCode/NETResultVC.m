@@ -23,7 +23,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     [self initConfig];
     
 }
@@ -83,7 +82,6 @@
     }];
     QZHViewRadius(self.submitBtn,25);
     QZHViewRadius(self.feedBook,25);
-
     
 }
 

@@ -1,9 +1,8 @@
 //
-//  TuyaSmartUser+Anonymous.h
-//  TuyaSmartBaseKit
+// TuyaSmartUser+Anonymous.h
+// TuyaSmartBaseKit
 //
-//  Created by XuChengcheng on 2020/7/28.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import "TuyaSmartUser.h"
 
@@ -11,41 +10,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TuyaSmartUser (Anonymous)
 
-/**
- *  Anonymous register
- *  匿名注册
- *
- *  @param countryCode Country code
- *  @param userName    User Name, e.g. : [UIDevice currentDevice].name
- *  @param success     Success block
- *  @param failure     Failure block
- */
+/// Anonymous register.
+/// @param countryCode Country code.
+/// @param userName User Name, e.g. : [UIDevice currentDevice].name.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)registerAnonymousWithCountryCode:(NSString *)countryCode
                                 userName:(NSString *)userName
                                  success:(nullable TYSuccessHandler)success
                                  failure:(nullable TYFailureError)failure;
 
-/**
- *  delete anonymous account
- *  删除匿名账号
- *
- *  @param success     Success block
- *  @param failure     Failure block
- */
+/// Delete anonymous account.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)deleteAnonymousAccountWithSuccess:(TYSuccessHandler)success
                                   failure:(TYFailureError)failure;
 
-/**
- *  bind username
- *  绑定匿名账号
- *
- *  @param countryCode Country code
- *  @param userName    Mobile phone number or Email address
- *  @param code        verification code
- *  @param password    password
- *  @param success     Success block
- *  @param failure     Failure block
- */
+/// Bind username.
+/// @param countryCode Country code.
+/// @param userName Mobile phone number or Email address.
+/// @param code Verification code.
+/// @param password Password.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)usernameBindingWithCountryCode:(NSString *)countryCode
                               userName:(NSString *)userName
                                   code:(NSString *)code

@@ -1,9 +1,8 @@
 //
-//  TuyaSmartHomeDeviceShare+TYDeprecatedApi.h
-//  TuyaSmartDeviceKit
+// TuyaSmartHomeDeviceShare+TYDeprecatedApi.h
+// TuyaSmartDeviceKit
 //
-//  Created by Hemin Won on 2020/7/6.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import "TuyaSmartHomeDeviceShare.h"
 
@@ -11,17 +10,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TuyaSmartHomeDeviceShare (TYDeprecatedApi)
 
-/**
- Add Shares
- 添加共享
- 
- @param homeId      homeId
- @param countryCode countryCode
- @param userAccount userAccount
- @param devIds      devId list
- @param success     Success block
- @param failure     Failure block
- */
+/// Add Sharing
+/// @param homeId homeId
+/// @param countryCode countryCode
+/// @param userAccount userAccount
+/// @param devIds devId list
+/// @param success Success block
+/// @param failure Failure block
+/// @deprecated This method is deprecated, Use TuyaSmartHomeDeviceShare::addDeviceShareWithRequestModel:success:failure: instead.
 - (void)addShareWithHomeId:(long long)homeId
                countryCode:(NSString *)countryCode
                userAccount:(NSString *)userAccount
@@ -30,17 +26,14 @@ NS_ASSUME_NONNULL_BEGIN
                    failure:(TYFailureError)failure __deprecated_msg("This method is deprecated, Use [TuyaSmartHomeDeviceShare   addDeviceShareWithRequestModel:success:failure:]");
 
 
-/**
- Device Add Sharing
- 单设备添加共享
- 
- @param homeId      homeId
- @param countryCode countryCode
- @param userAccount userAccount
- @param devId       devId
- @param success     Success block
- @param failure     Failure block
- */
+/// Single device add share
+/// @param homeId homeId
+/// @param countryCode countryCode
+/// @param userAccount userAccount
+/// @param devId devId
+/// @param success Success block
+/// @param failure Failure block
+/// @deprecated This method is deprecated, Use TuyaSmartHomeDeviceShare::addDeviceShareWithRequestModel:success:failure: instead.
 - (void)addDeviceShareWithHomeId:(long long)homeId
                      countryCode:(NSString *)countryCode
                      userAccount:(NSString *)userAccount

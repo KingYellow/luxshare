@@ -8,8 +8,9 @@
 #ifndef TuyaSmartCameraM_h
 #define TuyaSmartCameraM_h
 
-#define TuyaSmartCameraM_version @"4.20.0"
+#define TuyaSmartCameraM_version @"4.22.0"
 
 #import "TuyaSmartCloudVideoPlayer.h"
+#import "TuyaSmartP2pConfigService.h"
 
 #endif /* TuyaSmartCameraM_h */

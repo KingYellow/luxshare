@@ -1,30 +1,47 @@
 //
-//  TYBLEAdvModel.h
-//  TuyaSmartPublic
+// TYBLEAdvModel.h
+// TuyaSmartBLEKit
 //
-//  Created by 冯晓 on 16/8/24.
-//  Copyright © 2016年 Tuya. All rights reserved.
-//  单点蓝牙广播包model
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 typedef enum : NSUInteger {
+    /// The unknown BLE device type.
     TYSmartBLETypeUnknow = 1,
-    TYSmartBLETypeBLE,//单点设备
-    TYSmartBLETypeBLEPlus,//单点设备
-    TYSmartBLETypeBLEWifi,//ble-wifi 设备
-    TYSmartBLETypeBLESecurity,//安全协议的设备
-    TYSmartBLETypeBLEWifiSecurity,//安全协议的双模多协议配网 BLE WI-FI 设备
+    /// The old protocol BLE device type, which is not support security protocol.
+    TYSmartBLETypeBLE,
+    /// The old protocol BLE device type, which has a lower level of security.
+    TYSmartBLETypeBLEPlus,
+    /// The old protocol BLE dual-mode device type, which is not support security protocol.
+    TYSmartBLETypeBLEWifi,
+    /// The new protocol BLE device type, which has a high level of security.
+    TYSmartBLETypeBLESecurity,
+    /// The new protocol BLE dual-mode device type, which has a high level of security.
+    TYSmartBLETypeBLEWifiSecurity,
 } TYSmartBLEType;
 
+/// @brief TYBLEAdvModel provides model for developers to obtaine BLE device broadcast information.
+///
+/// All the device information is obtained from the Bluetooth device broadcast packet data.
+
+/// The different types of BLE device type. See explanation below.
 @interface TYBLEAdvModel : NSObject
 
+/// The BLE device UUID.
 @property (nonatomic, strong) NSString           *uuid;
+/// The BLE device product Id.
 @property (nonatomic, strong) NSString           *productId;
+/// The BLE device mac address.
 @property (nonatomic, strong) NSString           *mac;
+/// The BLE device activation state.
 @property (nonatomic, assign) BOOL               isActive;
+/// The BLE device BLE device type.
 @property (nonatomic, assign) TYSmartBLEType     bleType;
+/// whether the BLE device support connect the router 5G band.
+/// @note only available for `bleType` is `TYSmartBLETypeBLEWifi` or `TYSmartBLETypeBLEWifiSecurity`.
 @property (nonatomic, assign) BOOL               isSupport5G;
-@property (nonatomic, assign) BOOL               isProuductKey; // NO 前绑定设备 YES 后绑定设备
-//用于安全协议的设备 表示协议版本
+/// whether the BLE device support product key.
+@property (nonatomic, assign) BOOL               isProuductKey;
+/// The BLE device device protocol version.
 @property (nonatomic, assign) int                bleProtocolV;
 
 @end

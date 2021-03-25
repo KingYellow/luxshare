@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "AppDelegate+Exp.h"
-
 @interface AppDelegate ()
 @end
 
@@ -30,6 +29,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     
     [self exp_applicationDidEnterBackground:application];
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -51,10 +51,18 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [TuyaSmartSDK sharedInstance].deviceToken = deviceToken;
 }
+
 //接收到远程通知
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void(^)(UIBackgroundFetchResult))completionHandler {
 
-
+}
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
+    
 }
 
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler{
+    
+    self.tabVC.selectedIndex = 1;
+
+}
 @end

@@ -1,10 +1,8 @@
 //
-//  TuyaSmartDeviceModel.h
-//  TuyaSmartKit
+// TuyaSmartDeviceModel.h
+// TuyaSmartDeviceCoreKit
 //
-//  Created by XuChengcheng on 2017/6/8.
-//  Copyright © 2017年 Tuya. All rights reserved.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #ifndef TuyaSmart_BleMeshSubDeviceModuleModel
 #define TuyaSmart_BleMeshSubDeviceModuleModel
@@ -109,8 +107,6 @@
 @property (nonatomic, strong) TuyaSmartDeviceInfraredModel       *infrared;
 @property (nonatomic, strong) TuyaSmartDeviceSubpiecesModel      *subpieces;
 
-
 @end
-
 
 #endif

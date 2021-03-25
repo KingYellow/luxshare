@@ -1,9 +1,8 @@
 //
-//  TuyaSmartMultiControl.h
-//  TuyaSmartDeviceKit
+// TuyaSmartMultiControl.h
+// TuyaSmartDeviceKit
 //
-//  Created by Misaka on 2020/5/18.
-//
+// Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
 #import "TuyaSmartMultiControlLinkModel.h"
@@ -15,89 +14,71 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TuyaSmartMultiControl : NSObject
 
-/**
- * 查询设备下 dp 按键关联的多控和自动化
- *
- * @param devId 设备id
- * @param dpId 数据点id
- * @param success 成功回调
- * @param failure 失败回调
- */
+/// Query the multiple controls and automation associated with the dp button under the device.
+/// @param devId Main device ID.
+/// @param dpId DP ID.
+/// @param success Called when the task finishes successfully. TuyaSmartMultiControlLinkModel will be returned.
+/// @param failure Called when the task is interrupted by an error.
 - (void)queryDeviceLinkInfoWithDevId:(NSString *)devId
                                 dpId:(NSString *)dpId
                              success:(void (^)(TuyaSmartMultiControlLinkModel *))success
                              failure:(TYFailureError)failure;
 
-/**
- * 新增多控组
- *
- * @param devId 主设备id
- * @param groupName 多控组名称
- * @param groupDetail 多控组关联详情
- * @param success 成功回调
- * @param failure 失败回调
- */
+/// Adding a multi-control group.
+/// @param devId Main device ID.
+/// @param groupName The group name.
+/// @param groupDetail Multi-control group association details.
+/// @param success Called when the task finishes successfully. TuyaSmartMultiControlModel will be returned.
+/// @param failure Called when the task is interrupted by an error.
 - (void)addMultiControlWithDevId:(NSString *)devId
                        groupName:(NSString *)groupName
                      groupDetail:(NSArray<TuyaSmartMultiControlDetailModel *> *)groupDetail
                          success:(void (^)(TuyaSmartMultiControlModel *))success
                          failure:(TYFailureError)failure;
 
-/**
- * 更新多控组
- *
- * @param devId 主设备id
- * @param model 多控组数据模型
- * @param success 成功回调
- * @param failure 失败回调
- */
+//// Update multi-Control group.
+/// @param devId Main device ID.
+/// @param model Multi-control group data model.
+/// @param success Called when the task finishes successfully. TuyaSmartMultiControlModel will be returned.
+/// @param failure Called when the task is interrupted by an error.
 - (void)updateMultiControlWithDevId:(NSString *)devId
                   multiControlModel:(TuyaSmartMultiControlModel *)model
                             success:(void (^)(TuyaSmartMultiControlModel *))success
                             failure:(TYFailureError)failure;
 
-/**
- * 获取附属设备的 dp 点信息、已关联的多控、场景自动化信息
- *
- * @param devId 设备id
- * @param success 成功回调
- * @param failure 失败回调
- */
+/// Get dp point information of attached devices, associated multi-control, scene automation information.
+/// @param devId The device ID.
+/// @param success Called when the task finishes successfully. TuyaSmartMultiControlDpRelationModel will be returned.
+/// @param failure Called when the task is interrupted by an error.
 - (void)queryDeviceDpRelationWithDevId:(NSString *)devId
                                success:(void (^)(TuyaSmartMultiControlDpRelationModel *))success
                                failure:(TYFailureError)failure;
 
-/**
- * 启用或停用多控组
- *
- * @param multiControlId 多控组 Id
- * @param enable 启用或停用
- * @param success 成功回调
- * @param failure 失败回调
- */
+
+/// Enable or disable multiple control groups.
+/// @param multiControlId Multi-control group ID.
+/// @param enable A boolean value indicates whether to enable or disable the group.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
 - (void)enableMultiControlWithMultiControlId:(NSString *)multiControlId
                                       enable:(BOOL)enable
                                      success:(TYSuccessBOOL)success
                                      failure:(TYFailureError)failure;
 
-/**
- * 查询支持执行动作的设备ID列表及设备群组列表(包括用户的和家庭的)
- *
- * @param homeId 家庭 Id
- * @param success 成功回调
- * @param failure 失败回调
- */
+
+/// Query the list of device IDs and the list of device groups (including user's and family's) that support performing actions.
+/// @param homeId The home ID.
+/// @param success Called when the task finishes successfully. A list of TuyaSmartMultiControlDeviceModel will be returned.
+/// @param failure Called when the task is interrupted by an error.
 - (void)getMultiControlDeviceListWithHomeId:(long long)homeId
                                     success:(void (^)(NSArray<TuyaSmartMultiControlDeviceModel *> *))success
                                     failure:(TYFailureError)failure;
 
-/**
- * 获取设备下所有 dp 点信息
- *
- * @param devId 设备id
- * @param success 成功回调
- * @param failure 失败回调
- */
+
+/// Get information about all dp points under the device.
+/// @param devId The device ID.
+/// @param success Called when the task finishes successfully. A list of TuyaSmartMultiControlDatapointModel will be returned.
+/// @param failure Called when the task is interrupted by an error.
 - (void)getDeviceDpInfoWithDevId:(NSString *)devId
                          success:(void (^)(NSArray<TuyaSmartMultiControlDatapointModel *> *))success
                          failure:(TYFailureError)failure;

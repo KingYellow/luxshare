@@ -10,4 +10,5 @@
 #define Categories_h
 #import "UIButton+Exp.h"
 #import "NSString+ExpDate.h"
+#import "NSString+Filter.h"
 #endif /* Categories_h */

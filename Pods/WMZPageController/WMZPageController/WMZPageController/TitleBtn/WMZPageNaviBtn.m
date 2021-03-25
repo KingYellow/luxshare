@@ -76,9 +76,8 @@
      CGFloat labHeight = self.titleLabel.bounds.size.height;
      CGSize textSize = [self.titleLabel.text sizeWithAttributes:@{NSFontAttributeName:self.titleLabel.font}];
      CGSize frameSize = CGSizeMake(ceilf(textSize.width), ceilf(textSize.height));
-     if (labWidth < frameSize.width) {
-         labWidth = frameSize.width;
-     }
+     labWidth = MAX(labWidth, frameSize.width);
+     labHeight = MIN(labHeight, frameSize.height);
      CGFloat kMargin = spacing/2.0;
      switch (postion) {
          case PageBtnPositionLeft:
@@ -87,7 +86,7 @@
              break;
              
          case PageBtnPositionRight:
-            [self setImageEdgeInsets:UIEdgeInsetsMake(0, labWidth + kMargin, 0, -labWidth - kMargin)];
+             [self setImageEdgeInsets:UIEdgeInsetsMake(0, labWidth + kMargin, 0, -labWidth - kMargin)];
              [self setTitleEdgeInsets:UIEdgeInsetsMake(0, -imgWidth - kMargin, 0, imgWidth + kMargin)];
              break;
              
@@ -230,7 +229,7 @@ static NSInteger const pointWidth = 7; //小红点的宽高
 @implementation WMZPageNaviBtn (HMBadge)
 - (void)showBadgeWithTopMagin:(NSDictionary*)info
 {
-    if (self.badge == nil) {
+    if (!self.badge) {
         CGRect frame = CGRectMake(self.maxSize.width+self.param.wMenuCellMargin/2, self.param.wMenuCellPadding/2-pointWidth, pointWidth, pointWidth);
         self.badge = [[UILabel alloc] initWithFrame:frame];
         self.badge.backgroundColor = PageColor(0xff5153);
@@ -239,9 +238,12 @@ static NSInteger const pointWidth = 7; //小红点的宽高
         self.badge.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.badge];
         [self bringSubviewToFront:self.badge];
-        if (self.param.wCustomRedView) {
-            self.param.wCustomRedView(self.badge,info);
-        }
+    }else{
+        [self addSubview:self.badge];
+        [self bringSubviewToFront:self.badge];
+    }
+    if (self.param.wCustomRedView) {
+        self.param.wCustomRedView(self.badge,info);
     }
 }
 
