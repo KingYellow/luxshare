@@ -68,19 +68,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Create timer condition.
 ///
-/// @param timeZoneId timeZoneId like @"Asia/Shanghai"
+/// @param timeZoneId timeZoneId like @"Asia/Shanghai".
 /// @param loops eg: @"0111110", each character represent from Sunday to Monday. @"0000000" represent only once.
-/// @param date eg: @"20190501"
-/// @param time eg: @"20:40"
+/// @param date eg: @"20190501".
+/// @param time eg: @"20:40".
 ///
 /// @return A TuyaSmartSceneExprModel object.
 + (TuyaSmartSceneExprModel *)createTimerExprWithTimeZoneId:(NSString *)timeZoneId loops:(NSString *)loops date:(NSString *)date time:(NSString *)time;
 
 /// Create a timer condition's expression related to sunrise or sunset times, For example, "x minutes before sunrise". "at sunrise" is still handled as a normal weather condition.
 ///
-/// @param city City that needs to be set
-/// @param type Identify sunrise or sunset
-/// @param minutes From -300 minutes to 300 minutes
+/// @param city City that needs to be set.
+/// @param type Identify sunrise or sunset.
+/// @param minutes From -300 minutes to 300 minutes.
 ///
 /// @return A TuyaSmartSceneExprModel object.
 + (TuyaSmartSceneExprModel *)createSunsetriseTimerExprWithCity:(TuyaSmartCityModel *)city type:(SunType)type deltaMinutes:(NSInteger)minutes;

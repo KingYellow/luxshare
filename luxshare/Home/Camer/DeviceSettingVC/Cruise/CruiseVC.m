@@ -91,12 +91,13 @@
             cell.selectBtn.selected = ![self.deviceModel.dps[@"175"] boolValue];
              return cell;
         }else{
+            return  [UITableViewCell new];
+
             cell.nameLab.text = QZHLoaclString(@"cruise_collectionPointCruise");
             cell.contentLab.text = QZHLoaclString(@"cruise_cycleThrougAllTheCollectionPoints");
             cell.selectBtn.selected = [self.deviceModel.dps[@"175"] boolValue];
             return cell;
-        }
-         
+        }         
     }else{
         
         if (row == 0) {
@@ -169,7 +170,7 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 0 ) {
+    if (section == 0 || section == 1) {
         return 1;
     }
     return 2;

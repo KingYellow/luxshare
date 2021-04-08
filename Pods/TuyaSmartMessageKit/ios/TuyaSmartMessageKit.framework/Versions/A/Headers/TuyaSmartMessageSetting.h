@@ -10,46 +10,49 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+/// @brief TuyaSmartMessageSetting provides methods for device DND.
+///
 @interface TuyaSmartMessageSetting : NSObject
 
-/// 设置设备消息免打扰开关 set device Do Not Disturb status
-/// @param flags 开关状态 switch status
-/// @param success 成功回调 success
-/// @param failure 失败回调 failure
+/// Set device Do Not Disturb status.
+/// @param flags switch status.
+/// @param success When successfully set device Do Not Disturb status, this block will be called.
+/// @param failure When error occurred, return TYFailureError.
 - (void)setDeviceDNDSettingStatus:(BOOL)flags success:(TYSuccessHandler)success failure:(TYFailureError)failure;
 
-/// 获取设备消息免打扰状态 get device Do Not Disturb status
-/// @param success 成功回调 success
-/// @param failure 失败回调 failure
+/// Get device Do Not Disturb status.
+/// @param success When successfully get device Do Not Disturb status, this block will be called.
+/// @param failure When error occurred, return TYFailureError.
 - (void)getDeviceDNDSettingstatusSuccess:(TYSuccessBOOL)success failure:(TYFailureError)failure;
 
-/// 获取免打扰时间段列表 get Do Not Disturb list
-/// @param success 成功回调 success
-/// @param failure 失败回调 failure
+/// Get Do Not Disturb list.
+/// @param success When successfully get Do Not Disturb list, this block will be called.
+/// @param failure When error occurred, return TYFailureError.
 - (void)getDNDListSuccess:(TYSuccessList)success failure:(TYFailureError)failure;
 
-/// 获取设备列表 get device list
-/// @param success 成功回调 success
-/// @param failure 失败回调 failure
+/// Get device list.
+/// @param success When successfully get device list, this block will be called.
+/// @param failure When error occurred, return TYFailureError.
 - (void)getDNDDeviceListSuccess:(TYSuccessList)success failure:(TYFailureError)failure;
 
-/// 添加设备免打扰时间段 add device  Do Not Disturb time
-/// @param requestModel 免打扰设置模型 DND request model
-/// @param success 成功回调 success
-/// @param failure 失败回调 failure
+/// Add device Do Not Disturb time.
+/// @param requestModel DND request model.
+/// @param success When successfully add Do Not Disturb time, this block will be called.
+/// @param failure When error occurred, return TYFailureError.
 - (void)addDNDWithDNDRequestModel:(TuyaSmartMessageSettingDNDRequestModel *)requestModel success:(TYSuccessHandler)success failure:(TYFailureError)failure;
 
-/// 更新设备免打扰时间段 modify device  Do Not Disturb time
-/// @param timerID 时间ID time ID
-/// @param requestModel 免打扰设置模型 DND request model
-/// @param success 成功回调 success
-/// @param failure 失败回调 failure
+/// Modify device  Do Not Disturb time.
+/// @param timerID  time ID.
+/// @param requestModel DND request model.
+/// @param success When successfully modify device Do Not Disturb time, this block will be called.
+/// @param failure When error occurred, return TYFailureError.
 - (void)modifyDNDWithTimerID:(long)timerID DNDRequestModel:(TuyaSmartMessageSettingDNDRequestModel *)requestModel success:(TYSuccessHandler)success failure:(TYFailureError)failure;
 
-/// 移除设置的免打扰时间段 remove Do Not Disturb time
-/// @param timerID 时间ID time ID
-/// @param success 成功回调 success
-/// @param failure 失败回调 failure
+/// Remove Do Not Disturb time.
+/// @param timerID time ID.
+/// @param success When successfully remove Do Not Disturb time, this block will be called.
+/// @param failure When error occurred, return TYFailureError.
 - (void)removeDNDWithTimerID:(long)timerID success:(TYSuccessHandler)success failure:(TYFailureError)failure;
 
 @end

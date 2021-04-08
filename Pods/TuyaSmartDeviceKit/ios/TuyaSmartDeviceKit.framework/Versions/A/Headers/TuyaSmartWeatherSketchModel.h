@@ -8,6 +8,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// @brief Get Weather display entity.
+///
 @interface TuyaSmartWeatherSketchModel : NSObject
 
 /// Weather conditions, such as sunny, cloudy, rainy, etc.

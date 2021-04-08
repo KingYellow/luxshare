@@ -33,8 +33,8 @@
 - (void)addGestureRecognizerToView:(UIView *)view{
 
     // 缩放手势
-//    UIPinchGestureRecognizer *pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchView:)];
-//    [view addGestureRecognizer:pinchGestureRecognizer];
+    UIPinchGestureRecognizer *pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchView:)];
+    [view addGestureRecognizer:pinchGestureRecognizer];
 
     // 移动手势
 
@@ -54,8 +54,15 @@
     
     if (pinchGestureRecognizer.state == UIGestureRecognizerStateChanged){
 
-            NSLog(@"scale === %f width==%f",pinchGestureRecognizer.scale,view.frame.size.width);
-        self.scaGestureBolok(pinchGestureRecognizer.scale * self.gestureScale);
+        NSLog(@"scale === %f width==%f",pinchGestureRecognizer.scale,view.frame.size.width);
+        
+        CGFloat scalee = pinchGestureRecognizer.scale * self.gestureScale;
+        if (scalee <= 1) {
+            self.gestureX = 0;
+            self.gestureY = 0;
+        }
+
+        self.scaGestureBolok(scalee);
 
 //        pinchGestureRecognizer.scale = 1;
 //        self.leftBackBtn.hidden = YES;

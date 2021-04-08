@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
+/// device firmware upgrade informations
 @interface TuyaSmartFirmwareUpgradeModel : NSObject
 
 /// Upgrade copywriting.
@@ -35,6 +36,9 @@
 /// Equipment Type.
 @property (nonatomic, assign) NSInteger type;
 
+// Equipment type 0:Normal equipment, 1:Non-insured equipment
+@property (nonatomic, assign) NSInteger devType;
+
 /// Download URL of the upgrade firmware for Bluetooth devices.
 @property (nonatomic, strong) NSString *url;
 
@@ -53,11 +57,14 @@
 /// Whether the upgrade device is controllable.  0 : controllable; 1 : not controllable.
 @property (nonatomic, assign) BOOL controlType;
 
+/// Waiting for device wake-up description, low-power non-live device has the status of "waiting for device wake-up" before upgrade
+@property (nonatomic, strong) NSString *waitingDesc;
+
 /// Tip text in firmware upgrade.
 @property (nonatomic, strong) NSString *upgradingDesc;
 
 /// The prompt text in the device download firmware, currently only nb devices have.
-@property (nonatomic, strong) NSString *downloadingDesc;
+@property (nonatomic, strong) NSString *downloadingDesc __deprecated_msg("This property is deprecated, Use upgradingDesc instead");
 
 @end
 

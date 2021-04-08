@@ -6,7 +6,6 @@
 
 #ifndef TYSmartSceneDataFactory_h
 #define TYSmartSceneDataFactory_h
-/// @brief Header import for Scene
 
 #import "TuyaSmartScenePreConditionFactory.h"
 #import "TuyaSmartSceneExprModel.h"

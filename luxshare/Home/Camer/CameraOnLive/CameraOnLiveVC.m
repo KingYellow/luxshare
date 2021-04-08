@@ -818,11 +818,11 @@
 //WiFi信号状态代理
 - (void)device:(TuyaSmartDevice *)device signal:(NSString *)signal {
     NSInteger wifi = [signal integerValue];
-    if (wifi < -80) {
+    if (wifi <= 40) {
         self.playView.wifiIMG.image = QZHLoadIcon(@"wifi_0");
-    } else if (wifi < -65) {
+    } else if (wifi <= 50) {
         self.playView.wifiIMG.image = QZHLoadIcon(@"wifi_1");
-    } else if (wifi < -50) {
+    } else if (wifi <= 60) {
         self.playView.wifiIMG.image = QZHLoadIcon(@"wifi_2");
     } else {
         self.playView.wifiIMG.image = QZHLoadIcon(@"wifi_3");
@@ -1191,6 +1191,9 @@
         UIPanGestureRecognizer * pan = [[UIPanGestureRecognizer alloc]initWithTarget:traget action:nil];
         [_playView addGestureRecognizer:pan];
         _playView.camerGestureView.scaGestureBolok = ^(CGFloat sca) {
+            if (sca < 1.0) {
+                sca = 1.0;
+            }
             [weakSelf.camera.videoView tuya_setScaled:sca];
         };
 

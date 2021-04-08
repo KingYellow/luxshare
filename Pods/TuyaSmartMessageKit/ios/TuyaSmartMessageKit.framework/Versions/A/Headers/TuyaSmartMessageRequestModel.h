@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Limit count.
 @property (nonatomic, assign) NSInteger limit;
 
+/// Total number of messages requested
 @property (nonatomic, assign) NSInteger offset;
 
 @end
@@ -31,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Limit count.
 @property (nonatomic, assign) NSInteger limit;
 
+/// Total number of messages requested.
 @property (nonatomic, assign) NSInteger offset;
 
 /// Message device ID.
@@ -61,21 +63,27 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 #pragma mark - setting
+/// Device Do Not Disturb request model.
 @interface TuyaSmartMessageSettingDNDRequestModel : NSObject
 
-/// 开始时间 start time
+/// Start time.
 @property (nonatomic, copy) NSString *startTime;
 
-/// 结束时间 end time
+/// End time.
 @property (nonatomic, copy) NSString *endTime;
 
-/// 设备ID列表 device ID list
+/// The device ID list.
 @property (nonatomic, copy) NSArray<NSString *> *devIDs;
 
-/// 每周重复 周一 ～ 周日 0 代表当天不开启 1 代表当天开启 如@“0000111”, 代表仅仅周五～周天开启 Repeat days per week
+/// Repeat days per week.
+///
+/// 0 means close that day, 1 means open on the day. @"0000111" means Friday to Sunday open.
+///
 @property (nonatomic, copy) NSString *loops;
 
-/// 是否是全部设备免打扰，YES是忽略 devIDs中值 all device DND
+/// Do all devices support DND.
+///
+/// 'devIDs' is not required when 'isAllDevIDs' is Ture.
 @property (nonatomic, assign) BOOL isAllDevIDs;
 
 @end

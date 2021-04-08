@@ -4,6 +4,9 @@
 //
 // Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
+
+/// @brief Received share model.
+///
 @interface TuyaSmartReceivedShareUserModel : NSObject
 
 // user name

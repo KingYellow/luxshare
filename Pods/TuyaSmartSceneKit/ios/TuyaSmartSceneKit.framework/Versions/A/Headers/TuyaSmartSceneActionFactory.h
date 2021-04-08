@@ -6,6 +6,7 @@
 
 #import <Foundation/Foundation.h>
 #import <TuyaSmartSceneKit/TuyaSmartSceneKit.h>
+
 /// The two types of automation state. Provides enable and disable types.
 typedef enum : NSInteger {
     /// The enable type.
@@ -26,9 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param devId The device id.
 /// @param devName The device name.
 /// @param executerProperty Action to execute, format:{dpId: <dpId's value>} eg: {"1":true}.
-/// @param extraProperty The  optional parameters, extraProperty of action.
+/// @param extraProperty The optional parameters, extraProperty of action.
 ///
-/// @return TuyaSmartSceneActionModel
+/// @return The TuyaSmartSceneActionModel class.
 + (TuyaSmartSceneActionModel *)createDeviceDpActionWithDevId:(NSString *)devId devName:(NSString *)devName executerProperty:(NSDictionary *)executerProperty extraProperty:(NSDictionary *)extraProperty;
 
 /// Create a group action with group's params.
@@ -38,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param executerProperty Action to execute, format:{dpId: <dpId's value>} eg: {"1":true}.
 /// @param extraProperty The  optional parameters, extraProperty of action.
 ///
-/// @return TuyaSmartSceneActionModel
+/// @return The TuyaSmartSceneActionModel class.
 + (TuyaSmartSceneActionModel *)createGroupDpActionWithGroupId:(NSString *)groupId groupName:(NSString *)groupName executerProperty:(NSDictionary *)executerProperty extraProperty:(NSDictionary *)extraProperty;
 
 /// Create an action to trigger a scene.
@@ -46,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param sceneId The sceneId id.
 /// @param sceneName The sceneName name.
 ///
-/// @return TuyaSmartSceneActionModel
+/// @return The TuyaSmartSceneActionModel class.
 + (TuyaSmartSceneActionModel *)createTriggerSceneActionWithSceneId:(NSString *)sceneId sceneName:(NSString *)sceneName;
 
 /// Create an action to enable/disable an automation.
@@ -55,31 +56,31 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param sceneName The sceneName name.
 /// @param type AutoSwitchType.
 ///
-/// @return TuyaSmartSceneActionModel
+/// @return The TuyaSmartSceneActionModel class.
 + (TuyaSmartSceneActionModel *)createSwitchAutoActionWithSceneId:(NSString *)sceneId sceneName:(NSString *)sceneName type:(AutoSwitchType)type;
 
 /// Create a delay action.
 ///
-/// @param hours hours,range 0-5
-/// @param minutes minutes,range 0-59
-/// @param seconds seconds,range 0-59
+/// @param hours hours,range 0-5.
+/// @param minutes minutes,range 0-59.
+/// @param seconds seconds,range 0-59.
 /// 
-/// @return TuyaSmartSceneActionModel
+/// @return The TuyaSmartSceneActionModel class.
 + (TuyaSmartSceneActionModel *)createDelayActionWithHours:(NSString *)hours minutes:(NSString *)minutes seconds:(NSString *)seconds;
 
 /// Create a push notification action.
 ///
-/// @return TuyaSmartSceneActionModel
+/// @return The TuyaSmartSceneActionModel class.
 + (TuyaSmartSceneActionModel *)createSendNotificationAction;
 
 /// Create a call notification action(internal use, not open).
 ///
-/// @return TuyaSmartSceneActionModel
+/// @return The TuyaSmartSceneActionModel class.
 + (TuyaSmartSceneActionModel *)createCallAction;
 
 /// Create a send sms action(internal use, not open).
 ///
-/// @return TuyaSmartSceneActionModel
+/// @return The TuyaSmartSceneActionModel class.
 + (TuyaSmartSceneActionModel *)createSmsAction;
 
 @end

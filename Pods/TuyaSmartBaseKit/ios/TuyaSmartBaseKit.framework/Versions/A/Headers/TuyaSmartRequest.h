@@ -4,8 +4,8 @@
 //
 // Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
-#ifndef TuyaSmart_TuyaSmartRequest
-#define TuyaSmart_TuyaSmartRequest
+#ifndef TuyaSmartRequest_h
+#define TuyaSmartRequest_h
 
 #import <TuyaSmartUtil/TuyaSmartUtil.h>
 
@@ -119,4 +119,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 
-#endif
+#endif /* TuyaSmartRequest_h */

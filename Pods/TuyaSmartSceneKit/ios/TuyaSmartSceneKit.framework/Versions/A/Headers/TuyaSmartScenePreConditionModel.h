@@ -6,7 +6,7 @@
 
 #import <Foundation/Foundation.h>
 
-/// @brief TuyaSmartScenePreConditionModel provides more attributes for developers to create pre conditions for automation scene.
+/// @brief TuyaSmartScenePreConditionModel provides more attributes for developers to create pre-conditions for automation scene.
 @interface TuyaSmartScenePreConditionModel : NSObject<NSCoding>
 
 /// The scene id.

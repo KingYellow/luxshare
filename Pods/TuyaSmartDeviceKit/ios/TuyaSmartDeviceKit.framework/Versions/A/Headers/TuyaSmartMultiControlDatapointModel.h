@@ -7,14 +7,21 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
+/// @brief Multi-Control Datapoint Model.
+///
 @interface TuyaSmartMultiControlDatapointModel : NSObject
 
-@property (copy, nonatomic) NSString *dpId;///< dp id
-@property (copy, nonatomic) NSString *name;///< dp name
-@property (copy, nonatomic) NSString *code;///< dp standard name（dpCode）
-@property (copy, nonatomic) NSString *schemaId;///< The schema ID to which the key belongs.
+/// Dp id.
+@property (copy, nonatomic) NSString *dpId;
 
+/// Dp name.
+@property (copy, nonatomic) NSString *name;
+
+/// Dp standard name（dpCode）.
+@property (copy, nonatomic) NSString *code;
+
+/// The schema ID to which the key belongs.
+@property (copy, nonatomic) NSString *schemaId;
 @end
 
 NS_ASSUME_NONNULL_END

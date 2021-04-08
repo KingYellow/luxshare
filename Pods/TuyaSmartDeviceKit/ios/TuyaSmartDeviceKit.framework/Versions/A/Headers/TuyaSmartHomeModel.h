@@ -6,7 +6,8 @@
 
 #import <Foundation/Foundation.h>
 #import "TuyaSmartHomeModelUtils.h"
-
+/// @brief Home Model.
+///
 @interface TuyaSmartHomeModel : NSObject
 
 // home Id

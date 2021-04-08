@@ -12,18 +12,28 @@
 /// This notification is sent after receiving a broadcast from a wired distribution device. Object is dictionary, @{@"productId":productId, @"gwId":gwId}
 extern NSString *const TuyaSmartActivatorNotificationFindGatewayDevice;
 
+/// The four modes of network configuration. Provides EZ, AP and QR code and cable mode.
 typedef enum : NSUInteger {
-    TYActivatorModeEZ,///< smart config mode
-    TYActivatorModeAP,///< access point mode
-    TYActivatorModeQRCode,///< QR Code mode
-    TYActivatorModeWired, ///< wired mode
+    /// EZ mode, also refers to smart config mode
+    TYActivatorModeEZ,
+    /// AP mode, also refers to access point mode
+    TYActivatorModeAP,
+    /// QR Code mode
+    TYActivatorModeQRCode,
+    /// Wired mode, alse refers to cable mode
+    TYActivatorModeWired,
 } TYActivatorMode;
 
+/// The four steps of network configuration. Provides device found, registe, initialize and config timeout steps.
 typedef enum : NSUInteger {
-    TYActivatorStepFound = 1,///< device found
-    TYActivatorStepRegisted = 2,///< device registered
-    TYActivatorStepIntialized = 3,///< device initialized
-    TYActivatorStepTimeOut = 4, ///< device config timeout
+    /// Device found step
+    TYActivatorStepFound = 1,
+    /// Device registered step
+    TYActivatorStepRegisted = 2,
+    /// Device initialized step
+    TYActivatorStepIntialized = 3,
+    /// Device config timeout step
+    TYActivatorStepTimeOut = 4, 
 } TYActivatorStep;
 
 @class TuyaSmartActivator;
@@ -57,6 +67,11 @@ typedef enum : NSUInteger {
 
 @end
 
+/// @brief TuyaSmartActivator is used for network configuration.
+///
+/// This class provides network configuration capabilities for WiFi and ZigBee devices.Support EZ, AP and QR code and cable mode.
+///
+///
 @interface TuyaSmartActivator : NSObject
 
 /// Returns a singleton of the class.

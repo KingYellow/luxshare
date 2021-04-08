@@ -7,10 +7,14 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
+/// @brief TuyaSmartHomeInvitation provides methods to invite family members via invitation code.
+///
 @interface TuyaSmartHomeInvitation : NSObject
 
 /// Invite new members by invitation code.
+///
+/// This method is used to get the invitation code and invitation information, you need to send the invitation code to the required family members
+///
 /// @param createRequestModel The request model.
 /// @param success Called when the task finishes successfully. TuyaSmartHomeInvitationResultModel will be returned.
 /// @param failure If error occurred while adding the task, this block will be called.
@@ -27,6 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
                                  failure:(TYFailureError)failure;
 
 /// Re-invite members.
+///
+/// Invitation code has an expiration date, if you need to extend its validity, you can call this method
+///
+/// @note 'invitationID' in TuyaSmartHomeInvitationReinviteRequestModel can be obtained by fetchInvitationRecordListWithHomeID:success:failure
 /// @param reinviteRequestModel The re-invite request model.
 /// @param success Called when the task finishes successfully. TuyaSmartHomeInvitationResultModel will be returned.
 /// @param failure If error occurred while adding the task, this block will be called.

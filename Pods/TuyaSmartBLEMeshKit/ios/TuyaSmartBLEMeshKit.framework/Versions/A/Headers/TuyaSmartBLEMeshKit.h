@@ -25,10 +25,6 @@
 #import "TuyaSmartSIGMeshManager+OTA.h"
 #import "TuyaSmartSIGMeshDiscoverDeviceInfo.h"
 
-// home
-#import "TuyaSmartHome+BleMesh.h"
 #import "TuyaSmartActivator+BleMesh.h"
-#import "TuyaSmartHome+SIGMesh.h"
-
 
 #endif /* TuyaSmartBLEMeshKit_h */

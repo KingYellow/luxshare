@@ -4,6 +4,9 @@
 //
 // Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
+#ifndef TuyaSmartUser_Region_h
+#define TuyaSmartUser_Region_h
+
 #import "TuyaSmartUser.h"
 #import "TYRegionModel.h"
 
@@ -88,3 +91,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif /* TuyaSmartUser_Region_h */

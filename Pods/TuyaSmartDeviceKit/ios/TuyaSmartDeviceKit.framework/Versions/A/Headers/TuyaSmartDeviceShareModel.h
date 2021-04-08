@@ -8,6 +8,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// @brief Device sharing model.
+///
 @interface TuyaSmartDeviceShareRequestModel : NSObject
 
 /// Home ID

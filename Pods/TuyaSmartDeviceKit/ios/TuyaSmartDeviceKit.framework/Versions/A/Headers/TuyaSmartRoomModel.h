@@ -5,19 +5,20 @@
 // Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
 #import <Foundation/Foundation.h>
-
+/// @brief Room model.
+///
 @interface TuyaSmartRoomModel : NSObject
 
-// room Id
+/// Room ID.
 @property (nonatomic, assign) long long roomId;
 
-// room icon
+/// Room icon.
 @property (nonatomic, strong) NSString *iconUrl;
 
-// room name
+/// Room name.
 @property (nonatomic, strong) NSString *name;
 
-// order
+/// Order.
 @property (nonatomic, assign) NSInteger displayOrder;
 
 

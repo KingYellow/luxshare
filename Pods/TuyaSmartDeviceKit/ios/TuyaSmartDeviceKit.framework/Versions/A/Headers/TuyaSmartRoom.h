@@ -8,15 +8,17 @@
 #import "TuyaSmartRoomModel.h"
 #import <TuyaSmartDeviceCoreKit/TuyaSmartDeviceCoreKit.h>
 
+/// @brief TuyaSmartRoom provides room, device and group management functions.
+///
 @interface TuyaSmartRoom : NSObject
 
-/// room model
+/// Room model.
 @property (nonatomic, strong, readonly) TuyaSmartRoomModel *roomModel;
 
-/// device list
+/// Device list.
 @property (nonatomic, strong, readonly) NSArray <TuyaSmartDeviceModel *> *deviceList;
 
-/// group list
+/// Group list.
 @property (nonatomic, strong, readonly) NSArray <TuyaSmartGroupModel *> *groupList;
 
 

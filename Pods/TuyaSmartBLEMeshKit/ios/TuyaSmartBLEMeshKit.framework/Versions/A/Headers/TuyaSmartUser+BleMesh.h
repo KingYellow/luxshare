@@ -7,6 +7,9 @@
 #import <TuyaSmartBaseKit/TuyaSmartUser.h>
 #import "TuyaSmartBleMesh.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
+/// @brief Mesh information category for user.
 @interface TuyaSmartUser (BleMesh)
 
 @property (nonatomic, strong) TuyaSmartBleMeshModel *meshModel;
@@ -14,3 +17,5 @@
 @property (nonatomic, strong) TuyaSmartBleMesh *mesh;
 
 @end
+
+NS_ASSUME_NONNULL_END

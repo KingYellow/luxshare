@@ -8,24 +8,20 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// local network message
 @interface TuyaSmartLanMessageModel : NSObject
 
-/**
- protocol
- */
+/// protocol
 @property (nonatomic, assign) NSInteger    protocol;
 
-/**
- devId
- */
+/// device ID
 @property (nonatomic, strong) NSString     *devId;
 
-
+/// message body
 @property (nonatomic, strong) NSDictionary *body;
 
-
+/// message data
 @property (nonatomic, strong) NSData       *data;
-
 
 @end
 

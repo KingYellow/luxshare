@@ -7,6 +7,8 @@
 #ifndef TuyaSmartDeviceCoreKit_h
 #define TuyaSmartDeviceCoreKit_h
 
+/// @brief Header files for TuyaSmartDeviceCoreKit.
+
 /// The highest currently supported extranet communication protocol for clients.
 #define TUYA_CURRENT_GW_PROTOCOL_VERSION 2.2
 
@@ -18,6 +20,9 @@
 #if TARGET_OS_IOS
     #import <TuyaSmartMQTTChannelKit/TuyaSmartMQTTChannelKit.h>
     #import <TuyaSmartSocketChannelKit/TuyaSmartSocketChannelKit.h>
+
+    #import "TuyaSmartDevice+WiFiBackup.h"
+
 #elif TARGET_OS_WATCH
     #define TuyaSmartMQTTChannelDelegate NSObject
     #define TuyaSmartSocketChannelDelegate NSObject
@@ -28,6 +33,8 @@
 #import "TuyaSmartBleMeshModel.h"
 #import "TuyaSmartSingleTransfer.h"
 #import "TYCoreCacheService.h"
+
+#import "TuyaSmartDevice+OfflineReminder.h"
 
 #import "TuyaSmartDeviceCoreKitErrors.h"
 

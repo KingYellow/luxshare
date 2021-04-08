@@ -6,6 +6,9 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
+/// The ble mesh delegate when mesh do some action.
 @protocol TuyaSmartBleMeshDelegate<NSObject>
 
 @optional
@@ -21,6 +24,10 @@
 
 @end
 
+/// @brief Bluetooth mesh base class, including the basic operations of Bluetooth mesh, such as create, update, delete mesh, etc.
+///
+/// mesh as an important parameter for Bluetooth mesh connection.
+///
 @interface TuyaSmartBleMesh : NSObject
 
 @property (nonatomic, strong, readonly) TuyaSmartBleMeshModel *bleMeshModel;
@@ -157,3 +164,4 @@
 
 @end
 
+NS_ASSUME_NONNULL_END

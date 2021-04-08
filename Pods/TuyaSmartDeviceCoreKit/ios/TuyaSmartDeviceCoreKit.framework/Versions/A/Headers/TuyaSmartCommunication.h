@@ -8,6 +8,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// Communication type
 typedef NS_ENUM(NSUInteger, TYCommunicationType) {
     TYCommunicationTypeLAN      = 0, // LAN
     TYCommunicationTypeMQTT     = 1, // MQTT
@@ -17,6 +18,7 @@ typedef NS_ENUM(NSUInteger, TYCommunicationType) {
     TYCommunicationTypeBLEMesh  = 5, // Tuya Private Mesh
 };
 
+/// Communication mode
 @interface TuyaSmartCommunicationMode : NSObject
 
 /// Communication protocol version
@@ -27,6 +29,7 @@ typedef NS_ENUM(NSUInteger, TYCommunicationType) {
 
 @end
 
+/// Device communication
 @interface TuyaSmartCommunication : NSObject
 
 /// Communication sequence

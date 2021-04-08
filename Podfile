@@ -1,7 +1,7 @@
 
 source 'git@github.com:KingYellow/QZHFramework.git' # 私有库地址
 source "https://github.com/TuyaInc/TuyaPublicSpecs.git"
-source 'https://cdn.cocoapods.org/'
+#source 'https://cdn.cocoapods.org/'
 source 'https://github.com/CocoaPods/Specs.git'    # 官方库地址
 
 platform :ios, '9.0'

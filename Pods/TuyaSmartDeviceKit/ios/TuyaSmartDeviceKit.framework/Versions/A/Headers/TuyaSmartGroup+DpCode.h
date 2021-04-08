@@ -8,6 +8,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// @brief TuyaSmartGroup (DpCode) provides standard DPCode device group related functions.
+///
 @interface TuyaSmartGroup (DpCode)
 
 #pragma mark - Wi-Fi dpCode

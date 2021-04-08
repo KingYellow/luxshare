@@ -7,6 +7,7 @@
 #import <Foundation/Foundation.h>
 #import "TYBLEMeshCommandType.h"
 
+/// The mesh command protocol, confirm and impl some command, will execute.
 @protocol TYBLEMeshCommandProtocol <NSObject>
 
 /// Convert to Bluetooth command.
@@ -19,6 +20,7 @@
 
 @end
 
+/// @brief The ble mesh command for some command.
 @interface TYBLEMeshCommand : NSObject <TYBLEMeshCommandProtocol>
 
 /// Command type

@@ -15,5 +15,6 @@ ${PODS_CONFIGURATION_BUILD_DIR}/TYVideoPlayer/TYVideoPlayer.bundle
 ${PODS_ROOT}/TuyaSmartBaseKit/ios/TuyaSmartBaseKit.framework/Versions/A/Resources/cerficate_v2
 ${PODS_ROOT}/TuyaSmartBizCore/TuyaSmartBizCore-3.22.0-rc.3/Assets/resources/custom.json
 ${PODS_CONFIGURATION_BUILD_DIR}/TuyaSmartBizCore/TuyaSmartBizCore.bundle
+${PODS_ROOT}/TuyaSmartDefaultPanelKit/ios/TuyaSmartDefaultPanelKit.framework/Versions/A/Resources/TuyaSmartDefaultPanel.bundle
 ${PODS_CONFIGURATION_BUILD_DIR}/TuyaSmartHelpCenterBizBundle/TuyaSmartHelpCenterBizBundle.bundle
-${PODS_ROOT}/TuyaSmartUtil/ios/TuyaSmartUtil.framework/Versions/A/Resources/TuyaSmartUtil.bundle
+${PODS_ROOT}/TuyaSmartUtil/Carthage/Build/iOS/TuyaSmartUtil.framework/TuyaSmartUtil.bundle

@@ -10,18 +10,23 @@
 
 @class TuyaSmartHomeManager;
 
-
+/// @brief This class provides methods related to home management.
+///
 @protocol TuyaSmartHomeManagerDelegate <NSObject>
 
 @optional
 
 /// The delegate when a new home is added.
 ///
+/// Get result when call addHomeWithName:geoName:rooms:latitude:longitude:success:failure:
+///
 /// @param manager  instance
 /// @param home     homeModel
 - (void)homeManager:(TuyaSmartHomeManager *)manager didAddHome:(TuyaSmartHomeModel *)home;
 
 /// The delegate when an existing home is removed.
+///
+/// Get result when call TuyaSmartHome::dismissHomeWithSuccess:failure:
 ///
 /// @param manager  instance
 /// @param homeId   homeId
@@ -35,8 +40,10 @@
 
 @interface TuyaSmartHomeManager : NSObject
 
+/// Delegate for add and remove home result.
 @property (nonatomic, weak) id <TuyaSmartHomeManagerDelegate> delegate;
 
+/// Home List.
 @property (nonatomic, copy, readonly) NSArray <TuyaSmartHomeModel *> *homes;
 
 

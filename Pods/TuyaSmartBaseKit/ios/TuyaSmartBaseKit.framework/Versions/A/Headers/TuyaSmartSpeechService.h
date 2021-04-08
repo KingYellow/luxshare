@@ -4,10 +4,19 @@
 //
 // Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
+#ifndef TuyaSmartSpeechService_h
+#define TuyaSmartSpeechService_h
+
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// @brief TuyaSmartSpeechService is used for voice control.
+///
+/// There's two main functions:
+///     1. Audio to text. Convert voice data into text strings.
+///     2. Execute text command. Device related commands can be done through this API.
+///
 @interface TuyaSmartSpeechService : NSObject
 
 
@@ -39,3 +48,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif /* TuyaSmartSpeechService_h */

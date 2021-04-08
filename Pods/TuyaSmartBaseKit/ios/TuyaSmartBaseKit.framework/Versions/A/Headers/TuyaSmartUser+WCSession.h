@@ -4,6 +4,9 @@
 //
 // Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
+#ifndef TuyaSmartUser_WCSession_h
+#define TuyaSmartUser_WCSession_h
+
 #import "TuyaSmartUser.h"
 
 /**
@@ -19,9 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern NSString *const TuyaSmartUserWCSessionKey;
 
-/// We don't link WatchConnectivity.framework because not all developers need this feature.
-/// If the SDKs links WatchConnectivity.framework and don't use this feature, your app might be reject when submit to Apple Store.
-/// So please link WatchConnectivity.framework manually and use it on demand.
 @interface TuyaSmartUser (WCSession)
 
 /// Sync TuyaSmartUser context to Apple Watch. When user login/logout/session expired on iPhone, please use this method to sync manually.
@@ -37,3 +37,5 @@ extern NSString *const TuyaSmartUserWCSessionKey;
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif /* TuyaSmartUser_WCSession_h */

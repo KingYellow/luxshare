@@ -8,7 +8,7 @@
 #define TuyaSmartBaseKit_h
 
 #define TUYA_HOMEKIT_SDK
-#define TUYA_SDK_VERSION @"3.22.2"
+#define TUYA_SDK_VERSION @"3.24.2"
 
 #import <TuyaSmartUtil/TuyaSmartUtil.h>
 

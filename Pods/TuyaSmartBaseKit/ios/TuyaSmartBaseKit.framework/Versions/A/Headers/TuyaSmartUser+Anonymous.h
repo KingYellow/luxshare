@@ -4,6 +4,9 @@
 //
 // Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
+#ifndef TuyaSmartUser_Anonymous_h
+#define TuyaSmartUser_Anonymous_h
+
 #import "TuyaSmartUser.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -43,3 +46,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif /* TuyaSmartUser_Anonymous_h */

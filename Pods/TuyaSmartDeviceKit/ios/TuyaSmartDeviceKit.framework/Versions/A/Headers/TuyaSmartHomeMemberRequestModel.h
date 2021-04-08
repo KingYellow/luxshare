@@ -9,6 +9,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// @brief Home member request model.
+///
 @interface TuyaSmartHomeMemberRequestModel : NSObject
 
 /// Member ID, required field.

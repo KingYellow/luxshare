@@ -7,6 +7,7 @@
 #ifndef TYBLEMeshCommandType_h
 #define TYBLEMeshCommandType_h
 
+/// The ble mesh command type.
 typedef NS_ENUM(NSUInteger, TYBLEMeshCommandType) {
     
     /// Modify device address.

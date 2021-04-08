@@ -4,6 +4,9 @@
 //
 // Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
+#ifndef TuyaSmartUser_DeprecatedApi_h
+#define TuyaSmartUser_DeprecatedApi_h
+
 #import "TuyaSmartUser.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -120,3 +123,5 @@ DEPRECATED_MSG_ATTRIBUTE("use loginOrRegisterWithCountryCode:uid:password:create
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif /* TuyaSmartUser_DeprecatedApi_h */

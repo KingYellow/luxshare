@@ -11,12 +11,11 @@
 @class TYBLEAgent;
 @protocol TuyaSmartBLEDeviceProtocol;
 
-/// @brief TuyaSmartBLEDeviceProtocol provides protocol methons for developers to implement activator, control or OTA and others by itself protocol.
-
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Scan Protocol
 
+/// @brief TuyaSmartBLEDeviceProtocol provides protocol methods for developers to implement activator, control or OTA and others by itself protocol.
 @protocol TuyaSmartBLEScanProtocol <NSObject>
 
 typedef void(^TYBLEScanResultHandher)(id<TuyaSmartBLEDeviceProtocol> deviceInfo);

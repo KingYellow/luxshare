@@ -6,6 +6,9 @@
 
 #import <TuyaSmartBLEMeshKit/TuyaSmartBLEMeshKit.h>
 
+/// @brief SIG mesh activator Category for (SIG) bluetooth mesh manager.
+///
+/// Mainly contains the function entry for the device to start scanning and activating.
 @interface TuyaSmartSIGMeshManager (Activator)
 
 /// Start scanning device.

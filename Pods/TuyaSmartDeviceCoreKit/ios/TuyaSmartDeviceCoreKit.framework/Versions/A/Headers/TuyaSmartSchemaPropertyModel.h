@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
+/// device schema property
 @interface TuyaSmartSchemaPropertyModel : NSObject
 
 /// Type: enum - enumerated | bool - boolean | string - string | value - numeric | bitmap - fault.

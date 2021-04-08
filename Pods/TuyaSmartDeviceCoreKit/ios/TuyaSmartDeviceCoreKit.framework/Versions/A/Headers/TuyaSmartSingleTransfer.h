@@ -27,8 +27,13 @@ typedef NS_ENUM(NSUInteger, TuyaSmartTransferState) {
 
 @end
 
-__deprecated_msg("The channel already merged. We will provide new way to support it.") @interface TuyaSmartSingleTransfer : NSObject
+__deprecated_msg("The channel already merged. We will provide new way to support it.")
+@interface TuyaSmartSingleTransfer : NSObject
 
+/// @deprecated Data flow channel, currently deprecated.
+///
+/// Can use TuyaSmartMQTTChannelDelegate to receive data.
+///
 @property (nonatomic, weak) id<TuyaSmartTransferDelegate> delegate;
 
 #if TARGET_OS_IOS

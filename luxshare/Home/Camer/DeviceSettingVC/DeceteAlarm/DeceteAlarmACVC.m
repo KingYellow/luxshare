@@ -108,6 +108,32 @@
              cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
             return cell;
+        }else if(row == 3){
+            
+            PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
+             cell.nameLab.text = QZHLoaclString(@"setting_deceteMusic");
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            int state = [self.deviceModel.dps[@"233"] intValue];
+            if (state == 0) {
+                cell.describeLab.text = QZHLoaclString(@"closeAlarmMusic");
+            }
+            if (state == 1) {
+                cell.describeLab.text = QZHLoaclString(@"welcome");
+            }
+            if (state == 2) {
+                cell.describeLab.text = QZHLoaclString(@"dangerGoAway");
+            }
+            if (state == 3) {
+                cell.describeLab.text = QZHLoaclString(@"homeGoAway");
+            }
+            if ([self.deviceModel.dps[@"134"] boolValue]) {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }else{
+                //关闭人形侦测时候 隐藏报警灵敏度
+                return [UITableViewCell new];
+            }
+             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+             return cell;
         }else{
 
              SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
@@ -137,7 +163,7 @@
         }
       
     }else if(section == 1){
-        
+        //报警区域
         if (row == 0) {
              SettingSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_IMAGE];
             cell.nameLab.text = QZHLoaclString(@"setting_alarmAreaSwitch");
@@ -231,7 +257,7 @@
         }
          
     }else if(section == 4){
-
+//迁移到移动侦测下面
         PerInfoDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZHCELL_REUSE_TEXT];
          cell.nameLab.text = QZHLoaclString(@"setting_deceteMusic");
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -307,7 +333,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0 ) {
-        return 3;
+        return 4;
     }else if(section == 1){
         if ([self.deviceModel.dps[@"168"] boolValue]) {
             return 2;
@@ -324,7 +350,7 @@
             return 1;
         }
     }else if(section == 4){
-       //暂时隐藏提示音
+       //暂时隐藏提示音 后来又挪到移动侦测下面了
         return 0;
 //        return 1;
     }else{
@@ -336,7 +362,7 @@
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
 
-    if ((section == 0 && row == 2) || (section == 0 && row == 1)) {
+    if ((section == 0 && row == 2) || (section == 0 && row == 1) || (section == 0 && row == 3)) {
         if ([self.deviceModel.dps[@"134"] boolValue]) {
             return 50;
         }else{
@@ -413,7 +439,7 @@
             [self creatCryActionSheet];
         }
     }
-    if (section == 4) {
+    if (section == 0 && row == 3) {
         if (![QZHDeviceStatus deviceIsOnline:self.deviceModel]) {
             [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"deviceOfflineNoOperate") afterDelay:1.0];
             return;

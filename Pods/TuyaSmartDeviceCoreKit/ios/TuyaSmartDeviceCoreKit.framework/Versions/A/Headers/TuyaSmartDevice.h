@@ -14,25 +14,33 @@
 #import "TuyaSmartMQTTMessageModel.h"
 #import "TuyaSmartLanMessageModel.h"
 #import "TuyaSmartBackupWifiModel.h"
+#import "TuyaSmartDeviceOTAModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// Device online status
 typedef enum : NSUInteger {
-    TYDeviceOnlineModeLocal, ///< Local network online
-    TYDeviceOnlineModeInternet, ///<  Internet online
-    TYDeviceOnlineModeOffline, ///<  Offline
+    /// Local network online
+    TYDeviceOnlineModeLocal,
+    /// Internet online
+    TYDeviceOnlineModeInternet,
+    /// Offline
+    TYDeviceOnlineModeOffline,
 } TYDeviceOnlineMode;
 
-/// dp publish channel
+/// Dp publish channel
 typedef enum : NSUInteger {
-    TYDevicePublishModeLocal, ///<  Through local network
-    TYDevicePublishModeInternet, ///<  Through internet
-    TYDevicePublishModeAuto, ///<  Auto (If local network is available, use local)
+    /// Through local network
+    TYDevicePublishModeLocal,
+    /// Through internet
+    TYDevicePublishModeInternet,
+    /// Auto choose channel to publish
+    TYDevicePublishModeAuto,
 } TYDevicePublishMode;
 
 @class TuyaSmartDevice;
 
+/// The delegate for TuyaSmartDevice class, used for getting all device status updates.
 @protocol TuyaSmartDeviceDelegate<NSObject>
 
 @optional
@@ -113,10 +121,15 @@ typedef enum : NSUInteger {
 
 @end
 
-/// Device-related functions.
+/// @brief The basic operation class of the Tuya Smart Device contains the basic information model of the device, commands to publish, update device information and other common operation interfaces.
+///
+/// No matter what type of device, can be operated by initializing an instance of this class if the function supports it.
+///
 @interface TuyaSmartDevice : NSObject
 
+/// Get the basic device information model
 @property (nonatomic, strong, readonly) TuyaSmartDeviceModel *deviceModel;
+
 @property (nonatomic, weak, nullable) id<TuyaSmartDeviceDelegate> delegate;
 
 /// Get TuyaSmartDevice instance. If current user don't have this device, a nil will be return.
@@ -180,14 +193,13 @@ typedef enum : NSUInteger {
 - (void)syncWithCloud:(nullable TYSuccessHandler)success
               failure:(nullable TYFailureError)failure;
 
+
 /// Sync device information.
 /// @param devId The device ID.
-/// @param homeId The home ID.
 /// @param success Called when the task finishes successfully.
 /// @param failure Called when the task is interrupted by an error.
 + (void)syncDeviceInfoWithDevId:(NSString *)devId
-                         homeId:(long long)homeId
-                        success:(nullable TYSuccessHandler)success
+                        success:(nullable void (^)(TuyaSmartDeviceModel *device))success
                         failure:(nullable TYFailureError)failure;
 
 /// Sync subdevice information.
@@ -234,6 +246,12 @@ typedef enum : NSUInteger {
 /// @param failure Called when the task is interrupted by an error.
 - (void)upgradeFirmware:(NSInteger)type success:(nullable TYSuccessHandler)success failure:(nullable TYFailureError)failure;
 
+/// Cancel firmware upgrade, currently only supports canceling upgrade tasks that have not been published
+/// @param type Device type of `TuyaSmartFirmwareUpgradeModel`
+/// @param success  Called when the task finishes successfully.
+/// @param failure  Called when the task is interrupted by an error.
+- (void)cancelUpgradeFirmware:(NSInteger)type success:(nullable TYSuccessHandler)success failure:(nullable TYFailureError)failure;
+
 /// Cancel firmware upgrade network request.
 - (void)cancelFirmwareRequest;
 
@@ -260,6 +278,24 @@ typedef enum : NSUInteger {
 - (void)saveUpgradeInfoWithSwitchValue:(NSInteger)switchValue
                                success:(nullable TYSuccessHandler)success
                                failure:(nullable TYFailureError)failure;
+
+
+/// Access to the device's custom data, such as recording and storing custom data information
+/// @param success  Called when the task finishes successfully. The device property will return.
+/// @param failure Called when the task is interrupted by an error.
+- (void)getDevPropertyWithSuccess:(TYSuccessDict)success
+                          failure:(nullable TYFailureError)failure;
+
+
+/// Set the device's custom data, which can be used to record and store custom data information
+/// @param code The custom data key
+/// @param value The custom data value
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
+- (void)setDevPropertyWithCode:(NSString *)code
+                         value:(id)value
+                       success:(TYSuccessBOOL)success
+                       failure:(nullable TYFailureError)failure;
 
 #if TARGET_OS_IOS
 
@@ -290,41 +326,6 @@ typedef enum : NSUInteger {
 /// @param success Called when the task finishes successfully.
 /// @param failure Called when the task is interrupted by an error.
 - (void)awakeDeviceWithSuccess:(nullable TYSuccessHandler)success failure:(nullable TYFailureError)failure;
-
-#pragma mark - wifi backup
-
-/// Get current Wi-Fi info.
-/// @param success Called when the task finishes successfully. TYSuccessDict will be returned.
-/// @param failure Called when the task is interrupted by an error.
-- (void)getCurrentWifiInfoWithSuccess:(TYSuccessDict)success failure:(TYFailureError)failure __IOS_AVAILABLE(10.0);
-
-
-/// Get a list of alternate networks
-/// @param success Called when the task finishes successfully. TYSuccessDict will be returned.
-/// @param failure Called when the task is interrupted by an error.
-- (void)getBackupWifiListWithSuccess:(TYSuccessDict)success failure:(TYFailureError)failure __IOS_AVAILABLE(10.0);
-
-
-/// Setting up an alternate network list
-/// @param list Backup wifi list.
-/// @param success Called when the task finishes successfully. A list of TuyaSmartBackupWifiModel will be returned.
-/// @param failure Called when the task is interrupted by an error.
-- (void)setBackupWifiList:(NSArray<TuyaSmartBackupWifiModel *> *)list success:(TYSuccessDict)success failure:(TYFailureError)failure __IOS_AVAILABLE(10.0);
-
-
-/// Switching to a saved alternate network
-/// @param hash Hash for the SSID + password, returned from device.
-/// @param success Called when the task finishes successfully.
-/// @param failure Called when the task is interrupted by an error.
-- (void)switchToBackupWifiWithHash:(NSString *)hash success:(TYSuccessDict)success failure:(TYFailureError)failure __IOS_AVAILABLE(10.0);
-
-
-/// Switching to a new alternate network
-/// @param ssid SSID
-/// @param password SSID
-/// @param success Called when the task finishes successfully.
-/// @param failure Called when the task is interrupted by an error.
-- (void)switchToBackupWifiWithSSID:(NSString *)ssid password:(NSString *)password success:(TYSuccessDict)success failure:(TYFailureError)failure __IOS_AVAILABLE(10.0);
 
 #pragma mark - publish custom message
 

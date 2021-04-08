@@ -4,8 +4,11 @@
 //
 // Copyright (c) 2014-2021 Tuya Inc (https://developer.tuya.com)
 
+/// The two types of feedback. Provides question and answer types.
 typedef enum : NSUInteger {
+    /// The question feedback type.
     TuyaSmartFeedbackQuestion,
+    /// The answer feedback type.
     TuyaSmartFeedbackAnswer,
 } TuyaSmartFeedbackType;
 

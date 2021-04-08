@@ -6,6 +6,12 @@
 
 #import <TuyaSmartBLEMeshKit/TuyaSmartBLEMeshKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
+/// @brief SIG mesh activator Category for (SIG) bluetooth mesh manager.
+///
+/// Mainly contains the OTA upgrade function for device nodes
+///
 @interface TuyaSmartSIGMeshManager (OTA)
 
 /// Ready to upgrade target device.
@@ -24,3 +30,5 @@
 
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -9,38 +9,74 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// @brief Multi-Control group detail Model.
+///
 @interface TuyaSmartMultiControlGroupDetailModel : NSObject
 
+/// Group detail ID.
 @property (copy, nonatomic) NSString *detailId;
-@property (copy, nonatomic) NSString *multiControlId;///< Multi-control group id.
-@property (copy, nonatomic) NSString *devId;///< Attachment device id.
-@property (copy, nonatomic) NSString *devName;///< Name of attached device.
-@property (copy, nonatomic) NSString *dpId;///< The dp id of the associated attached device.
-@property (copy, nonatomic) NSString *dpName;///< The dp name of the associated attached device.
-@property (assign, nonatomic) BOOL enabled;///< Whether affiliated devices that have been associated can be controlled by the multi-control function.
+
+/// Multi-control group id.
+@property (copy, nonatomic) NSString *multiControlId;
+
+/// Attachment device id.
+@property (copy, nonatomic) NSString *devId;
+
+/// Name of attached device.
+@property (copy, nonatomic) NSString *devName;
+
+/// The dp id of the associated attached device.
+@property (copy, nonatomic) NSString *dpId;
+
+/// The dp name of the associated attached device.
+@property (copy, nonatomic) NSString *dpName;
+
+/// Whether affiliated devices that have been associated can be controlled by the multi-control function.
+@property (assign, nonatomic) BOOL enabled;
+
+/// Dp list.
 @property (strong, nonatomic) NSArray<TuyaSmartMultiControlDatapointModel *> *datapoints;
 
 @end
 
-
+/// @brief Multi-Control group Model.
+///
 @interface TuyaSmartMultiControlGroupModel : NSObject
 
-@property (copy, nonatomic) NSString *multiControlId;///< Multi-control group id.
-@property (copy, nonatomic) NSString *groupName;///< Multi-control group name.
-@property (strong, nonatomic) NSArray<TuyaSmartMultiControlGroupDetailModel *> *groupDetail;///< Multi-control group details.
+/// Multi-control group id.
+@property (copy, nonatomic) NSString *multiControlId;
 
+/// Multi-control group name.
+@property (copy, nonatomic) NSString *groupName;
+
+/// Multi-control group details.
+@property (strong, nonatomic) NSArray<TuyaSmartMultiControlGroupDetailModel *> *groupDetail;
+
+/// Whether the multi-control group is in effect.
 @property (assign, nonatomic) BOOL enabled;
-@property (assign, nonatomic) NSInteger groupType;///< Multi-control group type.
+
+/// Multi-control group type.
+@property (assign, nonatomic) NSInteger groupType;
+
+/// Multi rule ID.
 @property (copy, nonatomic) NSString *multiRuleId;
-@property (copy, nonatomic) NSString *ownerId;///< Family id.
-@property (copy, nonatomic) NSString *uid;///< User id.
+
+/// Family id.
+@property (copy, nonatomic) NSString *ownerId;
+
+/// User id.
+@property (copy, nonatomic) NSString *uid;
 
 @end
 
-
+/// @brief Multi-Control link Model.
+///
 @interface TuyaSmartMultiControlLinkModel : NSObject
 
+/// Multi-Control group Model.
 @property (strong, nonatomic) TuyaSmartMultiControlGroupModel *multiGroup;
+
+/// Automation List
 @property (strong, nonatomic) NSArray<TuyaSmartMultiControlParentRuleModel *> *parentRules;
 
 @end

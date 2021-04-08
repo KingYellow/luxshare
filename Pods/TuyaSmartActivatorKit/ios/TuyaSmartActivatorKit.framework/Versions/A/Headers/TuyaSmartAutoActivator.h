@@ -20,6 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/// @brief TuyaSmartAutoActivator is used for password-free configuration.
+///
+/// This class provides password-free configuration capabilities.
+///
 @interface TuyaSmartAutoActivator : NSObject
 
 /// Return the delegate of TuyaSmartAutoActivator.
@@ -40,6 +44,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray <TuyaSmartDeviceModel *> *)autoActiveRouterDeviceListWithHomeId:(long long)homeId __deprecated_msg("Use -[TuyaSmartRouterActivator autoActiveRouterDeviceListWithHomeId:] instead.");
 
 /// Start discovering devices.
+///
+/// The 'devIds' should be obtained form TuyaSmartAutoActivator::autoActiveSupportedDeviceListWithHomeId:
+///
 /// @param devIds Device Id list
 /// @param timeout Timeout, default 100 seconds.
 /// @param success Called when the task finishes successfully.
@@ -56,6 +63,9 @@ NS_ASSUME_NONNULL_BEGIN
                 failure:(TYFailureError)failure;
 
 /// Start discovering devices.
+///
+/// The 'devIds' should be obtained form TuyaSmartAutoActivator::autoActiveSupportedDeviceListWithHomeId:
+///
 /// @param devIds Device ID list.
 /// @param token Configuration token.
 /// @param timeout Timeout, default 100 seconds.

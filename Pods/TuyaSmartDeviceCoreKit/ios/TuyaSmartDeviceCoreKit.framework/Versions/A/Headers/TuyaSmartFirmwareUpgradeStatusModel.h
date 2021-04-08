@@ -9,6 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// device firmware upgrade status
 @interface TuyaSmartFirmwareUpgradeStatusModel : NSObject
 
 /// firmware upgrade status

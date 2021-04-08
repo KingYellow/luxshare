@@ -4,20 +4,21 @@
 //
 // Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
-#ifndef TuyaSmart_TuyaSmartSDK
-#define TuyaSmart_TuyaSmartSDK
+#ifndef TuyaSmartSDK_h
+#define TuyaSmartSDK_h
 
 #import <TuyaSmartUtil/TuyaSmartUtil.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// Server environment.
 typedef NS_ENUM(NSInteger, TYEnv) {
     TYEnvDaily,
     TYEnvPrepare,
     TYEnvRelease,
 };
 
-/// @brief TuyaSmartSDK is a entry for using the Tuya SDK.
+/// @brief TuyaSmartSDK is an entry for using the Tuya SDK.
 ///
 /// Before using the SDK, please go to Tuya IoT Platform (https://iot.tuya.com) create a SDK App.
 /// We need 4 things from the Platform to initialize the SDK:
@@ -46,7 +47,7 @@ typedef NS_ENUM(NSInteger, TYEnv) {
 /// Longitude of the location.
 @property (nonatomic, assign) double longitude;
 
-/// Server environment, daily/prepare/release. For test only. Not recommended to switch.
+/// Server environment, defaults is TYEnvRelease. Please do not set in production environment.
 @property (nonatomic, assign) TYEnv env;
 
 /// Request need SSL Pinning, default is `YES`.
@@ -189,4 +190,4 @@ typedef NS_ENUM(NSInteger, TYEnv) {
 
 NS_ASSUME_NONNULL_END
 
-#endif
+#endif /* TuyaSmartSDK_h */

@@ -20,13 +20,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/// @brief TuyaSmartRouterActivator is used for router configuration.
+///
+/// This class provides router configuration capabilities.
+///
 @interface TuyaSmartRouterActivator : NSObject
 
 /// Return the delegate of TuyaSmartRouterActivator.
 @property (nonatomic, weak) id<TuyaSmartRouterActivatorDelegate> delegate;
 
 
-/// Get the list of all gateway router devices under the current home.
+/// Get the list of all gateway router devices which support router configuration under the current home.
 /// @param homeId Current home ID.
 /// @return Current list of all home gateway router devices.
 - (NSArray <TuyaSmartDeviceModel *> *)autoActiveRouterDeviceListWithHomeId:(long long)homeId;
@@ -40,6 +44,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /// Start discovering devices.
+///
+/// The 'devIds' should be obtained form TuyaSmartRouterActivator::autoActiveRouterDeviceListWithHomeId:
+///
 /// @param devIds Device ID list.
 /// @param type Type, 0 to start discover device.
 /// @param timeout Timeout, default 100 seconds
@@ -53,6 +60,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /// Start discovering devices.
+///
+/// The 'devIds' should be obtained form TuyaSmartRouterActivator::autoActiveRouterDeviceListWithHomeId:
+///
 /// @param devIds Device ID list.
 /// @param token Configuration token.
 /// @param type Type, 0 to start discover device.

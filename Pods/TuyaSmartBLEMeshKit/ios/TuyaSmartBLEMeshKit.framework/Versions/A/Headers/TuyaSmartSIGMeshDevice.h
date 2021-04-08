@@ -6,6 +6,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// @brief SIG Bluetooth mesh device, operation class for Tuya Bluetooth devices.
+///
+/// Integrated from the basic smart device class, with some basic capabilities of the device method.
+///
 @interface TuyaSmartSIGMeshDevice : TuyaSmartDevice
 
 @end

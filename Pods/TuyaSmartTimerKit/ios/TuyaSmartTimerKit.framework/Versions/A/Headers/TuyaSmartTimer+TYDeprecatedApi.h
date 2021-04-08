@@ -9,6 +9,10 @@
 
 #import "TuyaSmartTimer.h"
 
+/// @deprecated The old timer api, deprecated.
+///
+/// Can use TuyaSmartTimer.h to set timer
+///
 @interface TuyaSmartTimer (TYDeprecatedApi)
 
 /// Add a new task for timer.

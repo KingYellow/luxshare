@@ -10,6 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class TuyaSmartBleMeshGroup;
 
+/// The ble mesh group delegate.  when use gateway to add device into group, will call it.
 @protocol TuyaSmartBleMeshGroupDelegate <NSObject>
 
 /// Group response of SIG mesh device joining gateway.
@@ -24,6 +25,10 @@ NS_ASSUME_NONNULL_BEGIN
   
 @end
 
+/// @brief Tuya Bluetooth mesh device groups, including group creation, updating, adding devices to groups, etc.
+///
+/// Form a group of mesh devices with the same function and control them simultaneously with a single command.
+///
 @interface TuyaSmartBleMeshGroup : NSObject
 
 @property (nonatomic, weak, nullable) id<TuyaSmartBleMeshGroupDelegate> delegate;
@@ -112,6 +117,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - SIG Mesh
 
+/// @brief The group command for gateway. Add device into group.
 @interface TuyaSmartBleMeshGroup (SIGMesh)
 
 /// Add sig mesh sub device group through sig mesh gateway.

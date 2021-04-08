@@ -6,8 +6,11 @@
 
 @class TuyaSmartShareDeviceModel;
 
+/// @brief Recipient Details Model.
+///
 @interface TuyaSmartReceiveMemberDetailModel : NSObject
 
+/// Share device model list.
 @property (nonatomic, strong) NSArray <TuyaSmartShareDeviceModel *> *devices;
 
 /// Account information, email or cell phone number.

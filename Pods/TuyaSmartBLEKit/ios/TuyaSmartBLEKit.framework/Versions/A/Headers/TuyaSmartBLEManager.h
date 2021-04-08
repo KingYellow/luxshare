@@ -8,9 +8,6 @@
 #import <TuyaSmartDeviceCoreKit/TuyaSmartDeviceCoreKit.h>
 #import "TYBLEAdvModel.h"
 
-/// @brief TuyaSmartBLEManager provides methods for developers to activator, control or OTA BLE device.
-///
-/// The two types of OTA. Provides firmware and MCU types.
 typedef enum : NSUInteger {
     /// The firmware OTA type.
     TuyaSmartBLEOTATypeFirmware = 0,
@@ -22,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class TuyaSmartBLEManager;
 
+/// Delegate for scanning and Bluetooth status change notification.
 @protocol TuyaSmartBLEManagerDelegate <NSObject>
 
 @optional
@@ -58,6 +56,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/// @brief TuyaSmartBLEManager provides methods for developers to activator, control or OTA BLE device.
+///
+/// The two types of OTA. Provides firmware and MCU types.
 @interface TuyaSmartBLEManager : NSObject
 
 /// Single instance.

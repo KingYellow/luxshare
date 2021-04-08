@@ -29,7 +29,7 @@ PODS:
   - Bugly (2.5.71)
   - CocoaAsyncSocket (7.6.5)
   - dsBridge (3.0.203)
-  - FLAnimatedImage (1.0.12)
+  - FLAnimatedImage (1.0.15)
   - HXPhotoPicker (2.4.2)
   - IQKeyboardManager (6.5.6)
   - JKCategories (1.7)
@@ -40,27 +40,16 @@ PODS:
   - MMKV (1.2.7):
     - MMKVCore (~> 1.2.7)
   - MMKVCore (1.2.7)
-  - MQTTClient (0.15.2):
-    - MQTTClient/Core (= 0.15.2)
-  - MQTTClient/Core (0.15.2):
-    - MQTTClient/Manager
-    - MQTTClient/Min
-  - MQTTClient/Manager (0.15.2):
-    - MQTTClient/Min
-  - MQTTClient/Min (0.15.2)
-  - OpenSSL-Universal (1.0.2.20):
-    - OpenSSL-Universal/Static (= 1.0.2.20)
-  - OpenSSL-Universal/Static (1.0.2.20)
   - Reachability (3.2)
-  - SDWebImage (5.10.3):
-    - SDWebImage/Core (= 5.10.3)
-  - SDWebImage/Core (5.10.3)
+  - SDWebImage (5.10.4):
+    - SDWebImage/Core (= 5.10.4)
+  - SDWebImage/Core (5.10.4)
   - SGQRCode (3.0.1)
   - TuyaCameraSDK (3.22.0.2)
-  - TuyaSmartActivatorKit (3.22.1):
-    - TuyaSmartDeviceKit (>= 3.20.0)
-  - TuyaSmartBaseKit (3.22.2):
-    - TuyaSmartUtil (>= 3.20.0)
+  - TuyaSmartActivatorKit (3.24.1):
+    - TuyaSmartDeviceKit (>= 3.24.0)
+  - TuyaSmartBaseKit (3.24.2):
+    - TuyaSmartUtil (>= 3.23.0)
     - YYModel
   - TuyaSmartBizCore (3.22.0):
     - TuyaSmartBaseKit
@@ -69,42 +58,42 @@ PODS:
     - TYModuleServices
     - TYOEMConfig
     - TYSmartBusinessLibrary
-  - TuyaSmartBLEKit (3.22.6):
-    - TuyaSmartActivatorKit (>= 3.20.0)
-    - TuyaSmartBaseKit (>= 3.20.0)
-    - TuyaSmartDeviceKit (>= 3.20.0)
+  - TuyaSmartBLEKit (3.24.1):
+    - TuyaSmartActivatorKit (>= 3.24.0)
+    - TuyaSmartDeviceCoreKit (>= 3.24.0)
     - TYBluetooth
-  - TuyaSmartBLEMeshKit (3.22.1):
-    - OpenSSL-Universal (~> 1.0.2.0)
-    - TuyaSmartActivatorKit (>= 3.20.0)
-    - TuyaSmartBaseKit (>= 3.20.0)
-    - TuyaSmartBLEKit (>= 3.20.0)
-    - TuyaSmartDeviceKit (>= 3.20.0)
+  - TuyaSmartBLEMeshKit (3.24.1):
+    - TuyaSmartActivatorKit (>= 3.24.0)
+    - TuyaSmartBLEKit (>= 3.24.0)
+    - TuyaSmartDeviceCoreKit (>= 3.24.0)
     - TYBluetooth
   - TuyaSmartCameraBase (4.22.0)
-  - TuyaSmartCameraKit (4.22.0):
+  - TuyaSmartCameraKit (4.22.0.2):
     - TuyaSmartBaseKit
     - TuyaSmartCameraBase
     - TuyaSmartCameraM
     - TuyaSmartDeviceCoreKit
     - TYEncryptImage
-  - TuyaSmartCameraM (4.22.0):
+  - TuyaSmartCameraM (4.22.0.2):
     - TuyaCameraSDK
     - TuyaSmartBaseKit
     - TuyaSmartCameraBase
-    - TuyaSmartDeviceCoreKit
+    - TuyaSmartDeviceKit
   - TuyaSmartCameraT (4.22.0):
     - TuyaSmartBaseKit
     - TuyaSmartCameraBase
     - TuyaSmartDeviceCoreKit
-  - TuyaSmartDeviceCoreKit (3.22.4):
-    - TuyaSmartBaseKit (>= 3.22.0)
-    - TuyaSmartMQTTChannelKit (>= 3.20.0)
-    - TuyaSmartSocketChannelKit (>= 3.20.0)
-  - TuyaSmartDeviceKit (3.22.2):
-    - TuyaSmartBaseKit (>= 3.22.0)
-    - TuyaSmartDeviceCoreKit (>= 3.22.0)
-  - TuyaSmartFeedbackKit (3.22.0):
+  - TuyaSmartDefaultPanelKit (1.0.0):
+    - TuyaSmartDeviceKit
+  - TuyaSmartDeviceCoreKit (3.24.1):
+    - TuyaSmartBaseKit (>= 3.24.0)
+    - TuyaSmartMQTTChannelKit (>= 3.24.0)
+    - TuyaSmartSocketChannelKit (>= 3.24.0)
+    - TuyaSmartUtil (>= 3.23.0)
+  - TuyaSmartDeviceKit (3.24.1):
+    - TuyaSmartBaseKit (>= 3.24.0)
+    - TuyaSmartDeviceCoreKit (>= 3.24.0)
+  - TuyaSmartFeedbackKit (3.24.1):
     - TuyaSmartBaseKit
   - TuyaSmartHelpCenterBizBundle (3.22.0.5):
     - CocoaAsyncSocket
@@ -153,36 +142,36 @@ PODS:
     - TYUrlPredefinedExternal (= 0.2.47)
     - TYVideoPlayer (= 2.0.1)
     - YYModel
-  - TuyaSmartHomeKit (3.22.0):
-    - TuyaSmartActivatorKit (>= 3.22.0)
-    - TuyaSmartBaseKit (>= 3.22.0)
-    - TuyaSmartBLEKit (>= 3.22.0)
-    - TuyaSmartBLEMeshKit (>= 3.22.0)
-    - TuyaSmartDeviceCoreKit (>= 3.22.0)
-    - TuyaSmartDeviceKit (>= 3.22.0)
-    - TuyaSmartFeedbackKit (>= 3.22.0)
-    - TuyaSmartMessageKit (>= 3.22.0)
-    - TuyaSmartMQTTChannelKit (>= 3.20.0)
-    - TuyaSmartSceneKit (>= 3.22.0)
-    - TuyaSmartSocketChannelKit (>= 3.20.0)
-    - TuyaSmartTimerKit (>= 3.22.0)
-  - TuyaSmartMessageKit (3.22.0):
+  - TuyaSmartHomeKit (3.24.0):
+    - TuyaSmartActivatorKit (>= 3.24.0)
+    - TuyaSmartBaseKit (>= 3.24.0)
+    - TuyaSmartBLEKit (>= 3.24.0)
+    - TuyaSmartBLEMeshKit (>= 3.24.0)
+    - TuyaSmartDefaultPanelKit
+    - TuyaSmartDeviceCoreKit (>= 3.24.0)
+    - TuyaSmartDeviceKit (>= 3.24.0)
+    - TuyaSmartFeedbackKit (>= 3.24.0)
+    - TuyaSmartMessageKit (>= 3.24.0)
+    - TuyaSmartMQTTChannelKit (>= 3.24.0)
+    - TuyaSmartSceneKit (>= 3.24.0)
+    - TuyaSmartSocketChannelKit (>= 3.24.0)
+    - TuyaSmartTimerKit (>= 3.24.0)
+  - TuyaSmartMessageKit (3.24.1):
     - TuyaSmartBaseKit
-  - TuyaSmartMQTTChannelKit (3.20.0):
-    - MQTTClient (= 0.15.2)
-    - TuyaSmartBaseKit (>= 3.20.0)
+  - TuyaSmartMQTTChannelKit (3.24.1):
+    - TuyaSmartBaseKit (>= 3.24.0)
     - TuyaSmartQUIC
   - TuyaSmartQUIC (1.1.1)
-  - TuyaSmartSceneKit (3.22.1):
-    - TuyaSmartBaseKit (>= 3.20.0)
-    - TuyaSmartDeviceKit (>= 3.20.0)
-  - TuyaSmartSocketChannelKit (3.20.1):
-    - CocoaAsyncSocket
-    - TuyaSmartBaseKit (>= 3.20.0)
-  - TuyaSmartTimerKit (3.22.0):
+  - TuyaSmartSceneKit (3.24.1):
     - TuyaSmartBaseKit
     - TuyaSmartDeviceKit
-  - TuyaSmartUtil (3.21.1)
+  - TuyaSmartSocketChannelKit (3.24.5):
+    - CocoaAsyncSocket
+    - TuyaSmartBaseKit (>= 3.24.0)
+  - TuyaSmartTimerKit (3.24.1):
+    - TuyaSmartBaseKit
+    - TuyaSmartDeviceKit
+  - TuyaSmartUtil (3.23.5)
   - TYAlertView (1.0.2):
     - Masonry
     - TYFoundationKit
@@ -197,7 +186,7 @@ PODS:
     - TYOEMConfig
     - TYUIKit
   - TYBlockKit (0.0.4)
-  - TYBluetooth (3.17.0)
+  - TYBluetooth (3.23.1)
   - TYCommonDebugger (0.3.0):
     - CocoaAsyncSocket
     - TuyaSmartDeviceKit
@@ -223,7 +212,7 @@ PODS:
     - TYModuleManager
     - TYModuleServices
     - TYSmartBusinessLibrary
-  - TYEncryptImage (4.22.0)
+  - TYEncryptImage (4.23.5)
   - TYFoundationKit (1.14.0):
     - Reachability
   - TYHelpCenterModule (0.0.3):
@@ -326,7 +315,7 @@ PODS:
     - Masonry
     - TYFoundationKit
     - TYSmartBusinessLibrary
-  - UMAPM (1.1.0)
+  - UMAPM (1.1.1)
   - UMCCommon (7.2.5):
     - UMAPM
     - UMDevice
@@ -371,15 +360,56 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - AFNetworking
+    - BRPickerView
+    - Bugly
+    - CocoaAsyncSocket
+    - FLAnimatedImage
+    - HXPhotoPicker
+    - IQKeyboardManager
+    - JKCategories
     - lottie-ios
+    - Masonry
+    - MBProgressHUD
     - MJRefresh
+    - MMKV
+    - MMKVCore
+    - Reachability
     - SDWebImage
+    - SGQRCode
+    - TuyaCameraSDK
     - TuyaSmartActivatorKit
     - TuyaSmartBaseKit
     - TuyaSmartBLEKit
+    - TuyaSmartBLEMeshKit
+    - TuyaSmartCameraBase
+    - TuyaSmartCameraKit
+    - TuyaSmartCameraM
+    - TuyaSmartCameraT
+    - TuyaSmartDefaultPanelKit
     - TuyaSmartDeviceCoreKit
     - TuyaSmartDeviceKit
+    - TuyaSmartFeedbackKit
+    - TuyaSmartHomeKit
+    - TuyaSmartMessageKit
+    - TuyaSmartMQTTChannelKit
+    - TuyaSmartQUIC
+    - TuyaSmartSceneKit
+    - TuyaSmartSocketChannelKit
+    - TuyaSmartTimerKit
     - TuyaSmartUtil
+    - TYBluetooth
+    - TYEncryptImage
+    - UMAPM
+    - UMCCommon
+    - UMCPush
+    - UMCSecurityPlugins
+    - UMDevice
+    - WMZPageController
+    - YYCache
+    - YYImage
+    - YYModel
+    - YYWebImage
   https://github.com/TuyaInc/TuyaPublicSpecs.git:
     - dsBridge
     - TuyaSmartBizCore
@@ -414,50 +444,6 @@ SPEC REPOS:
     - TYUrlPredefined
     - TYUrlPredefinedExternal
     - TYVideoPlayer
-  trunk:
-    - AFNetworking
-    - BRPickerView
-    - Bugly
-    - CocoaAsyncSocket
-    - FLAnimatedImage
-    - HXPhotoPicker
-    - IQKeyboardManager
-    - JKCategories
-    - Masonry
-    - MBProgressHUD
-    - MMKV
-    - MMKVCore
-    - MQTTClient
-    - OpenSSL-Universal
-    - Reachability
-    - SDWebImage
-    - SGQRCode
-    - TuyaCameraSDK
-    - TuyaSmartBLEMeshKit
-    - TuyaSmartCameraBase
-    - TuyaSmartCameraKit
-    - TuyaSmartCameraM
-    - TuyaSmartCameraT
-    - TuyaSmartFeedbackKit
-    - TuyaSmartHomeKit
-    - TuyaSmartMessageKit
-    - TuyaSmartMQTTChannelKit
-    - TuyaSmartQUIC
-    - TuyaSmartSceneKit
-    - TuyaSmartSocketChannelKit
-    - TuyaSmartTimerKit
-    - TYBluetooth
-    - TYEncryptImage
-    - UMAPM
-    - UMCCommon
-    - UMCPush
-    - UMCSecurityPlugins
-    - UMDevice
-    - WMZPageController
-    - YYCache
-    - YYImage
-    - YYModel
-    - YYWebImage
 
 EXTERNAL SOURCES:
   WMPlayer:
@@ -474,7 +460,7 @@ SPEC CHECKSUMS:
   Bugly: fd066c75c4a0eca1440f9b6a84bd37d51bfc85ac
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   dsBridge: f7698ec8790017bec8be7764b17fbdbc90c3c4bb
-  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  FLAnimatedImage: dd3db277b17e909ec3c7fd41adfce79b321d960e
   HXPhotoPicker: 0b0751fe5d64271edefcd5cc4ffa9b6300ca58b7
   IQKeyboardManager: 2a6e97afdafc7becf0cb17a9a8d795e3a980717f
   JKCategories: 5136d903ed6a17e700cac984db9fc9dcfaad2954
@@ -484,42 +470,41 @@ SPEC CHECKSUMS:
   MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
   MMKV: 22e5136f7d00197bc0fc9694b7f71519f0d1ca12
   MMKVCore: 607b7b05f2c2140056b5d338e45f2c14bf3f4232
-  MQTTClient: 902c7bcac1501595f3d0b15178c7205b40331fb0
-  OpenSSL-Universal: ff34003318d5e1163e9529b08470708e389ffcdd
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  SDWebImage: e378178472b735e84b007bfb55514c97948a0598
+  SDWebImage: c666b97e1fa9c64b4909816a903322018f0a9c84
   SGQRCode: bf02d60e18d6660a9d75ff1c8b9b467f064f054e
   TuyaCameraSDK: 334abb554b4872d2222ea3d9f49508f63f953496
-  TuyaSmartActivatorKit: 161d56db2e68fd1fad66820af0bffc15e70f5ae0
-  TuyaSmartBaseKit: 34ecdf83e4204bcc61bf399f7faa8b25ec2e1d48
+  TuyaSmartActivatorKit: 92046b613e56ffca5a8c122bc14afe4ff7fecbbe
+  TuyaSmartBaseKit: a7995ec5e0ca9849a4cedb1cd13b0169bbffb247
   TuyaSmartBizCore: 3a8aacdb986a7b7a9b0e9ab97374b82e8b3e63bb
-  TuyaSmartBLEKit: 1448cf65c11c850cfd7041d354987a3059498ab3
-  TuyaSmartBLEMeshKit: e99f978c07573fde2f2139f394ccdd99f3ab9488
+  TuyaSmartBLEKit: 9c991cb0b73a50838a2974092231e755d2b07a8f
+  TuyaSmartBLEMeshKit: ed6fde29563a99a839ac1e7a878903c53656fb98
   TuyaSmartCameraBase: 0c6ea4b08c07c0ffd37d35751875a9dcde347659
-  TuyaSmartCameraKit: 601f1cd3581414d89ceb1c854bfe4db9131e1055
-  TuyaSmartCameraM: 235d6baeab3d57cffab0316ababa7c3b39407811
+  TuyaSmartCameraKit: 059cc10690ea047dc2f0bb7dac8e856971441970
+  TuyaSmartCameraM: dae90a7e02711dc4ae226e85d042ea32d1537723
   TuyaSmartCameraT: 3f81d5d82ad2bc639f0edaf35a407dff48d2f63b
-  TuyaSmartDeviceCoreKit: 908aedc49bde250755116071ed9adf2dc7c87de2
-  TuyaSmartDeviceKit: c7801e3d1ae27822d5391e7fdc8c0d7eaa3deea9
-  TuyaSmartFeedbackKit: 4afe1fb31ab165f5b0f3418405c653b74a751707
+  TuyaSmartDefaultPanelKit: afb7cc9014304281c7de48548f06d03a61a27f07
+  TuyaSmartDeviceCoreKit: 998eee62759ec9cb13f5d965c27b3c0a1d2032e7
+  TuyaSmartDeviceKit: 91d2baacffaa103289db2fcc3f3c1ded1bc391f1
+  TuyaSmartFeedbackKit: 8a41f88a2252f98961eea0a8a4b71dfabb71d483
   TuyaSmartHelpCenterBizBundle: 9639f997a9957774a4ce025ee0969f0a76b75d91
-  TuyaSmartHomeKit: 1b2ab426e111a7b60a03e27636acdd75c0e2fde7
-  TuyaSmartMessageKit: 6302d0dc1111948c20a96f38e44d69429014108b
-  TuyaSmartMQTTChannelKit: 096c40a5be0e3953211453e7c6e7ea621512e261
+  TuyaSmartHomeKit: 2fd2c886fa3714be9f94a8828162ed9e7906f595
+  TuyaSmartMessageKit: 47ee941186f78e2f3126d357623e7fdd2195b5cb
+  TuyaSmartMQTTChannelKit: 2130f26d1563d8a2762832e332496db711ca302b
   TuyaSmartQUIC: 5bb81563fedf5b739ac50a5abbf42ec807cfb64b
-  TuyaSmartSceneKit: 4c98f3f7e5c2a8418139e3a356bba5cf61d87599
-  TuyaSmartSocketChannelKit: 094737c579ed90d3d4f9a9a58455aed57d2cd666
-  TuyaSmartTimerKit: 62cc6ee5bcaec18d1c149b98639e6dffc79fa8f5
-  TuyaSmartUtil: e657ec568b2df6ea578554870962528c47ee200d
+  TuyaSmartSceneKit: fd9b8cedf96b1c3a34cbcf6bd8e9d622983d7256
+  TuyaSmartSocketChannelKit: 496a745d78109a8b7c1bc4219a9dfea4466d85eb
+  TuyaSmartTimerKit: aded70f89494de3cc9661784f3d3b655178ec81b
+  TuyaSmartUtil: 92815bbf5c4ba5fbee5997cb74236a34e7d1ad15
   TYAlertView: ac74e22c131b3bd35fe4919c6b3aefe0e892edea
   TYAvatarEditKit: 6953c3e3e8b5914c7ec505f3707d7f376733cfed
   TYBaseDebugger: 5657011ea61fc3b0c68e34b437e2e60c49e81904
   TYBlockKit: 74068939d7ce21d0d921937bd45ca490d212535c
-  TYBluetooth: 0741669a99673b1de97365fb7584eaee75db2bdd
+  TYBluetooth: 9e46b5af7ba02c62f5c8f77495b0c386cb8b8398
   TYCommonDebugger: ac76b5f659cfdd438262fc85931db1816f3a5760
   TYConfigHub: cadf514086d480088912b566b4df6fd2140330f7
   TYDomainQueryModule: cf12ac25847b258da497c77fabfb673ec580ff09
-  TYEncryptImage: b7dd13b66c9d54b8fc7ce68c6a04042c169784cf
+  TYEncryptImage: 8b021a5c11a60ddfda747c75b7885a243536a341
   TYFoundationKit: 937d7ef4a3161165ed045a6e2e940d8145d90fd3
   TYHelpCenterModule: dc697e90dd4b13644a8a7a96db5aefd6d03242b0
   TYHybridContainer: 69806a3cb9da59f6f74e0f1eb2f94eac10f8050b
@@ -543,7 +528,7 @@ SPEC CHECKSUMS:
   TYUrlPredefined: 966bbd249b965e8e409aa82f1b8e73e399c201a8
   TYUrlPredefinedExternal: aab307c03c0df8c26dea905d998b524e8edfd0e4
   TYVideoPlayer: 170023c2ceb22af1fee424596bc7614932898fb6
-  UMAPM: 2b966cff744dccdd9e2ed99efafce280be30833c
+  UMAPM: d0623e0b3ca8b1a1df855e0bddb91b5c002d097d
   UMCCommon: f7480d316381612f90cdde3a3c0f39a7e2c0a788
   UMCPush: af977ec99bbf34558825e907c58f6b76f6c7f897
   UMCSecurityPlugins: 0831a08f3988f3cea9f1d3a7626cd9bee4fef150
@@ -555,6 +540,6 @@ SPEC CHECKSUMS:
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 65b5fa07ff35745f0896a9858db84a8d9fca5f74
+PODFILE CHECKSUM: d1fc2878c3984b16dc01abac6b94be7d0da174d0
 
 COCOAPODS: 1.9.1

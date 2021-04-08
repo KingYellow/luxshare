@@ -20,6 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)homeKitActivator:(TuyaSmartHomeKitActivator *)activator didReceiveHomeKitDevice:(TuyaSmartDeviceModel *)deviceModel error:(NSError *)error;
 @end
 
+/// @brief TuyaSmartHomeKitActivator is used for HomeKit device configuration.
+///
+/// This class provides HomeKit device configuration capabilities.
+///
 @interface TuyaSmartHomeKitActivator : NSObject
 
 ///Returns the singleton of the class.
@@ -27,13 +31,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id<TuyaSmartHomeKitActivatorDelegate> delegate;
 
-/// Get the HomeKit device configuration token.
+/// Obtain the HomeKit device configuration token.
 /// @param success Called when the task finishes successfully. TYSuccessString will be returned.
 /// @param failure Called when the task is interrupted by an error.
 - (void)getTokenSuccess:(TYSuccessString)success failure:(TYFailureError)failure;
 
 
-/// Get the token of the homeKit device wiring network.
+/// Obtain the HomeKit device configuration token with home id.
 /// @param homeID The home id
 /// @param success Called when the task finishes successfully. token will be returned.
 /// @param failure Called when the task is interrupted by an error.
@@ -63,6 +67,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /// Binding HomeKit devices to the home.
+///
+/// Need to call the method when using TuyaSmartHomeKitActivator::getTokenSuccess:failure:, cause configuration token has no home information
+///
 /// @param homeId The home ID.
 /// @param devIds A list of device IDs.
 /// @param success Called when the task finishes successfully.

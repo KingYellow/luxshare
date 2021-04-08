@@ -8,6 +8,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// @brief The methods in this class are deprecated, please use alternative methods.
+///
 @interface TuyaSmartHomeMember (TYDeprecatedApi)
 
 

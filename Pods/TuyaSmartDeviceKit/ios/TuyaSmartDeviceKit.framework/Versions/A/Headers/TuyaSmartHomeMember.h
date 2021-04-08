@@ -8,6 +8,8 @@
 #import "TuyaSmartHomeMemberModel.h"
 #import "TuyaSmartHomeMemberRequestModel.h"
 
+/// @brief This class provides methods related to home member management.
+///
 @interface TuyaSmartHomeMember : NSObject
 
 #pragma mark - public

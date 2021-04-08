@@ -10,9 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class TuyaSmartBLEWifiActivator;
 
-/// @brief TuyaSmartBLEWifiActivator provides methods for developers to implement dual-mode device activator functionalities.
-///
-/// Dual-mode device, which has both Bluetooth and Wi-Fi chips, can publish activator data through Bluetooth channel and completed through Wi-Fi channel.
+/// Delegate for dual-mode device activator result.
 @protocol TuyaSmartBLEWifiActivatorDelegate <NSObject>
 
 /// The result of the activator dual-mode devices.
@@ -24,6 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/// @brief TuyaSmartBLEWifiActivator provides methods for developers to implement dual-mode device activator functionalities.
+///
+/// Dual-mode device, which has both Bluetooth and Wi-Fi chips, can publish activator data through Bluetooth channel and completed through Wi-Fi channel.
 @interface TuyaSmartBLEWifiActivator : NSObject
 
 /// Delegate for dual-mode device activator result.

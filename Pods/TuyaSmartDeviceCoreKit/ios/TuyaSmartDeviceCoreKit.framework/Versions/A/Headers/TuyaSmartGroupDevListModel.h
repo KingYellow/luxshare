@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
+/// group device list information
 @interface TuyaSmartGroupDevListModel : NSObject
 
 

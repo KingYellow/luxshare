@@ -15,16 +15,26 @@
  */
 extern NSString *const kTYDeviceCoreKitErrorDomain;
 
+/// The device core kit errors define.
 typedef NS_ENUM(NSInteger, TYDeviceCoreKitError) {
-    kTYDeviceCoreKitErrorDeviceNotSupport                      = 3000, ///< The device does not support a certain capability (capability reported on the device dimension).
-    kTYDeviceCoreKitErrorSocketSendDataFailed                  = 3001, ///< LAN downstream data failure
-    kTYDeviceCoreKitErrorEmptyDpsData                          = 3002, // DPS command is empty.
-    kTYDeviceCoreKitErrorGroupDeviceListEmpty                  = 3003, // Group device is empty.
-    kTYDeviceCoreKitErrorGroupIdLengthError                    = 3004, // Group ID length error.
-    kTYDeviceCoreKitErrorIllegalDpData                         = 3005, // Illegal dps, see product dp definition.
-    kTYDeviceCoreKitErrorDeviceIdLengthError                   = 3006, // Device ID length error.
-    kTYDeviceCoreKitErrorDeviceLocalKeyNotFound                = 3007, // Missing local key.
-    kTYDeviceCoreKitErrorDeviceProductIDLengthError            = 3008, // Product ID length error.
+    /// The device does not support a certain capability (capability reported on the device dimension).
+    kTYDeviceCoreKitErrorDeviceNotSupport                      = 3000,
+    /// LAN downstream data failure.
+    kTYDeviceCoreKitErrorSocketSendDataFailed                  = 3001,
+    /// DPS command is empty.
+    kTYDeviceCoreKitErrorEmptyDpsData                          = 3002,
+    /// Group device is empty.
+    kTYDeviceCoreKitErrorGroupDeviceListEmpty                  = 3003,
+    /// Group ID length error.
+    kTYDeviceCoreKitErrorGroupIdLengthError                    = 3004,
+    /// Illegal dps, see product dp definition.
+    kTYDeviceCoreKitErrorIllegalDpData                         = 3005,
+    /// Device ID length error.
+    kTYDeviceCoreKitErrorDeviceIdLengthError                   = 3006,
+    /// Missing local key.
+    kTYDeviceCoreKitErrorDeviceLocalKeyNotFound                = 3007,
+    /// Product ID length error.
+    kTYDeviceCoreKitErrorDeviceProductIDLengthError            = 3008,
     
 };
 

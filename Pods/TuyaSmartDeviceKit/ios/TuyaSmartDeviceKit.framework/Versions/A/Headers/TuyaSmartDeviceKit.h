@@ -4,6 +4,8 @@
 //
 // Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
+
+/// @brief Header files for TuyaSmartDeviceKit.
 #ifndef TuyaSmartDeviceKit_h
 #define TuyaSmartDeviceKit_h
 
@@ -47,5 +49,12 @@
 
 #import "TuyaSmartDeviceShareModel.h"
 #import "TuyaSmartHomeDeviceShare+TYDeprecatedApi.h"
+
+#import "TuyaSmartDevice+Home.h"
+#import "TuyaSmartDeviceModel+Home.h"
+#import "TuyaSmartGroup+Home.h"
+
+#import "TuyaSmartHome+BleMesh.h"
+#import "TuyaSmartHome+SIGMesh.h"
 
 #endif /* TuyaSmartDeviceKit_h */

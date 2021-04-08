@@ -93,11 +93,11 @@
     }
     return _selectBtn;
 }
+
 - (void)setFrame:(CGRect)frame {
 
     frame.size.height -= QZHSIZE_HEIGHT_LISTCELL_SEPARATOR;
     [super setFrame:frame];
-    
 }
 
 @end

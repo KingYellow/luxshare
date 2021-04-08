@@ -9,7 +9,8 @@
 #import "TuyaSmartMessageRequestModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
+/// @brief TuyaSmartMessage provides methods for developers to implement message functionalities.
+///
 /// TuyaSmartMessage contains message center and push-related functions, and its messages are mainly divided into three major categories: alarms, families, and notifications, each of which is supported to be turned on or off respectively.
 @interface TuyaSmartMessage : NSObject
 

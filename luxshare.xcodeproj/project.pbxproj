@@ -2369,7 +2369,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				EXCLUDED_ARCHS = arm64;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2429,7 +2429,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				EXCLUDED_ARCHS = arm64;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2472,7 +2472,6 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/MJRefresh\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/MMKV\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/MMKVCore\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/MQTTClient\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/Masonry\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/Reachability\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage\"",
@@ -2548,13 +2547,11 @@
 					"-l\"TuyaSmartHelpCenterBizBundle\"",
 					"-l\"bz2\"",
 					"-l\"c++\"",
-					"-l\"crypto\"",
 					"-l\"dsBridge\"",
 					"-l\"iconv\"",
 					"-l\"resolv\"",
 					"-l\"sqlite3\"",
 					"-l\"sqlite3.0\"",
-					"-l\"ssl\"",
 					"-l\"z\"",
 					"-framework",
 					"\"AFNetworking\"",
@@ -2618,8 +2615,6 @@
 					"\"MMKV\"",
 					"-framework",
 					"\"MMKVCore\"",
-					"-framework",
-					"\"MQTTClient\"",
 					"-framework",
 					"\"MapKit\"",
 					"-framework",
@@ -2817,13 +2812,11 @@
 					"-l\"TuyaSmartHelpCenterBizBundle\"",
 					"-l\"bz2\"",
 					"-l\"c++\"",
-					"-l\"crypto\"",
 					"-l\"dsBridge\"",
 					"-l\"iconv\"",
 					"-l\"resolv\"",
 					"-l\"sqlite3\"",
 					"-l\"sqlite3.0\"",
-					"-l\"ssl\"",
 					"-l\"z\"",
 					"-framework",
 					"\"AFNetworking\"",
@@ -2887,8 +2880,6 @@
 					"\"MMKV\"",
 					"-framework",
 					"\"MMKVCore\"",
-					"-framework",
-					"\"MQTTClient\"",
 					"-framework",
 					"\"MapKit\"",
 					"-framework",

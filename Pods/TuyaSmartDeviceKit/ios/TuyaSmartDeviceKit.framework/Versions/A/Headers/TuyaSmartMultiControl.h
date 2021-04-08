@@ -11,7 +11,8 @@
 #import "TuyaSmartMultiControlDeviceModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
+/// @brief TuyaSmartMultiControl provides multi-control related functions.
+///
 @interface TuyaSmartMultiControl : NSObject
 
 /// Query the multiple controls and automation associated with the dp button under the device.

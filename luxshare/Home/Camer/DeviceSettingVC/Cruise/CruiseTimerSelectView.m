@@ -54,15 +54,16 @@
     self.leftMin = @"00";
     self.rightHour = @"00";
     self.rightMin = @"00";
-    if (self.selectTime) {
-        NSData *jsonData = [self.selectTime dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *err;
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                            options:NSJSONReadingMutableContainers
-                                                              error:&err];
-        
-        NSString *startTime = dic[@"t_start"];
-        NSString *endTime = dic[@"t_end"];
+    NSData *jsonData = [self.selectTime dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingMutableContainers
+                                                          error:&err];
+
+    NSString *startTime = dic[@"t_start"];
+    NSString *endTime = dic[@"t_end"];
+    if (self.selectTime.length > 0) {
+
         self.leftHour = [startTime componentsSeparatedByString:@":"].firstObject;
         self.leftMin = [startTime componentsSeparatedByString:@":"].lastObject;
         self.rightHour = [endTime componentsSeparatedByString:@":"].firstObject;
@@ -75,10 +76,10 @@
         [self.leftPicker selectRow:leftM inComponent:1 animated:YES];
         [self.rightPicker selectRow:rightH inComponent:0 animated:YES];
         [self.rightPicker selectRow:rightM inComponent:1 animated:YES];
-        _leftTimeLab.text = [NSString stringWithFormat:@"%@:%@",self.leftHour,self.leftMin];
-        _rightTimeLab.text = [NSString stringWithFormat:@"%@:%@",self.rightHour,self.rightMin];
-        [self compareRightTime];
     }
+    _leftTimeLab.text = [NSString stringWithFormat:@"%@:%@",self.leftHour,self.leftMin];
+    _rightTimeLab.text = [NSString stringWithFormat:@"%@:%@",self.rightHour,self.rightMin];
+    [self compareRightTime];
 
 }
 - (void)initConfig{
@@ -91,6 +92,19 @@
     [self removeFromSuperview];
 }
 - (void)submitAction{
+    
+    if (!self.leftHour) {
+        self.leftHour = @"00";
+    }
+    if (!self.leftMin) {
+        self.leftMin = @"00";
+    }
+    if (!self.rightHour) {
+        self.rightHour = @"00";
+    }
+    if (!self.rightMin) {
+        self.rightMin = @"00";
+    }
     self.selectBlock([NSString stringWithFormat:@"%@:%@",self.leftHour,self.leftMin],[NSString stringWithFormat:@"%@:%@",self.rightHour,self.rightMin]);
     [self removeFromSuperview];
     

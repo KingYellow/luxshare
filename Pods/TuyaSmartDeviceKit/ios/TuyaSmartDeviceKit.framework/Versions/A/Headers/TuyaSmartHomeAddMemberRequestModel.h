@@ -8,6 +8,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// @brief Home Member add model.
+///
 @interface TuyaSmartHomeAddMemberRequestModel : NSObject
 
 /// Nicknames for invitees.
@@ -30,6 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+
+/// @brief Home Invitation Create Request Model.
+///
 @interface TuyaSmartHomeInvitationCreateRequestModel : NSObject
 
 /// Home ID
@@ -40,6 +45,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/// @brief Home Invitation Reinvite Request Model.
+///
 @interface TuyaSmartHomeInvitationReinviteRequestModel : NSObject
 
 /// The invitation ID.
@@ -50,6 +57,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/// @brief Home Invitation Info Request Model.
+///
 @interface TuyaSmartHomeInvitationInfoRequestModel : NSObject
 
 /// The invitation ID.
@@ -60,6 +69,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/// @brief Home Invitation Info Result Model.
+///
 @interface TuyaSmartHomeInvitationResultModel : NSObject
 
 /// The Invitation message.
@@ -70,7 +81,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
+/// @brief Home Invitation Record Model.
+///
 @interface TuyaSmartHomeInvitationRecordModel : NSObject;
 
 /// Invitation code valid time, unit:hour.

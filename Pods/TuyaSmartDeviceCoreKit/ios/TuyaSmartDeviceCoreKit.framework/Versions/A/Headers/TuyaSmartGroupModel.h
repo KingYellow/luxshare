@@ -7,6 +7,7 @@
 #ifndef TuyaSmart_TuyaSmartGroupModel
 #define TuyaSmart_TuyaSmartGroupModel
 
+/// group type
 typedef enum : NSUInteger {
     TuyaSmartGroupTypeWifi = 0,
     TuyaSmartGroupTypeMesh,
@@ -17,6 +18,7 @@ typedef enum : NSUInteger {
 #import <Foundation/Foundation.h>
 #import "TuyaSmartDevice.h"
 
+/// group information.
 @interface TuyaSmartGroupModel : NSObject
 
 /// group Id

@@ -8,15 +8,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// The type of sig mesh manager for inactive and active.
 typedef NS_ENUM(NSUInteger, TuyaSmartSIGScanType) {
-    ScanForUnprovision, /// Scan equipment without distribution network
-    ScanForProxyed, /// Scan the equipment with distribution network.
+    /// Scan equipment without distribution network
+    ScanForUnprovision,
+    /// Scan the equipment with distribution network.
+    ScanForProxyed,
 };
 
 @class TuyaSmartSIGMeshManager;
 
 @class TuyaSmartSIGMeshDiscoverDeviceInfo;
 
+/// The sig mesh manager delegate, when sig mesh manager handle some message, will call it.
 @protocol TuyaSmartSIGMeshManagerDelegate <NSObject>
 
 @optional;
@@ -72,6 +76,11 @@ typedef NS_ENUM(NSUInteger, TuyaSmartSIGScanType) {
 
 @end
 
+
+/// @brief SIG Bluetooth mesh manager, contains common sig mesh management classes, such as creating groups, issuing control commands, removing devices, etc.
+///
+/// We provide a particularly large number of extension interfaces that can be used for various methods and scenarios.
+/// 
 @interface TuyaSmartSIGMeshManager : NSObject
 
 + (instancetype)sharedInstance;

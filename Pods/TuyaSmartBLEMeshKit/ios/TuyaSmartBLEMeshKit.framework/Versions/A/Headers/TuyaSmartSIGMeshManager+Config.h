@@ -9,6 +9,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class TuyaSmartDeviceModel;
 
+/// @brief SIG mesh activator Category for (SIG) bluetooth mesh manager.
+///
+/// Mainly contains device node control, reset and other functions. The core channels are also included and can send generic mesh messages.
 @interface TuyaSmartSIGMeshManager (Config)
 
 /// Reset node.

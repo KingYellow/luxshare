@@ -14,8 +14,11 @@
 
 #define kInitMeshName @"out_of_mesh"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class TYBLEMeshManager;
 
+/// The bluetooth mesh for tuya when ble mesh manger do some action and received some messages.
 @protocol TYBLEMeshManagerDelegate <NSObject>
 
 @optional
@@ -81,26 +84,55 @@
 
 @end
 
+/// @brief ( Tuya ) Bluetooth mesh manager, contains common sig mesh management classes, such as creating groups, issuing control commands, removing devices, etc.
+///
+/// We provide a particularly large number of extension interfaces that can be used for various methods and scenarios.
+///
 @interface TYBLEMeshManager : NSObject
 
+/// shared instance
 + (instancetype)sharedInstance;
 
+/// the system bluetooth status.
 @property (nonatomic, assign) BOOL isPoweredOn;
+
+/// the mesh connect status.
 @property (nonatomic, assign) BOOL isLogin;
+
+/// is a wifi device when activator execute.
 @property (nonatomic, assign) BOOL isWifiDevice;
+
+/// if a wifi device, the wifi device's node address.
 @property (nonatomic, assign) uint32_t wifiAddress;
+
+/// the device's node address when device ota.
 @property (nonatomic, assign) uint32_t otaAddress;
+
+/// the ssid for activator.
 @property (nonatomic, strong) NSString *ssid;
+
+/// the password for activator.
 @property (nonatomic, strong) NSString *password;
+
+/// the token for activator.
 @property (nonatomic, strong) NSString *token;
+
+/// the device authkey when active.
 @property (nonatomic, strong) NSString *authKey;
+
+/// the mesh node uuid.
 @property (nonatomic, strong) NSString *uuid;
+
+/// the mesh node product.
 @property (nonatomic, strong) NSString *productId;
+
+/// the mesh device version.
 @property (nonatomic, strong) NSString *version;
 
 /// New Wi-Fi address.
 @property (nonatomic, assign) uint32_t wifiMac;
 
+/// the delegate for ble mesh manager.
 @property (nonatomic, weak) id<TYBLEMeshManagerDelegate> delegate;
 
 /// Mesh entrance.
@@ -302,3 +334,5 @@
 @end
 
 #endif
+
+NS_ASSUME_NONNULL_END

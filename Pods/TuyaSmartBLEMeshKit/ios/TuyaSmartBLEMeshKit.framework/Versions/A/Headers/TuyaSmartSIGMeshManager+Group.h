@@ -6,6 +6,11 @@
 
 #import <TuyaSmartBLEMeshKit/TuyaSmartBLEMeshKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
+/// @brief SIG mesh activator Category for (SIG) bluetooth mesh manager.
+///
+/// Mainly contains gong for group management, adding devices to groups and removing devices from groups.
 @interface TuyaSmartSIGMeshManager (Group)
 
 /// Add device to group.
@@ -30,3 +35,5 @@
 - (void)queryGroupListWithDevid:(NSString *)devId;
 
 @end
+
+NS_ASSUME_NONNULL_END

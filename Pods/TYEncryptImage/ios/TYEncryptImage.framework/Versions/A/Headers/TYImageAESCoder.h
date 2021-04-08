@@ -2,9 +2,10 @@
 //  TYImageAESCoder.h
 //  Bolts
 //
-//  Created by 傅浪 on 2019/5/29.
+//  Created by TuyaInc on 2019/5/29.
 //
 
+#import "TYEncryptWebImageCompat.h"
 #import <Foundation/Foundation.h>
 
 @interface TYImageAESCoder : NSObject

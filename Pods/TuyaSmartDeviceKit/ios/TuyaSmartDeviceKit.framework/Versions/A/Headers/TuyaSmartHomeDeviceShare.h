@@ -13,7 +13,8 @@
 #import "TuyaSmartDeviceShareModel.h"
 
 
-/// Sharing device related functions (based on device dimension sharing).
+/// @brief TuyaSmartHomeDeviceShare provides sharing device related functions (based on device dimension sharing).
+///
 @interface TuyaSmartHomeDeviceShare : NSObject
 
 /// Device add sharing.

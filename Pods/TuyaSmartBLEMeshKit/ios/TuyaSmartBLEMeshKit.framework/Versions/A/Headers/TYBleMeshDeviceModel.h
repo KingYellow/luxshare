@@ -9,6 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// @brief The ble mesh device model when bluetooth scan some peripheral.
 @interface TYBleMeshDeviceModel : NSObject
 
 /// The device name.

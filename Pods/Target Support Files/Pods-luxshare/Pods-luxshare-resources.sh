@@ -113,8 +113,9 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "${PODS_ROOT}/TuyaSmartBaseKit/ios/TuyaSmartBaseKit.framework/Versions/A/Resources/cerficate_v2"
   install_resource "${PODS_ROOT}/TuyaSmartBizCore/TuyaSmartBizCore-3.22.0-rc.3/Assets/resources/custom.json"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/TuyaSmartBizCore/TuyaSmartBizCore.bundle"
+  install_resource "${PODS_ROOT}/TuyaSmartDefaultPanelKit/ios/TuyaSmartDefaultPanelKit.framework/Versions/A/Resources/TuyaSmartDefaultPanel.bundle"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/TuyaSmartHelpCenterBizBundle/TuyaSmartHelpCenterBizBundle.bundle"
-  install_resource "${PODS_ROOT}/TuyaSmartUtil/ios/TuyaSmartUtil.framework/Versions/A/Resources/TuyaSmartUtil.bundle"
+  install_resource "${PODS_ROOT}/TuyaSmartUtil/Carthage/Build/iOS/TuyaSmartUtil.framework/TuyaSmartUtil.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/TYAlertView/TYAlertView.bundle"
@@ -133,8 +134,9 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${PODS_ROOT}/TuyaSmartBaseKit/ios/TuyaSmartBaseKit.framework/Versions/A/Resources/cerficate_v2"
   install_resource "${PODS_ROOT}/TuyaSmartBizCore/TuyaSmartBizCore-3.22.0-rc.3/Assets/resources/custom.json"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/TuyaSmartBizCore/TuyaSmartBizCore.bundle"
+  install_resource "${PODS_ROOT}/TuyaSmartDefaultPanelKit/ios/TuyaSmartDefaultPanelKit.framework/Versions/A/Resources/TuyaSmartDefaultPanel.bundle"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/TuyaSmartHelpCenterBizBundle/TuyaSmartHelpCenterBizBundle.bundle"
-  install_resource "${PODS_ROOT}/TuyaSmartUtil/ios/TuyaSmartUtil.framework/Versions/A/Resources/TuyaSmartUtil.bundle"
+  install_resource "${PODS_ROOT}/TuyaSmartUtil/Carthage/Build/iOS/TuyaSmartUtil.framework/TuyaSmartUtil.bundle"
 fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

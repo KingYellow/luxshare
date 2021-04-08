@@ -7,6 +7,7 @@
 #ifndef TuyaSmartDeviceModelUtils_h
 #define TuyaSmartDeviceModelUtils_h
 
+/// device upgrade status
 typedef enum : NSUInteger {
     TuyaSmartDeviceUpgradeStatusDefault = 0,    // Default. No upgrade required by default.
     TuyaSmartDeviceUpgradeStatusReady,          // Ready. Hardware readiness.

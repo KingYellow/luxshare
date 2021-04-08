@@ -5,11 +5,11 @@
 //  Created by TuyaInc on 2020/5/26.
 //
 
+#import "TYEncryptWebImageCompat.h"
+#import <Foundation/Foundation.h>
+
 #ifndef TYEncryptImageDefine_h
 #define TYEncryptImageDefine_h
-
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 
 /// Indicated where the image came from.
 typedef NS_ENUM(NSUInteger, TYEncryptWebImageFromType) {
@@ -43,6 +43,23 @@ typedef NS_ENUM(NSInteger, TYEncryptWebImageStage) {
     
     /// Finished (succeed or failed).
     TYWebImageStageFinished  = 1,
+};
+
+/**
+ Image file type.
+ */
+typedef NS_ENUM(NSUInteger, TYEncryptImageType) {
+    TYEncryptImageTypeUnknown = 0, ///< unknown
+    TYEncryptImageTypeJPEG,        ///< jpeg, jpg
+    TYEncryptImageTypeJPEG2000,    ///< jp2
+    TYEncryptImageTypeTIFF,        ///< tiff, tif
+    TYEncryptImageTypeBMP,         ///< bmp
+    TYEncryptImageTypeICO,         ///< ico
+    TYEncryptImageTypeICNS,        ///< icns
+    TYEncryptImageTypeGIF,         ///< gif
+    TYEncryptImageTypePNG,         ///< png
+    TYEncryptImageTypeWebP,        ///< webp
+    TYEncryptImageTypeOther,       ///< other image format
 };
 
 /**

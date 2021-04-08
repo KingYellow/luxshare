@@ -102,6 +102,11 @@
 - (void)home:(TuyaSmartHome *)home device:(TuyaSmartDeviceModel *)device firmwareUpgradeStatusModel:(TuyaSmartFirmwareUpgradeStatusModel *)upgradeStatusModel;
 
 
+/// the delegate when family/shared devices ota status are updated
+/// @param home The home instance
+/// @param otaModelList OTA model list
+- (void)home:(TuyaSmartHome *)home didUpdateOTAModelList:(NSArray<TuyaSmartDeviceOTAModel *> *)otaModelList;
+
 /// The delegate when a new group is added.
 ///
 /// @param home     instance
@@ -148,22 +153,33 @@
 
 @end
 
+/// @brief TuyaSmartHome provides methods for developers to implement home management, room settings and family member management.
+///
 @interface TuyaSmartHome : NSObject
 
+/// Delegate for home setting and devices related result.
 @property (nonatomic, weak) id <TuyaSmartHomeDelegate> delegate;
 
+/// Home model.
 @property (nonatomic, strong, readonly) TuyaSmartHomeModel *homeModel;
 
+/// List of rooms in the home.
 @property (nonatomic, copy, readonly) NSArray <TuyaSmartRoomModel *> *roomList;
 
+/// List of device in the home.
 @property (nonatomic, copy, readonly) NSArray <TuyaSmartDeviceModel *> *deviceList;
 
+/// List of device group in the home.
 @property (nonatomic, copy, readonly) NSArray <TuyaSmartGroupModel *> *groupList;
 
+/// List of shared devices.
 @property (nonatomic, copy, readonly) NSArray <TuyaSmartDeviceModel *> *sharedDeviceList;
 
+/// List of shared Group.
 @property (nonatomic, copy, readonly) NSArray <TuyaSmartGroupModel *>  *sharedGroupList;
 
+/// List of OTA devices.
+@property (nonatomic, copy, readonly) NSArray <TuyaSmartDeviceOTAModel *> *deviceOtaList;
 
 /// Init home.
 ///
@@ -180,6 +196,14 @@
 /// @param failure If error occurred while adding the task, this block will be called.
 - (void)getHomeDetailWithSuccess:(void (^)(TuyaSmartHomeModel *homeModel))success
                          failure:(TYFailureError)failure;
+
+/// After get home details, update device ota status
+/// @param homeId Home id
+/// @param success Called when the task finishes successfully.
+/// @param failure  If error occurred while adding the task, this block will be called.
+- (void)getDeviceOTAStatusWithHomeId:(long long)homeId
+                             success:(void (^)(NSArray<TuyaSmartDeviceOTAModel *> *))success
+                             failure:(TYFailureError)failure;
 
 
 /// Update home info, API version 2.0.

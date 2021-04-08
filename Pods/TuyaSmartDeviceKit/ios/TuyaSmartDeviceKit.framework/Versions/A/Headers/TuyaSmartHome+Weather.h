@@ -10,6 +10,8 @@
 @class TuyaSmartWeatherSketchModel;
 @class TuyaSmartWeatherOptionModel;
 
+/// @brief This class provides methods to obtain weather information for your home location.
+///
 @interface TuyaSmartHome (Weather)
 
 /// Home location

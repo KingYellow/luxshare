@@ -9,23 +9,45 @@
 
 #import <TuyaSmartUtil/TuyaSmartUtil.h>
 
+/// Timer detail model.
 @interface TYTimerModel : NSObject
 
+/// The id of timer.
 @property (nonatomic, strong) NSString *timerId;
+
+/// Date.
 @property (nonatomic, strong) NSString *date;
+
+/// The timer execute time.
 @property (nonatomic, strong) NSString *time;
+
+/// The timer status.
 @property (nonatomic, assign) BOOL     status;
+
+/// The timer loop.
 @property (nonatomic, strong) NSString *loops;
+
+/// The timer action dps.
 @property (nonatomic, strong) NSDictionary *dps;
+
+/// The timer zone id.
 @property (nonatomic, strong) NSString *timezoneId;
+
+/// The timer alias name.
 @property (nonatomic, copy)   NSString *aliasName;
+
+/// Timer push notify, if yes, when timer execute, app will receive a notify message.
 @property (nonatomic, assign) BOOL     isAppPush;
 
 @end
 
+/// Timer task model.
 @interface TYTimerTaskModel : NSObject
 
+/// The task name.
 @property (nonatomic, strong) NSString  *taskName;
+
+// The task status.
 @property (nonatomic, assign) NSInteger status;
 
 @end

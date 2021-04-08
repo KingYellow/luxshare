@@ -6,38 +6,40 @@
 
 #import <Foundation/Foundation.h>
 #import "TuyaSmartHomeModelUtils.h"
-
+/// @brief Home member model.
+///
 @interface TuyaSmartHomeMemberModel : NSObject
 
-// member Id
+/// Member ID.
 @property (nonatomic, assign) long long memberId;
 
-// Head portraits of members
+/// Head portraits of members.
 @property (nonatomic, strong) NSString *headPic;
 
-// name of members
+/// Name of members.
 @property (nonatomic, strong) NSString *name;
 
-// role
+/// Role.
 @property (nonatomic, assign) TYHomeRoleType role;
 
-// home Id
+/// Home Id.
 @property (nonatomic, assign) long long homeId;
 
-// mobile
+/// Mobile.
 @property (nonatomic, strong) NSString *mobile;
 
-// user name
+/// User name.
 @property (nonatomic, strong) NSString *userName;
 
-// uid
+/// Uid.
 @property (nonatomic, strong) NSString *uid;
 
-// state of deal
+/// State of deal.
 @property (nonatomic, assign) TYHomeStatus dealStatus;
 
 #pragma mark - deprecated
-// admin or not
+/// Admin or not.
+/// @deprecated This property is deprecated. Use 'role' instead.
 @property (nonatomic, assign) BOOL isAdmin __deprecated_msg("The property will be deprecated and remove in a future version，Please use role");
 
 @end

@@ -31,6 +31,7 @@ typedef NS_ENUM(int, TYBLEAgentRole)
 @optional
 
 - (void)onCentralDidDisconnecteFromPeripheral:(TYBLEPeripheral *)peripheral;
+- (void)onCentralDidDisconnectFromPeripheral:(TYBLEPeripheral *)peripheral error:(NSError *)error;
 - (void)onCentralDidUpdateState:(BOOL)isPoweredOn;
 - (void)onBLECentralDidUpdateState:(TYBLECentralManagerState)state;
 

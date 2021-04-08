@@ -140,7 +140,6 @@
     view.tintColor = QZHKIT_COLOR_LEADBACK;
 }
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     NSInteger row = indexPath.row;

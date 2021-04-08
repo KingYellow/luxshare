@@ -4,6 +4,7 @@
 //
 // Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
+/// The different type of BLE device.
 typedef enum : NSUInteger {
     /// The unknown BLE device type.
     TYSmartBLETypeUnknow = 1,
@@ -17,6 +18,8 @@ typedef enum : NSUInteger {
     TYSmartBLETypeBLESecurity,
     /// The new protocol BLE dual-mode device type, which has a high level of security.
     TYSmartBLETypeBLEWifiSecurity,
+    /// The new protocol BLE dual-mode device type, which has a high level of security and supports plug&play function.
+    TYSmartBLETypeBLEWifiPlugPlay,
 } TYSmartBLEType;
 
 /// @brief TYBLEAdvModel provides model for developers to obtaine BLE device broadcast information.

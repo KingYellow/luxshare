@@ -22,6 +22,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/// @brief TuyaSmartDiscovery is used for EZ configuration.
+///
+/// This class provides EZ configuration capabilities for WiFi devices.
+///
+/// @note This EZ configuration is different form the EZ mode in 'TuyaSmartActivator'. Need to call the method 'bindDeviceWithHomeId:devIds:success:' after obtaining the devices, cause configuration token has no home information
+///
 @interface TuyaSmartDiscovery : NSObject
 
 @property (nonatomic, weak) id<TuyaSmartDiscoveryDelegate> delegate;

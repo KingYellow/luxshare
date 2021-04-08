@@ -8,6 +8,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// @brief SIG mesh information category for bluetooth mesh.
 @interface TuyaSmartBleMesh (SIGMesh)
 
 + (void)createSIGMeshWithHomeId:(long long)homeId

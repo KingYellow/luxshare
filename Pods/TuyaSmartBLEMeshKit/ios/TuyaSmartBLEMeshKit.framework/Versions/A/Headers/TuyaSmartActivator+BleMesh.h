@@ -6,6 +6,9 @@
 
 #import <TuyaSmartActivatorKit/TuyaSmartActivatorKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
+/// @brief Mesh activator category for activator.
 @interface TuyaSmartActivator (BleMesh)
 
 /// WiFi connector adds mesh. Get distribution network token (valid for 10 minutes).
@@ -38,3 +41,5 @@
 
 
 @end
+
+NS_ASSUME_NONNULL_END

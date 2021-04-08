@@ -8,6 +8,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// @brief Tuya smart device offline alert function, including setting whether to support offline alert function, the status of offline alert switch, setting offline alert function.
+///
+/// When the device sets offline alert, it will send offline notification to the current user as a reminder when it is offline, you can access  message push to access this feature.
+///
 @interface TuyaSmartDevice (OfflineReminder)
 
 /// Check if the device supports offline alerts

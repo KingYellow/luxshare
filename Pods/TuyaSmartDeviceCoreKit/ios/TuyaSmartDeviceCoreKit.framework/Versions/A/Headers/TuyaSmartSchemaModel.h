@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import "TuyaSmartSchemaPropertyModel.h"
 
+/// device schema
 @interface TuyaSmartSchemaModel : NSObject
 
 /// Dp ID.

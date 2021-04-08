@@ -11,6 +11,7 @@
 #import "TuyaSmartDeviceModuleModel.h"
 #import "TuyaSmartStandSchemaModel.h"
 
+/// device types
 typedef enum : NSUInteger {
     
     TuyaSmartDeviceModelTypeWifiDev,         /// Wi-Fi
@@ -41,6 +42,7 @@ typedef enum : NSUInteger {
     
 } TuyaSmartDeviceModelType;
 
+/// device information.
 @interface TuyaSmartDeviceModel : NSObject
 
 /// device Id
@@ -100,8 +102,10 @@ typedef enum : NSUInteger {
 /// hardware baseline version
 @property (nonatomic, assign) double       bv;
 
-/// lat, lon
+/// device latitude
 @property (nonatomic, strong) NSString     *latitude;
+
+/// device longitude
 @property (nonatomic, strong) NSString     *longitude;
 
 /// dp name
@@ -115,14 +119,14 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSString     *runtimeEnv;
 
 /// attribute
-@property (nonatomic, assign) NSUInteger    attribute;
+@property (nonatomic, assign) NSUInteger   attribute;
 
 @property (nonatomic, strong) NSString     *localKey;
 
 @property (nonatomic, strong) NSString     *uuid;
 
 /// Media Access Control Address
-@property (nonatomic, strong) NSString *mac;
+@property (nonatomic, strong) NSString     *mac;
 
 /// The network communication ability:0.wifi;1.cable;2.gprs;3.nb-iot; 10:bluetooth;11.blemesh;12.zigbee.
 @property (nonatomic, assign) NSUInteger   capability;
@@ -169,7 +173,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) long         errorCode;
 
 @property (nonatomic, assign) TuyaSmartDeviceModelType deviceType;
-@property (nonatomic, assign) BOOL         upgrading;
+@property (nonatomic, assign) BOOL         upgrading  __deprecated_msg("Use TuyaSmartDeviceOTAModel.otaUpgradeStatus instead");
 
 @property (nonatomic, strong) NSDictionary *originJson;
 

@@ -449,16 +449,26 @@
                 }else{
                     UIAlertController *alertC = [UIAlertController alertControllerWithTitle:QZHLoaclString(@"tip") message:QZHLoaclString(@"cannotBeRestoredafteRestored") preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *action = [UIAlertAction actionWithTitle:QZHLoaclString(@"confirm") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-                        NSDictionary  *dps = @{@"233": @(YES)};
-                        
-                          [self.device publishDps:dps success:^{
+                        [self.device resetFactory:^{
+                            [self.navigationController popToRootViewControllerAnimated:YES];
 
-                          } failure:^(NSError *error) {
+                        } failure:^(NSError *error) {
 
-                              [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:1.0];
+                            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:1.0];
 
-                          }];
-                        
+                       }];
+//                        
+//                        NSDictionary  *dps = @{@"236": @(YES)};
+//
+//                          [self.device publishDps:dps success:^{
+//                              [self.navigationController popToRootViewControllerAnimated:YES];
+//
+//                          } failure:^(NSError *error) {
+//
+//                              [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:1.0];
+//
+//                          }];
+//
                     }];
                     UIAlertAction *actionC = [UIAlertAction actionWithTitle:QZHLoaclString(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                         

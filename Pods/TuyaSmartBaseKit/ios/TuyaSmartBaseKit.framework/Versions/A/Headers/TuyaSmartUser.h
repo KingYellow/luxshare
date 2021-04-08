@@ -4,8 +4,8 @@
 //
 // Copyright (c) 2014-2021 Tuya Inc. (https://developer.tuya.com)
 
-#ifndef TuyaSmart_TuyaSmartUser
-#define TuyaSmart_TuyaSmartUser
+#ifndef TuyaSmartUser_h
+#define TuyaSmartUser_h
 
 #import <UIKit/UIKit.h>
 #import <TuyaSmartUtil/TuyaSmartUtil.h>
@@ -39,7 +39,40 @@ typedef NS_ENUM(NSInteger, TYRegType) {
     TYRegGoogleType,
 };
 
-/// User-related functions.
+/// Password strength type
+typedef NS_ENUM(NSInteger, TYPasswordRegularType) {
+    TYPasswordRegularLow = 1,       // 8-20 character,include letters and numbers
+    TYPasswordRegularMiddle = 2,       // 8-20 character,include capital and lower-case letter and numbers
+    TYPasswordRegularHigh = 3,     // 8-20 character,include capital and lower-case letter and numbers and special character
+};
+
+/// @brief TuyaSmartUser is used for user-related functions.
+///
+/// This class is used to do the user-related things, such as register, login, logout, reset password, and so on.
+///
+/// Currently we support the following account type:
+/// Main:
+///     - Email
+///     - Phone
+/// Third-party:
+///     - QQ
+///     - Weibo
+///     - WeChat
+///     - Facebook
+///     - Twitter
+///     - Google
+///     - AppleID
+/// Other:
+///     - UID (for advance usage)
+///     - Anonymous
+///     - QRCode
+///
+/// For email and phone account, usually we need to send a verify code to continue the following steps.
+///
+/// For uid account, it is designed for developers who already has the account system for their own. The developer can register the uid account without any verification. So please keep your username/password in safe place.
+///
+/// @warning Tuya server have many regions over the world, China/Europe/America, and so on. Account system between regions are separated. When user is not logged in, Tuya SDK will select a nearest region for the initial API request. During the register step, Tuya Cloud will see the account country code and create it in the right region. After the register or login step, the API request will be sent to the right region. So, the country code is part of the account username, please do not ignore it.
+///
 @interface TuyaSmartUser : NSObject
 
 /// Returns the singleton of the class.
@@ -444,6 +477,28 @@ typedef NS_ENUM(NSInteger, TYRegType) {
               failure:(nullable TYFailureError)failure;
 
 
+/**
+ * Check password format by password regular type
+ *
+ * @param password  Inputed password
+ * @param regularType Password regular type
+ * @return Result of check password format
+ */
+- (BOOL)checkPasswordFormat:(NSString *)password withPasswordRegularType:(TYPasswordRegularType)regularType;
+
+
+#pragma mark - Ticket from third cloud login
+
+/// Login with ticket.
+/// Ticket is created from a third-party cloud platform, for more information, please refer to the tuya cloud-to-cloud solution.
+///
+/// @param ticket User ticket from service.
+/// @param success Called when the task finishes successfully.
+/// @param failure Called when the task is interrupted by an error.
+- (void)loginWithTicket:(NSString *)ticket
+                success:(TYSuccessHandler)success
+                failure:(TYFailureError)failure;
+
 #pragma mark -
 
 /// Cancel network request.
@@ -451,6 +506,6 @@ typedef NS_ENUM(NSInteger, TYRegType) {
 
 @end
 
-#endif
-
 NS_ASSUME_NONNULL_END
+
+#endif /* TuyaSmartUser_h */
