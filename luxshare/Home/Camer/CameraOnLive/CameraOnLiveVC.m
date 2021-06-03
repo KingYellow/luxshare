@@ -119,9 +119,7 @@
     [self UIConfig];
     [self setConfigs];
     [self.camera getDefinition];
-    if ([QZHDeviceStatus deviceType:self.deviceModel] != IPCamPTZDevice) {
-        self.playView.camerGestureView.hidden = YES;
-    }
+
     self.isMuted = YES;
     self.dpManager = [[TuyaSmartCameraDPManager alloc] initWithDeviceId:self.deviceModel.devId];
     self.device = [TuyaSmartDevice deviceWithDeviceId:self.deviceModel.devId];
@@ -1199,33 +1197,34 @@
 
         _playView.camerGestureView.panGestureBolok = ^(CGFloat gestureX, CGFloat gestureY, CGFloat scale, BOOL end) {
             if (scale == 1) {
-                if (end) {
-                    [weakSelf stopDirectionTimer];
-                }else{
-                    long directionTag = 8;
-                    if (gestureX == 6) {
-                        directionTag = 6;
-                    }
-                    if (gestureX == 2) {
-                        directionTag = 2;
-                    }
-                    if (gestureY == 0) {
-                        directionTag = 0;
-                    }
-                    if (gestureY == 4) {
-                        directionTag = 4;
-                    }
-                    
-                    NSString *dir = [NSString stringWithFormat:@"%ld",(long)directionTag];
-                    NSDictionary  *dps = @{@"119": dir};
-                    
-                    [weakSelf.device publishDps:dps success:^{
+                if ([QZHDeviceStatus deviceType:self.deviceModel] == IPCamPTZDevice) {
+                    if (end) {
+                        [weakSelf stopDirectionTimer];
+                    }else{
+                        long directionTag = 8;
+                        if (gestureX == 6) {
+                            directionTag = 6;
+                        }
+                        if (gestureX == 2) {
+                            directionTag = 2;
+                        }
+                        if (gestureY == 0) {
+                            directionTag = 0;
+                        }
+                        if (gestureY == 4) {
+                            directionTag = 4;
+                        }
+                        
+                        NSString *dir = [NSString stringWithFormat:@"%ld",(long)directionTag];
+                        NSDictionary  *dps = @{@"119": dir};
+                        
+                        [weakSelf.device publishDps:dps success:^{
 
-                    } failure:^(NSError *error) {
+                        } failure:^(NSError *error) {
 
-                        [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:1.0];
-                    }];
-                                            
+                            [[QZHHUD HUD] textHUDWithMessage:error.userInfo[@"NSLocalizedDescription"] afterDelay:1.0];
+                        }];
+                    }
                 }
             }else{
                 [weakSelf.camera.videoView tuya_setOffset:CGPointMake(gestureX, gestureY)];

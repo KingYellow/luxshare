@@ -38,6 +38,10 @@
         [[QZHHUD HUD] textHUDWithMessage:QZHLoaclString(@"deviceOfflineNoOperate") afterDelay:1.0];
         return;
     }
+    if (self.listArr.count == 0){
+        [[QZHHUD HUD] textHUDWithMessage:@"暂无房间可选" afterDelay:1.0];
+        return;
+    }
     self.selectBlack(self.listArr[self.selectIndex]);
     [self.navigationController popViewControllerAnimated:YES];
 }

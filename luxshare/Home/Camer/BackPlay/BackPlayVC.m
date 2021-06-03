@@ -469,11 +469,27 @@
 
 #pragma mark -- lazy
 - (CameraPlayView *)playView{
+    QZHWS(weakSelf)
     if (!_playView) {
         _playView = [[CameraPlayView alloc] init];
         id traget = self.navigationController.interactivePopGestureRecognizer.delegate;
         UIPanGestureRecognizer * pan = [[UIPanGestureRecognizer alloc]initWithTarget:traget action:nil];
         [_playView addGestureRecognizer:pan];
+        _playView.camerGestureView.scaGestureBolok = ^(CGFloat sca) {
+            if (sca < 1.0) {
+                sca = 1.0;
+            }
+            [weakSelf.backCamera.videoView tuya_setScaled:sca];
+        };
+
+        _playView.camerGestureView.panGestureBolok = ^(CGFloat gestureX, CGFloat gestureY, CGFloat scale, BOOL end) {
+            if (scale == 1) {
+
+            }else{
+                [weakSelf.backCamera.videoView tuya_setOffset:CGPointMake(gestureX, gestureY)];
+            }
+
+        };
 
     }
     return _playView;
